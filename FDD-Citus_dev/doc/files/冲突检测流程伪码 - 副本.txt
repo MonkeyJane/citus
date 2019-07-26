@@ -1,0 +1,308 @@
+1. 获取 pg_subscription & pg_subscription_rel 中在线迁移创建的订阅者及订阅表数据存储到 sub_stat_list
+2. 启动轮询定时器
+注：定时器中 sub_stat_list 以及其元素均标识为 a_s  a
+	轮询的 pg_stat_subscription 数据列表及其元素标识为 b_s  b
+	轮询的 pg_subscription_rel 数据列表及其元素标识为 c_s  c
+
+
+foreach (a_s)
+{
+	foreach (b_s)
+	{
+		if (a.subid != b.subid || a.relid != b.relid)
+		{
+			continue;
+		}
+		
+		if (a.finished)
+		{
+			continue;
+		}
+		
+		if (a.pid == b.pid && a.pid != 0)
+		{
+			continue;
+		}
+		else if (a.pid == b.pid && a.pid == 0)
+		{
+			if (a.fault)
+			{
+				break;
+			}
+			
+			if (a.disabled)
+			{
+				break;
+			}
+			
+			if (a.abnormal_check)
+			{
+				// 根据 a.nodeip & a.nodeport 尝试连接到发布端 connected
+				if (!connected)
+				{
+					++a.disconnect_count;
+				}
+				else
+				{
+					++a.abnormal_count;
+				}
+				
+				if (a.disconnect_count >= 通信失败阈值)
+				{
+					// 报警：与发布者通信异常
+					a.fault = true;
+				}
+				
+				if (a.abnormal_count >= 冲突阈值)
+				{
+					// 报警：逻辑复制冲突
+					a.fault = true;
+				}
+			}
+			else if (a.wait_abnormal_check)
+			{
+				if (a.relid == NULL)
+				{
+					if (b_s.normal_app_count < max_replication_slots)
+					{
+						a.abnormal_check = true;
+						a.wait_abnormal_check = false;
+					}
+				}
+				else
+				{
+					if (c_s.count == 0)
+					{
+						// 根据 a.subid 查询 pg_subscription_rel -> d_s
+						if (d_s.not_ready_count <= max_sync_workers_per_subscription)
+						{
+							a.abnormal_check = true;
+							a.wait_abnormal_check = false;
+						}
+					}
+					else
+					{
+						if (c_s.not_ready_count <= max_sync_workers_per_subscription)
+						{
+							a.abnormal_check = true;
+							a.wait_abnormal_check = false;
+						}
+					}
+				}
+			}
+		}
+		else if (a.pid == 0 && b.pid != 0)
+		{
+			{
+				a.pid = b.pid;
+				
+				if (!a.subname)
+				{
+					a.subname = b.subname;
+				}
+			}
+			
+			if (a.fault)
+			{
+				break;
+			}
+			
+			if (a.disabled)
+			{
+				a.disabled = false;
+			}
+			else if (a.wait_abnormal_check)
+			{
+				a.wait_abnormal_check = fasle;
+				a.abnormal_check = true;
+			}
+			
+			++a.start_count;
+			
+			if (a.stop_count)
+			{
+				a.stop_count = a.start_count - 1;
+			}
+			if (a.stop_count >= 冲突阈值)
+			{
+				// 报警：逻辑复制冲突
+				a.fault = true;
+				break;
+			}
+		}
+		else if (a.pid != 0 && b.pid == 0)
+		{
+			{
+				a.pid = b.pid;
+			}
+			
+			++a.stop_count;
+			
+			if (a.relid == NULL)
+			{
+				// 根据 a.subid & a.relid 查询 pg_subscription -> d
+				if (d.subenabled == 'f')
+				{
+					// 报警：订阅者被 DISABLE
+					a.disabled = true;
+					
+					if (!a.fault)
+					{
+						// 清空结构体 a.stateinfo 
+					}
+				}
+				else
+				{
+					// 根据 a.nodeip & a.nodeport 尝试连接到发布端 connected
+					if (!connected)
+					{
+						++a.disconnect_count;
+					}
+					if (a.disconnect_count >= 通信失败阈值)
+					{
+						// 报警：与发布者通信异常
+						a.fault = true;
+						break;
+					}
+					
+					if (b_s.normal_app_count < max_replication_slots)
+					{
+						a.abnormal_check = true;
+						a.wait_abnormal_check = false;
+					}
+					else
+					{
+						a.wait_abnormal_check = true;
+						a.abnormal_check = false;
+					}
+				}
+			}
+			else
+			{
+				if (c_s.count == 0)
+				{
+					// 根据 a.subid 查询 pg_subscription_rel -> d_s
+					if (d.srsubstate == 's' || d.srsubstate == 'r')
+					{
+						a.finished = true;
+						a.fault = false;
+						a.disabled = false;
+						// 清空结构体 a.stateinfo 
+					}
+					else
+					{
+						a.relstate = d.srsubstate;
+						
+						// 根据 a.subid & a.relid 查询 pg_subscription -> e
+						if (e.subenabled == 'f')
+						{
+							// 报警：订阅者被 DISABLE
+							a.disabled = true;
+							
+							if (!a.fault)
+							{
+								// 清空结构体 a.stateinfo 
+							}
+							break;
+						}
+						
+						// 根据 a.nodeip & a.nodeport 尝试连接到发布端 connected
+						if (!connected)
+						{
+							++a.disconnect_count;
+						}
+						if (a.disconnect_count >= 通信失败阈值)
+						{
+							// 报警：与发布者通信异常
+							a.fault = true;
+							break;
+						}
+						
+						if (d_s.not_ready_count <= max_sync_workers_per_subscription)
+						{
+							a.abnormal_check = true;
+							a.wait_abnormal_check = false;
+						}
+						else
+						{
+							a.wait_abnormal_check = true;
+							a.abnormal_check = false;
+						}
+					}
+				}
+				else
+				{
+					foreach (c_s)
+					{
+						if (c.subid == a.subid && c.relid == a.relid)
+						{
+							if (d.srsubstate == 's' || d.srsubstate == 'r')
+							{
+								a.finished = true;
+								a.fault = false;
+								a.disabled = false;
+								// 清空结构体 a.stateinfo 
+							}
+							else
+							{
+								a.relstate = d.srsubstate;
+								
+								// 根据 a.nodeip & a.nodeport 尝试连接到发布端 connected
+								if (!connected)
+								{
+									++a.disconnect_count;
+								}
+								if (a.disconnect_count >= 通信失败阈值)
+								{
+									// 报警：与发布者通信异常
+									a.fault = true;
+									break;
+								}
+								
+								if (c_s.not_ready_count <= max_sync_workers_per_subscription)
+								{
+									a.abnormal_check = true;
+									a.wait_abnormal_check = false;
+								}
+								else
+								{
+									a.wait_abnormal_check = true;
+									a.abnormal_check = false;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		else if (a.pid != b.pid && a.pid != 0 && b.pid != 0)
+		{
+			{
+				a.pid = b.pid;
+			}
+			
+			if (a.fault)
+			{
+				break;
+			}
+			
+			if (a.disabled)
+			{
+				a.disabled = false;
+			}
+			
+			++a.start_count;
+			
+			if (a.stop_count)
+			{
+				a.stop_count = a.start_count - 1;
+			}
+			if (a.stop_count >= 冲突阈值)
+			{
+				// 报警：逻辑复制冲突
+				a.fault = true;
+				break;
+			}
+		}
+	}
+}

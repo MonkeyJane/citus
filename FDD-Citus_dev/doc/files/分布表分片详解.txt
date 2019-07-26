@@ -1,0 +1,48 @@
+FindShardIntervalIndex <- FindShardInterval
+
+-- 构造分布表属性，指定 hashFunction
+BuildDistTableCacheEntry <- LookupDistTableCacheEntry
+1. 对 pg_dist_partition 表上锁 AccessShareLock
+2. 在表中查找入参 relationId 的记录，不存在则标记 isDistributedTable=false 并解锁退出
+3. 标记 isDistributedTable=true
+4. 设置 partitionMethod 为 relationId 记录值
+5. 若此 relationId 存在 partitionKey (REFERENCE 表不存在 partitionKey) ，设置 partitionKeyString 为分布键名、 partitionColumn 为分布键转化的Var节点
+6. 设置 colocationId replicationModel 为 relationId 记录值
+7. BuildCachedShardList
+8. 若 partitionMethod 为 DISTRIBUTE_BY_HASH ，根据 partitionColumn 的数据类型调用PG函数 lookup_type_cache 获取 hashFunction ，调用 HasUniformHashDistribution 设置 hasUniformHashDistribution
+9. 根据 relationId 获取并设置 referencedRelationsViaForeignKey 与 referencingRelationsViaForeignKey
+
+BuildCachedShardList
+
+
+lookup_type_cache
+
+
+HasUniformHashDistribution
+1. 若入参分片区间数组元素个数 shardIntervalArrayLength 为0，则直接返回 false
+2. 计算 hashTokenIncrement = HASH_TOKEN_COUNT(4294967296) / shardIntervalArrayLength
+3. for循环遍历分片区间数据
+	1. 区间预期最小值 shardMinHashToken 为 (-2147483647-1) + (shardIndex * hashTokenIncrement) ，预期最大值 shardMaxHashToken 为 最小值 + hashTokenIncrement -1
+	2. 若为最后一个分片区间，则预期最大值为 2147483647
+	3. 比较分区区间实际与预期最小最大值，若不一致则返回 false
+	
+
+分布表的分片规则：
+1. HASH
+	1. 计算 hashTokenIncrement = HASH_TOKEN_COUNT(4294967296) / shardCount(待分片个数)
+	2. 区间最小值 shardMinHashToken 为 (-2147483647-1) + (shardIndex * hashTokenIncrement) ，最大值 shardMaxHashToken 为 最小值 + hashTokenIncrement -1
+	3. 若为最后一个分片区间，则最大值为 2147483647
+2. RANGE
+3. APPEND
+
+分布表的SELECT选址规则：
+1. HASH
+2. RANGE
+3. APPEND
+
+分布表的DML选址规则：
+1. HASH
+2. RANGE
+3. APPEND
+
+分布表的扩表方式：

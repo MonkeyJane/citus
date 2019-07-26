@@ -1,0 +1,165 @@
+-- 对 jobId 上锁 LockAcquire
+LockJobResource
+--> InitTaskDirectory(AccessExclusiveLock)  -- job以及task目录创建前
+--> task_tracker_assign_task(AccessExclusiveLock)  -- 创建schema前
+--> task_tracker_cleanup_job(AccessExclusiveLock)  -- 函数入口
+
+-- 对 jobId 解锁 LockRelease
+UnlockJobResource
+--> InitTaskDirectory  -- job以及task目录创建后
+--> task_tracker_assign_task  -- 创建schema后/schema已存在无需创建
+--> task_tracker_cleanup_job  -- 函数出口
+
+
+对分区表/分片/分片元数据上锁的原子函数为：
+LockPartitionRelations
+LockShardResource
+LockShardDistributionMetadata
+TryLockShardDistributionMetadata
+
+
+-- 遍历relationIdList，若 relationId 为分区表，则找到它的所有子表的 relationId 上锁 LockPartitionRelations
+LockPartitionsInRelationList
+--> RealTimeExecScan(AccessShareLock) --> RealTimeCustomExecMethods
+--> TaskTrackerExecScan(AccessShareLock) --> TaskTrackerCustomExecMethods
+--> CitusModifyBeginScan(AccessShareLock) --> RouterModifyCustomExecMethods --> RouterCreateScan
+--> RouterSelectExecScan(AccessShareLock) --> RouterSelectCustomExecMethods --> RouterCreateScan
+
+
+-- 若 relationId 为分区表，则找到它的所有子表的 relationId 上锁 LockRelationOid
+LockPartitionRelations 
+--> LockPartitionsInRelationList(relationId为分区表时调用)
+--> CoordinatorInsertSelectExecScan(目的表为分区表时调用:RowExclusiveLock)
+--> ExecuteSingleModifyTask(任务是对分区表的DML操作时调用:RowExclusiveLock) --> RouterSequentialModifyExecScan --> RouterModifyExecScan(!parallelExecution 时调用)
+																			--> ExecuteModifyTasksSequentiallyWithoutResults --> master_modify_multiple_shards(MultiShardConnectionType=SEQUENTIAL_CONNECTION 时调用)
+																															 --> ExecuteDistributedDDLJob(!ddlJob->concurrentIndexCmd 且 [MultiShardConnectionType=SEQUENTIAL_CONNECTION 或 ddlJob->executeSequentially] 时调用) --> multi_ProcessUtility(ddlJobs 非空时调用)
+--> ExecuteModifyTasks(首个任务是对分区表的DML操作时调用:RowExclusiveLock) --> ExecuteMultipleTasks --> CoordinatorInsertSelectExecScan(prunedTaskList 非空时调用)
+																									--> RouterMultiModifyExecScan --> RouterModifyExecScan(parallelExecution 时调用)
+																		   --> ExecuteModifyTasksWithoutResults --> master_modify_multiple_shards(MultiShardConnectionType!=SEQUENTIAL_CONNECTION 时调用)
+                                                                                                                --> ExecuteDistributedDDLJob --> multi_ProcessUtility(ddlJobs 非空时调用)
+                                                                                                                --> ExecuteDistributedDDLJob --> multi_ProcessUtility(ddlJobs 非空时调用)
+                                                                                                                --> ProcessVacuumStmt(IsDistributedTable 时调用) --> multi_ProcessUtility(VacuumStmt 时调用)
+
+
+
+
+
+-- 对 shardIntervalList 升序排列，遍历对 shardId 上锁 LockShardDistributionMetadata
+LockShardListMetadata
+--> ErrorIfShardPlacementsNotColocated(ShareLock)--> MarkTablesColocated --> mark_tables_colocated
+--> CreateIndexTaskList(ShareLock) --> PlanIndexStmt(创建新index且关联分区表时调用) --> multi_ProcessUtility(IndexStmt 时调用)
+--> DropIndexTaskList(ShareLock) --> PlanDropIndexStmt(删除旧index且关联分区表时调用) --> multi_ProcessUtility(DropStmt INDEX 时调用)
+--> CreateColocatedShards(ShareLock) --> CreateHashDistributedTableShards(入参colocatedTableId非空时调用) --> CreateDistributedTable(创建Hash表时调用)
+--> ModifyMultipleShardsTaskList(ShareLock) --> master_modify_multiple_shards
+--> InterShardDDLTaskList(ShareLock) --> PlanAlterTableStmt(rightRelationId为分区表时调用) --> multi_ProcessUtility(AlterTableStmt TABLE/INDEX 时调用)
+--> DDLTaskList(ShareLock) --> PlanRenameStmt --> multi_ProcessUtility(RenameStmt时调用)
+						   --> PlanAlterTableStmt(rightRelationId为空时调用) --> multi_ProcessUtility(AlterTableStmt TABLE/INDEX 时调用)
+--> VacuumTaskList(ShareLock) --> ProcessVacuumStmt(IsDistributedTable 时调用) --> multi_ProcessUtility(VacuumStmt 时调用)
+--> CitusCopyDestReceiverStartup(ShareLock);
+
+
+-- 对 shardPlacementList 升序排列，遍历对 shardId 上锁 LockShardDistributionMetadata
+LockShardsInPlacementListMetadata
+--> master_update_node(WorkerNodeIsPrimary 时调用:AccessExclusiveLock)
+
+
+-- 获取 shardId 所属分区表外键关联的复制表的所有分区分片 shardIntervalList 
+若 ClusterHasKnownMetadataWorkers ，则对 shardIntervalList 上锁 LockShardListMetadataOnWorkers 。遍历对 shardId 上锁 LockShardDistributionMetadata
+LockReferencedReferenceShardDistributionMetadata
+--> BlockWritesToShardList(ExclusiveLock) --> ReplicateAllReferenceTablesToNode(ClusterHasKnownMetadataWorkers 时调用) --> ActivateNode(节点为primary 时调用) --> master_activate_node
+                                                                                                                      									      --> master_add_node
+                                                                                                                      										  --> master_add_coordinator
+                                          --> DeleteAllReferenceTablePlacementsFromNodeGroup(ClusterHasKnownMetadataWorkers 时调用) --> RemoveNodeFromCluster(节点为primary 时调用) --> master_remove_node
+                                                                                                                                    --> master_disable_node(节点为primary 时调用)
+--> RepairShardPlacement(ExclusiveLock) --> master_copy_shard_placement
+
+
+
+-- 封装上锁模式以及要上锁的所有分区分片信息到 SELECT lock_shard_metadata(%d, ARRAY[%lu, %lu, ..., %lu]) ，并发送给所有元数据节点
+LockShardListMetadataOnWorkers
+--> LockReferencedReferenceShardDistributionMetadata(ClusterHasKnownMetadataWorkers 时调用)
+--> BlockWritesToShardList(ShouldSyncTableMetadata 时调用:ExclusiveLock)
+
+
+-- 遍历传入的所有 shardId 上锁 LockShardDistributionMetadata
+lock_shard_metadata
+--> LockShardListMetadataOnWorkers
+
+-- 对 shardId 上锁 LockAcquire(dontWait=false, 表示若抢不到锁则阻塞) ，锁标记为 SET_LOCKTAG_SHARD_METADATA_RESOURCE
+LockShardDistributionMetadata
+--> lock_shard_metadata(lockMode);
+--> LockShardListMetadata(lockMode);
+--> LockShardsInPlacementListMetadata(lockMode);
+--> LockReferencedReferenceShardDistributionMetadata(lockMode);
+--> BlockWritesToShardList(ExclusiveLock);
+--> ReplicateAllReferenceTablesToNode(ExclusiveLock)
+--> DeleteAllReferenceTablePlacementsFromNodeGroup(ExclusiveLock);	 
+--> RepairShardPlacement(ExclusiveLock);
+--> RouterModifyTaskForShardInterval(ShareLock) --> CreateDistributedInsertSelectPlan --> CreateInsertSelectPlan --> CreateDistributedPlan(InsertSelectIntoDistributedTable 时调用)
+--> TwoPhaseInsertSelectTaskList(ShareLock) --> CreateCoordinatorInsertSelectPlan -->CreateInsertSelectPlan(不支持 CreateDistributedInsertSelectPlan 时调用) --> CreateDistributedPlan(InsertSelectIntoDistributedTable 时调用)
+--> CreateShardsWithRoundRobinPolicy(ExclusiveLock) --> CreateHashDistributedTableShards(入参colocatedTableId为空时调用) --> CreateDistributedTable(创建Hash表时调用)
+--> CreateReferenceTableShard(ExclusiveLock) --> CreateDistributedTable(创建复制表时调用)
+--> AcquireMetadataLocks(ShareLock) --> CitusModifyBeginScan --> RouterModifyCustomExecMethods --> RouterCreateScan
+--> master_append_table_to_shard(ShareLock);
+--> upgrade_to_reference_table(ExclusiveLock);
+
+
+
+
+-- 封装上锁模式以及要上锁的所有分区分片信息到 SELECT lock_shard_resources(%d, ARRAY[%lu, %lu, ..., %lu]) ，并发送给第一个Active Primary节点
+LockShardListResourcesOnFirstWorker
+--> SerializeNonCommutativeWrites(首个分片为复制表分片且ClusterHasKnownMetadataWorkers且本节点不是第一个Active Primary节点) 
+								  --> CitusCopyDestReceiverStartup(RowExclusiveLock)
+								  --> AcquireExecutorShardLock(shardId!=INVALID_SHARD_ID 且 lockMode!=NoLock 时调用:lockMode) --> ExecuteSingleModifyTask(DML操作时调用)
+								  --> AcquireExecutorShardLock(task->relationRowLockList 非空且关联的表为复制表时调用:lockMode) --> ExecuteSingleModifyTask(DML操作时调用)
+
+
+-- 遍历传入的所有 shardId 上锁 LockShardResource
+lock_shard_resources
+--> LockShardListResourcesOnFirstWorker
+
+
+-- 对 shardIntervalList 升序排列，遍历对 shardId 上锁 LockShardResource
+LockShardListResources
+--> SerializeNonCommutativeWrites
+
+
+-- 若 shardId 所属表为分区表，则找到其父表中与自己同index的分片(亲和分片)的shardId上锁 LockShardResource
+LockParentShardResourceIfPartition
+--> AcquireExecutorMultiShardLocks --> ExecuteModifyTasks --> ExecuteModifyTasksWithoutResults --> master_modify_multiple_shards(MultiShardConnectionType!=SEQUENTIAL_CONNECTION 时调用)
+														  --> ExecuteMultipleTasks --> CoordinatorInsertSelectExecScan(prunedTaskList 非空时调用)
+
+
+-- 将 relationShardList 升序排列，遍历对有效的 shardId 上锁 LockShardResource
+LockRelationShardResources
+--> AcquireExecutorMultiShardLocks(RequiresConsistentSnapshot 时调用)
+--> AcquireExecutorShardLock(RequiresConsistentSnapshot 时调用) --> ExecuteSingleModifyTask(DML操作时调用)
+
+-- 对 shardId 上锁 LockAcquire(dontWait=false, 表示若抢不到锁则阻塞) ，锁标记为 SET_LOCKTAG_SHARD_RESOURCE
+LockShardResource
+--> lock_shard_resources(lockMode);
+--> LockShardListResources(lockMode);
+--> LockRelationShardResources(shardId!=INVALID_SHARD_ID 时调用:lockMode);
+--> LockParentShardResourceIfPartition(PartitionTable 时调用:lockMode);
+--> AcquireExecutorMultiShardLocks(lockMode);
+--> acquire_shared_shard_lock(ShareLock)
+--> master_append_table_to_shard(ExclusiveLock)
+--> upgrade_to_reference_table(ExclusiveLock)
+--> worker_append_table_to_shard(AccessExclusiveLock)
+
+
+-- 调用PG接口 RangeVarGetRelidExtended 来对 relationId 上锁 LockRelationOid
+lock_relation_if_exists
+--> AcquireDistributedLockOnRelations --> LockTruncatedRelationMetadataInWorkers(AccessExclusiveLock) --> ProcessTruncateStatement --> multi_ProcessUtility(TruncateStmt 时调用)
+
+
+-- 对 shardId 上锁 LockAcquire (dontWait=true, 表示若抢不到锁不阻塞直接返回)，锁标记为 SET_LOCKTAG_SHARD_METADATA_RESOURCE
+TryLockShardDistributionMetadata
+--> ShardIntervalsOnWorkerGroup(ShareLock) --> DistributedTableSizeOnWorker --> DistributedTableSize(遍历 ActiveReadableNodeList) --> citus_total_relation_size
+																																  --> citus_table_size
+																																  --> citus_relation_size
+
+SerializeNonCommutativeWrites
+
+
+

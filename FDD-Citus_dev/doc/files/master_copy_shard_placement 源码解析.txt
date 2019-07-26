@@ -1,0 +1,80 @@
+master_copy_shard_placement
+入参：shardId、源节点名、源节点端口、目的节点名、目的节点端口、是否是修复分片操作(默认true)、分片传输模式(默认auto)
+功能：社区版仅用于修复异常状态分片；企业版可用于分片拷贝
+限制：只在主CN节点支持此UDF函数。社区版不支持 doRepair 为false(只有企业版支持)、不支持分片传输模式为 logic 。
+
+关键函数：
+RepairShardPlacement
+1. 获取该shard的分区 shardInterval
+2. 获取该shard对应的表owner
+3. 校验当前用户是否为表owner，不是则退出
+4. 不支持 RELKIND_FOREIGN_TABLE 表，报错退出
+5. 不支持 有多个placement的分片，报错退出
+6. 对通过 foreign key 关联到该shard所属表的复制表，的元数据上锁(ExclusiveLock)     -- LockReferencedReferenceShardDistributionMetadata
+	6.1 若存在上述复制表、且集群中有元数据节点(MX、cn_tp、cn_rtap)，则发送 SELECT lock_shard_metadata(%d, ARRAY[%lu,...%lu]) 命令通知元数据节点锁元数据
+	6.2 对上述复制表的所有shard 元数据上锁
+7. 对该shard 元数据上锁(ExclusiveLock)     -- LockShardDistributionMetadata
+8. 确认该shard 在源节点上状态正常(FILE_FINALIZED)、且在目标节点上状态异常(FILE_INACTIVE)。若任一节点上不存在此shard 或者shard 状态不符合要求，则报错退出
+9. 获取该shard 是否属于分区表(partitionedTable=true)，并设置 includeDataCopy 为 !partitionedTable
+
+10. 以shard分区(shardInterval)、源节点名、源节点端口、 includeDataCopy 为入参，生成拷贝命令     -- CopyShardCommandList
+	10.1 根据 shardInterval 构造分片名(<schemaName>.<tableName>_<shardId>)     -- ConstructQualifiedShardName
+	10.2 获取重建(先drop后create)表命令：只支持 RELKIND_RELATION 、 RELKIND_PARTITIONED_TABLE 以及 RELKIND_FOREIGN_TABLE 表，否则报错退出     -- RecreateTableDDLCommandList
+	10.3 生成在Worker上执行的重建表命令：用 SELECT worker_apply_shard_ddl_command (%lu, %s)封装10.2获得的命令（参数为：shardId、sql命令行）
+	10.4 若 includeDataCopy=true，则构造一条SELECT worker_append_table_to_shard (%s, %s, %s, %u) 命令（参数为：目的分片名、源分片名、源节点名、源节点端口）
+	10.5 获取创建表index、constraint的命令：若该表存在index、constraint，则生成相应的创建命令     -- GetTableIndexAndConstraintCommands
+	10.6 生成在Worker上执行的创建index、constraint命令：用SELECT worker_apply_shard_ddl_command (%lu, %s)分装10.5获得的命令（参数为：shardId、sql命令行）
+
+11. 生成拷贝 Foreign Constraint 命令     -- CopyShardForeignConstraintCommandList
+	11.1 获取创建表foreign constraint的命令：若该表存在foreign constraint，则生成相应的创建命令     -- GetTableForeignConstraintCommands
+	遍历步骤11.1获取的命令，每条命令进行（11.2-11.4）流程：
+	11.2 解析foreign constraint 中关联的表，若不存在，则报错退出     -- ForeignConstraintGetReferencedTableId
+	11.3 若关联的表为复制表，则获取表首个shard的shardId；否则获取表中与该shard同一个index的分片的shardId，并认为此分片为该shard的亲和分片     -- GetFirstShardId  ColocatedShardIdInRelation
+	11.4 生成在Worker上执行的创建foreign constraint命令：用SELECT worker_apply_inter_shard_ddl_command (%lu, %s, %lu, %s, %s)封装11.1获得的命令（参数为：shardId、分片所属表所在的schema名、步骤11.3获取的shardId、步骤11.3获取的分片所属表所在的schema名、sql命令行）
+
+12. 若该shard 属于分区表(partitionedTable=true)，则进行以下操作
+	12.1 获取分片名：根据 shardInterval 构造分片名(<schemaName>.<tableName>_<shardId>)     -- ConstructQualifiedShardName
+	12.2 获取拷贝子表命令     -- CopyPartitionShardsCommandList
+		12.2.1 获取以该表为父表的子表 Oid
+		12.2.2 遍历12.2.1 获取的子表，获取表中与该shard同一个index的分片的shardId以及ShardInterval
+		12.2.3 入参为：步骤12.2.2中获取的ShardInterval、源节点名、源节点端口、includeDataCopy(false)，生成拷贝命令流程同步骤10
+		12.2.4 生成创建子表与父表继承关系的命令，并用 SELECT worker_apply_inter_shard_ddl_command (%lu, %s, %lu, %s, %s) 封装用于在Worker上执行（参数为：shardId、分片所属表所在的schema名、步骤12.2.2获取的shardId、步骤12.2.2获取的分片所属表所在的schema名、sql命令行）
+	12.3 生成在Worker上执行的拷贝命令：SELECT worker_append_table_to_shard (%s, %s, %s, %u) ，参数为：目的分片名、源分片名、源节点名、源节点端口
+	
+13. 在目标节点上新开启一个transaction ，执行上述流程（步骤10-12）中生成的命令     -- SendCommandListToWorkerInSingleTransaction
+14. 获取该shard的所有placement，并获取部署在目标节点的placement。若不存在此placement，则报错退出     -- ShardPlacementList  SearchShardPlacementInList
+15. 刷新 pg_dist_placement 表中该placement的状态为 FILE_FINALIZED     -- UpdateShardPlacementState
+
+
+以上流程中涉及的UDF函数：下述变量名是自定义的，可能与源代码中实际变量名不一致
+1. lock_shard_metadata ：锁分片元数据
+	1. 获取锁模式 lockMode
+	2. 读取需上锁的 shardId 信息
+	3. 确认当前用户为超级用户，否则报错退出
+	4. 遍历所有 shardId ，对关联到该 shardId 的元数据上锁
+	
+2. worker_apply_shard_ddl_command ：执行在指定 shard 上的 ddl命令
+	1. 解析shardId、schemaName、ddlCommand
+	2. 将ddlCommand 解析为 Node 结构体形式
+	3. 通过调用 RelayEventExtendNames ，扩展特定类型的DDL命令涉及的表名以及索引名。例如 test1 --> test1_103920 从表名到具体分片名的扩展转变
+	4. 用PG接口 ProcessUtility 执行此DDL语句，实际调用的是Citus钩子函数 multi_ProcessUtility
+
+3. worker_append_table_to_shard ：将远端表
+	1. 解析targetName、sourceName、sourceName、sourcePort
+	2. 分别从targetName、sourceName中解析出 目的tableName、目的schemaName，以及源tableName、源schemaName
+	3. 根据步骤2获得的数据，解析出目的shardId
+	4. 对步骤3获得的 shard 上锁(AccessExclusiveLock)
+	5. 创建本地文件 'base/pgsql_job_cache/table_<shardId>'
+	6. 生成拷贝表命令：若涉及表为分区表，则为'COPY (SELECT * FROM %s) TO STDOUT'，否则为'COPY %s TO STDOUT'
+	7. 与源节点建立连接，通知源节点执行步骤6生成的命令，把执行结果拷贝到步骤5生成的文件中
+	8. 生成拷贝表命令：'COPY %s FROM '%s''，参数为 目的表、源文件路径。也即表数据从指定文件中拷贝
+	9. 确认当前用户有执行COPY操作的权限，若无则报错退出
+	10. 切换到超级用户
+	11. 执行步骤8生成的命令，将步骤5文件中的数据拷贝到目的表中
+	12. 切换回本用户
+	13. 删除步骤5生成的文件
+
+4. worker_apply_inter_shard_ddl_command
+	1. 解析 shardId、schemaName、亲和shardId、亲和shard的schemaName、ddlCommand
+	2. 通过调用 RelayEventExtendNamesForInterShardCommands 函数，扩展特定类型的DDL命令涉及的表名以及约束名。例如 test1 --> test1_103920 从表名到具体分片名的扩展转变
+	3. 用PG接口 ProcessUtility 执行此ddl 语句，实际调用的是Citus钩子函数 multi_ProcessUtility

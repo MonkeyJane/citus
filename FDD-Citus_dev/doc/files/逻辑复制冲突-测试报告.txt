@@ -1,0 +1,69 @@
+测试背景：1个发布者，1个订阅者，发布3张表，max_sync_workers_per_subscription=2
+测试1：iii状态，所有表冲突    -- 创建订阅者之前使订阅端表数据与发布端冲突
+订阅端观察情况：
+  1. 所有订阅表的sync进程依次间隔（5s）反复重启
+  2. pg_subscription_rel 表中所有订阅表状态均变为 'd'
+  3. pg_stat_subscription 表中sync进程（表1&2->表2&3->表3&1）在变，异常退出的sync进程在表内不可查；且同一个订阅表的sync进程数据（pid | last_msg_send_time | last_msg_receipt_time | latest_end_time）也会变
+  冲突解决后
+  1. 订阅表的sync进程不再故障重启
+  2. 某个订阅表复制状态变为 's'/'r' 后，未启动逻辑复制的'd'状态表sync进程启动直至逻辑复制完毕
+发布端观察情况：
+  1. pg_stat_replication 表中sync进程（表1&2->表2&3->表3&1）在变，异常退出的sync进程在表内不可查；且同一个订阅表的sync进程数据（pid | client_port | backend_start）也会变
+  2. pg_replication_slots 表中sync进程（表1&2->表2&3->表3&1）在变，异常退出的sync进程在表内不可查；且同一个订阅表的sync进程数据（active_pid）会变
+
+ 
+测试2：idd状态，d状态表冲突    -- 'd'状态表逻辑复制过程中，在订阅端插入1条记录使之与发布端冲突
+订阅端观察情况：
+  1. 该冲突表的sync进程退出，'i'状态表的sync进程启动
+  2. pg_stat_subscription 表中sync进程变化（表1&2->表2&3），异常退出的sync进程在表内不可查
+  冲突解决后
+  1. 某个订阅表复制状态变为 's'/'r' 后，冲突解决的那个订阅表sync进程启动直至逻辑复制完毕
+  2. pg_stat_subscription 表中该冲突解决的sync进程数据（pid | last_msg_send_time | last_msg_receipt_time | latest_end_time）会变
+发布端观察情况：
+  1. pg_stat_replication 表中sync进程变化（表1&2->表2&3），异常退出的sync进程在表内不可查
+  2. pg_replication_slots 表中sync进程变化（表1&2->表2&3），异常退出的sync进程在表内不可查
+  冲突解决后
+  1. pg_stat_replication 表中该冲突解决重启的sync进程数据（pid | client_port | backend_start）会变
+  2. pg_replication_slots 表中该冲突解决重启的sync进程数据（active_pid）会变
+
+  
+测试3：ddd状态，d状态（正在进行逻辑复制）表冲突    -- 测试1冲突修复后，'d'状态表逻辑复制过程中，在订阅端插入1条记录使之与发布端冲突
+订阅端观察情况：
+  1. 该订阅表的sync进程退出，未启动逻辑复制的'd'状态表的sync进程启动
+  2. pg_stat_subscription 表中sync进程变化（表1&2->表2&3），异常退出的sync进程在表内不可查
+  冲突解决后
+  1. 某个订阅表复制状态变为 's'/'r' 后，冲突解决的那个订阅表sync进程启动直至逻辑复制完毕
+  2. pg_stat_subscription 表中该冲突解决的sync进程数据（pid | last_msg_send_time | last_msg_receipt_time | latest_end_time）会变
+发布端观察情况：
+  1. pg_stat_replication 表中sync进程变化（表1&2->表2&3），异常退出的sync进程在表内不可查
+  2. pg_replication_slots 表中sync进程变化（表1&2->表2&3），异常退出的sync进程在表内不可查
+  冲突解决后
+  1. pg_stat_replication 表中该冲突解决重启的sync进程数据（pid | client_port | backend_start）会变
+  2. pg_replication_slots 表中该冲突解决重启的sync进程数据（active_pid）会变
+
+
+测试4：rdd状态，r状态表冲突    -- 在订阅端向'r'状态表插入1条记录后，在发布端向此表插入相同记录
+订阅端观察情况：
+
+  冲突解决后
+
+发布端观察情况：
+
+  冲突解决后
+
+
+
+测试5：rrr状态，r状态表冲突    -- 在订阅端向'r'状态表插入1条记录后，在发布端向此表插入相同记录
+订阅端观察情况：
+  1. app进程间隔（5s）反复重启
+  2. pg_stat_subscription 表中订阅者app进程除（subid | subname）以外其他列数据为空
+  冲突解决后
+  1. app进程不再故障重启
+  2. pg_stat_subscription 表中该订阅者app进程数据恢复正常
+  3. pg_replication_origin_status 表中该订阅者数据（remote_lsn | local_lsn）更新
+发布端观察情况：
+  1. pg_replication_slots 表中该订阅者数据（active）变为 'f'，（active_pid）为空
+  2. pg_stat_replication 表中根据该订阅者在 pg_replication_slots 表中属性（slot_name）查询数据不存在
+  冲突解决后
+  1. pg_stat_replication 表中该订阅者数据（state）catchup阶段（write_lag | flush_lag | replay_lag）数据由空变为有效值；streaming阶段（write_lag | flush_lag | replay_lag）数据变为空，（sent_lsn | write_lsn）会更新
+  2. pg_replication_slots 表中该订阅者数据（active）变为 't'，（active_pid）变为有效值，（catalog_xmin | restart_lsn | confirmed_flush_lsn）会更新

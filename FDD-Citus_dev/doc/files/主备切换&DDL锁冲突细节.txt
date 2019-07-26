@@ -1,0 +1,81 @@
+1. 角色切换操作：
+只能在主CN节点进行。
+	1. 对pg_dist_node上锁（ExclusiveLock）
+	2. 对primary节点上所有分片的元数据上锁（ExclusiveLock）
+	3. 如果存在元数据节点，则通知元数据节点对这些分片元数据上锁（ExclusiveLock）
+
+2. 建分布表操作：
+只能在主CN节点进行。
+2.1 若创建的HASH分布表，不存在亲和表，则调用 CreateShardsWithRoundRobinPolicy ：
+	1. 对待创建的表上锁（ExclusiveLock）
+	2. 对pg_dist_node上锁（RowShareLock）
+	3. ActivePrimaryNodeList 获取所有priamry节点：对pg_dist_node上锁（AccessShareLock）
+	4. LockShardDistributionMetadata ：对待创建的所有分片元数据上锁（ExclusiveLock）
+	5. LoadShardPlacement->ResolveGroupShardPlacement->LookupNodeForGroup 获取placement数据：对pg_dist_node上锁（AccessShareLock）
+2.2 若创建的HASH分布表，存在亲和表，则调用 CreateColocatedShards ：
+	1. 对待创建的表上锁（ExclusiveLock）
+	2. 对其亲和表上锁（AccessShareLock）
+	3. LockShardListMetadata ：对亲和表的所有分片元数据上锁（ShareLock）
+	4. LoadShardPlacement->ResolveGroupShardPlacement->LookupNodeForGroup 获取placement数据：对pg_dist_node上锁（AccessShareLock）
+2.3 若创建的参考表，则调用 CreateReferenceTableShard ：
+	1. 对待创建的表上锁（ExclusiveLock）
+	2. ActivePrimaryNodeList 获取所有primary节点：对pg_dist_node上锁（AccessShareLock）
+	3. LockShardDistributionMetadata ：对待创建的所有分片元数据上锁（ExclusiveLock）
+	4. LoadShardPlacement->ResolveGroupShardPlacement->LookupNodeForGroup 获取placement数据：对pg_dist_node上锁（AccessShareLock）
+	
+如果存在元数据节点，则在通知元数据节点同步时，主CN节点也将对pg_dist_node上锁（ExclusiveLock）
+
+	1. EnsureSchemaExistsOnAllNodes->ActivePrimaryNodeList 获取所有primary节点：对pg_dist_node上锁（AccessShareLock）
+	2. ActivePrimaryNodeList 获取所有primary节点：对pg_dist_node上锁（AccessShareLock）
+
+
+3. 更新为参考表操作：
+只能在主CN节点进行。
+	1. LockShardDistributionMetadata ：对分片元数据上锁（ExclusiveLock）
+	2. LockShardResource ：对分片资源上锁（ExclusiveLock）
+	3. ReplicateSingleShardTableToAllWorkers->ReplicateShardToAllWorkers ：对pg_dist_node上锁（RowShareLock）
+	4. ReplicateSingleShardTableToAllWorkers->ActivePrimaryNodeList 获取所有primary节点：对pg_dist_node上锁（AccessShareLock）
+	5. ReplicateSingleShardTableToAllWorkers->ReplicateShardToNode
+	6. CreateTableMetadataOnWorkers->SendCommandToWorkers->FDD_ActivePrimaryAndCNNodeList 获取所有primary节点：对pg_dist_node上锁（AccessShareLock）
+	
+
+场景2.1与操作1两者之间的锁冲突体现在：主CN对pg_dist_node上锁时 RowShareLock 与 ExclusiveLock 的锁冲突
+(gdb) bt
+#0  0x00007f56dc35f163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x1a95510, cur_timeout=-1, occurred_events=0x7ffe88071e30, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x1a95510, timeout=-1, occurred_events=0x7ffe88071e30, nevents=1, wait_event_info=50331648) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f56d43a7104, wakeEvents=1, sock=-1, timeout=-1, wait_event_info=50331648) at latch.c:385
+#4  0x00000000007ec701 in WaitLatch (latch=0x7f56d43a7104, wakeEvents=1, timeout=0, wait_event_info=50331648) at latch.c:339
+#5  0x0000000000800aeb in ProcSleep (locallock=0x198bc58, lockMethodTable=0xaf7580 <default_lockmethod>) at proc.c:1255
+#6  0x00000000007fb022 in WaitOnLock (locallock=0x198bc58, owner=0x1a64578) at lock.c:1702
+#7  0x00000000007fa162 in LockAcquireExtended (locktag=0x7ffe880722c0, lockmode=2, sessionLock=0 '\000', dontWait=0 '\000', reportMemoryError=1 '\001') at lock.c:998
+#8  0x00000000007f987e in LockAcquire (locktag=0x7ffe880722c0, lockmode=2, sessionLock=0 '\000', dontWait=0 '\000') at lock.c:688
+#9  0x00000000007f8168 in LockRelationOid (relid=26443, lockmode=2) at lmgr.c:112
+#10 0x00007f56d5a8864d in CreateShardsWithRoundRobinPolicy (distributedTableId=26787, shardCount=3, replicationFactor=1, useExclusiveConnections=0 '\000')
+    at master/master_create_shards.c:166
+#11 0x00007f56d5a67254 in CreateHashDistributedTableShards (relationId=26787, colocatedTableId=0, localTableEmpty=1 '\001') at commands/create_distributed_table.c:504
+#12 0x00007f56d5a66fbd in CreateDistributedTable (relationId=26787, distributionColumn=0x1aa06c8, distributionMethod=104 'h', colocateWithTableName=0x1aa10d0 "default", 
+    viaDeprecatedAPI=0 '\000') at commands/create_distributed_table.c:366
+#13 0x00007f56d5a66d3e in create_distributed_table (fcinfo=0x1a4b5e8) at commands/create_distributed_table.c:230
+
+场景2.2与操作1两者之间的锁冲突体现在：主CN对分片元数据上锁时 ShareLock 与 ExclusiveLock 的锁冲突
+(gdb) bt
+#0  0x00007f56dc35f163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x1a8df58, cur_timeout=-1, occurred_events=0x7ffe88071df0, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x1a8df58, timeout=-1, occurred_events=0x7ffe88071df0, nevents=1, wait_event_info=50331657) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f56d43a7104, wakeEvents=1, sock=-1, timeout=-1, wait_event_info=50331657) at latch.c:385
+#4  0x00000000007ec701 in WaitLatch (latch=0x7f56d43a7104, wakeEvents=1, timeout=0, wait_event_info=50331657) at latch.c:339
+#5  0x0000000000800aeb in ProcSleep (locallock=0x198bcb8, lockMethodTable=0xaf75a0 <user_lockmethod>) at proc.c:1255
+#6  0x00000000007fb022 in WaitOnLock (locallock=0x198bcb8, owner=0x1a64578) at lock.c:1702
+#7  0x00000000007fa162 in LockAcquireExtended (locktag=0x7ffe88072280, lockmode=5, sessionLock=0 '\000', dontWait=0 '\000', reportMemoryError=1 '\001') at lock.c:998
+#8  0x00000000007f987e in LockAcquire (locktag=0x7ffe88072280, lockmode=5, sessionLock=0 '\000', dontWait=0 '\000') at lock.c:688
+#9  0x00007f56d5adfcba in LockShardDistributionMetadata (shardId=102014, lockMode=5) at utils/resource_lock.c:316
+#10 0x00007f56d5ae0065 in LockShardListMetadata (shardIntervalList=0x1a92e70, lockMode=5) at utils/resource_lock.c:486
+#11 0x00007f56d5a889dc in CreateColocatedShards (targetRelationId=26781, sourceRelationId=26772, useExclusiveConnections=0 '\000') at master/master_create_shards.c:285
+#12 0x00007f56d5a67232 in CreateHashDistributedTableShards (relationId=26781, colocatedTableId=26772, localTableEmpty=1 '\001') at commands/create_distributed_table.c:494
+#13 0x00007f56d5a66fbd in CreateDistributedTable (relationId=26781, distributionColumn=0x1a8da88, distributionMethod=104 'h', colocateWithTableName=0x1a8ed80 "default", 
+    viaDeprecatedAPI=0 '\000') at commands/create_distributed_table.c:366
+#14 0x00007f56d5a66d3e in create_distributed_table (fcinfo=0x1a57628) at commands/create_distributed_table.c:230
+
+场景2.3与操作1两者之间的不存在锁冲突
+操作3与操作1两者之间的锁冲突体现在：主CN对分片元数据上锁时 ExclusiveLock 与 ExclusiveLock 的锁冲突

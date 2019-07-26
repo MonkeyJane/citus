@@ -1,0 +1,151 @@
+create table xxx(id int primary key, name text);
+
+insert into tbl2 select generate_series(1,4730000),1234;
+
+select * from pg_size_pretty(pg_relation_size('tbl1'));
+select * from pg_size_pretty(pg_relation_size('tbl2'));
+select * from pg_size_pretty(pg_relation_size('tbl3'));
+select * from pg_size_pretty(pg_relation_size('tbl4'));
+
+tbl1 600M 14200000
+tbl2 200M 4730000
+tbl3 600M 14200000
+tbl4 800M 18935000
+
+CREATE PUBLICATION pub1 FOR TABLE tbl2, tbl3, tbl4;
+CREATE SUBSCRIPTION sub1 CONNECTION 'host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres' PUBLICATION pub1;
+
+
+--发布端
+declare @n int
+set @n=0
+begin
+while @n<10000
+set @n=@n + 1
+select current_time;
+select * from pg_publication_rel;
+select * from pg_stat_replication;
+select * from pg_replication_slots;
+select * from pg_publication_tables;
+\sleep 200ms
+end
+
+pg_publication_rel
+-- 表中属性：只要发布者存在，且不通过 ALTER 命令变更此发布者的发布表信息，则不会变化
+
+pg_publication_tables
+-- 表中属性：只要发布者存在，且不通过 ALTER 命令变更此发布者的发布表信息，则不会变化
+
+pg_replication_slots
+
+pg_stat_replication
+
+
+--订阅端
+declare @n int
+set @n=0
+begin
+while @n<10000
+set @n=@n + 1
+select current_time;
+select * from pg_subscription;
+select * from pg_subscription_rel;
+select * from pg_stat_subscription;
+select * from pg_replication_origin_status;
+\sleep 200ms
+end
+
+pg_subscription
+-- 表中属性：只要订阅者存在，且不通过 ALTER 命令变更此订阅者相关信息，则不会变化
+
+pg_subscription_rel
+更新表数据函数 SetSubscriptionRelState
+-- 表中 srsubstate 属性：当订阅表的订阅状态发生变化（由app 与 sync进程流程决定）时，将同步更新此值
+-- 表中 srsublsn 属性：当订阅表的订阅状态发生变化时（由app 与 sync进程流程决定，变为 's'/'r' ），将同步更新此值
+从逻辑复制过程中的查询结果可以发现：
+1. 状态 'c' -> 's' 时：属性 srsublsn 空值 -> 创建临时复制槽时发布端响应的 origin_startpos 或 app进程解析逻辑槽报文（ 'k' 报文或 'w' 的COMMIT报文）中的 end_lsn 中的最大值
+2. 状态 's' -> 'r' 时：属性 srsublsn 场景1中的值 -> app 进程解析逻辑槽报文（ 'k' 报文或 'w' 的COMMIT报文）中的 end_lsn
+
+pg_stat_subscription
+逻辑同步进程启动则插入1条数据，进程退出则删除该条数据
+更新数据函数 UpdateWorkerStats
+-- 表中 received_lsn 属性：初始值为空（ logicalrep_worker_launch ），app 或 sync进程处理复制槽报文（ 'k' 或 'w' 报文）时，将更新此值为 报文中的 end_lsn
+-- 表中 last_msg_send_time 属性：初始值为进程启动时间（ app 或 sync进程）；处理复制槽报文（ 'k' 或 'w' 报文）时，将更新此值为 'w' 报文中的 send_time 或 'k' 报文中的 timestamp
+-- 表中 last_msg_receipt_time 属性：初始值为进程启动时间（ app 或 sync进程）；处理复制槽报文（ 'k' 或 'w' 报文）时，将更新此值为 当前系统时间
+-- 表中 latest_end_lsn 属性：初始值为空（ logicalrep_worker_launch ），app 或 sync进程处理复制槽报文（ 'k'  报文）时，将更新此值为 报文中的 end_lsn
+-- 表中 latest_end_time 属性：初始值为进程启动时间（ app 或 sync进程）；处理复制槽报文（ 'k'  报文）时，将更新此值为 报文中的 timestamp
+
+pg_replication_origin_status
+-- 表中 local_lsn 属性：当预事务或事务提交时，将更新此值为 XactLastRecEnd （ XLogInsertRecord 触发写XLOG时将更新此值）  -- 更新函数 replorigin_session_advance
+-- 表中 remote_lsn 属性：当 app 进程处理COMMIT报文时，将更新此值为报文中的 end_lsn  -- 更新函数 apply_handle_commit
+从逻辑复制过程中的查询结果可以发现：
+1. 集群只做存量更新（没有任何DML&DDL操作并行），当订阅表在 pg_subscription_rel 中的状态变为 'r' 时， local_lsn 将发生变化，remote_lsn 不变
+2. 集群进行存量更新（场景1结束后），当订阅表在 pg_subscription_rel 中的状态变为 'r' 后， remote_lsn 与 local_lsn 都将发生变化
+
+
+步骤1： app 进程进入 LogicalRepApplyLoop(last_lsn=0)
+  1. 从复制槽读到第一个报文：
+	 场景1：不是事务BEGIN报文，则触发 process_syncing_tables->process_syncing_tables_for_apply 
+	 场景2：是事务BEGIN报文，则需持续处理报文直到该事务的COMMIT报文，才能触发 process_syncing_tables->process_syncing_tables_for_apply 
+  2. process_syncing_tables_for_apply 发现没有订阅表的sync进程，则触发 logicalrep_worker_launch -> sigusr1_handler 启动1个sync进程
+  3. 继续循环处理复制槽报文
+
+步骤2： sync 进程进入 LogicalRepSyncTableStart
+  1. 开始数据拷贝
+  2. 拷贝完毕，进程挂起，等待app进程消息唤醒
+  
+步骤3： app 进程处于 LogicalRepApplyLoop(last_lsn=0)
+  1. 从复制槽读取报文
+  2. 当触发 process_syncing_tables_for_apply 时，发现sync进程挂起，则唤醒它，自己进程挂起，等待sync进程消息唤醒
+  3. 若不满足条件2，则继续循环处理复制槽报文
+
+步骤4： sync 进程处于 LogicalRepSyncTableStart
+  1. 退出挂起状态：
+	 场景1：步骤3中app进程处理的报文end_lsn <= sync进程创建临时复制槽时发布端响应的origin_startpos ，则sync进程退出，唤醒app进程
+	 场景2：不满足场景1条件，则进入 LogicalRepApplyLoop 循环处理复制槽报文
+
+步骤5：
+场景1：不需要sync进程追增量
+app 进程处于 LogicalRepApplyLoop(last_lsn=0)
+  1. 退出挂起状态
+  2. 继续循环处理复制槽报文
+  3. 当触发 process_syncing_tables_for_apply 时，若发现处理的报文end_lsn >= origin_startpos ，则确认表存量同步完毕
+
+场景2：需要sync进程追增量
+sync 进程处于 LogicalRepApplyLoop(last_lsn=origin_startpos)
+  1. 从复制槽读到第一个报文：
+	 场景1：不是事务BEGIN报文，则触发 process_syncing_tables->process_syncing_tables_for_sync 
+	 场景2：是事务BEGIN报文，则需持续处理报文直到该事务的COMMIT报文，才能触发 process_syncing_tables->process_syncing_tables_for_sync 
+  2. 当触发 process_syncing_tables_for_sync 时，若发现处理的报文end_lsn >= 步骤3中app进程处理的报文end_lsn ，则sync进程退出，唤醒app进程
+  3. 若不满足条件2，则继续循环处理复制槽报文
+
+app 进程处于 LogicalRepApplyLoop(last_lsn=0)
+  1. 退出挂起状态
+  2. 继续循环处理复制槽报文
+  3. 当触发 process_syncing_tables_for_apply 时，发现处理的报文end_lsn >= sync 进程步骤2中处理的报文end_lsn ，则确认表存量同步完毕
+
+
+
+1. iii状态场景，全冲突：按下列步骤循环，直到冲突解决
+--> tbl2 tbl3 开始逻辑复制
+--> tbl2 逻辑复制报错（主键约束冲突），sync 进程退出
+--> tbl4 开始逻辑复制
+--> tbl3 逻辑复制报错（主键约束冲突），sync 进程退出
+--> tbl4 逻辑复制报错（主键约束冲突），sync 进程退出
+--> tbl3 tbl2 开始逻辑复制
+--> tbl3 逻辑复制报错（主键约束冲突），sync 进程退出
+--> tbl4 开始逻辑复制
+--> tbl2 逻辑复制报错（主键约束冲突），sync 进程退出
+--> tbl4 逻辑复制报错（主键约束冲突），sync 进程退出
+
+2. ddd状态场景，tbl2 冲突：按下列步骤循环，直到冲突解决
+--> tbl2 tbl3 开始逻辑复制
+--> tbl2 逻辑复制报错（主键约束冲突），sync 进程退出
+--> tbl4 开始逻辑复制
+--> tbl3 完成逻辑复制
+--> tbl2 开始逻辑复制
+--> tbl2 逻辑复制报错（主键约束冲突），sync 进程退出
+--> tbl2 开始逻辑复制
+--> tbl2 逻辑复制报错（主键约束冲突），sync 进程退出
+
+

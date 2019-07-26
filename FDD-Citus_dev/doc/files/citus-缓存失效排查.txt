@@ -1,0 +1,242 @@
+上周工作：
+1. 完成新增CN角色适配排查与验证
+	2.1 文件 src\backend\distributed\transaction\backend_data.c 函数 get_global_active_transactions ：用于获取全局节点active的后端进程信息
+	2.2 文件 src\backend\distributed\transaction\citus_dist_stat_activity.c 函数 CitusStatActivity 、 GetLocalNodeCitusDistStat 、 ParseCitusDistStat 、 HeapTupleToCitusDistStat ：目前均只用于 citus_dist_stat_activity 与 citus_worker_stat_activity
+	2.3 文件 src\backend\distributed\transaction\worker_transaction.c 函数 SendBareCommandListToWorkers ：原代码中用于发送SQL指令到所有primary节点。目前仅应用于主CN执行DDL操作时，关闭 citus.enable_ddl_propagation 标记
+
+2. 熟悉Citus缓存销毁机制
+	方式一：通过PG机制
+		2.1.1 通过PG函数 CacheRegisterRelcacheCallback 向PG的全局结构体数组 relcache_callback_list 中插入相关缓存销毁回调函数
+		2.1.2 在一定场景（如：heap 或 index 数据变更），PG通过函数 RegisterRelcacheInvalidation 向PG的全局结构体 transInvalInfo 的成员 CurrentCmdInvalidMsgs.rclist.msgs 数组中插入1条关于该变更数据的 dbId、relId 的 SHAREDINVALRELCACHE_ID 消息
+		2.1.3 在一定场景，PG通过函数 LocalExecuteInvalidationMessage 处理 SHAREDINVALRELCACHE_ID 消息，调用 relcache_callback_list 中的函数触发销毁缓存
+	-- 以上步骤 2.1.2 与 2.1.3 触发场景较多，暂时未梳理完毕
+		补充：
+		1. CitusInvalidateRelcacheByRelid  -->  CacheInvalidateRelcacheByTuple 调用 RegisterRelcacheInvalidation 
+		2. CommandCounterIncrement  -->  AtCCI_LocalCache  -->  CommandEndInvalidationMessages  --> ProcessInvalidationMessages -->  ProcessMessageList 调用 LocalExecuteInvalidationMessage
+	
+	方式二：在Citus 流程 CitusMaintenanceDaemonMain 内定时自主触发。以下标记均默认使能
+		2.2.1 数据采集标记使能 且 到达采集时间时触发自动刷新 : EnableStatisticsCollection && GetCurrentTimestamp() >= nextStatsCollectionTime
+		2.2.2 2PC恢复标记使能 且 达到恢复时间时触发自动刷新 : Recover2PCInterval > 0 && !RecoveryInProgress() && TimestampDifferenceExceeds(lastRecoveryTime, GetCurrentTimestamp(), Recover2PCInterval)
+		2.2.3 分布式死锁探测标记使能 : DistributedDeadlockDetectionTimeoutFactor != -1.0
+
+3. 熟悉Citus插件创建以及Citus-8.2-2 的sql 加载机制（函数 CreateExtension ）
+	3.1 PG 获取插件的文件夹路径，从中读取 citus.control 文件、解析并校验配置项
+	3.2 遍历插件文件夹路径下的所有 'citus--*.sql' 脚本文件，读取文件名中的所有的版本号。通过 Dijkstra 算法找到升级到 default_version 版本的执行脚本最少的路径
+	3.3 依次执行最优路径涉及的所有 sql 脚本文件
+	
+会议讨论：
+1. 备worker升级为主后，CN_standby、CN_expand能否正常工作
+	1.1 现状分析：
+		1.1.1 CN_expand 只访问本地 pg_dist_node 表中的 secondary 角色节点。备worker升主不会触发pg_dist_node表secondary节点的角色变更，CN_expand数据访问依然正常
+		1.1.2 CN_standby 只访问本地 pg_dist_node 表中的 primary 角色节点。主worker故障触发的备升主，将导致CN_standby数据访问失败
+	1.2 实施计划：
+		1.2.1 走通备worker升主流程
+			实测：
+				a. 关闭主worker后，在备执行pg_ctl promote即可完成升主；
+				b. 主不可通过命令降备，只能手动删除data目录，重新执行pg_basebackup；
+				c. 原主以备角色启动需修改 postgres.conf 并增加 recovery.conf 
+			
+		1.2.2 备worker升主应同步刷新CN节点以及MX节点的 pg_dist_node 表数据
+			实测：
+				a. 主worker故障：CN_standby 涉及故障worker时报错；CN_expand 查询正常（无论备worker是否升主）
+				b. 备worker故障：CN_expand 涉及故障worker时报错；CN_standby 查询正常
+			
+			解决方案：worker主备故障/切换需有监控进程监管，检测到变化后通过调用/通知相关节点调用一系列UDF函数完成相关元数据刷新
+				a. 故障监控与处理：依赖独立的高可用程序承担节点故障/主备变更监控与处理的功能
+					故障感知现状：只针对primary或secondary这一类节点，并无集群全局节点感知流程
+						Citus 通过 CitusMaintenanceDaemonMain 后台程序定时（默认 2s ）执行 CheckForDistributedDeadlocks 。向集群所有active可读节点发送'SELECT * FROM dump_local_wait_edges()'获取分布锁信息
+						因此，集群primary/secondary节点出现故障（如：进程中断/网络/主机故障）将导致 CheckForDistributedDeadlocks 报错。
+					主备变更现状：只能通过PG命令 或 UDF 函数获取节点信息，从中解析主备角色
+				
+				b. 元数据刷新：
+					现状：主备worker以流复制实现数据同步，在Citus集群中以primary 与 secondary角色关联，共用groupId。因此主备故障、角色变更只需要更新 pg_dist_node 数据
+					问题：节点故障无法恢复时，相应的 CN_standby 或 CN_expand 相关功能是否要求不受影响？
+						a. 受影响：现状如此，不需变更代码流程
+						b. 不受影响：
+							主节点故障、备未升主；需改变相应 CN_standby 支持操作 secondary 节点。此时由于备节点只支持读， CN_standby 功能受限，只能做查询操作
+							主节点故障、备升主； 需改变相应 CN_expand 支持操作 primary 节点。由于 primary 节点支持读写， CN_expand 限制只读功能需由自身逻辑保障
+							备节点故障：同 主节点故障、备升主
+			
+			
+			
+			
+			
+			
+		
+
+---- CitusInvalidateRelcacheByRelid Matches (21 in 6 files) ----
+-- 刷新 pg_dist_partition （更新表元素 colocationid ）：实时生成并处理失效消息
+UpdateRelationColocationGroup in colocation_utils.c (src\backend\distributed\utils) : 	CitusInvalidateRelcacheByRelid(distributedRelationId);
+UpdateRelationColocationGroup in colocation_utils.c (src\backend\distributed\utils) : 	CommandCounterIncrement();
+
+-- 刷新 pg_dist_colocation （删除）：实时生成并处理失效消息
+DeleteColocationGroup in colocation_utils.c (src\backend\distributed\utils) : 		CitusInvalidateRelcacheByRelid(DistColocationRelationId());
+DeleteColocationGroup in colocation_utils.c (src\backend\distributed\utils) : 		CommandCounterIncrement();
+
+-- 刷新 pg_dist_shard （插入 & 删除）：实时生成并处理失效消息
+InsertShardRow in master_metadata_utility.c (src\backend\distributed\master) : 	CitusInvalidateRelcacheByRelid(relationId);
+InsertShardRow in master_metadata_utility.c (src\backend\distributed\master) : 	CommandCounterIncrement();
+DeleteShardRow in master_metadata_utility.c (src\backend\distributed\master) : 	CitusInvalidateRelcacheByRelid(distributedRelationId);
+DeleteShardRow in master_metadata_utility.c (src\backend\distributed\master) : 	CommandCounterIncrement();
+
+-- 刷新 pg_dist_partition （插入 & 删除）：实时生成并处理失效消息
+InsertIntoPgDistPartition in master_metadata_utility.c (src\backend\distributed\master) : 	CitusInvalidateRelcacheByRelid(relationId);
+InsertIntoPgDistPartition in master_metadata_utility.c (src\backend\distributed\master) : 	CommandCounterIncrement();
+DeletePartitionRow in master_metadata_utility.c (src\backend\distributed\master) : 	CitusInvalidateRelcacheByRelid(distributedRelationId);
+DeletePartitionRow in master_metadata_utility.c (src\backend\distributed\master) : 	CommandCounterIncrement();
+
+-- 刷新 pg_dist_node （更新表元素 hasmetadata ）：实时生成并处理失效消息
+MarkNodeHasMetadata in metadata_sync.c (src\backend\distributed\metadata) : 	CitusInvalidateRelcacheByRelid(DistNodeRelationId());
+MarkNodeHasMetadata in metadata_sync.c (src\backend\distributed\metadata) : 	CommandCounterIncrement();
+
+-- 刷新 pg_dist_node （更新表元素 nodename 与 nodeport ）：实时生成并处理失效消息
+UpdateNodeLocation in node_metadata.c (src\backend\distributed\utils) : 	CitusInvalidateRelcacheByRelid(DistNodeRelationId());
+UpdateNodeLocation in node_metadata.c (src\backend\distributed\utils) : 	CommandCounterIncrement();
+
+-- 刷新 pg_dist_node （更新表元素 isactive ）：实时生成并处理失效消息
+SetNodeState in node_metadata.c (src\backend\distributed\utils) : 	CitusInvalidateRelcacheByRelid(DistNodeRelationId());
+SetNodeState in node_metadata.c (src\backend\distributed\utils) : 	CommandCounterIncrement();
+
+-- 刷新 pg_dist_node （插入 & 删除）：实时生成并处理失效消息
+InsertNodeRow in node_metadata.c (src\backend\distributed\utils) : 	CitusInvalidateRelcacheByRelid(DistNodeRelationId());
+InsertNodeRow in node_metadata.c (src\backend\distributed\utils) : 	CommandCounterIncrement();
+DeleteNodeRow in node_metadata.c (src\backend\distributed\utils) : 	CitusInvalidateRelcacheByRelid(DistNodeRelationId());
+DeleteNodeRow in node_metadata.c (src\backend\distributed\utils) : 	CommandCounterIncrement();
+
+-- 联动 pg_dist_colocation （待分析）：实时生成并处理失效消息
+InvalidateForeignKeyGraph in metadata_cache.c (src\backend\distributed\utils) : 	CitusInvalidateRelcacheByRelid(DistColocationRelationId());
+InvalidateForeignKeyGraph in metadata_cache.c (src\backend\distributed\utils) : 	CommandCounterIncrement();
+
+-- 查找 pg_dist_shard （若已存在该 shard 则触发）：实时生成并处理失效消息
+CitusInvalidateRelcacheByShardId in metadata_cache.c (src\backend\distributed\utils) : 		CitusInvalidateRelcacheByRelid(shardForm->logicalrelid);
+CitusInvalidateRelcacheByShardId in metadata_cache.c (src\backend\distributed\utils) : 	CommandCounterIncrement();
+
+-- UDF 函数供外部调用；在 citus--5.0.sql 中创建 pg_dist_partition 的 DML 触发器
+CREATE TRIGGER dist_partition_cache_invalidate
+    AFTER INSERT OR UPDATE OR DELETE
+    ON pg_catalog.pg_dist_partition
+    FOR EACH ROW EXECUTE PROCEDURE master_dist_partition_cache_invalidate();
+master_dist_partition_cache_invalidate in metadata_cache.c (src\backend\distributed\utils) : 		CitusInvalidateRelcacheByRelid(oldLogicalRelationId);
+
+-- UDF 函数供外部调用；在 citus--5.0.sql 中创建 pg_dist_shard 的 DML 触发器
+CREATE TRIGGER dist_shard_cache_invalidate
+    AFTER INSERT OR UPDATE OR DELETE
+    ON pg_catalog.pg_dist_shard
+    FOR EACH ROW EXECUTE PROCEDURE master_dist_shard_cache_invalidate();
+master_dist_shard_cache_invalidate in metadata_cache.c (src\backend\distributed\utils) : 		CitusInvalidateRelcacheByRelid(newLogicalRelationId);
+
+-- UDF 函数供外部调用；在 citus--6.0-3--6.0-4.sql 中创建 pg_dist_node 的 DML 触发器
+CREATE TRIGGER dist_node_cache_invalidate
+    AFTER INSERT OR UPDATE OR DELETE
+    ON pg_catalog.pg_dist_node
+    FOR EACH ROW EXECUTE PROCEDURE master_dist_node_cache_invalidate();
+master_dist_node_cache_invalidate in metadata_cache.c (src\backend\distributed\utils) : 	CitusInvalidateRelcacheByRelid(DistNodeRelationId());
+
+-- UDF 函数供外部调用；在 citus--6.1-14--6.1-15.sql 中创建 pg_dist_local_group 的 UPDATE 触发器
+CREATE TRIGGER dist_local_group_cache_invalidate
+    AFTER UPDATE
+    ON pg_catalog.pg_dist_local_group
+    FOR EACH ROW EXECUTE PROCEDURE master_dist_local_group_cache_invalidate();
+master_dist_local_group_cache_invalidate in metadata_cache.c (src\backend\distributed\utils) : 	CitusInvalidateRelcacheByRelid(DistLocalGroupIdRelationId());
+
+
+---- CitusInvalidateRelcacheByShardId Matches (7 in 3 files) ---- 调用 CitusInvalidateRelcacheByRelid
+-- 刷新 pg_dist_placement （插入）：实时生成并处理失效消息
+InsertShardPlacementRow in master_metadata_utility.c (src\backend\distributed\master) : 	CitusInvalidateRelcacheByShardId(shardId);
+InsertShardPlacementRow in master_metadata_utility.c (src\backend\distributed\master) : 	CommandCounterIncrement();
+-- 调用 InsertShardPlacementRow 处
+-- master_create_empty_shard  --  CreateAppendDistributedShardPlacements
+-- CreateDistributedTable  --  CreateHashDistributedTableShards(创建HASH表时触发)  --  CreateColocatedShards(pg_dist_partition 中存在该colocationId时触发)
+-- CreateDistributedTable  --  CreateReferenceTableShard(创建复制表时触发)  --  InsertShardPlacementRows
+-- CreateDistributedTable  -- CreateHashDistributedTableShards(创建HASH表时触发)  --  CreateShardsWithRoundRobinPolicy(pg_dist_partition 中不存在该colocationId时触发)  --  InsertShardPlacementRows
+-- master_create_worker_shards  --  CreateShardsWithRoundRobinPolicy  --  InsertShardPlacementRows
+-- ActivateNode  --  ReplicateAllReferenceTablesToNode  --  ReplicateShardToNode  -- WN不存在该shard的placement时触发
+-- upgrade_to_reference_table  --  ReplicateSingleShardTableToAllWorkers  --  ReplicateShardToAllWorkers  --  ReplicateShardToNode  -- WN不存在该shard的placement时触发
+-- master_append_table_to_shard  --  UpdateShardStatistics
+-- master_update_shard_statistics  --  UpdateShardStatistics
+-- CitusCopyFrom  -- CopyFromWorkerNode  --  CopyToNewShards  --  MasterUpdateShardStatistics  --  UpdateShardStatistics(masterConnection == NULL 时触发)
+-- CitusCopyFrom  --  CopyToNewShards  --  MasterUpdateShardStatistics  --  UpdateShardStatistics(masterConnection == NULL 时触发)
+
+-- 刷新 pg_dist_placement （删除）：实时生成并处理失效消息
+DeleteShardPlacementRow in master_metadata_utility.c (src\backend\distributed\master) : 	CitusInvalidateRelcacheByShardId(shardId);
+DeleteShardPlacementRow in master_metadata_utility.c (src\backend\distributed\master) : 	CommandCounterIncrement();
+-- 调用 DeleteShardPlacementRow 处
+-- master_remove_node  --  RemoveNodeFromCluster  --  DeleteAllReferenceTablePlacementsFromNodeGroup(删除primary节点时触发)
+-- master_disable_node  --  DeleteAllReferenceTablePlacementsFromNodeGroup(去使能primary节点时触发)
+-- master_apply_delete_command  --  DropShards
+-- master_drop_all_shards  --  DropShards
+-- citus_truncate_trigger  --  master_drop_all_shards(append表触发)  --  DropShards
+-- master_append_table_to_shard  --  UpdateShardStatistics
+-- master_update_shard_statistics  --  UpdateShardStatistics
+-- CitusCopyFrom  -- CopyFromWorkerNode  --  CopyToNewShards  --  MasterUpdateShardStatistics  --  UpdateShardStatistics(masterConnection == NULL 时触发)
+-- CitusCopyFrom  --  CopyToNewShards  --  MasterUpdateShardStatistics  --  UpdateShardStatistics(masterConnection == NULL 时触发)
+-- worker_drop_distributed_table
+
+-- 刷新 pg_dist_placement （更新表元素 shardstate ）：实时生成并处理失效消息
+UpdateShardPlacementState in master_metadata_utility.c (src\backend\distributed\master) : 	CitusInvalidateRelcacheByShardId(shardId);
+UpdateShardPlacementState in master_metadata_utility.c (src\backend\distributed\master) : 	CommandCounterIncrement();
+-- 调用 UpdateShardPlacementState 处
+-- MarkFailedShardPlacements  --  CheckShardPlacements(ConnectionShardHash 不为空时触发)  -- shardState 为 FILE_FINALIZED 时触发
+-- CoordinatedTransactionCallback  --  PostCommitMarkFailedShardPlacements(XACT_EVENT_PRE_COMMIT 时触发)  --  CheckShardPlacements(ConnectionShardHash 不为空时触发)  -- shardState 为 FILE_FINALIZED 时触发
+-- master_apply_delete_command  --  DropShards  -- connection->pgConn 状态不OK时触发
+-- master_drop_all_shards  --  DropShards  -- connection->pgConn 状态不OK时触发
+-- citus_truncate_trigger  --  master_drop_all_shards(append表触发)  --  DropShards  -- connection->pgConn 状态不OK时触发
+-- master_copy_shard_placement  --  RepairShardPlacement
+-- ActivateNode  --  ReplicateAllReferenceTablesToNode(激活primary节点时触发)  --  ReplicateShardToNode(pg_dist_partition 存在复制表时触发)
+-- upgrade_to_reference_table  --  ReplicateSingleShardTableToAllWorkers  --  ReplicateShardToAllWorkers  --  ReplicateShardToNode  -- WN存在该shard的placement 且 placement状态不为FILE_FINALIZED时触发
+
+-- UDF 函数供外部调用；在 citus--7.0-2--7.0-3.sql 中创建 pg_dist_placement 的 DML 触发器
+CREATE TRIGGER dist_placement_cache_invalidate
+    AFTER INSERT OR UPDATE OR DELETE
+    ON pg_catalog.pg_dist_placement
+    FOR EACH ROW EXECUTE PROCEDURE master_dist_placement_cache_invalidate();
+master_dist_placement_cache_invalidate in metadata_cache.c (src\backend\distributed\utils) : 		CitusInvalidateRelcacheByShardId(oldShardId);
+
+
+
+---- CommandCounterIncrement Matches (26 in 10 files) ----
+CreateColocationGroup in colocation_utils.c (src\backend\distributed\utils) : 	CommandCounterIncrement();
+-- 刷新 pg_dist_colocation （插入）
+-- CreateDistributedTable  --  ColocationIdForNewTable  -- 创建未指定colocate表的HASH表 且 pg_dist_colocation 中不存在默认colocate表信息时触发
+-- CreateDistributedTable  --  ColocationIdForNewTable  --  CreateReferenceTableColocationId(创建复制表时触发)  -- pg_dist_colocation 中不存在 shardCount 为1 且 replicationFactor 为当前集群primary节点数的colocate表信息时触发
+-- upgrade_to_reference_table  --  ReplicateSingleShardTableToAllWorkers  --  ConvertToReferenceTableMetadata  -- CreateReferenceTableColocationId  -- pg_dist_colocation 中不存在 shardCount 为1 且 replicationFactor 为当前集群primary节点数的colocate表信息时触发
+
+
+UpdateColocationGroupReplicationFactor in master_metadata_utility.c (src\backend\distributed\master) : 	CommandCounterIncrement();
+-- 刷新 pg_dist_colocation （更新表元素 replicationfactor ）
+-- master_remove_node  --  RemoveNodeFromCluster  -- 删除primary节点 且 pg_dist_partition 存在复制表时触发
+-- ActivateNode  -- ReplicateAllReferenceTablesToNode  -- pg_dist_partition 存在复制表时触发
+
+
+CreateLocalTable in multi_copy.c (src\backend\distributed\commands) : 			CommandCounterIncrement();
+-- DDL操作为 Create | CreateForeignTable | CreateExtension | CreateForeignServer且Server不存在 时触发
+-- ProcessCopyStmt  -- isCopyFromWorker 时触发 
+
+
+LogTransactionRecord in transaction_recovery.c (src\backend\distributed\transaction) : 	CommandCounterIncrement();
+-- 刷新 pg_dist_transaction （插入）
+-- CoordinatedTransactionCallback  --  CoordinatedRemoteTransactionsPrepare(XACT_EVENT_PRE_COMMIT 且 CoordinatedTransactionUses2PC 时触发)  --  StartRemoteTransactionPrepare(InProgressTransactions 中有数据时触发)  -- WorkerNodeHash中存在该connection对端节点
+-- RemoteTransactionPrepare(暂未发现调度)  --  StartRemoteTransactionPrepare  -- WorkerNodeHash中存在该connection对端节点
+
+
+CreateJobSchema in task_tracker_protocol.c (src\backend\distributed\worker) : 	CommandCounterIncrement();
+-- task_tracker_assign_task  -- NAMESPACENAME 中不存在该job的schema
+
+
+RemoveJobSchema in worker_merge_protocol.c (src\backend\distributed\worker) : 		CommandCounterIncrement();
+-- NAMESPACENAME 中存在该schema 且有效时触发，且触发两次(DROP_CASCADE 与 DROP_RESTRICT)
+-- task_tracker_cleanup_job
+-- worker_cleanup_job_schema_cache  -- NAMESPACENAME 中存在 'pg_merge_job_' 前缀命名的schema
+
+
+CreateTaskTable in worker_merge_protocol.c (src\backend\distributed\worker) : 	CommandCounterIncrement();
+-- worker_merge_files_into_table
+
+
+CopyTaskFilesFromDirectory in worker_merge_protocol.c (src\backend\distributed\worker) : 		CommandCounterIncrement();
+-- worker_merge_files_and_run_query
+-- worker_merge_files_into_table
+
+
+-- UDF 函数供外部调用；函数 SequenceDDLCommandsForTable 通过宏命令 WORKER_APPLY_SEQUENCE_COMMAND 调用 
+worker_apply_sequence_command in worker_data_fetch_protocol.c (src\backend\distributed\worker) : 	CommandCounterIncrement();

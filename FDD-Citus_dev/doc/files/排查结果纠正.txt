@@ -1,0 +1,64 @@
+排查点39-40：
+LockTruncatedRelationMetadataInWorkers 只在 ProcessTruncateStatement 中调用
+目前代码中：truncate 分布表时，将通知 ActivePrimaryNodeList 所有节点对 relationId 上锁(AccessExclusiveLock)。
+在这个过程中，通过gdb观察到：
+1. 在节点锁表后，直到调用ExecuteTruncate清空表以前，cn_tp对该表的DML操作，是成功的。
+2. 在执行 ExecuteTruncate 后，直到finish_xact_command调用CommitTransactionCommand提交事务以前，cn_tp对该表的DML操作是阻塞的。cn_tp的阻塞点在 FinishConnectionIO，在执行DML计划(PortalRun)之后
+如果在加锁时改用 FDD_ActivePrimaryAndCNNodeList 通知新CN角色节点锁表，
+那么，在通知cn_tp锁表成功后直到truncate事务提交之前，cn_tp对表做DML都是阻塞的，cn_tp的阻塞点在 LockRelationOid，在对RawStmt进行分析、规则重写(pg_analyze_and_rewrite)时
+建议更正：AcquireDistributedLockOnRelations 时需将 ActivePrimaryNodeList 改为 FDD_ActivePrimaryAndCNNodeList ，通知集群所有active 节点上锁
+
+排查点41-42：
+EnsureSchemaExistsOnAllNodes 
+static void
+EnsureSchemaExistsOnAllNodes(Oid relationId)
+{
+	List *workerNodeList = ActivePrimaryNodeList();
+	ListCell *workerNodeCell = NULL;
+	StringInfo applySchemaCreationDDL = makeStringInfo();
+
+	Oid schemaId = get_rel_namespace(relationId);
+	
+	/* 获取创建schema命令 
+	 * 1. 若schemaId为默认值，也即schemaName为'public'，则直接返回空;
+	 * 2. 反之，若为自定义schema，则生成SQL命令 : CREATE SCHEMA IF NOT EXISTS %s AUTHORIZATION %s , 参数为：schemaName、ownerName
+	 */
+	const char *createSchemaDDL = CreateSchemaDDLCommand(schemaId);
+	
+	// 创建1条新连接
+	uint64 connectionFlag = FORCE_NEW_CONNECTION;
+
+	if (createSchemaDDL == NULL)
+	{
+		return;
+	}
+
+	appendStringInfo(applySchemaCreationDDL, "%s", createSchemaDDL);
+
+	// 与 ActivePrimaryNodeList 所有节点建立1条新连接, 在这些节点上执行创建schema命令
+	foreach(workerNodeCell, workerNodeList)
+	{
+		WorkerNode *workerNode = (WorkerNode *) lfirst(workerNodeCell);
+		char *nodeName = workerNode->workerName;
+		uint32 nodePort = workerNode->workerPort;
+		MultiConnection *connection =
+			GetNodeUserDatabaseConnection(connectionFlag, nodeName, nodePort, NULL,
+										  NULL);
+
+		ExecuteCriticalRemoteCommand(connection, applySchemaCreationDDL->data);
+	}
+}
+由上可知，此函数目的在于，在集群所有active primary节点创建自定义的 schema，以确保后续涉及该自定义 schema 的操作无误。
+在以下流程中会调用此函数：
+1. create_reference_table --> EnsureSchemaExistsOnAllNodes
+2. master_create_distributed_table --> CreateDistributedTable --> EnsureSchemaExistsOnAllNodes
+3. create_distributed_table --> CreateDistributedTable --> EnsureSchemaExistsOnAllNodes
+4. _PG_init --> ProcessUtility_hook --> multi_ProcessUtility --> ProcessAlterTableStmtAttachPartition(AlterTableStmt 时触发) --> CreateDistributedTable --> EnsureSchemaExistsOnAllNodes
+5. _PG_init --> ProcessUtility_hook --> multi_ProcessUtility --> ProcessCreateTableStmtPartitionOf(CreateStmt 时触发) --> CreateDistributedTable --> EnsureSchemaExistsOnAllNodes
+不难发现，只有在创建分布表时会触发。
+另外，在 CreateDistributedTable 中针对流复制Hash表以及复制表，会向所有元数据节点同步创建该表的相关SQL，其中也包括创建schema命令(CreateSchemaDDLCommand)。
+该同步流程确保了新增CN角色节点上也会有该自定义 schema；对于不需同步元数据的表，新增CN角色节点不可见，与之相关的自定义schema数据也就不需要同步
+
+排查点44-50：表述有歧义，新增CN角色不应支持操作，但在 HasMetadataWorkers 中需改用 FDD_ActivePrimaryAndCNNodeList 适配新增CN角色
+
+

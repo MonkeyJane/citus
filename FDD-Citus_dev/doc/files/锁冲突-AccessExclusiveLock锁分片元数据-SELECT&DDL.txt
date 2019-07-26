@@ -1,0 +1,134 @@
+-- citus_failover时将调用 LockAcquire 对表test1分片元数据上锁 AccessExclusiveLock 无法阻塞 SELECT
+postgres=# explain analyze select * from test1 where id<30;
+WARNING:  connection error: 192.168.221.135:5432
+DETAIL:  could not connect to server: Connection refused
+	Is the server running on host "192.168.221.135" and accepting
+	TCP/IP connections on port 5432?
+WARNING:  connection error: 192.168.221.135:5432
+DETAIL:  could not connect to server: Connection refused
+	Is the server running on host "192.168.221.135" and accepting
+	TCP/IP connections on port 5432?
+WARNING:  connection error: 192.168.221.135:5432
+DETAIL:  could not connect to server: Connection refused
+	Is the server running on host "192.168.221.135" and accepting
+	TCP/IP connections on port 5432?
+WARNING:  connection error: 192.168.221.135:5432
+DETAIL:  could not connect to server: Connection refused
+	Is the server running on host "192.168.221.135" and accepting
+	TCP/IP connections on port 5432?
+WARNING:  connection error: 192.168.221.135:5432
+DETAIL:  could not connect to server: Connection refused
+	Is the server running on host "192.168.221.135" and accepting
+	TCP/IP connections on port 5432?
+WARNING:  connection error: 192.168.221.135:5432
+DETAIL:  could not connect to server: Connection refused
+	Is the server running on host "192.168.221.135" and accepting
+	TCP/IP connections on port 5432?
+WARNING:  connection error: 192.168.221.135:5432
+DETAIL:  could not connect to server: Connection refused
+	Is the server running on host "192.168.221.135" and accepting
+	TCP/IP connections on port 5432?
+WARNING:  connection error: 192.168.221.135:5432
+DETAIL:  could not connect to server: Connection refused
+	Is the server running on host "192.168.221.135" and accepting
+	TCP/IP connections on port 5432?
+WARNING:  connection error: 192.168.221.135:5432
+DETAIL:  could not connect to server: Connection refused
+	Is the server running on host "192.168.221.135" and accepting
+	TCP/IP connections on port 5432?
+WARNING:  connection error: 192.168.221.135:5432
+DETAIL:  could not connect to server: Connection refused
+	Is the server running on host "192.168.221.135" and accepting
+	TCP/IP connections on port 5432?
+WARNING:  connection error: 192.168.221.135:5432
+DETAIL:  could not connect to server: Connection refused
+	Is the server running on host "192.168.221.135" and accepting
+	TCP/IP connections on port 5432?
+WARNING:  connection error: 192.168.221.135:5432
+DETAIL:  could not connect to server: Connection refused
+	Is the server running on host "192.168.221.135" and accepting
+	TCP/IP connections on port 5432?
+WARNING:  connection error: 192.168.221.135:5432
+DETAIL:  could not connect to server: Connection refused
+	Is the server running on host "192.168.221.135" and accepting
+	TCP/IP connections on port 5432?
+
+-- citus_failover时将调用 LockAcquire 对表test1分片元数据上锁 AccessExclusiveLock 无法阻塞 DROP TABLE test1
+postgres=# drop table test1;
+WARNING:  connection error: 192.168.221.135:5432
+DETAIL:  could not send data to server: Connection refused
+could not send startup packet: Connection refused
+WARNING:  could not connect to shard "test1_102040" on node "192.168.221.135:5432"
+DETAIL:  Marking this shard placement for deletion
+WARNING:  could not connect to shard "test1_102042" on node "192.168.221.135:5432"
+DETAIL:  Marking this shard placement for deletion
+WARNING:  could not connect to shard "test1_102044" on node "192.168.221.135:5432"
+DETAIL:  Marking this shard placement for deletion
+WARNING:  could not connect to shard "test1_102046" on node "192.168.221.135:5432"
+DETAIL:  Marking this shard placement for deletion
+WARNING:  could not connect to shard "test1_102048" on node "192.168.221.135:5432"
+DETAIL:  Marking this shard placement for deletion
+WARNING:  could not connect to shard "test1_102050" on node "192.168.221.135:5432"
+DETAIL:  Marking this shard placement for deletion
+WARNING:  could not connect to shard "test1_102052" on node "192.168.221.135:5432"
+DETAIL:  Marking this shard placement for deletion
+WARNING:  could not connect to shard "test1_102054" on node "192.168.221.135:5432"
+DETAIL:  Marking this shard placement for deletion
+WARNING:  could not connect to shard "test1_102056" on node "192.168.221.135:5432"
+DETAIL:  Marking this shard placement for deletion
+WARNING:  could not connect to shard "test1_102058" on node "192.168.221.135:5432"
+DETAIL:  Marking this shard placement for deletion
+WARNING:  could not connect to shard "test1_102060" on node "192.168.221.135:5432"
+DETAIL:  Marking this shard placement for deletion
+WARNING:  could not connect to shard "test1_102062" on node "192.168.221.135:5432"
+DETAIL:  Marking this shard placement for deletion
+WARNING:  could not connect to shard "test1_102064" on node "192.168.221.135:5432"
+DETAIL:  Marking this shard placement for deletion
+WARNING:  could not connect to shard "test1_102066" on node "192.168.221.135:5432"
+DETAIL:  Marking this shard placement for deletion
+WARNING:  could not connect to shard "test1_102068" on node "192.168.221.135:5432"
+DETAIL:  Marking this shard placement for deletion
+WARNING:  could not connect to shard "test1_102070" on node "192.168.221.135:5432"
+DETAIL:  Marking this shard placement for deletion
+ERROR:  could not make changes to shard 102046 on any node
+postgres=# 
+
+-- citus_failover时将调用 LockAcquire 对表test1分片元数据上锁 AccessExclusiveLock 无法阻塞 TRUNCATE TABLE test1
+1202		if (isFailover)
+(gdb) 
+1209			nodeRoleUpdateCommand = FDD_NodeRoleUpdateCommand(primaryNode->nodeId, SecondaryNodeRoleId());
+(gdb) 
+1210			SendCommandToWorkers(WORKERS_WITH_METADATA, nodeRoleUpdateCommand);
+(gdb) 
+1212		nodeRoleUpdateCommand = FDD_NodeRoleUpdateCommand(secondaryNode->nodeId, PrimaryNodeRoleId());
+(gdb) 
+1213		SendCommandToWorkers(WORKERS_WITH_METADATA, nodeRoleUpdateCommand);
+(gdb) 
+1216		if (!isCloseConnections)
+(gdb) 
+1221		CloseNodeConnectionsAfterTransaction(primaryNode->workerName, primaryNode->workerPort);	
+(gdb) 
+1222		CloseNodeConnectionsAfterTransaction(secondaryNode->workerName, secondaryNode->workerPort);
+(gdb) 
+1224		if (hasMetadataNode || (!hasShardOnNode && ClusterHasKnownMetadataWorkers()))
+(gdb) 
+1226			StringInfo closePrimConnCommand = makeStringInfo();
+(gdb) 
+1227			StringInfo closeSecondConnCommand = makeStringInfo();
+(gdb) 
+1228			appendStringInfo(closePrimConnCommand, CLOSE_CONNECTION, primaryNode->workerName, primaryNode->workerPort);
+(gdb) 
+1229			appendStringInfo(closeSecondConnCommand, CLOSE_CONNECTION, secondaryNode->workerName, secondaryNode->workerPort);
+(gdb) 
+1230			SendCommandToWorkers(WORKERS_WITH_METADATA, closePrimConnCommand->data);
+(gdb) 
+1231			SendCommandToWorkers(WORKERS_WITH_METADATA, closeSecondConnCommand->data);
+(gdb) 
+1233	}
+(gdb) 
+
+postgres=# truncate table test1;
+ERROR:  connection error: 192.168.221.135:5432
+DETAIL:  could not send data to server: Connection refused
+could not send startup packet: Connection refused
+postgres=# 

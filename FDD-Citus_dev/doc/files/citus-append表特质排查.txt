@@ -1,0 +1,46 @@
+-- 若 DISTRIBUTE_BY_APPEND | DISTRIBUTE_BY_RANGE ，拷贝入参 shardInterval 作为出参 colocatedShardList 唯一的元素。也即
+ColocatedShardIntervalList <- get_colocated_shard_array ：根据入参shardId获取它的所有亲和分片（包括该shardId）
+
+-- 若 DISTRIBUTE_BY_APPEND | DISTRIBUTE_BY_RANGE ，入参 colocateWithTableName 不为 'default' 则报错
+ColocationIdForNewTable <- CreateDistributedTable
+
+--根据分布模式字符串确定分布模式
+LookupDistributionMethod <- create_distributed_table
+
+-- 遍历入参 tableNodeList ，若表存在分布列且分布列属性与入参 column 一致，则判断若不为 DISTRIBUTE_BY_APPEND ，返回 true
+PartitionColumnInTableList <- HasNonPartitionColumnDistinctAgg <- BuildExtendedOpNodeProperties
+
+-- 若 DISTRIBUTE_BY_APPEND ，则报错。也即 DISTRIBUTE_BY_APPEND 表不支持创建唯一的索引
+ErrorIfUnsupportedIndexStmt <- PlanIndexStmt
+
+-- 若 DISTRIBUTE_BY_APPEND ，则报错。也即 DISTRIBUTE_BY_APPEND 表不支持 INSERT ... SELECT into
+CoordinatorInsertSelectSupported <- CreateCoordinatorInsertSelectPlan
+
+-- 若不为 DISTRIBUTE_BY_APPEND ，则返回 true 。也即 DISTRIBUTE_BY_APPEND 表将获取入参shardName分片分布列的最大最小值
+WorkerShardStats <- UpdateShardStatistics <- master_append_table_to_shard
+										  <- master_update_shard_statistics
+
+-- 若 DISTRIBUTE_BY_APPEND ，则删除 pg_dist_shard 表中入参shardId对应的记录，插入一条新纪录
+UpdateShardStatistics <- master_append_table_to_shard
+					  <- master_update_shard_statistics
+					  <- MasterUpdateShardStatistics <- CopyToNewShards <- CopyFromWorkerNode <- CitusCopyFrom <- ProcessCopyStmt
+																		<- CitusCopyFrom <- ProcessCopyStmt
+
+-- 若不为 DISTRIBUTE_BY_APPEND ，则报错。也即非 DISTRIBUTE_BY_APPEND 表不支持从worker节点拷贝
+CopyFromWorkerNode <- CitusCopyFrom <- ProcessCopyStmt
+
+-- 若 DISTRIBUTE_BY_APPEND ，则调用 CopyToNewShards ，其他则调用 CopyToExistingShards
+CitusCopyFrom <- ProcessCopyStmt
+
+-- 若 DISTRIBUTE_BY_APPEND | DISTRIBUTE_BY_RANGE ，则对出参 intervalTypeId 与 intervalTypeMod 以及 columnTypeId 与 columnTypeMod 赋值
+GetPartitionTypeInputInfo <- BuildCachedShardList
+
+-- 若 DISTRIBUTE_BY_APPEND | DISTRIBUTE_BY_RANGE ，则调用 PartitionColumn
+ShardIntervalOpExpressions <- RouterModifyTaskForShardInterval <- CreateDistributedInsertSelectPlan
+
+-- 若 DISTRIBUTE_BY_APPEND ，则报错。也即
+ErrorIfUnsupportedConstraint <- EnsureRelationCanBeDistributed <- CreateDistributedTable
+							 <- ErrorIfUnsupportedAlterAddConstraintStmt <- PostProcessAlterTableStmt
+
+-- 若 DISTRIBUTE_BY_APPEND ，则调用 master_drop_all_shards ；否则调用 master_modify_multiple_shards
+citus_truncate_trigger

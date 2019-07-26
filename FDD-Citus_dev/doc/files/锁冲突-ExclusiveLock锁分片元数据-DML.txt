@@ -1,0 +1,90 @@
+-- citus_failover时将调用 LockAcquire 对表test1分片元数据上锁 ExclusiveLock 将阻塞 DML
+[cituscluster@gtm1 ~]$ ps -ef | grep postgres
+cituscl+  85874      1  0 00:41 pts/0    00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  85876  85874  0 00:41 ?        00:00:00 postgres: checkpointer process  
+cituscl+  85877  85874  0 00:41 ?        00:00:00 postgres: writer process   
+cituscl+  85878  85874  0 00:41 ?        00:00:00 postgres: wal writer process  
+cituscl+  85879  85874  0 00:41 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  85880  85874  0 00:41 ?        00:00:00 postgres: stats collector process  
+cituscl+  85881  85874  0 00:41 ?        00:00:00 postgres: bgworker: task tracker  
+cituscl+  85882  85874  0 00:41 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  85883  68305  0 00:41 pts/0    00:00:00 psql -d postgres
+cituscl+  85884  85874  0 00:41 ?        00:00:01 postgres: cituscluster postgres [local] SELECT
+cituscl+  85885  85874  0 00:41 ?        00:00:01 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  86133  84921  0 01:02 pts/2    00:00:00 psql -d postgres
+cituscl+  86134  85874  0 01:02 ?        00:00:00 postgres: cituscluster postgres [local] DELETE waiting
+cituscl+  86186  86140  0 01:03 pts/3    00:00:00 grep --color=auto postgres
+[cituscluster@gtm1 ~]$ pstack 86134
+#0  0x00007f12d4930163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x23d20a8, cur_timeout=-1, occurred_events=0x7ffe83c781b0, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x23d20a8, timeout=-1, occurred_events=0x7ffe83c781b0, nevents=1, wait_event_info=50331657) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f12cc976104, wakeEvents=1, sock=-1, timeout=-1, wait_event_info=50331657) at latch.c:385
+#4  0x00000000007ec701 in WaitLatch (latch=0x7f12cc976104, wakeEvents=1, timeout=0, wait_event_info=50331657) at latch.c:339
+#5  0x0000000000800aeb in ProcSleep (locallock=0x22a2ef8, lockMethodTable=0xaf75a0 <user_lockmethod>) at proc.c:1255
+#6  0x00000000007fb022 in WaitOnLock (locallock=0x22a2ef8, owner=0x236b608) at lock.c:1702
+#7  0x00000000007fa162 in LockAcquireExtended (locktag=0x7ffe83c78640, lockmode=5, sessionLock=0 '\000', dontWait=0 '\000', reportMemoryError=1 '\001') at lock.c:998
+#8  0x00000000007f987e in LockAcquire (locktag=0x7ffe83c78640, lockmode=5, sessionLock=0 '\000', dontWait=0 '\000') at lock.c:688
+#9  0x00007f12ce0b01c6 in LockShardDistributionMetadata (shardId=102040, lockMode=5) at utils/resource_lock.c:362
+#10 0x00007f12ce04f00a in AcquireMetadataLocks (taskList=0x23ca890) at executor/multi_router_executor.c:138
+#11 0x00007f12ce04f4ee in CitusModifyBeginScan (node=0x23c9bb8, estate=0x23c99a8, eflags=0) at executor/multi_router_executor.c:545
+#12 0x0000000000691868 in ExecInitCustomScan (cscan=0x7f12d5692eb0, estate=0x23c99a8, eflags=0) at nodeCustom.c:105
+#13 0x000000000067f173 in ExecInitNode (node=0x7f12d5692eb0, estate=0x23c99a8, eflags=0) at execProcnode.c:282
+#14 0x0000000000679677 in InitPlan (queryDesc=0x23a60d8, eflags=0) at execMain.c:1045
+#15 0x0000000000678719 in standard_ExecutorStart (queryDesc=0x23a60d8, eflags=0) at execMain.c:264
+#16 0x00007f12ce04cc48 in CitusExecutorStart (queryDesc=0x23a60d8, eflags=0) at executor/multi_executor.c:96
+#17 0x0000000000678516 in ExecutorStart (queryDesc=0x23a60d8, eflags=0) at execMain.c:150
+#18 0x00000000008188c0 in ProcessQuery (plan=0x7f12d5693010, sourceText=0x230db18 "delete from test1 where id < 5;", params=0x0, queryEnv=0x0, dest=0x7f12d5693250, completionTag=0x7ffe83c78c60 "") at pquery.c:156
+#19 0x000000000081a035 in PortalRunMulti (portal=0x23c7998, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x7f12d5693250, altdest=0x7f12d5693250, completionTag=0x7ffe83c78c60 "") at pquery.c:1286
+#20 0x000000000081968a in PortalRun (portal=0x23c7998, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x7f12d5693250, altdest=0x7f12d5693250, completionTag=0x7ffe83c78c60 "") at pquery.c:799
+#21 0x0000000000813b59 in exec_simple_query (query_string=0x230db18 "delete from test1 where id < 5;") at postgres.c:1099
+#22 0x0000000000817b1f in PostgresMain (argc=1, argv=0x22a9378, dbname=0x22a9228 "postgres", username=0x2260d28 "cituscluster") at postgres.c:4088
+#23 0x000000000078b2d2 in BackendRun (port=0x22a3a20) at postmaster.c:4357
+#24 0x000000000078aa7b in BackendStartup (port=0x22a3a20) at postmaster.c:4029
+#25 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#26 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x225ec00) at postmaster.c:1361
+#27 0x00000000006cf26f in main (argc=1, argv=0x225ec00) at main.c:228
+[cituscluster@gtm1 ~]$ pstack 86134
+#0  0x00007f12d4930163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x23d20a8, cur_timeout=-1, occurred_events=0x7ffe83c781b0, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x23d20a8, timeout=-1, occurred_events=0x7ffe83c781b0, nevents=1, wait_event_info=50331657) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f12cc976104, wakeEvents=1, sock=-1, timeout=-1, wait_event_info=50331657) at latch.c:385
+#4  0x00000000007ec701 in WaitLatch (latch=0x7f12cc976104, wakeEvents=1, timeout=0, wait_event_info=50331657) at latch.c:339
+#5  0x0000000000800aeb in ProcSleep (locallock=0x22a2ef8, lockMethodTable=0xaf75a0 <user_lockmethod>) at proc.c:1255
+#6  0x00000000007fb022 in WaitOnLock (locallock=0x22a2ef8, owner=0x236b608) at lock.c:1702
+#7  0x00000000007fa162 in LockAcquireExtended (locktag=0x7ffe83c78640, lockmode=5, sessionLock=0 '\000', dontWait=0 '\000', reportMemoryError=1 '\001') at lock.c:998
+#8  0x00000000007f987e in LockAcquire (locktag=0x7ffe83c78640, lockmode=5, sessionLock=0 '\000', dontWait=0 '\000') at lock.c:688
+#9  0x00007f12ce0b01c6 in LockShardDistributionMetadata (shardId=102040, lockMode=5) at utils/resource_lock.c:362
+#10 0x00007f12ce04f00a in AcquireMetadataLocks (taskList=0x23ca890) at executor/multi_router_executor.c:138
+#11 0x00007f12ce04f4ee in CitusModifyBeginScan (node=0x23c9bb8, estate=0x23c99a8, eflags=0) at executor/multi_router_executor.c:545
+#12 0x0000000000691868 in ExecInitCustomScan (cscan=0x7f12d5692eb0, estate=0x23c99a8, eflags=0) at nodeCustom.c:105
+#13 0x000000000067f173 in ExecInitNode (node=0x7f12d5692eb0, estate=0x23c99a8, eflags=0) at execProcnode.c:282
+#14 0x0000000000679677 in InitPlan (queryDesc=0x23a60d8, eflags=0) at execMain.c:1045
+#15 0x0000000000678719 in standard_ExecutorStart (queryDesc=0x23a60d8, eflags=0) at execMain.c:264
+#16 0x00007f12ce04cc48 in CitusExecutorStart (queryDesc=0x23a60d8, eflags=0) at executor/multi_executor.c:96
+#17 0x0000000000678516 in ExecutorStart (queryDesc=0x23a60d8, eflags=0) at execMain.c:150
+#18 0x00000000008188c0 in ProcessQuery (plan=0x7f12d5693010, sourceText=0x230db18 "delete from test1 where id < 5;", params=0x0, queryEnv=0x0, dest=0x7f12d5693250, completionTag=0x7ffe83c78c60 "") at pquery.c:156
+#19 0x000000000081a035 in PortalRunMulti (portal=0x23c7998, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x7f12d5693250, altdest=0x7f12d5693250, completionTag=0x7ffe83c78c60 "") at pquery.c:1286
+#20 0x000000000081968a in PortalRun (portal=0x23c7998, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x7f12d5693250, altdest=0x7f12d5693250, completionTag=0x7ffe83c78c60 "") at pquery.c:799
+#21 0x0000000000813b59 in exec_simple_query (query_string=0x230db18 "delete from test1 where id < 5;") at postgres.c:1099
+#22 0x0000000000817b1f in PostgresMain (argc=1, argv=0x22a9378, dbname=0x22a9228 "postgres", username=0x2260d28 "cituscluster") at postgres.c:4088
+#23 0x000000000078b2d2 in BackendRun (port=0x22a3a20) at postmaster.c:4357
+#24 0x000000000078aa7b in BackendStartup (port=0x22a3a20) at postmaster.c:4029
+#25 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#26 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x225ec00) at postmaster.c:1361
+#27 0x00000000006cf26f in main (argc=1, argv=0x225ec00) at main.c:228
+[cituscluster@gtm1 ~]$ pstack 86134
+#0  0x00007f12d4930163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x22607e8, cur_timeout=-1, occurred_events=0x7ffe83c78c60, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x22607e8, timeout=-1, occurred_events=0x7ffe83c78c60, nevents=1, wait_event_info=100663296) at latch.c:1000
+#3  0x00000000006beacc in secure_read (port=0x22a3a20, ptr=0xe182c0 <PqRecvBuffer>, len=8192) at be-secure.c:166
+#4  0x00000000006cad3b in pq_recvbuf () at pqcomm.c:963
+#5  0x00000000006cadd5 in pq_getbyte () at pqcomm.c:1006
+#6  0x0000000000812db2 in SocketBackend (inBuf=0x7ffe83c78e70) at postgres.c:328
+#7  0x0000000000813281 in ReadCommand (inBuf=0x7ffe83c78e70) at postgres.c:501
+#8  0x0000000000817a41 in PostgresMain (argc=1, argv=0x22a9378, dbname=0x22a9228 "postgres", username=0x2260d28 "cituscluster") at postgres.c:4030
+#9  0x000000000078b2d2 in BackendRun (port=0x22a3a20) at postmaster.c:4357
+#10 0x000000000078aa7b in BackendStartup (port=0x22a3a20) at postmaster.c:4029
+#11 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#12 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x225ec00) at postmaster.c:1361
+#13 0x00000000006cf26f in main (argc=1, argv=0x225ec00) at main.c:228
+[cituscluster@gtm1 ~]$ 

@@ -1,0 +1,30 @@
+数据存储：
+  1. 创建1个链表 subscriber_list 保存 pg_subscription_rel 表中所有订阅表的数据（主键 srrelid & srsubid，其他信息 pid）
+		其中 pid 取自 pg_stat_subscription 表，默认为空
+  2. 创建1个链表 wait_wakeup_subscriber 保存逻辑复制异常退出的sync进程数据（主键 relid & subid，其他信息 pid）
+  3. 创建1个链表 abnormal_app_subscriber 保存逻辑复制异常退出的app进程数据（主键 relid & subid，其他信息 pid）
+感知方式：
+  1. 建立表数据变更触发器或缓存失效回调函数，来监控 pg_subscription_rel 表数据的 INSERT & DELETE 变更，触发对 subscriber_list 进行增删操作
+  2. 建立表数据变更触发器或缓存失效回调函数，来监控 pg_stat_subscription 表数据的 INSERT & DELETE 变更，触发冲突识别流程
+  
+识别流程：
+  若感知到INSERT，则累计该relid的INSERT触发次数 start_count ，记录当前时间戳为该relid逻辑复制启动的时间，并计算与上一次触发的时间间隔 subscriber_restart_interval
+  若感知到DELETE，则累计该relid的DELETE触发次数 stop_count ，并在 pg_stat_subscription 表中查找该relid的订阅者app进程（subid相等，relid=空）数据 app_subscriber
+
+app进程冲突：app_subscriber 中除（subid & subname）以外数据都为空
+  根据 subname 查询 pg_subscription 表属性（subenabled），并获取 pg_subscription_rel 表中该订阅者进程下所有'r'状态的（subid & relid）保存到链表 ready_tables
+场景1：若（subenabled='f'），则表示该订阅者进程被命令行DISABLE，为正常情况
+场景2：不满足场景1，则将该app进程保存到 abnormal_app_subscriber，并触发定时检测如下：
+	在 pg_stat_subscription 表中根据（subid & relid）查找该app进程数据，若除（subid & subname）以外数据都为空，则累加异常次数 app_abnormal_count
+	当（app_abnormal_count>=阈值），则确定该订阅者app进程存在逻辑复制冲突，引发冲突的表储存在 ready_tables 中
+
+sync进程冲突：
+场景1：若该relid的（start_count>1 && subscriber_restart_interval=wal_retrieve_retry_interval），累计其逻辑复制异常重启次数 subscriber_restart_count
+	当（subscriber_restart_count>=阈值），则确定该relid的逻辑复制存在冲突
+场景2：若该relid的（stop_count=1 && start_count=1），则获取该relid在 pg_subscription_rel 表中状态（srsubstate）
+	条件1：若 （srsubstate == 's' || srsubstate == 'r'），则确认该relid逻辑复制正常结束
+	条件2：若不满足条件1，且（max_sync_workers_per_subscription >= pg_subscription_rel 表中该条 relid 对应的 subid 所订阅的表的总数量），
+		则认为该进程由于其他异常终止，不作处理
+	条件3：若不满足条件1与条件2，则将该relid保存到 wait_wakeup_subscriber ，并清空该relid的上述所有计数
+场景3：若触发INSERT的relid在 wait_wakeup_subscriber 链表中，则从 wait_wakeup_subscriber 链表中删除，直到其满足场景1则确认该订阅表存在冲突
+

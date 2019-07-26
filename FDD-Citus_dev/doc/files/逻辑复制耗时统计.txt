@@ -1,0 +1,375 @@
+表内容：
+tbl1 30w
+tbl2 30w
+tbl3 50w
+tbl4 50w
+tbl5 500w
+tbl6 500w
+
+测试1：
+postgres=# CREATE PUBLICATION pub1 FOR TABLE tbl5, tbl6;
+CREATE PUBLICATION
+postgres=# CREATE PUBLICATION pub2 FOR TABLE tbl1, tbl2, tbl3, tbl4;
+CREATE PUBLICATION
+postgres=# CREATE SUBSCRIPTION sub1 CONNECTION 'host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres' PUBLICATION pub1;
+NOTICE:  created replication slot "sub1" on publisher
+CREATE SUBSCRIPTION
+postgres=# CREATE SUBSCRIPTION sub2 CONNECTION 'host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres' PUBLICATION pub2;
+NOTICE:  created replication slot "sub2" on publisher
+CREATE SUBSCRIPTION
+
+耗时总计：
+00:45:05.12946 - 00:42:32.076201
+
+逻辑复制开始日志：
+postgres=# 2019-07-08 00:42:31.414 PDT [5720] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-07-08 00:42:31.441 PDT [5721] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl5" has started
+2019-07-08 00:42:31.458 PDT [5722] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl6" has started
+postgres=# 2019-07-08 00:42:38.199 PDT [5723] LOG:  logical replication apply worker for subscription "sub2" has started
+postgres=# 2019-07-08 00:42:38.287 PDT [5724] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl1" has started
+2019-07-08 00:42:38.334 PDT [5725] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl2" has started
+2019-07-08 00:42:38.369 PDT [5726] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl3" has started
+2019-07-08 00:42:38.422 PDT [5727] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl4" has started
+
+逻辑复制结束日志：
+postgres=# 2019-07-08 00:42:59.763 PDT [5724] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl1" has finished
+2019-07-08 00:42:59.836 PDT [5725] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl2" has finished
+postgres=# 2019-07-08 00:43:09.093 PDT [5727] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl4" has finished
+2019-07-08 00:43:09.155 PDT [5726] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl3" has finished
+postgres=# 2019-07-08 00:45:01.962 PDT [5722] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl6" has finished
+postgres=# 2019-07-08 00:45:05.307 PDT [5721] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl5" has finished
+
+表数据记录：
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-08 00:42:32.076201-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate | srsublsn 
+---------+---------+------------+----------
+   68467 |   68425 | d          | 
+   68467 |   68433 | d          | 
+(2 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-08 00:42:33.087145-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+   13212 | sub2    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub2        | off           | {pub2}
+(2 rows)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate | srsublsn 
+---------+---------+------------+----------
+   68467 |   68425 | d          | 
+   68467 |   68433 | d          | 
+   68468 |   43797 | i          | 
+   68468 |   43764 | i          | 
+   68468 |   43814 | i          | 
+   68468 |   43822 | i          | 
+(6 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-08 00:42:38.437856-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+   13212 | sub2    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub2        | off           | {pub2}
+(2 rows)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate | srsublsn 
+---------+---------+------------+----------
+   68467 |   68425 | d          | 
+   68467 |   68433 | d          | 
+   68468 |   43797 | d          | 
+   68468 |   43764 | d          | 
+   68468 |   43814 | d          | 
+   68468 |   43822 | d          | 
+(6 rows)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-08 00:45:05.12946-07
+(1 row)
+
+postgres=# 2019-07-08 00:45:05.307 PDT [5721] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl5" has finished
+SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+   13212 | sub2    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub2        | off           | {pub2}
+(2 rows)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68468 |   43797 | r          | 6/4621B6E8
+   68468 |   43764 | r          | 6/4621B6E8
+   68468 |   43822 | r          | 6/4621B6E8
+   68468 |   43814 | r          | 6/4621B6E8
+   68467 |   68433 | r          | 6/4621B6E8
+   68467 |   68425 | r          | 6/4621B6E8
+(6 rows)
+
+
+
+
+测试2：
+postgres=# CREATE PUBLICATION pub1 FOR TABLE tbl5, tbl1, tbl3;
+CREATE PUBLICATION
+postgres=# CREATE PUBLICATION pub2 FOR TABLE tbl6, tbl2, tbl4;
+CREATE PUBLICATION
+postgres=# 
+postgres=# CREATE SUBSCRIPTION sub1 CONNECTION 'host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres' PUBLICATION pub1;
+NOTICE:  created replication slot "sub1" on publisher
+CREATE SUBSCRIPTION
+postgres=# CREATE SUBSCRIPTION sub2 CONNECTION 'host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres' PUBLICATION pub2;
+NOTICE:  created replication slot "sub2" on publisher
+CREATE SUBSCRIPTION
+
+耗时总计：
+01:12:28.595933 - 01:09:59.418093
+
+逻辑复制开始日志：
+postgres=# 2019-07-08 01:09:59.796 PDT [6042] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-07-08 01:09:59.845 PDT [6043] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl1" has started
+postgres=# 2019-07-08 01:09:59.859 PDT [6044] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl3" has started
+2019-07-08 01:09:59.870 PDT [6045] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl5" has started
+postgres=# 2019-07-08 01:10:04.959 PDT [6055] LOG:  logical replication apply worker for subscription "sub2" has started
+2019-07-08 01:10:05.099 PDT [6056] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl2" has started
+2019-07-08 01:10:05.142 PDT [6057] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl4" has started
+postgres=# 2019-07-08 01:10:05.193 PDT [6058] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl6" has started
+
+逻辑复制结束日志：
+postgres=# 2019-07-08 01:10:16.955 PDT [6043] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl1" has finished
+postgres=# 2019-07-08 01:10:23.650 PDT [6056] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl2" has finished
+postgres=# 2019-07-08 01:10:28.033 PDT [6044] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl3" has finished
+postgres=# 2019-07-08 01:10:32.271 PDT [6057] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl4" has finished
+postgres=# 2019-07-08 01:12:23.993 PDT [6058] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl6" has finished
+postgres=# 2019-07-08 01:12:28.959 PDT [6045] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl5" has finished
+
+表数据记录：
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-08 01:09:59.418093-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled | subconninfo | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+-------------+-------------+---------------+-----------------
+(0 rows)
+
+postgres=# 2019-07-08 01:09:59.796 PDT [6042] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-07-08 01:09:59.845 PDT [6043] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl1" has started
+SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate | srsublsn 
+---------+---------+------------+----------
+   68493 |   43797 | i          | 
+   68493 |   43814 | i          | 
+   68493 |   68425 | i          | 
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-08 01:10:00.492977-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub2    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub2        | off           | {pub2}
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(2 rows)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate | srsublsn 
+---------+---------+------------+----------
+   68494 |   43764 | i          | 
+   68494 |   43822 | i          | 
+   68494 |   68433 | i          | 
+   68493 |   43797 | d          | 
+   68493 |   43814 | d          | 
+   68493 |   68425 | d          | 
+(6 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-08 01:10:05.798512-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub2    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub2        | off           | {pub2}
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(2 rows)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate | srsublsn 
+---------+---------+------------+----------
+   68493 |   43797 | d          | 
+   68493 |   43814 | d          | 
+   68493 |   68425 | d          | 
+   68494 |   43764 | d          | 
+   68494 |   43822 | d          | 
+   68494 |   68433 | d          | 
+(6 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-08 01:12:28.595933-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub2    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub2        | off           | {pub2}
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(2 rows)
+
+postgres=# 2019-07-08 01:12:28.959 PDT [6045] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl5" has finished
+SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68493 |   43797 | r          | 6/462250F8
+   68494 |   43764 | r          | 6/462250F8
+   68493 |   43814 | r          | 6/462250F8
+   68494 |   43822 | r          | 6/462250F8
+   68494 |   68433 | r          | 6/462250F8
+   68493 |   68425 | r          | 6/462250F8
+(6 rows)
+
+
+测试3：
+postgres=# CREATE PUBLICATION pub1 FOR TABLE tbl5;
+CREATE PUBLICATION
+postgres=# CREATE PUBLICATION pub2 FOR TABLE tbl6, tbl1, tbl2, tbl3, tbl4;
+CREATE PUBLICATION
+postgres=# CREATE SUBSCRIPTION sub1 CONNECTION 'host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres' PUBLICATION pub1;
+NOTICE:  created replication slot "sub1" on publisher
+CREATE SUBSCRIPTION
+postgres=# CREATE SUBSCRIPTION sub2 CONNECTION 'host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres' PUBLICATION pub2;
+NOTICE:  created replication slot "sub2" on publisher
+CREATE SUBSCRIPTION
+
+耗时总计：
+01:30:53.637281 - 01:28:12.387328
+
+逻辑复制开始日志：
+postgres=# 2019-07-08 01:28:12.420 PDT [6241] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-07-08 01:28:12.474 PDT [6242] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl5" has started
+postgres=# 2019-07-08 01:28:17.505 PDT [6244] LOG:  logical replication apply worker for subscription "sub2" has started
+postgres=# 2019-07-08 01:28:17.559 PDT [6245] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl1" has started
+2019-07-08 01:28:17.598 PDT [6246] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl2" has started
+2019-07-08 01:28:17.629 PDT [6247] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl3" has started
+2019-07-08 01:28:17.661 PDT [6248] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl4" has started
+2019-07-08 01:28:17.702 PDT [6249] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl6" has started
+
+逻辑复制结束日志：	
+postgres=# 2019-07-08 01:28:38.706 PDT [6245] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl1" has finished
+postgres=# 2019-07-08 01:28:39.167 PDT [6246] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl2" has finished
+postgres=# 2019-07-08 01:28:50.430 PDT [6248] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl4" has finished
+postgres=# 2019-07-08 01:28:50.527 PDT [6247] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl3" has finished
+postgres=# 2019-07-08 01:30:53.409 PDT [6249] LOG:  logical replication table synchronization worker for subscription "sub2", table "tbl6" has finished
+postgres=# 2019-07-08 01:30:53.926 PDT [6242] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl5" has finished
+
+表记录：
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-08 01:28:12.387328-07
+(1 row)
+
+postgres=# 2019-07-08 01:28:12.420 PDT [6241] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-07-08 01:28:12.474 PDT [6242] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl5" has started
+SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+   13212 | sub2    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub2        | off           | {pub2}
+(2 rows)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate | srsublsn 
+---------+---------+------------+----------
+   68520 |   43797 | i          | 
+   68520 |   43764 | i          | 
+   68520 |   43814 | i          | 
+   68520 |   43822 | i          | 
+   68520 |   68433 | i          | 
+   68519 |   68425 | d          | 
+(6 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-08 01:28:18.229332-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+   13212 | sub2    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub2        | off           | {pub2}
+(2 rows)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate | srsublsn 
+---------+---------+------------+----------
+   68519 |   68425 | d          | 
+   68520 |   43797 | d          | 
+   68520 |   43764 | d          | 
+   68520 |   43814 | d          | 
+   68520 |   43822 | d          | 
+   68520 |   68433 | d          | 
+(6 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-08 01:30:53.637281-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+   13212 | sub2    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub2        | off           | {pub2}
+(2 rows)
+
+postgres=# 2019-07-08 01:30:53.926 PDT [6242] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl5" has finished
+SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68520 |   68433 | r          | 6/4622E5F0
+   68519 |   68425 | r          | 6/4622E5F0
+   68520 |   43797 | r          | 6/4622E5F0
+   68520 |   43764 | r          | 6/4622E5F0
+   68520 |   43822 | r          | 6/4622E5F0
+   68520 |   43814 | r          | 6/4622E5F0
+(6 rows)

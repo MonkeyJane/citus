@@ -1,0 +1,116 @@
+订阅端
+表名： pg_subscription
+数据关系：一个订阅者对应一条记录。创建订阅者时插入，删除订阅者时删除
+表中属性变更：只要订阅者存在，且不通过 ALTER 命令变更此订阅者相关信息，则不会变化
+结论：该表信息不受逻辑复制进度、逻辑复制过程中的冲突异常等因素影响
+
+
+表名： pg_subscription_rel
+数据关系：一张订阅表对应一条记录，同一个订阅者可以有多条记录。创建订阅者时插入，删除订阅者时删除
+表中属性变更：只需关注以下属性
+  1. srsubstate ：随着该订阅表的复制进度而变化（'i'->'d' 'd'->'s' 's'->'r'），当属性值达到'r'后，将不再变化
+  2. srsublsn ：随着该订阅表的复制进度而变化，当 srsubstate 属性变化（'d'->'s' 's'->'r'）时，将更新此属性值，当srsubstate属性值达到'r'后，将不再变化
+	's'->'r' 时：srsublsn 属性值将变为 此时app进程处理的复制槽报文的end_lsn
+	'd'->'s' 时：分为两个场景
+		1. sync进程不需要追增量：srsublsn 属性值将变为 sync进程创建临时复制槽时，发布端返回的逻辑复制起始lsn
+		2. sync进程需要追增量：srsublsn 属性值将变为 sync进程此时处理的复制槽报文的end_lsn
+结论：该表信息受逻辑复制进度、逻辑复制过程中的异常的影响；但无法据此区分异常场景
+
+
+表名： pg_stat_subscription
+数据关系：一个逻辑复制进程（app & sync）对应一条记录。进程启动时插入，进程退出时删除
+表中属性变更：只需关注以下属性（sync进程只在追增量时会更新，否则为进程启动时的默认值）
+  1. pid ：订阅端逻辑复制进程的pid，当进程重启时将更新此值（重新插入一条数据）
+  2. received_lsn ：进程处理复制槽报文（'k' | 'w'）时，将更新此属性值为 报文字段 end_lsn
+  3. latest_end_lsn ：进程处理复制槽报文（'k'）时，将更新此属性值为 报文字段 end_lsn
+  4. last_msg_send_time ：进程处理复制槽报文（'k' | 'w'）时，将更新此属性值为 报文字段 timestamp('k'报文) | send_time('w'报文)
+  5. last_msg_receipt_time ：进程处理复制槽报文（'k' | 'w'）时，将更新此属性值为 当前系统时间
+  6. latest_end_time ：进程处理复制槽报文（'k'）时，将更新此属性值为 报文字段 timestamp('k'报文)
+结论：无法据此区分异常场景
+  1. 该表信息更新受逻辑复制进度影响：
+	app进程可以更新数据的阶段：
+	  进程启动后开始处理复制槽报文 -> 某订阅表完成表数据拷贝（sync进程状态为'w' 表复制状态为'd'）；
+	  某订阅表复制状态变为's' -> 另一个订阅表完成表数据拷贝；（此阶段将循环持续直至满足下一阶段的条件）
+	  所有订阅表复制状态变为's' -> 持续处理复制槽报文至进程退出（删除该订阅者或其他异常情况退出）
+	sync进程可以更新数据的阶段：
+	  进程进入追增量阶段，处理复制槽报文 -> 进程对应的订阅表复制状态变为's'
+
+  2. 该表信息更新受逻辑复制过程中的异常的影响：进程重启将重置上述所有属性
+
+
+表名： pg_replication_origin_status
+数据关系：一个订阅者对应一条记录。创建订阅者时插入，删除订阅者时删除
+表中属性变更：只需关注以下属性（由app进程完成变更）
+  1. local_lsn ：至少1个sync进程已经完成同步工作，而且app进程已经应用过该订阅表的DML报文；app进程处理复制槽中COMMIT报文，将更新此属性值为 最近一次应用DML报文时计算的一个值
+  2. remote_lsn ：app进程处理复制槽中COMMIT报文时，将更新此属性值为 报文字段 end_lsn
+结论：无法据此区分异常场景
+  1. 该表信息受逻辑复制进度影响：
+	app进程可以更新remote_lsn的阶段：
+	  进程启动后开始处理复制槽报文 -> 某订阅表完成表数据拷贝（sync进程状态为'w' 表复制状态为'd'）；
+	  某订阅表复制状态变为's' -> 另一个订阅表完成表数据拷贝；（此阶段将循环持续直至满足下一阶段的条件）
+	  所有订阅表复制状态变为's' -> 持续处理复制槽报文至进程退出（删除该订阅者或其他异常情况退出）
+	app进程可以更新local_lsn的阶段：
+	  某订阅表复制状态变为's' -> 另一个订阅表完成表数据拷贝；（此阶段将循环持续直至满足下一阶段的条件）
+	  所有订阅表复制状态变为's' -> 持续处理复制槽报文至进程退出（删除该订阅者或其他异常情况退出）
+	  
+  2. 该表信息受逻辑复制过程中的异常的影响：进程重启将重置local_lsn；由于remote_lsn被保存在父进程的全局变量中，进程异常退出也不会被重置
+
+
+
+发布端：
+表名： pg_publication_rel
+数据关系：一个发布表对应一条记录，同一个订阅者可以有多条记录。创建发布者时插入，删除发布者时删除
+表中属性变更：只要发布者存在，且不通过 ALTER 命令变更此发布者相关信息，则不会变化
+结论：该表信息不受逻辑复制进度、逻辑复制过程中的冲突异常等因素影响
+
+
+表名： pg_publication_tables
+数据关系：一个发布表对应一条记录，同一个订阅者可以有多条记录。创建发布者时插入，删除发布者时删除
+表中属性变更：只要发布者存在，且不通过 ALTER 命令变更此发布者相关信息，则不会变化
+结论：该表信息不受逻辑复制进度、逻辑复制过程中的冲突异常等因素影响
+
+
+函数名： pg_stat_get_activity
+
+函数名： pg_stat_get_wal_senders
+		state = walsnd->state;
+		sentPtr = walsnd->sentPtr;
+		write = walsnd->write;
+		flush = walsnd->flush;
+		apply = walsnd->apply;
+
+表名： pg_stat_replication
+数据关系：一个逻辑复制进程（app & sync）对应一条记录。进程启动时插入，进程退出时删除
+表中属性变更：只需关注以下属性（sync进程只在追增量时会更新，否则为进程启动时的默认值）
+  1. pid ：发布端逻辑复制进程pid，当进程重启时将更新此值（重新插入一条数据）
+  2. client_port ：订阅端逻辑复制进程port，当进程重启时将更新此值（重新插入一条数据）
+  3. backend_start ：
+  4. backend_xmin ：
+  5. state ：复制槽的状态，默认值 "startup" 
+		发布端 Wal Sender 进程收到订阅端 BASE_BACKUP 命令，将状态变更为 "backup" ；发布端 Wal Sender 进程收到 SHUT DOWN 信号时，将状态变更为 "stopping"
+		发布端收到订阅端worker进程发送的 START_REPLICATION SLOT 命令时，将状态变更为 "catchup" ，sync进程只有在需要追增量时会启动逻辑槽
+		发布端发现逻辑槽已经追上增量，且当前状态为 "catchup"，则将状态变更为 "streaming" 
+		app进程逻辑槽状态变化非常快，只能够看到 "streaming" 状态
+  6. sent_lsn ：
+  7. write_lsn ：
+  8. flush_lsn ：
+  9. replay_lsn ：
+结论：
+
+
+函数名：pg_get_replication_slots
+		active_pid = slot->active_pid;
+		xmin = slot->data.xmin;
+		catalog_xmin = slot->data.catalog_xmin;
+		restart_lsn = slot->data.restart_lsn;
+		confirmed_flush_lsn = slot->data.confirmed_flush;
+
+表名： pg_replication_slots
+数据关系：一个逻辑复制进程（app & sync）对应一条记录。进程启动时插入，进程退出时删除
+表中属性变更：只需关注以下属性
+  1. active_pid ：发布端逻辑复制进程pid，当进程重启时将更新此值（重新插入一条数据）
+  2. xmin ：
+  3. catalog_xmin ：
+  4. restart_lsn ：
+  5. confirmed_flush_lsn ：
+结论：

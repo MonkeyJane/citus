@@ -1,0 +1,50 @@
+PushActiveSnapshot<exec_simple_query:1012> -> PopActiveSnapshot<exec_simple_query:1032> 
+-> 
+PushActiveSnapshot<PortalStart:492> -> PopActiveSnapshot<PortalStart:539> 
+-> 
+PushActiveSnapshot<PortalRunSelect:931> -> PopActiveSnapshot<PortalRunSelect:935> 
+-> 
+UnregisterSnapshotFromOwner<PortalDrop:513> -> ResourceOwnerForgetSnapshot<remove_from(owner->snapshotarr)>
+											-> free(snapshot)
+
+ResourceOwnerRelease<PortalDrop:552> -> ResourceOwnerReleaseInternal -> UnregisterSnapshot -> UnregisterSnapshotFromOwner<free(snapshot)>
+ResourceOwnerDelete<PortalDrop:555> -> free(owner->snapshotarr)
+
+finish_xact_command -> CommitTransactionCommand 
+-> CommitTransaction<2112> -> ResourceOwnerRelease -> UnregisterSnapshot -> UnregisterSnapshotFromOwner<free(snapshot)>
+-> CommitTransaction<2137> -> AtEOXact_Snapshot<ActiveSnapshot=NULL>
+-> CommitTransaction<2142> -> ResourceOwnerDelete<free(owner->snapshotarr)>
+
+
+ResourceOwnerRememberSnapshot<add_into(owner->snapshotarr)> <- RegisterSnapshotOnOwner <- RegisterSnapshot
+																					   <- inv_open
+
+ResourceOwnerForgetSnapshot<remove_from(owner->snapshotarr)> <- UnregisterSnapshotFromOwner <- UnregisterSnapshot
+																							<- PortalDrop
+																							<- inv_close
+
+PushActiveSnapshot
+
+PopActiveSnapshot
+
+
+
+限制主CN的DDL操作有：
+EnsureCoordinator <- ExecuteDistributedDDLJob <- multi_ProcessUtility
+涉及操作：
+PlanIndexStmt
+PlanDropIndexStmt
+PlanAlterTableStmt
+PlanAlterObjectSchemaStmt（ALTER ... SET SCHEMA）
+PlanRenameStmt（Table Table_Colum Table_Constraint Index）
+PlanClusterStmt   -- 社区版返回空
+PlanGrantStmt     -- 社区版返回空
+PlanCreatePolicyStmt    -- 社区版返回空
+PlanAlterPolicyStmt     -- 社区版返回空
+PlanDropPolicyStmt      -- 社区版返回空
+
+
+EnsureCoordinator <- ProcessDropTableStmt <- multi_ProcessUtility
+
+
+IsCoordinator <- PostProcessIndexStmt <- PlanIndexStmt <- multi_ProcessUtility

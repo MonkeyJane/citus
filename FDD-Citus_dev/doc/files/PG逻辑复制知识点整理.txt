@@ -1,0 +1,930 @@
+官方文档章节：
+19.5 19.6
+26
+29
+30
+48
+52.9
+
+1. 配置发布端 postgresql.conf
+	wal_level = logical
+	max_replication_slots = 10  #发布端支持的最大复制槽数
+	max_wal_senders = 10   #同时运行的WAL发送器进程的最大数量，不小于 max_replication_slots
+2. 配置订阅端 
+	wal_receiver_timeout = 60 #超时时长
+	wal_retrieve_retry_interval = 5 #超时重试时间间隔
+	
+	max_replication_slots = 10  #订阅端支持的最大复制槽数
+	max_worker_processes = 8 #工作进程的最大数量
+	max_logical_replication_workers = 4 #逻辑复制工作者的最大数量，包括app worker和 sync worker。需小于 max_worker_processes
+	max_sync_workers_per_subscription = 2 #每个订阅者的最大同步工作者数量。需小于等于 max_logical_replication_workers ，但目前，每个表只能有一个同步工作进程
+2. 配置发布端用户权限 replicatoin / superuser
+	CREATE USER <user_name> REPLICATION LOGIN CONNECTION LIMIT 10 ENCRYPTED PASSWORD '<passwd>'
+3. 配置发布端、订阅端 pg_hba.conf
+	host <user_name> all <ip>/<mask_bit> trust
+4. 发布端PG创建表
+	CREATE TABLE <table_name>(x1 type1, x2 type2, ...)
+	注：最好配置主键约束，否则在创建发布者时需要执行以下命令，不然对该表执行UPDATE/DELETE操作将报错（订阅端异常）。但是 FULL 模式效率极低
+	ALTER TABLE <table_name> REPLICA IDENTITY FULL;
+5. 发布端创建发布者
+	CREATE PUBLICATION <pub_name> FOR [ TABLE <table_name> | ALL TABLES ] [WITH {PUBLISH | NOPUBLISH { INSERT | UPDATE | DELETE }}];
+6. 订阅端PG创建与待订阅的表相同的表（表名相同、列名与类型相同；列顺序可以不同、允许有发布表不存在的列），否则创建相应订阅者时将报错
+	CREATE TABLE <table_name>(x1 type1, x2 type2, ...)
+7. 订阅端创建订阅者
+	CREATE SUBSCRIPTION <subscrip_name> CONNECTION '<conn_info>' PUBLICATION <pub_name1>,<pub_name2> [WITH { ENABLED | DISABLED | CREATE SLOT | NOCREATE SLOT | SLOT NAME = slot_name }]  
+
+8. 发布者增加表名时，订阅者需要刷新
+	ALTER SUBSCRIPTION <subscrip_name> REFRESH PUBLICATION;
+9. 变更订阅的发布者
+	ALTER SUBSCRIPTION <subscrip_name> SET PUBLICATION <pub_name>;
+10. 关闭/开启订阅者
+	ALTER SUBSCRIPTION <subscrip_name> DISABLE;
+	ALTER SUBSCRIPTION <subscrip_name> ENABLE;	
+11. 删除订阅者
+	DROP SUBSCRIPTION <subscrip_name>;
+12. 订阅者侧可以自由增加表的字段，逻辑复制过程中，发布端表中不存在的列值为默认值
+
+13. 订阅端可以修改表，但是可能导致逻辑复制终止
+
+涉及的PG表：
+pg_publication
+pg_publication_rel
+pg_stat_replication
+pg_replication_slots
+pg_publication_tables
+pg_subscription
+pg_subscription_rel
+pg_stat_subscription
+pg_replication_origin_status
+
+
+相关函数
+pg_logical_slot_get_changes
+pg_logical_slot_peek_changes
+
+逻辑复制的限制：
+1）版本限制：pglogical是逻辑复制的技术组件，功能使用存在数据库版本限制
+  1. 数据源发布和订阅节点需要运行 PostgreSQL 9.4 +
+  2. 复制源过滤和冲突检测需要 PostgreSQL 9.5 +
+  3. pglogical 支持跨 PostgreSQL 主要版本之间的复制，但在订阅服务器上不同版本之间进行复制时，可能会出现问题。
+  4. 支持从旧版本复制到新版本因为 PostgreSQL 的向后兼容性保证的，但只有有限的向前兼容性比较安全
+
+2）其它限制
+  1. 不支持schema 以及 DDL复制(ALTER TABLE/CREATE TABLE)
+	说明：可以手动复制初始模式 pg_dump --schema-only ，序列 schema 更改需要手动保持同步（发布、订阅双方不需要 schema 完全一致）
+		  当实时数据库中的 schema 定义更改时，逻辑复制是很可靠的：当发布者上的 schema 已经发生更改并且复制的数据已经到达订阅者，
+		  但数据与表 schema 不匹配，逻辑复制将出错，直到 schema 被更新。在许多情况下，可以通过先将 schema 变更同步到订阅者来避免间歇性错误。
+  2. 不支持TEMPRORARY表和UNLOGGED表复制
+  3. 不支持Sequences复制（ serial/bigserial/identity）
+	说明：由序列支持的串行或标识列中的数据将作为表的一部分被复制，但序列本身在订阅端仍将显示为起始值。
+		  如果订阅者只作为只读数据库，那么不是一个麻烦的问题。如果打算切换或故障转移到订阅端数据库，
+		  则需要从发布者复制当前数据（可能使用pg_dump）或通过根据这些表本身确定一个足够高的值，来将序列更新为最新值。
+  4. 不完全支持TRUNCATE操作复制
+	说明：支持复制TRUNCATE操作，但TRUNCATE有外键关联的表时需要注意。因为在复制TRUNCATE操作时，订阅者将清空发布端清空的表，
+		  同时通过显式指定或隐式收集CASCADE，过滤掉未被订阅的表。如果TRUNCATE操作涉及的表都被订阅端订阅，则不影响。
+		  如果在订阅端被清空的某些表的外键关联的是不属于这个订阅者或未被订阅的表，那么订阅端的TRUNCATE操作将失败。
+  5. 不支持大对象复制（Bytea）
+  6. 不支持视图、物化视图、外部表复制
+	说明：发布和订阅方面上的表必须是普通表，而不是视图，物化视图，分区根表或外表。
+		  对于分区，可以一对一地复制分区层次结构，但目前无法复制到不同的分区设置。尝试复制除基表之外的表将导致错误。
+
+复制槽：
+  1. 订阅者从发布端的复制槽接收更改。
+  2. 使用CREATE SUBSCRIPTION 创建订阅者时会自动创建远程复制槽（见发布端 pg_replication_slots 表）；使用DROP SUBSCRIPTION 删除订阅者时会自动删除发布端 pg_replication_slots 表中对应记录。
+  3. 复制槽提供了一种自动化的方法，确保发布端在所有的订阅者收到 WAL段之前不会移除它们；主库随时知道从库应用 WAL 的情况，哪怕从库掉线，主库依然保留WAL日志
+这种机制的缺点：如果从库掉线很久，那么主库的WAL日志会一直保留以至于撑暴硬盘，对监控要求很高
+
+注意：
+创建订阅者时，关联的发布者名字可以是一个不存在的发布者，也能成功。
+订阅端、发布端依然会启动相关工作进程，信息在 pg_stat_replication、pg_replication_slots、pg_stat_subscription 表中可见；
+仅当发布端触发逻辑复制时检测到有不存在的发布者，持续报错
+
+冲突处理：
+即使在订阅端节点上更改了数据，也会更新数据。如果传入数据违反任何约束，则复制将停止。这被称为冲突。
+在复制UPDATE或DELETE操作时，丢失的数据不会产生冲突，只会跳过此类操作。冲突会产生错误并停止复制， 它必须由用户手动解决。
+可以通过更改订阅端的数据，使其不与传入的更改冲突，或通过跳过与现有数据冲突的事务来完成解决方案
+
+
+流程点：
+追踪一下pg_logical_slot_peek_changes的调用链，不难看到Decoding的整个过程。
+在pg_logical_slot_get_changes_guts中，从restart_lsn（即上次的最后读取后，剩下的事务中最先开始的事务对应的LSN）开始，
+先用XLogReadRecord函数（注意，会先从cache里面读取日志，如果cache里面没有，则会到磁盘中的日志段里面读取）获取一个日志记录，存入结构体XLogRecord，
+紧接着用LogicalDecodingProcessRecord做Decode。
+如此循环，直到读完日志或到达指定点。
+
+
+pg_class 中 reltuples 为表中的行数，但是 pg_class 表的数据更新是懒惰更新，reltuples 属性仅当执行 VACUUM，ANALYZE和某些DDL命令（如CREATE INDEX）更新
+
+1. 分片表对应的逻辑复制槽的选择
+2. 分片与亲和分片的逻辑复制槽的选择
+3. 发布端、订阅端关于约束的处理：如何重放
+
+pg_test_fsync
+除了关注发布端订阅端 fsync、 synchronous_commit 对性能的影响，还可关注以下配置项
+  wal_sync_method
+  full_page_writes
+  wal_writer_delay
+  wal_writer_flush_after
+  commit_delay
+  commit_siblings
+
+
+
+GetPublicationByName
+get_publication_oid
+AlterPublication
+AlterPublicationOwner
+output_plugin_error_callback
+
+
+发布端：
+postgres=# create table publication1(id int primary key, name int);
+CREATE TABLE
+postgres=# CREATE PUBLICATION pub1 FOR TABLE publication1;
+CREATE PUBLICATION
+postgres=# \d+ publication1;
+                               Table "public.publication1"
+ Column |  Type   | Collation | Nullable | Default | Storage | Stats target | Description 
+--------+---------+-----------+----------+---------+---------+--------------+-------------
+ id     | integer |           | not null |         | plain   |              | 
+ name   | integer |           |          |         | plain   |              | 
+Indexes:
+    "publication1_pkey" PRIMARY KEY, btree (id)
+Publications:
+    "pub1"
+
+postgres=# 
+postgres=# select * from pg_publication;
+ pubname | pubowner | puballtables | pubinsert | pubupdate | pubdelete 
+---------+----------+--------------+-----------+-----------+-----------
+ pub1    |       10 | f            | t         | t         | t
+(1 row)
+
+postgres=# select * from pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |   state   | sent_lsn  | write_lsn | flus
+h_lsn | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+-----------+-----------+-----------+-----
+------+------------+-----------+-----------+------------+---------------+------------
+ 25375 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       35616 | 2019-06-11 19:48:00.739535-07 |              | streaming | 0/52E3E80 | 0/52E3E80 | 0/52
+E3E80 | 0/52E3E80  |           |           |            |             0 | async
+ 25285 |       10 | cituscluster | walreceiver      | 192.168.221.135 |                 |       37016 | 2019-06-11 19:41:17.710874-07 |              | streaming | 0/52E3E80 | 0/52E3E80 | 0/52
+E3E80 | 0/52E3E80  |           |           |            |             0 | async
+(2 rows)
+
+postgres=# select * from pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      25375 |      |          782 | 0/52E3E48   | 0/52E3E80
+(1 row)
+
+postgres=# insert into publication1 select generate_series(1,20),1234;
+INSERT 0 20
+postgres=# select * from pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      25375 |      |          783 | 0/52E8D98   | 0/52E8DD0
+(1 row)
+
+postgres=# select * from pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |   state   | sent_lsn  | write_lsn | flus
+h_lsn | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+-----------+-----------+-----------+-----
+------+------------+-----------+-----------+------------+---------------+------------
+ 25375 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       35616 | 2019-06-11 19:48:00.739535-07 |              | streaming | 0/52E8DD0 | 0/52E8DD0 | 0/52
+E8DD0 | 0/52E8DD0  |           |           |            |             0 | async
+ 25285 |       10 | cituscluster | walreceiver      | 192.168.221.135 |                 |       37016 | 2019-06-11 19:41:17.710874-07 |              | streaming | 0/52E8DD0 | 0/52E8DD0 | 0/52
+E8DD0 | 0/52E8DD0  |           |           |            |             0 | async
+(2 rows)
+
+
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  25234      1  0 19:38 pts/1    00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  25236  25234  0 19:38 ?        00:00:00 postgres: checkpointer process  
+cituscl+  25237  25234  0 19:38 ?        00:00:00 postgres: writer process   
+cituscl+  25238  25234  0 19:38 ?        00:00:00 postgres: wal writer process  
+cituscl+  25239  25234  0 19:38 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  25240  25234  0 19:38 ?        00:00:00 postgres: stats collector process  
+cituscl+  25241  25234  0 19:38 ?        00:00:00 postgres: bgworker: task tracker  
+cituscl+  25242  25234  0 19:38 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  25285  25234  0 19:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.135(37016) streaming 0/52E72E8
+cituscl+  25289  25234  0 19:42 ?        00:00:00 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  25315  25234  0 19:43 ?        00:00:00 postgres: cituscluster postgres 192.168.221.133(60496) idle
+cituscl+  25327  25116  0 19:44 pts/1    00:00:00 psql -d postgres
+cituscl+  25328  25234  0 19:44 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  25332  25234  0 19:44 ?        00:00:00 postgres: cituscluster postgres 192.168.221.130(34428) idle
+cituscl+  25375  25234  0 19:48 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(35616) idle
+cituscl+  25481  25430  0 19:51 pts/0    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ lsof -i:35616
+COMMAND    PID         USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+postgres 25375 cituscluster    9u  IPv4 286794      0t0  TCP gtm2:postgres->center1:35616 (ESTABLISHED)
+[cituscluster@gtm2 ~]$ pstack 25375
+#0  0x00007fed4b2e1163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x26ad028, cur_timeout=29999, occurred_events=0x7ffedc1b1ea0, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x26ad028, timeout=29999, occurred_events=0x7ffedc1b1ea0, nevents=1, wait_event_info=100663302) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7fed43323774, wakeEvents=27, sock=9, timeout=29999, wait_event_info=100663302) at latch.c:385
+#4  0x00000000007b9d7d in WalSndWaitForWal (loc=86930176) at walsender.c:1399
+#5  0x00000000007b8e06 in logical_read_xlog_page (state=0x262bef0, targetPagePtr=86925312, reqLen=4864, targetRecPtr=86930152, cur_page=0x2694f98 "\227\320\005", pageTLI=0x262c79c) at walsender.c:761
+#6  0x0000000000525d94 in ReadPageInternal (state=0x262bef0, pageptr=86925312, reqLen=4864) at xlogreader.c:556
+#7  0x0000000000525627 in XLogReadRecord (state=0x262bef0, RecPtr=86930152, errormsg=0x7ffedc1b2058) at xlogreader.c:255
+#8  0x00000000007bb898 in XLogSendLogical () at walsender.c:2752
+#9  0x00000000007bac5d in WalSndLoop (send_data=0x7bb867 <XLogSendLogical>) at walsender.c:2134
+#10 0x00000000007b9873 in StartLogicalReplication (cmd=0x25a1f78) at walsender.c:1101
+#11 0x00000000007ba0b5 in exec_replication_command (cmd_string=0x2630bb8 "START_REPLICATION SLOT \"sub1\" LOGICAL 0/0 (proto_version '1', publication_names '\"pub1\"')") at walsender.c:1527
+#12 0x0000000000817b01 in PostgresMain (argc=1, argv=0x25cc418, dbname=0x25cc2c8 "postgres", username=0x2583d18 "cituscluster") at postgres.c:4084
+#13 0x000000000078b2d2 in BackendRun (port=0x25c6ce0) at postmaster.c:4357
+#14 0x000000000078aa7b in BackendStartup (port=0x25c6ce0) at postmaster.c:4029
+#15 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#16 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x2581bf0) at postmaster.c:1361
+#17 0x00000000006cf26f in main (argc=1, argv=0x2581bf0) at main.c:228
+[cituscluster@gtm2 ~]$ 
+
+
+订阅端：
+postgres=# CREATE SUBSCRIPTION sub1 CONNECTION 'host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres' PUBLICATION pub1;
+ERROR:  relation "public.publication1" does not exist
+postgres=# create table publication1(id int primary key, name int, age int);
+CREATE TABLE
+postgres=# CREATE SUBSCRIPTION sub1 CONNECTION 'host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres' PUBLICATION pub1;
+NOTICE:  created replication slot "sub1" on publisher
+CREATE SUBSCRIPTION
+postgres=# \d+ publication1;
+                               Table "public.publication1"
+ Column |  Type   | Collation | Nullable | Default | Storage | Stats target | Description 
+--------+---------+-----------+----------+---------+---------+--------------+-------------
+ id     | integer |           | not null |         | plain   |              | 
+ name   | integer |           |          |         | plain   |              | 
+ age    | integer |           |          |         | plain   |              | 
+Indexes:
+    "publication1_pkey" PRIMARY KEY, btree (id)
+
+postgres=# 
+postgres=# select * from publication1;
+ id | name | age 
+----+------+-----
+(0 rows)
+postgres=# select * from pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 35583 | sub1    | 25903 |       | 0/52E3E48    | 2019-06-11 19:48:31.247848-07 | 2019-06-11 19:46:28.257108-07 | 0/52E3E48      | 2019-06-11 19:48:31.247848-07
+(1 row)
+
+postgres=# select * from pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# select * from publication1;
+ id | name | age 
+----+------+-----
+  1 | 1234 |    
+  2 | 1234 |    
+  3 | 1234 |    
+  4 | 1234 |    
+  5 | 1234 |    
+  6 | 1234 |    
+  7 | 1234 |    
+  8 | 1234 |    
+  9 | 1234 |    
+ 10 | 1234 |    
+ 11 | 1234 |    
+ 12 | 1234 |    
+ 13 | 1234 |    
+ 14 | 1234 |    
+ 15 | 1234 |    
+ 16 | 1234 |    
+ 17 | 1234 |    
+ 18 | 1234 |    
+ 19 | 1234 |    
+ 20 | 1234 |    
+(20 rows)
+
+postgres=# select * from pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 35583 | sub1    | 25903 |       | 0/52E8DD0    | 2019-06-11 19:58:04.814055-07 | 2019-06-11 19:55:58.031767-07 | 0/52E8DD0      | 2019-06-11 19:58:04.814055-07
+(1 row)
+
+[cituscluster@center1 ~]$ ps -ef | grep postgres
+cituscl+   1722      1  0 Jun10 ?        00:00:02 /opt/pgsql-10.1/bin/postgres
+cituscl+   1725   1722  0 Jun10 ?        00:00:00 postgres: checkpointer process  
+cituscl+   1726   1722  0 Jun10 ?        00:00:07 postgres: writer process   
+cituscl+   1727   1722  0 Jun10 ?        00:00:07 postgres: wal writer process  
+cituscl+   1728   1722  0 Jun10 ?        00:00:04 postgres: autovacuum launcher process  
+cituscl+   1729   1722  0 Jun10 ?        00:00:29 postgres: stats collector process  
+cituscl+   1730   1722  0 Jun10 ?        00:01:57 postgres: bgworker: task tracker  
+cituscl+   1731   1722  0 Jun10 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+   1734   1722  0 Jun10 ?        00:01:37 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+   1778   1722  0 Jun10 ?        00:01:48 postgres: cituscluster postgres 192.168.221.133(59974) idle
+cituscl+  25803   1722  0 19:40 ?        00:00:00 postgres: cituscluster postgres 192.168.221.130(56918) idle
+cituscl+  25884  25841  0 19:44 pts/1    00:00:00 psql -d postgres
+cituscl+  25885   1722  0 19:44 ?        00:00:01 postgres: cituscluster postgres [local] idle
+cituscl+  25903   1722  0 19:45 ?        00:00:00 postgres: bgworker: logical replication worker for subscription 35583  
+cituscl+  26001  25940  0 19:50 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@center1 ~]$ pstack 25903
+#0  0x00007fee14e40163 in __epoll_wait_nocancel () from /lib64/libc.so.6
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x1d3d268, cur_timeout=1000, occurred_events=0x7ffeefe65f00, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x1d3d268, timeout=1000, occurred_events=0x7ffeefe65f00, nevents=1, wait_event_info=83886086) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7fee0ce850e4, wakeEvents=27, sock=4, timeout=1000, wait_event_info=83886086) at latch.c:385
+#4  0x00000000007b710d in LogicalRepApplyLoop (last_received=86930152) at worker.c:1167
+#5  0x00000000007b7e48 in ApplyWorkerMain (main_arg=0) at worker.c:1650
+#6  0x000000000077a272 in StartBackgroundWorker () at bgworker.c:835
+#7  0x000000000078c035 in do_start_bgworker (rw=0x1d04ab0) at postmaster.c:5680
+#8  0x000000000078c36f in maybe_start_bgworkers () at postmaster.c:5884
+#9  0x000000000078b455 in sigusr1_handler (postgres_signal_arg=10) at postmaster.c:5073
+#10 <signal handler called>
+#11 0x00007fee14e36c53 in __select_nocancel () from /lib64/libc.so.6
+#12 0x00000000007872c2 in ServerLoop () at postmaster.c:1717
+#13 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1cbfc20) at postmaster.c:1361
+#14 0x00000000006cf26f in main (argc=1, argv=0x1cbfc20) at main.c:228
+[cituscluster@center1 ~]$ 
+
+
+
+
+
+
+
+
+wal_receiver_status_interval (integer)
+Specifies the minimum frequency for the WAL receiver process on the standby to send information about replication progress to the primary or upstream standby, where it can be seen using the pg_stat_replication view. 
+The standby will report the last write-ahead log location it has written, the last position it has flushed to disk, and the last position it has applied. This parameter's value is the maximum interval, in seconds, between reports. 
+Updates are sent each time the write or flush positions change, or at least as often as specified by this parameter. 
+Thus, the apply position may lag slightly behind the true position. Setting this parameter to zero disables status updates completely. 
+This parameter can only be set in the postgresql.conf file or on the server command line. The default value is 10 seconds.
+指定备用数据库上WAL接收器进程的最小频率，以便将有关复制进度的信息发送到主要备用数据库或上游备用数据库，从而可以使用该pg_stat_replication视图查看。
+备用数据库将报告它已写入的最后一个预写日志位置，它已刷新到磁盘的最后一个位置，以及它已应用的最后一个位置。
+此参数的值是报告之间的最大间隔（以秒为单位）。每次写入或刷新位置发生更改时发送更新，或者至少按此参数指定的频率发送更新。
+因此，应用位置可能略微落后于真实位置。将此参数设置为零会完全禁用状态更新。此参数只能在postgresql.conf文件或服务器命令行中设置。默认值为10秒。
+
+
+
+订阅端创建订阅者代码流程：
+命令行 CREATE SUBSCRIBE ...
+CreateSubscription
+1. 解析命令行字段并做校验   -- parse_subscription_options
+	1.1 对命令行字段赋默认值： connect=true enabled=true create_slot=true slot_name=NULL copy_data=true synchronous_commit=NULL refresh=true
+	1.2 循环解析命令行字段并获取相应值： "connect" "enabled" "create_slot" "slot_name" "copy_data" "synchronous_commit" "refresh"
+	1.3 检查各字段值之间的冲突：
+		1.3.1 配置值： connect=false 与 enabled=true / create_slot=true / copy_data=true 冲突
+		1.3.2 字段值： slot_name!=NULL 与 enabled=true / create_slot=true 冲突
+2. 若 create_slot=true 则校验当前命令是否处于事务 或 子事务 或 函数内，若是则报错
+3. 若当前用户不是超级用户，则报错
+4. 对 pg_subscription 表加锁 RowExclusiveLock
+5. 查询待创建的订阅者 sub_name 在 pg_subscription 表中是否存在，若存在则报错
+6. 若命令行字段未指定 slot_name ，则设置为 sub_name
+7. 若命令行字段未指定 synchronous_commit ，则设置为 'off'
+8. 加载动态库 libpqwalreceiver
+9. 校验 conninfo 合法性
+10. 生成1条订阅者记录插入 pg_subscription 表，并释放表锁。返回订阅者序号 subid
+11. 在 pg_replication_origin 表中插入一条 'pg_<subid>' 的新记录
+12. 若 connect=true 则通过 libpq 接口获取到发布端的连接
+13. 若 copy_data=true 则设置 table_state='i' ，否则 table_state='r'
+14. 向发布端发送查询命令，获取订阅的表信息(schemaname & tablename) 
+	SELECT DISTINCT t.schemaname, t.tablename FROM pg_catalog.pg_publication_tables t HERE t.pubname IN (%s, ...) ，%s 为关联的发布者名
+15. 遍历步骤14获取的表信息，校验该表是否为常规表，若不是则报错；若是则向 pg_subscription_rel 表中插入一条新订阅者记录（若 subid 已存在则不操作）
+16. 若 create_slot=true 则向发布端发送创建复制槽命令
+	CREATE_REPLICATION_SLOT <slot_name> LOGICAL pgoutput NOEXPORT_SNAPSHOT 
+17. 关闭到发布端的连接
+18. 释放 pg_subscription 表锁
+19. 若 enabled=true 则设置全局变量 on_commit_launcher_wakeup = true
+20. InvokeObjectPostCreateHook
+
+相关全局结构体：
+LogicalRepCtx
+名为 "Logical Replication Launcher Data" 的共享内存，存储的元素数量为 max_logical_replication_workers
+replication_states_ctl
+名为 "ReplicationOriginState" 的共享内存，存储的元素数量为 max_replication_slots
+
+StartupReplicationOrigin <- StartupXLOG <- InitPostgres
+
+
+创建订阅者事务提交：
+CommitTransaction -> AtEOXact_ApplyLauncher(true)
+1. 遍历 on_commit_stop_workers ，停止与之相关的逻辑复制进程（发送信号 SIGTERM）
+2. 若全局变量 on_commit_launcher_wakeup = true ，向 LogicalRepCtx->launcher_pid 进程（也即 ApplyLauncherMain 进程）发送信号 SIGUSR1
+3. 重置全局变量 on_commit_launcher_wakeup = false on_commit_stop_workers = NIL
+
+ApplyLauncherMain
+1. 设置逻辑复制进程ID： LogicalRepCtx->launcher_pid = MyProcPid
+2. 设置信号处理函数
+3. BackgroundWorkerInitializeConnection
+4. 进入死循环
+  4.1 获取当前时间戳
+  4.2 若循环时间间隔大于等于 wal_retrieve_retry_interval 则开启一个事务，获取 pg_subscription 表中所有订阅者信息；反之，则继续等待
+	4.2.1 遍历订阅者信息，若 enabled=false 则跳过，反之，则在 LogicalRepCtx->workers 数组根据 subid relid(InvalidOid) 中查找该订阅者
+	4.2.2 若查询不存在，则触发 logicalrep_worker_launch ，在 LogicalRepCtx->workers 数组中找到一个未使用的元素保存worker，并根据元素索引(slot)，注册一个 ApplyWorkerMain 进程(RegisterDynamicBackgroundWorker), 等待事件触发(WaitForReplicationWorkerAttach)
+		worker->launch_time = now;
+		worker->in_use = true;
+		worker->generation++;
+		worker->proc = NULL;
+		worker->dbid = dbid;
+		worker->userid = userid;
+		worker->subid = subid;
+		worker->relid = InvalidOid;
+		worker->relstate = SUBREL_STATE_UNKNOWN;
+		worker->relstate_lsn = InvalidXLogRecPtr;
+		worker->last_lsn = InvalidXLogRecPtr;
+		TIMESTAMP_NOBEGIN(worker->last_send_time);
+		TIMESTAMP_NOBEGIN(worker->last_recv_time);
+		worker->reply_lsn = InvalidXLogRecPtr;
+		TIMESTAMP_NOBEGIN(worker->reply_time);
+	
+		bgw.bgw_library_name = "postgres"
+		bgw.bgw_function_name = "ApplyWorkerMain"
+		bgw.bgw_name = "logical replication worker for subscription <subid>"                -- 订阅的表 relid 无效时
+		bgw.bgw_name = "logical replication worker for subscription <subid> sync <relid>"   -- 订阅的表 relid 有效时
+		bgw.bgw_restart_time = BGW_NEVER_RESTART
+		bgw.bgw_notify_pid = MyProcPid
+		bgw.bgw_main_arg = Int32GetDatum(slot)
+
+RegisterDynamicBackgroundWorker
+1. 省略校验流程
+2. 将注册的程序保存到全局变量数组中 BackgroundWorkerData->slot
+3. 向 postmaster 进程发送信号量 PMSIGNAL_BACKGROUND_WORKER_CHANGE
+
+postmaster 进程信号量处理函数 sigusr1_handler
+1. 若收到信号量 PMSIGNAL_BACKGROUND_WORKER_CHANGE ，则触发 BackgroundWorkerStateChange
+2. 中间省略
+3. 若 StartWorkerNeeded || HaveCrashedWorker ，则触发 maybe_start_bgworkers 遍历全局链表 BackgroundWorkerList 筛选符合条件的进程启动 
+												-> do_start_bgworker 将进程信息保存到全局变量 MyBgworkerEntry ，并以 postmaster 子进程启动该进程
+												-> StartBackgroundWorker 在全局数组 InternalBGWorkers 中查询该进程的执行函数并调用
+												-> ApplyWorkerMain
+
+logicalrep_worker_onexit
+
+
+
+ApplyWorkerMain
+1. 根据入参 slot 完成全局变量赋值，并作相关有效性校验，同时注册进程退出回调函数 logicalrep_worker_onexit  -- logicalrep_worker_attach
+	MyLogicalRepWorker = &LogicalRepCtx->workers[slot]
+	MyLogicalRepWorker->proc = MyProc;
+2. 初始化全局变量 MyLogicalRepWorker 相关时间变量(last_send_time / last_recv_time / reply_time)为当前时间戳
+3. 加载动态库 libpqwalreceiver
+4. 创建一个名为 "logical replication apply" 的资源所有者  -- ResourceOwnerCreate
+5. 设置环境变量 session_replication_role=replica
+6. 连接到逻辑复制关联的数据库  -- BackgroundWorkerInitializeConnectionByOid
+7. 创建名为 "ApplyContext" 的顶级内存上下文
+8. 开启一个事务，执行以下操作
+	8.1 根据 subid 在 pg_subscription 表中查找订阅者信息，完成全局变量赋值与初始化
+		MySubscription = GetSubscription(MyLogicalRepWorker->subid, false)
+		MySubscriptionValid = true
+	8.2 设置环境变量 synchronous_commit=MySubscription->synccommit
+	8.3. 注册 pg_subscription 表缓存失效回调函数 subscription_change_cb
+		MySubscriptionValid = false
+	8.4 打印日志 "logical replication apply worker for subscription <sub_name> has started"                                    -- 订阅的表 relid 无效时
+	8.4 打印日志 "logical replication table synchronization worker for subscription <sub_name>, table <rel_name> has started"  -- 订阅的表 relid 有效时
+9. 若订阅的表 relid 无效，则执行以下操作    -- 创建完订阅者后，第一次走这里
+	9.1 开启一个事务，执行以下操作
+		9.1.1 通过 "pg_<subid>" 在 pg_replication_origin 表中查找订阅者记录
+		9.1.2 replorigin_session_setup
+		9.1.3 设置全局变量 replorigin_session_origin = originid
+		9.1.4 replorigin_session_get_progress
+	9.2 通过 libpq 接口获取到该订阅者关联的发布端的连接
+	9.3 向发布端发送以下命令，获取系统ID
+		IDENTIFY_SYSTEM
+10. 若不满足条件9，也即，订阅的表 relid 有效，则触发 LogicalRepSyncTableStart
+11. 注册 pg_subscription_rel 表缓存失效回调函数 invalidate_syncing_table_states
+	table_states_valid = false
+12. 向发布端发送以下命令，启动逻辑复制，其中 %X 分别为 session_replication_state->remote_lsn >>32, session_replication_state->remote_lsn
+	START_REPLICATION SLOT <sub_slot_name> LOGICAL  %X/%X (proto_version 1, publication_names <pub_name1>,...,<pub_name>)
+13. 进入死循环  -- LogicalRepApplyLoop
+14. 循环退出，进程安全退出
+
+
+LogicalRepApplyLoop(last_lsn)
+1. 在上下文 ApplyContext 中创建名为 "ApplyMessageContext" 的内存上下文
+2. pgstat_report_activity
+3. 进入死循环，执行以下操作
+	3.1 获取当前时间戳
+	3.2 通过pq接口 PQgetCopyData 获取数据
+	3.3 进入死循环，解析消息内容并进行相关操作
+		3.3.1 判断数据长度是否为0，若是则退出循环3.3
+		3.3.2 判断数据长度是否小于0，若是则退出循环3.3 ，并设置标记位，指示退出循环3
+		3.3.2 获取当前时间戳
+		3.3.3 读取一个字节，根据消息类型进行相关处理
+			1. 若为 'w' 消息，依次读取消息携带的4个信息(start_lsn / end_lsn / send_time / action), 并更新全局变量 MyLogicalRepWorker ，同时调用 apply_dispatch 处理 action
+				MyLogicalRepWorker->last_lsn = last_lsn;  -- start_lsn / end_lsn / 入参 last_lsn 三者中的最大值
+				MyLogicalRepWorker->last_send_time = send_time;
+				MyLogicalRepWorker->last_recv_time = GetCurrentTimestamp();
+			注意：通过函数 should_apply_changes_for_rel 对 复制DML操作做了限制
+				app worker 进程：仅当在 pg_subscription_rel 表中，该表订阅状态为 'r' ，或者订阅状态为 's' 且订阅lsn小于等于 remote_final_lsn 时，允许复制DML操作
+				sync worker 进程：只能复制与订阅表相关的操作
+			2. 若为 'k' 消息，依次读取消息携带的3个信息(end_lsn / timestamp / reply_requested), 并更新全局变量 MyLogicalRepWorker ，同时调用 send_feedback 发送心跳响应报文
+				MyLogicalRepWorker->last_lsn = last_lsn;  -- end_lsn / 入参 last_lsn 两者中的最大值
+				MyLogicalRepWorker->last_send_time = timestamp;
+				MyLogicalRepWorker->last_recv_time = GetCurrentTimestamp();
+				MyLogicalRepWorker->reply_lsn = last_lsn;    -- end_lsn / 入参 last_lsn 两者中的最大值
+				MyLogicalRepWorker->reply_time = timestamp;
+		3.3.4 通过pq接口 PQgetCopyData 获取数据
+	3.4 send_feedback 发送响应报文
+	3.5 当远端事务终止时 (!in_remote_transaction) 也即处理完 commit 报文，进行以下操作
+		3.5.1 处理缓存失效消息  -- AcceptInvalidationMessages
+		3.5.2 如果 MySubscriptionValid 失效，则重新读取 pg_subscription 表中订阅者信息刷新全局变量 MySubscription ，并重置环境变量 "synchronous_commit"
+		3.5.3 开始对订阅表的逻辑复制  -- process_syncing_tables
+	3.6 进程挂起，等待事件 WAIT_EVENT_LOGICAL_APPLY_MAIN 或超时
+	3.7 超时、信号量故障等异常处理：对于未触发异常退出的超时，仍然通过 send_feedback 发送响应报文
+	3.8 若步骤 3.3.2 设置标记位，则关闭到发布端的连接，并退出循环3
+
+apply_dispatch
+apply_handle_begin 处理 BEGIN 报文
+1. 依次读取报文读取消息携带的3个信息(final_lsn / committime / xid) 
+2. 设置全局变量 remote_final_lsn = final_lsn
+3. 设置全局变量 in_remote_transaction = true
+4. pgstat_report_activity(STATE_RUNNING, NULL);
+
+apply_handle_commit 处理 COMMIT 报文
+1. 依次读取报文读取消息携带的3个信息(commit_lsn / end_lsn / committime) 
+2. 若当前出于一个事务中，且当前进程为 app worker ，则执行以下操作
+	2.1 设置全局变量
+		replorigin_session_origin_lsn = end_lsn;
+		replorigin_session_origin_timestamp = committime;
+	2.2 提交当前事务
+	2.3 pgstat_report_stat(false);
+	2.4 store_flush_position(end_lsn);
+	
+3. 若不满足条件2，则执行以下操作
+	3.1 处理缓存失效消息  -- AcceptInvalidationMessages
+	3.2 如果 MySubscriptionValid 失效，则重新读取 pg_subscription 表中订阅者信息刷新全局变量 MySubscription ，并重置环境变量 "synchronous_commit"  -- maybe_reread_subscription
+
+process_syncing_tables
+1. 若当前逻辑复制进程没有指定表 relid 则触发 process_syncing_tables_for_apply  -- 创建完订阅者后，第一次走这里
+2. 若当前逻辑复制进程指定了复制表 relid 则触发 process_syncing_tables_for_sync
+
+process_syncing_tables_for_apply
+1. 若 !table_states_valid ，则开启一个事务（流程结尾处调用COMMIT函数），执行以下操作  -- 创建完订阅者后，第一次走这里
+	1.1 在 pg_subscription_rel 表中查询，当前订阅者的订阅状态不为 'r' 的表记录，保存在静态局部链表中
+	1.2 设置全局变量 table_states_valid = true
+2. 创建一个名为 "Logical replication table sync worker start times" 的静态局部HASH表
+3. 遍历步骤1.1 获取的链表，执行以下操作
+	3.1 若表的订阅状态不为 's' ，则在 LogicalRepCtx->workers 数组根据 subid relid(有效值) 中查找该订阅者，执行以下操作  -- 创建完订阅者后，第一次走这里
+		3.2.1 若不存在该订阅者，若当前订阅者个数小于 max_sync_workers_per_subscription ，则向步骤2创建的HASH表中插入此订阅者信息，并触发 logicalrep_worker_launch 
+		3.2.2 若存在该订阅者，则执行以下操作
+			1. 若订阅者进程的订阅状态为 'w' ，则刷新此订阅者进程数据
+				syncworker->relstate = 'c';
+				syncworker->relstate_lsn = Max(syncworker->relstate_lsn, current_lsn);
+			2. 若满足条件1，也即，订阅者进程的旧状态为 'w' ，则通过 logicalrep_worker_wakeup_ptr 唤醒此订阅者(LogicalRepSyncTableStart)进行逻辑复制，并开启一个事务（若未触发步骤1），挂起等待该表的订阅状态刷新为 's'
+			
+	3.2 若表的订阅状态为 's' ，若当前订阅者的lsn 大于等于表复制的lsn，则刷新 pg_subscription_rel 表中订阅者数据
+		rstate->state = 'r';
+		rstate->lsn = current_lsn; 
+4. 若开启了事务，则提交事务并触发 pgstat_report_stat
+
+
+
+
+process_syncing_tables_for_sync
+1. 若 MyLogicalRepWorker->relstate 为 'c' ，且入参lsn大于等于当前订阅者进程lsn，则进行以下操作
+	1.1 刷新订阅者全局变量 MyLogicalRepWorker 数据
+		MyLogicalRepWorker->relstate = 's';
+		MyLogicalRepWorker->relstate_lsn = current_lsn;
+	1.2 刷新 pg_subscription_rel 表中该订阅者状态为 's' 以及lsn为入参lsn
+	1.3 关闭当前订阅者进程到发布端的连接
+	1.4 触发 finish_sync_worker
+
+
+finish_sync_worker
+1. 若当前出于事务中，则提交事务，并触发 pgstat_report_stat
+2. xlog 刷到磁盘  -- XLogFlush
+3. 开启一个事务，执行以下操作
+	3.1 打印日志： logical replication table synchronization worker for subscription <sub_name> table <table_name> has finished
+4. 向 app worker 进程发送信号量唤醒进程 -- logicalrep_worker_wakeup
+5. 进程安全退出
+
+logicalrep_worker_wakeup
+1. 根据入参 subid relid 从 LogicalRepCtx->workers 数组中找到对应的worker进程
+2. 若步骤1查询存在，则向该worker进程发送信号量，唤醒进程  -- logicalrep_worker_wakeup_ptr
+
+新创建的订阅者 sync 进程 ApplyWorkerMain->LogicalRepSyncTableStart
+LogicalRepSyncTableStart
+1. 开启一个事务，执行以下操作
+	1.1 获取 pg_subscription_rel 表中指定 subid relid(有效值) 的订阅者信息
+2. 根据步骤1获取的信息，设置全局变量 MyLogicalRepWorker
+	MyLogicalRepWorker->relstate = relstate;
+	MyLogicalRepWorker->relstate_lsn = relstate_lsn;
+3. 以应用名 '<sub_slot_name>_<subid>_sync_<relid>' 获取到发布端的连接
+4. 若 MyLogicalRepWorker->relstate 为 'i' 或者 'd' ，则进行以下操作
+	4.1 刷新全局变量 MyLogicalRepWorker
+		SpinLockAcquire(&MyLogicalRepWorker->relmutex);
+		MyLogicalRepWorker->relstate = 'd';
+		MyLogicalRepWorker->relstate_lsn = InvalidXLogRecPtr;
+		SpinLockRelease(&MyLogicalRepWorker->relmutex);
+	4.2 开启一个事务，执行以下操作
+		4.2.1 将上述订阅者数据变更刷新到 pg_subscription_rel 表
+	4.3 pgstat_report_stat(false);
+	4.4 开启一个事务（没有调用相应COMMIT函数），执行以下操作
+		4.4.1 打开本地 relid 表，上锁 RowExclusiveLock
+		4.4.2 向发布端发送以下命令
+			BEGIN READ ONLY ISOLATION LEVEL REPEATABLE READ
+		4.4.3 向发布端发送以下命令，创建带快照的临时复制槽
+			CREATE_REPLICATION_SLOT TEMPORARY <slot_name> LOGICAL pgoutput USE_SNAPSHOT 
+		4.4.4 在当前事务快照(GetTransactionSnapshot())内，拷贝表数据  -- copy_table
+		4.4.5 向发布端发送以下命令
+			COMMIT
+		4.4.6 关闭本地表并释放锁
+		4.4.7 使拷贝数据生效可见   -- CommandCounterIncrement
+		4.4.8 刷新全局变量 MyLogicalRepWorker
+				SpinLockAcquire(&MyLogicalRepWorker->relmutex);
+				MyLogicalRepWorker->relstate = 'w';
+				MyLogicalRepWorker->relstate_lsn = *origin_startpos;
+				SpinLockRelease(&MyLogicalRepWorker->relmutex);
+		4.4.9 进程挂起，等待状态变化事件(WAIT_EVENT_LOGICAL_SYNC_STATE_CHANGE)唤醒  -- wait_for_worker_state_change
+		4.4.10 若入参lsn大于等于当前订阅者lsn，则刷新 pg_subscription_rel 表中该订阅者状态为 's' 、lsn为入参lsn，并触发 finish_sync_worker
+5. 若 MyLogicalRepWorker->relstate 为 's' 或者 'r' ，则直接触发 finish_sync_worker
+
+
+以发布端已创建发布者pub1发布表tbl1，订阅端创建发布者pub1的订阅者sub1为例
+CREATE SUBSCRIPTION sub1 CONNECTION 'host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres' PUBLICATION pub1;
+
+  1. 订阅端生成新的订阅者记录存入 pg_subscription 表、 pg_replication_origin 表、pg_subscription_rel 表
+  2. 订阅端向发布端发送查询命令，获取发布者pub1所发布的表信息
+    SELECT DISTINCT t.schemaname, t.tablename FROM pg_catalog.pg_publication_tables t HERE t.pubname IN ("pub1")
+  3. 订阅端向发布端发送创建复制槽命令
+    CREATE_REPLICATION_SLOT "sub1" LOGICAL pgoutput NOEXPORT_SNAPSHOT 
+  4. 订阅端创建订阅者事务提交时，将唤醒 ApplyLauncherMain 进程。向 LogicalRepCtx->launcher_pid 进程（也即 ApplyLauncherMain 进程）发送信号 SIGUSR1
+  5. 订阅端ApplyLauncherMain进程从 pg_subscription 表中获取订阅者sub1的信息，触发 logicalrep_worker_launch 注册一个app worker进程，并向 postmaster 进程发送信号量 PMSIGNAL_BACKGROUND_WORKER_CHANGE
+  6. 订阅端postmaster 进程捕捉到信号量，将启动该app worker进程（也即 ApplyWorkerMain 进程）
+  7. app worker进程向发布端发送 "IDENTIFY_SYSTEM" 命令获取发布端相关系统信息
+  8. app worker进程向发布端发送启动逻辑复制的命令
+    START_REPLICATION SLOT "sub1" LOGICAL 0/0 (proto_version 1, publication_names "pub1")
+  9. app worker进程进入死循环处理复制槽报文，然后挂起等待状态变化时间(WAIT_EVENT_LOGICAL_APPLY_MAIN)唤醒或等待超时，直到报文读空或捕捉到异常退出。
+	同时并触发 logicalrep_worker_launch 注册一个sync worker进程（进程与订阅的表一一对应）
+	其中，通过函数 should_apply_changes_for_rel 对app worker进程复制DML操作做了限制。仅当在 pg_subscription_rel 表中，该表订阅状态为 'r' ，或者订阅状态为 's' 且订阅lsn小于等于 remote_final_lsn 时，允许复制DML操作
+  10. postmaster 进程捕捉到信号量，将启动该sync worker进程（也即 ApplyWorkerMain 进程）
+  11. sync worker进程依次向发布端发送以下命令，也即创建一个临时复制槽
+    BEGIN READ ONLY ISOLATION LEVEL REPEATABLE READ
+	CREATE_REPLICATION_SLOT TEMPORARY "sub1_tbl1_43772_sync_43764" LOGICAL pgoutput USE_SNAPSHOT 
+  12. sync worker进程向发布端拷贝tbl1表数据
+  13. sync worker进程拷贝表数据完毕后向发布端发送 "COMMIT" 命令，并刷新sync worker进程复制状态为'w'。
+	然后通过 logicalrep_worker_wakeup_ptr 唤醒沉睡的app worker进程，自己挂起等待状态变化事件(WAIT_EVENT_LOGICAL_SYNC_STATE_CHANGE)唤醒或等待超时
+  14. app worker进程检测到sync worker进程复制状态为'w'，则刷新sync worker进程复制状态为'c'，并通过 logicalrep_worker_wakeup_ptr 唤醒沉睡的sync worker进程
+  15. sync worker进程向发布端发送启动逻辑复制的命令
+    START_REPLICATION SLOT "sub1_tbl1_43772_sync_43764" LOGICAL 0/0 (proto_version 1, publication_names "pub1")
+  16. sync worker进程进入死循环处理复制槽报文，然后挂起等待状态变化时间(WAIT_EVENT_LOGICAL_APPLY_MAIN)唤醒或等待超时，直到报文读空或捕捉到异常，进程终止退出。
+	当报文中关于tbl1表的lsn超过sync worker进程的订阅lsn时，将刷新sync worker进程复制状态为's'，并通过 logicalrep_worker_wakeup_ptr 唤醒沉睡的app worker进程。sync worker进程终止退出
+  17. app worker进程检测到sync worker进程复制状态为's'，而报文中关于tbl1表的lsn超过app worker进程的订阅lsn时，将刷新tbl1表的订阅状态为'r'
+
+
+存量同步过程中的复制状态变化与订阅端进程交互：
+app worker进程有2处挂起等待：
+ApplyWorkerMain->LogicalRepApplyLoop->process_syncing_tables->process_syncing_tables_for_apply->wait_for_relation_state_change
+ApplyWorkerMain->LogicalRepApplyLoop->WaitLatchOrSocket
+
+sync worker进程有2处挂起等待：
+ApplyWorkerMain->LogicalRepSyncTableStart->wait_for_worker_state_change 当事件触发或者等待超时，将退出等待，继续循环逻辑；当进程复制状态
+ApplyWorkerMain->LogicalRepApplyLoop->WaitLatchOrSocket
+
+1. sync worker进程第一次进入 LogicalRepSyncTableStart -- relstate='i'
+--> relstate='d' tablestate='d'
+--> 完成表数据拷贝
+--> relstate='w'
+--> 进入 wait_for_worker_state_change 循环，通过 logicalrep_worker_wakeup_ptr 唤醒app worker进程，直到 relstate='c'
+
+2. app worker进程处于 LogicalRepApplyLoop ，死循环处理复制槽报文
+--> 收到sync worker进程通知
+--> 进入 process_syncing_tables_for_apply ，发现sync worker进程 relstate='w' ，刷新sync worker进程 relstate='c' ，通过 logicalrep_worker_wakeup_ptr 唤醒sync worker进程
+--> 进入 wait_for_relation_state_change 循环，直到 tablestate='s'
+
+3. sync worker进程处于 wait_for_worker_state_change 等待
+--> 发现 relstate='c', 退出循环等待
+--> 进入 LogicalRepApplyLoop 死循环处理复制槽报文
+--> 表数据同步完毕
+--> relstate='s' tablestate='s'
+--> 进入 finish_sync_worker ，通过 logicalrep_worker_wakeup_ptr 唤醒app worker进程
+--> 进程终止退出
+
+4. app worker进程处于 wait_for_relation_state_change 等待
+--> 收到sync worker进程通知，发现 relstate='s', 退出循环等待
+--> 确认表数据同步完毕
+--> tablestate='r'
+
+
+replorigin_session_advance 刷新全局变量 session_replication_state 元素(local_lsn / remote_lsn)
+<- RecordTransactionCommit <- CommitTransaction <- CommitTransactionCommand
+												<- EndParallelWorkerTransaction
+<- RecordTransactionCommitPrepared <- FinishPreparedTransaction <- standard_ProcessUtility
+
+
+
+
+XLOG 初始化
+main->PostgresMain->BaseInit->InitCommunication->CreateSharedMemoryAndSemaphores->XLOGShmemInit
+1. 创建名为 "XLOG Ctl" 的共享内存全局变量 XLogCtl 
+2. 创建名为 "Control File" 的共享内存全局变量 ControlFile 
+3. 设置全局变量如下：未设置的成员变量均为默认值0
+	XLogCtl->xlblocks = ((char *) XLogCtl) + sizeof(XLogCtlData);
+	XLogCtl->Insert.WALInsertLocks = (WALInsertLockPadded *)(XLogCtl->xlblocks + sizeof(XLogRecPtr) * XLOGbuffers + sizeof(WALInsertLockPadded) - ((uintptr_t) allocptr) % sizeof(WALInsertLockPadded));
+	XLogCtl->pages = (char *) TYPEALIGN(XLOG_BLCKSZ, XLogCtl->Insert.WALInsertLocks + sizeof(WALInsertLockPadded) * NUM_XLOGINSERT_LOCKS)
+	XLogCtl->XLogCacheBlck = XLOGbuffers - 1;
+	XLogCtl->SharedRecoveryInProgress = true;
+	XLogCtl->SharedHotStandbyActive = false;
+	XLogCtl->WalWriterSleeping = false;
+	InitSharedLatch(&XLogCtl->recoveryWakeupLatch);
+
+	WALInsertLocks = XLogCtl->Insert.WALInsertLocks;
+
+
+XLOG 启动
+main->PostgresMain->InitPostgres->StartupXLOG
+-->ReadControlFile 从 $PGDATA/global/pg_control 文件（可通过在$PGDATA目录下执行 pg_controldata 命令查看）中读取启动信息保存到 ControlFile 中
+-->SyncDataDirectory 没看懂怎么运用 pg_wal 目录下的文件
+-->readRecoveryCommandFile 读取 $PGDATA/recovery.conf 文件内容（只有备节点存在），对recovery相关流程暂不做讨论
+-->XLogReaderAllocate 创建并初始化一个 XLogReader ，指定 read_page 回调函数为 XLogPageRead
+-->read_backup_label 读取 $PGDATA/backup_label 文件内容（只有备节点存在），对checkpoint相关流程暂不做讨论
+-->若不存在上述文件，则查看 $PGDATA/tablespace_map 文件是否存在，存在则做相关限制校验，不存在则不考虑
+-->
+
+
+
+订阅端进程使用 XLOG 相关流程
+逻辑复制的起始位置从全局变量 session_replication_state->remote_lsn 获取（下文以 origin_startpos 表示），当订阅端事务/预事务提交时将刷新此LSN数值
+通过 libpqrcv_startstreaming 启动逻辑复制时，将会在报文中把 origin_startpos 发送给发布端
+进入大循环 LogicalRepApplyLoop ，入参 last_received = origin_startpos
+在循环读取处理复制槽报文时，将刷新相关LSN值
+1. last_received 为报文中携带的LSN的最大值
+2. BEGIN 报文：刷新 remote_final_lsn = begin_data.final_lsn;
+3. INSERT 报文：刷新（前三个为有条件更新） XLogCtl->Insert  XLogCtl->LogwrtRqst.Write  LogwrtResult  ProcLastRecPtr  XactLastRecEnd
+4. UPDATE 报文：刷新（前三个为有条件更新） XLogCtl->Insert  XLogCtl->LogwrtRqst.Write  LogwrtResult  ProcLastRecPtr  XactLastRecEnd
+5. DELETE 报文：似乎不会
+6. COMMIT 报文：
+
+ApplyWorkerMain->BackgroundWorkerInitializeConnectionByOid->InitPostgres->RecoveryInProgress->InitXLOGAccess
+
+
+
+sync worker 进程应用 XLOG
+ApplyWorkerMain->LogicalRepSyncTableStart->copy_table->CopyFrom->CopyFromInsertBatch->ExecInsertIndexTuples->index_insert->...->XLogInsert->XLogInsertRecord
+-- 刷新这些全局变量 XLogCtl->Insert  XLogCtl->LogwrtRqst.Write  LogwrtResult  ProcLastRecPtr  XactLastRecEnd
+
+
+ReplicationOriginShmemInit
+创建1个名为 "ReplicationOriginState" 的共享内存全局变量 replication_states_ctl ，存储的元素数量为 max_replication_slots
+设置全局变量如下：未设置的成员变量均为默认值0
+replication_states_ctl->tranche_id = LWTRANCHE_REPLICATION_ORIGIN;
+replication_states = replication_states_ctl->states;
+
+StartupReplicationOrigin
+从 $PGDATA/pg_logical/replorigin_checkpoint 文件中读取信息（ roident remote_lsn ），依次保存到 replication_states 数组中
+
+
+replorigin_session_setup(RepOriginId node)
+遍历 replication_states 数组，查找是否存在该入参节点元素（ roident == node ）；若不存在则将这个入参节点保存到数组尾部一个未使用的元素中
+将这个数组元素赋值给全局变量 session_replication_state
+
+replorigin_session_get_progress(bool flush)
+返回全局变量的成员变量 session_replication_state->remote_lsn
+若 flush=true ，则将 session_replication_state->local_lsn 保存到磁盘
+
+
+
+ReplicationSlotsShmemInit
+1. 创建一个名为 "ReplicationSlot Ctl" 的共享内存全局变量 ReplicationSlotCtl ，存储的元素数量为 max_replication_slots
+2. 赋初始值为0
+
+ReplicationSlotAcquire
+
+CheckPointReplicationSlots
+遍历 ReplicationSlotCtl->replication_slots 数组元素，将复制槽数据刷新到文件 $PGDATA/pg_replslot/<slot_name>/state
+
+RestoreSlotFromDisk
+从 $PGDATA/pg_replslot/<slot_name>/state 文件中读取所有复制槽信息，设置 ReplicationSlotCtl->replication_slots 数组中未使用的复制槽元素数据
+	slot->data = cp.slotdata;
+	slot->effective_xmin = cp.slotdata.xmin;
+	slot->effective_catalog_xmin = cp.slotdata.catalog_xmin;
+
+InitProcGlobal
+创建名为 "Proc Header" 的共享内存全局变量 ProcGlobal
+设置全局变量如下：未设置的成员变量均为默认值0
+	ProcGlobal->spins_per_delay = DEFAULT_SPINS_PER_DELAY;
+	ProcGlobal->freeProcs = NULL;
+	ProcGlobal->autovacFreeProcs = NULL;
+	ProcGlobal->bgworkerFreeProcs = NULL;
+	ProcGlobal->startupProc = NULL;
+	ProcGlobal->startupProcPid = 0;
+	ProcGlobal->startupBufferPinWaitBufId = -1;
+	ProcGlobal->walwriterLatch = NULL;
+	ProcGlobal->checkpointerLatch = NULL;
+	pg_atomic_init_u32(&ProcGlobal->procArrayGroupFirst, INVALID_PGPROCNO);
+	ProcGlobal->allProcCount = max_connections + autovacuum_max_workers + 1 + max_worker_processes + 4;
+	ProcGlobal->allProcs 存储的元素数量为 max_connections + autovacuum_max_workers + 1 + max_worker_processes + 4 + max_prepared_transactions
+	ProcGlobal->allPgXact 存储的元素数量为 max_connections + autovacuum_max_workers + 1 + max_worker_processes + 4 + max_prepared_transactions
+	
+	
+	
+	
+发布端创建复制槽代码流程：
+命令行 CREATE_REPLICATION_SLOT ...
+CreateReplicationSlot
+1. 解析订阅端发送来的创建复制槽报文
+
+2. 设置全局变量
+	sendTimeLineIsHistoric = false;
+	sendTimeLine = ThisTimeLineID;
+3. 根据命令行类型（创建 物理复制槽 / 逻辑复制槽），执行相关流程。此处的复制槽为逻辑复制，以下只分析逻辑复制流程 
+4. 检查当前环境配置是否支持使用逻辑复制槽，若不支持，则报错退出。要求如下：
+	max_replication_slots > 0
+	wal_level = 'logical'
+	MyDatabaseId != InvalidOid
+	LocalRecoveryInProgress = false  -- 也即当前节点不是备节点
+5. 创建复制槽，执行以下操作  -- ReplicationSlotCreate
+  1. 校验复制槽的名字是否合法
+  2. 遍历 ReplicationSlotCtl->replication_slots 数组元素，找一个未使用的元素保存该复制槽信息；若发现该复制槽名字在数组中已存在且在使用，则报错
+	slot->data.name = name;
+	slot->data.database =  MyDatabaseId;
+	slot->data.persistency = persistency;
+	slot->just_dirtied = false;
+	slot->dirty = false;
+	slot->effective_xmin = InvalidTransactionId;
+	slot->effective_catalog_xmin = InvalidTransactionId;
+	slot->candidate_catalog_xmin = InvalidTransactionId;
+	slot->candidate_xmin_lsn = InvalidXLogRecPtr;
+	slot->candidate_restart_valid = InvalidXLogRecPtr;
+	slot->candidate_restart_lsn = InvalidXLogRecPtr;
+  3. 创建文件夹目录以及文件 $PGDATA/pg_replslot/<slot_name>.tmp/state.tmp ，将复制槽信息（ slot->data ）写入文件后，重命名为 $PGDATA/pg_replslot/<slot_name>/state
+	注意：将复制槽信息写入文件前后，通过变更复制槽属性（ slot->just_dirtied slot->dirty ）来保护防止重入
+  4. 设置复制槽属性
+	slot->in_use = true;
+	slot->active_pid = MyProcPid;
+  5. 将复制槽保存到全局变量 MyReplicationSlot = slot
+6. 若步骤1解析的报文信息中，要求复制槽使用快照（ sync worker 进程的临时复制槽），则需对当前环境配置进行校验，不符合要求则报错
+7. 创建逻辑解码上下文，执行以下操作  -- CreateInitDecodingContext
+  1. 校验当前复制槽信息，若不合法则退出
+  2. 设置复制槽属性
+	slot->data.plugin = 'pgoutput';
+  3. 进入死循环，找到当前复制槽保障一致性安全的lsn，执行以下操作  -- ReplicationSlotReserveWal
+	3.1 设置全局变量
+		slot->data.restart_lsn = XLogCtl->Insert->CurrBytePos;
+	3.2 
+	3.3 
+  4. 对 ProcArrayLock 加 LW_EXCLUSIVE 锁后，执行以下操作
+	4.1 获取安全解码的最老的事务xid 为 xmin_horizon -- GetOldestSafeDecodingTransactionId
+	4.2. 设置复制槽属性
+	  slot->effective_catalog_xmin = xmin_horizon;
+	  slot->data.catalog_xmin = xmin_horizon;
+	  slot->effective_xmin = xmin_horizon;  -- 只有 sync worker 进程临时复制槽需要设置
+	4.3. 计算复制槽中活跃的最老 xmin ，执行以下操作  -- ReplicationSlotsComputeRequiredXmin
+	  1. 遍历 ReplicationSlotCtl->replication_slots 数组，找出正在使用的复制槽中最小的 xmin 值（ effective_xmin effective_catalog_xmin ）
+	  2. 设置全局变量成员变量为步骤1中获取的值
+	  	procArray->replication_slot_xmin = effective_xmin;
+		procArray->replication_slot_catalog_xmin = effective_catalog_xmin;
+  5. 刷新上述复制槽属性变更到复制槽文件 $PGDATA/pg_replslot/<slot_name>/state
+  6. 启动逻辑解码上下文  -- StartupDecodingContext
+	6.1 在上下文内存 CurrentMemoryContext 中创建名为 "Logical decoding context" 的内存上下文 context
+	6.2 初始化步骤6.1创建的上下文成员变量
+		1. 动态分配一段 LogicalDecodingContext 内存 ctx
+		2. 从 "pgoutput" 动态库中获取名为 "_PG_output_plugin_init" 的函数初始化以下回调函数
+			ctx->callbacks->startup_cb = pgoutput_startup;
+			ctx->callbacks->begin_cb = pgoutput_begin_txn;
+			ctx->callbacks->change_cb = pgoutput_change;
+			ctx->callbacks->commit_cb = pgoutput_commit_txn;
+			ctx->callbacks->filter_by_origin_cb = pgoutput_origin_filter;
+			ctx->callbacks->shutdown_cb = pgoutput_shutdown;
+		3. 设置 ctx 成员变量
+			ctx->context = context;
+			ctx->slot = MyReplicationSlot;
+			
+			ctx->reader->max_block_id = -1;
+			ctx->reader->read_page = logical_read_xlog_page;
+			ctx->reader->private_data = ctx;
+			
+			ctx->snapshot_builder->state = SNAPBUILD_START;
+			ctx->snapshot_builder->committed.xcnt = 0;
+			ctx->snapshot_builder->committed.xcnt_space = 128;
+			ctx->snapshot_builder->committed.includes_all_transactions = true;
+			ctx->snapshot_builder->initial_xmin_horizon = xmin_horizon;
+			ctx->snapshot_builder->start_decoding_at = InvalidXLogRecPtr;
+			ctx->snapshot_builder->building_full_snapshot = true;   -- sync worker 进程复制槽
+			ctx->snapshot_builder->building_full_snapshot = false;  -- app worker 进程复制槽
+			
+			ctx->reorder->private_data = ctx;
+			ctx->reorder->begin = begin_cb_wrapper;
+			ctx->reorder->apply_change = change_cb_wrapper;
+			ctx->reorder->commit = commit_cb_wrapper;
+			ctx->reorder->message = message_cb_wrapper;
+			
+			ctx->prepare_write = WalSndPrepareWrite;
+			ctx->write = WalSndWriteData;
+			ctx->update_progress = WalSndUpdateProgress;
+			ctx->output_plugin_options = NIL;
+	6.3 启动 pgoutput 并完成相关数据初始化  -- startup_cb_wrapper
+8. 设置全局变量 last_reply_timestamp = 0
+9. 死循环查找逻辑解码的起始位置  -- DecodingContextFindStartpoint
+
+10. 为 sync worker 进程的临时复制槽，构建复制槽快照
+	snap = SnapBuildInitialSnapshot(ctx->snapshot_builder);
+	RestoreTransactionSnapshot(snap, MyProc);
+11. FreeDecodingContext
+12. 设置 app worker 进程的复制槽属性，并刷新到复制槽文件 $PGDATA/pg_replslot/<slot_name>/state
+	slot->data.persistency = RS_PERSISTENT;
+13. 构造复制槽记录返回给订阅端
+	slot_name = slot->data.name;
+	consistent_point = slot->data.confirmed_flush >> 32 / slot->data.confirmed_flush;
+	snapshot_name = '';
+	output_plugin = 'pgoutput';
+
+
+
+
+  
+  
+  
