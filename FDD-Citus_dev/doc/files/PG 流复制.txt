@@ -1,0 +1,100 @@
+MultiClientConnect
+-- ManageWorkerTasksHash -- TaskTrackerMain
+-- ExecuteRemoteQuery -- 
+-- ReceiveRegularFile -- FetchRegularFileAsSuperUser -- worker_fetch_partition_file(select调用)  -- MAP_OUTPUT_FETCH_COMMAND -- MapFetchTaskQueryString -- ManageTaskExecution -- MultiTaskTrackerExecute -- TaskTrackerExecScan
+													 -- worker_fetch_query_results_file(select调用)
+					  -- worker_append_table_to_shard(select调用) -- WORKER_APPEND_TABLE_TO_SHARD -- CopyShardCommandList -- RepairShardPlacement
+																					  -- master_append_table_to_shard
+
+insert into test1 values(21,1234),(22,1234);
+
+host=192.168.221.131 port=5432 user=cituscluster password=123456
+
+host=192.168.221.132 port=5432 user=cituscluster password=123456
+
+
+postgres=# select * from pg_stat_get_wal_receiver();
+  pid  |  status   | receive_start_lsn | receive_start_tli | received_lsn | received_tli |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |       latest_end_ti
+me        | slot_name |                                                                                       conninfo                                                                         
+               
+-------+-----------+-------------------+-------------------+--------------+--------------+-------------------------------+-------------------------------+----------------+--------------------
+----------+-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------
+ 14496 | streaming | 0/4000000         |                 1 | 0/5000950    |            1 | 2019-03-19 01:35:24.778829-07 | 2019-03-19 01:33:45.711762-07 | 0/5000950      | 2019-03-19 01:13:23
+.53254-07 |           | user=cituscluster password=******** dbname=replication host=192.168.221.131 port=5432 fallback_application_name=walreceiver sslmode=disable sslcompression=1 target_ses
+sion_attrs=any
+(1 row)
+
+--主CN
+postgres=# select * from pg_stat_get_wal_senders();
+ pid  |   state   | sent_lsn  | write_lsn | flush_lsn | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+------+-----------+-----------+-----------+-----------+------------+-----------+-----------+------------+---------------+------------
+ 2061 | streaming | 0/5000140 | 0/5000140 | 0/5000140 | 0/5000140  |           |           |            |             0 | async
+(1 row)
+
+postgres=# 
+
+--备CN
+postgres=# select * from pg_stat_get_wal_receiver();
+ pid  |  status   | receive_start_lsn | receive_start_tli | received_lsn | received_tli |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |       latest_end_tim
+e       | slot_name |                                                                                       conninfo                                                                           
+             
+------+-----------+-------------------+-------------------+--------------+--------------+-------------------------------+-------------------------------+----------------+---------------------
+--------+-----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------
+ 1821 | streaming | 0/5000000         |                 1 | 0/5000140    |            1 | 2019-03-19 20:33:06.505455-07 | 2019-03-19 20:31:26.587426-07 | 0/5000140      | 2019-03-19 18:55:56.
+7585-07 |           | user=cituscluster password=******** dbname=replication host=192.168.221.130 port=5432 fallback_application_name=walreceiver sslmode=disable sslcompression=1 target_sessi
+on_attrs=any
+(1 row)
+
+postgres=# 
+
+
+1. 配置recovery.conf内容
+
+2. StartupXLOG 时，调用 readRecoveryCommandFile 从 recovery.conf 文件中读取'primary_conninfo'字段存储到全局变量 PrimaryConnInfo、'standby_mode'字段存储到全局变量 StandbyModeRequested；
+根据'recovery_target_timeline'字段配置两个全局变量 recoveryTargetTLI 和 recoveryTargetIsLatest
+
+3. StartupXLOG 时，调用 XLogReaderAllocate 挂载 XLogReaderState.read_page 钩子函数 XLogPageRead
+StartupXLOG --> ReadRecord --> XLogReadRecord --> ReadPageInternal : 调用 read_page 钩子函数 XLogPageRead
+StartupXLOG --> ReadCheckpointRecord --> ReadRecord --> XLogReadRecord --> ReadPageInternal : 调用 read_page 钩子函数 XLogPageRead
+
+pg_waldump --> XLogFindNextRecord --> ReadPageInternal : 调用 read_page 钩子函数 XLogDumpReadPage
+pg_waldump --> XLogReadRecord --> ReadPageInternal : 调用 read_page 钩子函数 XLogDumpReadPage
+XLogFindNextRecord --> XLogReadRecord --> ReadPageInternal : 调用 read_page 钩子函数 XLogDumpReadPage
+
+extractPageMap --> XLogReadRecord --> ReadPageInternal : 调用 read_page 钩子函数 SimpleXLogPageRead
+readOneRecord --> XLogReadRecord --> ReadPageInternal : 调用 read_page 钩子函数 SimpleXLogPageRead
+findLastCheckpoint --> XLogReadRecord --> ReadPageInternal : 调用 read_page 钩子函数 SimpleXLogPageRead
+
+XlogReadTwoPhaseData --> XLogReadRecord --> ReadPageInternal : 调用 read_page 钩子函数 read_local_xlog_page
+
+StartLogicalReplication --> WalSndLoop --> XLogSendLogical --> XLogReadRecord --> ReadPageInternal : 调用 read_page 钩子函数 logical_read_xlog_page
+CreateReplicationSlot --> DecodingContextFindStartpoint --> XLogReadRecord --> ReadPageInternal : 调用 read_page 钩子函数 logical_read_xlog_page
+
+pg_logical_slot_get_changes_guts --> XLogReadRecord --> ReadPageInternal : 调用 read_page 钩子函数 logical_read_local_xlog_page
+pg_create_logical_replication_slot --> DecodingContextFindStartpoint --> XLogReadRecord --> ReadPageInternal : 调用 read_page 钩子函数 logical_read_local_xlog_page
+
+
+
+
+4. XLogPageRead --> WaitForWALToBecomeAvailable --> RequestXLogStreaming
+lastSourceFailed && currentSource==XLOG_FROM_ARCHIVE|XLOG_FROM_PG_WAL && 'standby_mode=on' && PrimaryConnInfo 则触发 RequestXLogStreaming
+
+RequestXLogStreaming 调用 SendPostmasterSignal 发送信号量 PMSIGNAL_START_WALRECEIVER 给 postmaster 进程
+
+5. postmaster 进程启动 sigusr1_handler 来监听信号量。
+   若收到 PMSIGNAL_START_WALRECEIVER 则触发设置全局变量 WalReceiverRequested 为true，并调用 MaybeStartWalReceiver 启动 WalReceiver 进程(重置全局变量 WalReceiverRequested 为 false)；
+	postmaster进程运行(PostmasterMain)过程中，调用 ServerLoop ，若全局变量 WalReceiverRequested 为true，则调用 MaybeStartWalReceiver
+																调用 StartWalWriter 启动 WalWrite 进程
+																
+																
+
+WalWrite 进程 在主函数 WalWriterMain 中 死循环定期调用 XLogBackgroundFlush ，通过 XLogWrite 将 xlog 刷新到磁盘，并通过 WalSndWakeupProcessRequests 触发 Latch 事件唤醒 WalSender 进程
+-- XLogWrite
+1. XLogFileInit 生成文件
+2. 将 page 写入文件（落磁盘）
+3. 调用 WalSndWakeupRequest 通知 WalReceiver 进程可以工作（wake_wal_senders = true）
+
+	
+	
