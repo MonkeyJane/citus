@@ -1,0 +1,1038 @@
+[BEGIN] 2019/6/26 ÐÇÆÚÈý ÉÏÎç 10:49:40
+[cituscluster@center1 pg_wal]$ ps -ef | grep postgres
+cituscl+   2085      1  0 Jun21 ?        00:00:04 /opt/pgsql-10.1/bin/postgres
+cituscl+   2087   2085  0 Jun21 ?        00:00:08 postgres: checkpointer process  
+cituscl+   2088   2085  0 Jun21 ?        00:00:09 postgres: writer process   
+cituscl+   2089   2085  0 Jun21 ?        00:00:24 postgres: wal writer process  
+cituscl+   2090   2085  0 Jun21 ?        00:00:05 postgres: autovacuum launcher process  
+cituscl+   2091   2085  0 Jun21 ?        00:00:11 postgres: stats collector process  
+cituscl+   2092   2085  0 Jun21 ?        00:02:28 postgres: bgworker: task tracker  
+cituscl+   2093   2085  0 Jun21 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  25181   2085  0 Jun23 ?        00:01:28 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  64569  64499  0 19:43 pts/3    00:00:00 psql -d postgres
+cituscl+  64570   2085  0 19:43 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  64610  64055  0 19:47 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@center1 pg_wal]$ ps -ef | grep postgres
+cituscl+   2085      1  0 Jun21 ?        00:00:04 /opt/pgsql-10.1/bin/postgres
+cituscl+   2087   2085  0 Jun21 ?        00:00:08 postgres: checkpointer process  
+cituscl+   2088   2085  0 Jun21 ?        00:00:09 postgres: writer process   
+cituscl+   2089   2085  0 Jun21 ?        00:00:25 postgres: wal writer process  
+cituscl+   2090   2085  0 Jun21 ?        00:00:05 postgres: autovacuum launcher process  
+cituscl+   2091   2085  0 Jun21 ?        00:00:11 postgres: stats collector process  
+cituscl+   2092   2085  0 Jun21 ?        00:02:28 postgres: bgworker: task tracker  
+cituscl+   2093   2085  0 Jun21 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  25181   2085  0 Jun23 ?        00:01:28 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  64569  64499  0 19:43 pts/3    00:00:00 psql -d postgres
+cituscl+  64570   2085  0 19:43 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  64620   2085  0 19:48 ?        00:00:00 postgres: bgworker: logical replication worker for subscription 43830  
+cituscl+  64621   2085 48 19:48 ?        00:00:04 postgres: bgworker: logical replication worker for subscription 43830 sync 43764  
+cituscl+  64622   2085 47 19:48 ?        00:00:04 postgres: bgworker: logical replication worker for subscription 43830 sync 43814  
+cituscl+  64625  64055  0 19:48 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@center1 pg_wal]$ pkill -9 postgres
+[cituscluster@center1 pg_wal]$ ps -ef | grep postgres
+cituscl+  64569  64499  0 19:43 pts/3    00:00:00 psql -d postgres
+cituscl+  64631  64055  0 19:48 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@center1 pg_wal]$ ps -ef | grep postgres
+cituscl+  64569  64499  0 19:43 pts/3    00:00:00 psql -d postgres
+cituscl+  64633  64055  0 19:48 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@center1 pg_wal]$ ps -ef | grep postgres
+cituscl+  64569  64499  0 19:43 pts/3    00:00:00 psql -d postgres
+cituscl+  64635  64055  0 19:48 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@center1 pg_wal]$ cd ..
+[cituscluster@center1 data]$ pg_controldata 
+pg_control version number:            1002
+Catalog version number:               201707211
+Database system identifier:           6695542742840340507
+Database cluster state:               in production
+pg_control last modified:             Tue 25 Jun 2019 07:44:54 PM PDT
+Latest checkpoint location:           0/C3CAFC78
+Prior checkpoint location:            0/C3C96920
+Latest checkpoint's REDO location:    0/C3CAFC40
+Latest checkpoint's REDO WAL file:    0000000100000000000000C3
+Latest checkpoint's TimeLineID:       1
+Latest checkpoint's PrevTimeLineID:   1
+Latest checkpoint's full_page_writes: on
+Latest checkpoint's NextXID:          0:1180
+Latest checkpoint's NextOID:          51954
+Latest checkpoint's NextMultiXactId:  1
+Latest checkpoint's NextMultiOffset:  0
+Latest checkpoint's oldestXID:        548
+Latest checkpoint's oldestXID's DB:   1
+Latest checkpoint's oldestActiveXID:  1180
+Latest checkpoint's oldestMultiXid:   1
+Latest checkpoint's oldestMulti's DB: 1
+Latest checkpoint's oldestCommitTsXid:0
+Latest checkpoint's newestCommitTsXid:0
+Time of latest checkpoint:            Tue 25 Jun 2019 07:44:52 PM PDT
+Fake LSN counter for unlogged rels:   0/1
+Minimum recovery ending location:     0/0
+Min recovery ending loc's timeline:   0
+Backup start location:                0/0
+Backup end location:                  0/0
+End-of-backup record required:        no
+wal_level setting:                    logical
+wal_log_hints setting:                off
+max_connections setting:              100
+max_worker_processes setting:         8
+max_prepared_xacts setting:           200
+max_locks_per_xact setting:           64
+track_commit_timestamp setting:       off
+Maximum data alignment:               8
+Database block size:                  8192
+Blocks per segment of large relation: 131072
+WAL block size:                       8192
+Bytes per WAL segment:                16777216
+Maximum length of identifiers:        64
+Maximum columns in an index:          32
+Maximum size of a TOAST chunk:        1996
+Size of a large-object chunk:         2048
+Date/time type storage:               64-bit integers
+Float4 argument passing:              by value
+Float8 argument passing:              by value
+Data page checksum version:           0
+Mock authentication nonce:            ddea925761a70b90572b8040eab40c864f4e27903483156963a15cea21a14ef1
+[cituscluster@center1 data]$ date
+Tue Jun 25 19:49:21 PDT 2019
+[cituscluster@center1 data]$ pg_ctl start
+pg_ctl: another server might be running; trying to start server anyway
+waiting for server to start....2019-06-25 19:49:37.456 PDT [64648] LOG:  number of prepared transactions has not been configured, overriding
+2019-06-25 19:49:37.456 PDT [64648] DETAIL:  max_prepared_transactions is now set to 200
+2019-06-25 19:49:37.457 PDT [64648] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2019-06-25 19:49:37.458 PDT [64648] LOG:  listening on IPv6 address "::", port 5432
+2019-06-25 19:49:37.460 PDT [64648] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-06-25 19:49:37.547 PDT [64649] LOG:  database system was interrupted; last known up at 2019-06-25 19:44:54 PDT
+2019-06-25 19:49:37.708 PDT [64649] LOG:  database system was not properly shut down; automatic recovery in progress
+2019-06-25 19:49:37.729 PDT [64649] LOG:  redo starts at 0/C3CAFC40
+.........2019-06-25 19:49:47.020 PDT [64649] LOG:  unexpected pageaddr 0/313A0000 in log segment 0000000100000000000000CB, offset 3801088
+2019-06-25 19:49:47.020 PDT [64649] LOG:  redo done at 0/CB39FFA8
+2019-06-25 19:49:47.020 PDT [64649] LOG:  last completed transaction was at log time 2019-06-25 19:48:13.900916-07
+2019-06-25 19:49:47.658 PDT [64648] LOG:  database system is ready to accept connections
+ done
+server started
+[cituscluster@center1 data]$ 2019-06-25 19:49:47.964 PDT [64657] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-06-25 19:49:47.993 PDT [64658] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl4" has started
+2019-06-25 19:49:48.006 PDT [64659] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl2" has started
+2019-06-25 19:50:30.562 PDT [64679] LOG:  starting maintenance daemon on database 13212 user 10
+2019-06-25 19:50:30.562 PDT [64679] CONTEXT:  Citus maintenance daemon for database 13212 user 10
+
+[cituscluster@center1 data]$ ps -ef | grep postgres
+cituscl+  64648      1  0 19:49 pts/2    00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  64650  64648  0 19:49 ?        00:00:00 postgres: checkpointer process  
+cituscl+  64651  64648  0 19:49 ?        00:00:00 postgres: writer process   
+cituscl+  64652  64648  3 19:49 ?        00:00:01 postgres: wal writer process  
+cituscl+  64653  64648  0 19:49 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  64654  64648  0 19:49 ?        00:00:00 postgres: stats collector process  
+cituscl+  64655  64648  0 19:49 ?        00:00:00 postgres: bgworker: task tracker  
+cituscl+  64656  64648  0 19:49 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  64657  64648  0 19:49 ?        00:00:00 postgres: bgworker: logical replication worker for subscription 43830  
+cituscl+  64658  64648 44 19:49 ?        00:00:26 postgres: bgworker: logical replication worker for subscription 43830 sync 43822  
+cituscl+  64659  64648 44 19:49 ?        00:00:26 postgres: bgworker: logical replication worker for subscription 43830 sync 43764  
+cituscl+  64677  64499  0 19:50 pts/3    00:00:00 psql -d postgres
+cituscl+  64678  64648  1 19:50 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  64679  64648  0 19:50 ?        00:00:00 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  64683  64055  0 19:50 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@center1 data]$ pg_controldata 
+pg_control version number:            1002
+Catalog version number:               201707211
+Database system identifier:           6695542742840340507
+Database cluster state:               in production
+pg_control last modified:             Tue 25 Jun 2019 07:49:47 PM PDT
+Latest checkpoint location:           0/CB39FFE8
+Prior checkpoint location:            0/C3CAFC78
+Latest checkpoint's REDO location:    0/CB39FFE8
+Latest checkpoint's REDO WAL file:    0000000100000000000000CB
+Latest checkpoint's TimeLineID:       1
+Latest checkpoint's PrevTimeLineID:   1
+Latest checkpoint's full_page_writes: on
+Latest checkpoint's NextXID:          0:1185
+Latest checkpoint's NextOID:          51954
+Latest checkpoint's NextMultiXactId:  1
+Latest checkpoint's NextMultiOffset:  0
+Latest checkpoint's oldestXID:        548
+Latest checkpoint's oldestXID's DB:   1
+Latest checkpoint's oldestActiveXID:  0
+Latest checkpoint's oldestMultiXid:   1
+Latest checkpoint's oldestMulti's DB: 1
+Latest checkpoint's oldestCommitTsXid:0
+Latest checkpoint's newestCommitTsXid:0
+Time of latest checkpoint:            Tue 25 Jun 2019 07:49:47 PM PDT
+Fake LSN counter for unlogged rels:   0/1
+Minimum recovery ending location:     0/0
+Min recovery ending loc's timeline:   0
+Backup start location:                0/0
+Backup end location:                  0/0
+End-of-backup record required:        no
+wal_level setting:                    logical
+wal_log_hints setting:                off
+max_connections setting:              100
+max_worker_processes setting:         8
+max_prepared_xacts setting:           200
+max_locks_per_xact setting:           64
+track_commit_timestamp setting:       off
+Maximum data alignment:               8
+Database block size:                  8192
+Blocks per segment of large relation: 131072
+WAL block size:                       8192
+Bytes per WAL segment:                16777216
+Maximum length of identifiers:        64
+Maximum columns in an index:          32
+Maximum size of a TOAST chunk:        1996
+Size of a large-object chunk:         2048
+Date/time type storage:               64-bit integers
+Float4 argument passing:              by value
+Float8 argument passing:              by value
+Data page checksum version:           0
+Mock authentication nonce:            ddea925761a70b90572b8040eab40c864f4e27903483156963a15cea21a14ef1
+[cituscluster@center1 data]$ date
+Tue Jun 25 19:51:48 PDT 2019
+[cituscluster@center1 data]$ 2019-06-25 19:52:30.771 PDT [64659] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl2" has finished
+2019-06-25 19:52:31.001 PDT [64704] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl3" has started
+
+[cituscluster@center1 data]$ ps -ef | grep postgres
+cituscl+  64648      1  0 19:49 pts/2    00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  64650  64648  1 19:49 ?        00:00:04 postgres: checkpointer process  
+cituscl+  64651  64648  0 19:49 ?        00:00:02 postgres: writer process   
+cituscl+  64652  64648  1 19:49 ?        00:00:08 postgres: wal writer process  
+cituscl+  64653  64648  0 19:49 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  64654  64648  0 19:49 ?        00:00:00 postgres: stats collector process  
+cituscl+  64655  64648  0 19:49 ?        00:00:00 postgres: bgworker: task tracker  
+cituscl+  64656  64648  0 19:49 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  64657  64648  0 19:49 ?        00:00:00 postgres: bgworker: logical replication worker for subscription 43830  
+cituscl+  64658  64648 44 19:49 ?        00:03:11 postgres: bgworker: logical replication worker for subscription 43830 sync 43822  
+cituscl+  64677  64499  0 19:50 pts/3    00:00:00 psql -d postgres
+cituscl+  64678  64648  0 19:50 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  64679  64648  0 19:50 ?        00:00:00 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  64704  64648 44 19:52 ?        00:01:59 postgres: bgworker: logical replication worker for subscription 43830 sync 43814  
+cituscl+  64746  64055  0 19:56 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@center1 data]$ 2019-06-25 19:57:31.229 PDT [64657] LOG:  logical replication apply worker for subscription "sub1" will stop because the subscription was disabled
+
+[cituscluster@center1 data]$ ps -ef | grep postgres
+cituscl+  64648      1  0 19:49 pts/2    00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  64650  64648  0 19:49 ?        00:00:04 postgres: checkpointer process  
+cituscl+  64651  64648  0 19:49 ?        00:00:03 postgres: writer process   
+cituscl+  64652  64648  1 19:49 ?        00:00:08 postgres: wal writer process  
+cituscl+  64653  64648  0 19:49 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  64654  64648  0 19:49 ?        00:00:00 postgres: stats collector process  
+cituscl+  64655  64648  0 19:49 ?        00:00:00 postgres: bgworker: task tracker  
+cituscl+  64656  64648  0 19:49 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  64658  64648 44 19:49 ?        00:03:29 postgres: bgworker: logical replication worker for subscription 43830 sync 43822  
+cituscl+  64677  64499  0 19:50 pts/3    00:00:00 psql -d postgres
+cituscl+  64678  64648  0 19:50 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  64679  64648  0 19:50 ?        00:00:00 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  64704  64648 45 19:52 ?        00:02:17 postgres: bgworker: logical replication worker for subscription 43830 sync 43814  
+cituscl+  64757  64055  0 19:57 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@center1 data]$ ps -ef | grep postgres
+cituscl+  64648      1  0 19:49 pts/2    00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  64650  64648  0 19:49 ?        00:00:04 postgres: checkpointer process  
+cituscl+  64651  64648  0 19:49 ?        00:00:03 postgres: writer process   
+cituscl+  64652  64648  1 19:49 ?        00:00:08 postgres: wal writer process  
+cituscl+  64653  64648  0 19:49 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  64654  64648  0 19:49 ?        00:00:00 postgres: stats collector process  
+cituscl+  64655  64648  0 19:49 ?        00:00:00 postgres: bgworker: task tracker  
+cituscl+  64656  64648  0 19:49 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  64658  64648 44 19:49 ?        00:03:30 postgres: bgworker: logical replication worker for subscription 43830 sync 43822  
+cituscl+  64677  64499  0 19:50 pts/3    00:00:00 psql -d postgres
+cituscl+  64678  64648  0 19:50 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  64679  64648  0 19:50 ?        00:00:00 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  64704  64648 45 19:52 ?        00:02:18 postgres: bgworker: logical replication worker for subscription 43830 sync 43814  
+cituscl+  64759  64055  0 19:57 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@center1 data]$ pstack 64658
+#0  0x0000000000976009 in hash_search_with_hash_value (hashp=0x2a28e88, keyPtr=0x7ffddb1e2fb0, hashvalue=1655837850, action=8402005, foundPtr=0x7f207aff8404 "\001") at dynahash.c:920
+#1  0x00000000007dac88 in BufTableLookup (tagPtr=0x7ffddb1e2fb0, hashcode=1655837850) at buf_table.c:96
+#2  0x00000000007dc385 in BufferAlloc (smgr=0x2aed608, relpersistence=112 'p', forkNum=MAIN_FORKNUM, blockNum=43598, strategy=0x0, foundPtr=0x7ffddb1e3063 "\333\375\177") at bufmgr.c:1013
+#3  0x00000000007dba9b in ReadBuffer_common (smgr=0x2aed608, relpersistence=112 'p', forkNum=MAIN_FORKNUM, blockNum=43598, mode=RBM_NORMAL, strategy=0x0, hit=0x7ffddb1e315b "") at bufmgr.c:745
+#4  0x00000000007db8d5 in ReadBufferExtended (reln=0x7f208cea8500, forkNum=MAIN_FORKNUM, blockNum=43598, mode=RBM_NORMAL, strategy=0x0) at bufmgr.c:664
+#5  0x00000000007db7ba in ReadBuffer (reln=0x7f208cea8500, blockNum=43598) at bufmgr.c:596
+#6  0x00000000007dcd9e in ReleaseAndReadBuffer (buffer=14257, relation=0x7f208cea8500, blockNum=43598) at bufmgr.c:1545
+#7  0x00000000004d7ee2 in _bt_relandgetbuf (rel=0x7f208cea8500, obuf=14257, blkno=43598, access=1) at nbtpage.c:708
+#8  0x00000000004dbf95 in _bt_search (rel=0x7f208cea8500, keysz=1, scankey=0x2b3eab8, nextkey=0 '\000', bufP=0x7ffddb1e32ec, access=2, snapshot=0x0) at nbtsearch.c:170
+#9  0x00000000004d3522 in _bt_doinsert (rel=0x7f208cea8500, itup=0x2b3ea98, checkUnique=UNIQUE_CHECK_YES, heapRel=0x7f208cea4498) at nbtinsert.c:123
+#10 0x00000000004da5d1 in btinsert (rel=0x7f208cea8500, values=0x7ffddb1e3440, isnull=0x7ffddb1e3420 "", ht_ctid=0x2b5621c, heapRel=0x7f208cea4498, checkUnique=UNIQUE_CHECK_YES, indexInfo=0x2b20da0) at nbtree.c:330
+#11 0x00000000004d2131 in index_insert (indexRelation=0x7f208cea8500, values=0x7ffddb1e3440, isnull=0x7ffddb1e3420 "", heap_t_ctid=0x2b5621c, heapRelation=0x7f208cea4498, checkUnique=UNIQUE_CHECK_YES, indexInfo=0x2b20da0) at indexam.c:210
+#12 0x000000000067718f in ExecInsertIndexTuples (slot=0x2b0feb8, tupleid=0x2b5621c, estate=0x2b3aa08, noDupErr=0 '\000', specConflict=0x0, arbiterIndexes=0x0) at execIndexing.c:386
+#13 0x00000000005e8a24 in CopyFromInsertBatch (cstate=0x2b11038, estate=0x2b3aa08, mycid=0, hi_options=0, resultRelInfo=0x2b20a20, myslot=0x2b0feb8, bistate=0x2b3ea48, nBufferedTuples=1000, bufferedTuples=0x2b3ca18, firstBufferedLineNo=15933001) at copy.c:2942
+#14 0x00000000005e85ab in CopyFrom (cstate=0x2b11038) at copy.c:2768
+#15 0x00000000007b50cd in copy_table (rel=0x7f208cea4498) at tablesync.c:804
+#16 0x00000000007b5423 in LogicalRepSyncTableStart (origin_startpos=0x7ffddb1e3918) at tablesync.c:921
+#17 0x00000000007b7bff in ApplyWorkerMain (main_arg=1) at worker.c:1577
+#18 0x000000000077a272 in StartBackgroundWorker () at bgworker.c:835
+#19 0x000000000078c035 in do_start_bgworker (rw=0x2a6ca40) at postmaster.c:5680
+#20 0x000000000078c36f in maybe_start_bgworkers () at postmaster.c:5884
+#21 0x000000000078b455 in sigusr1_handler (postgres_signal_arg=10) at postmaster.c:5073
+#22 <signal handler called>
+#23 0x00007f208c0e9c53 in __select_nocancel () from /lib64/libc.so.6
+#24 0x00000000007872c2 in ServerLoop () at postmaster.c:1717
+#25 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x2a27c40) at postmaster.c:1361
+#26 0x00000000006cf26f in main (argc=1, argv=0x2a27c40) at main.c:228
+[cituscluster@center1 data]$ pstack 64704
+#0  0x00007f207adf2121 in libpqrcv_receive (conn=0x2aaa4d8, buffer=0x7ffddb1e3360, wait_fd=0x7ffddb1e336c) at libpqwalreceiver.c:672
+#1  0x00000000007b4934 in copy_read_data (outbuf=0x2b2b178, minread=1, maxread=65536) at tablesync.c:603
+#2  0x00000000005e3624 in CopyGetData (cstate=0x2b117f8, databuf=0x2b2b178, minread=1, maxread=65536) at copy.c:654
+#3  0x00000000005e380b in CopyLoadRawBuf (cstate=0x2b117f8) at copy.c:753
+#4  0x00000000005ea502 in CopyReadLineText (cstate=0x2b117f8) at copy.c:3717
+#5  0x00000000005ea249 in CopyReadLine (cstate=0x2b117f8) at copy.c:3563
+#6  0x00000000005e95b1 in NextCopyFromRawFields (cstate=0x2b117f8, fields=0x7ffddb1e3520, nfields=0x7ffddb1e351c) at copy.c:3262
+#7  0x00000000005e98d0 in NextCopyFrom (cstate=0x2b117f8, econtext=0x2b3b3d8, values=0x2b3f1e8, nulls=0x2b3f208 "\001\001", tupleOid=0x7ffddb1e3654) at copy.c:3331
+#8  0x00000000005e80c3 in CopyFrom (cstate=0x2b117f8) at copy.c:2580
+#9  0x00000000007b50cd in copy_table (rel=0x7f208cea4498) at tablesync.c:804
+#10 0x00000000007b5423 in LogicalRepSyncTableStart (origin_startpos=0x7ffddb1e3918) at tablesync.c:921
+#11 0x00000000007b7bff in ApplyWorkerMain (main_arg=2) at worker.c:1577
+#12 0x000000000077a272 in StartBackgroundWorker () at bgworker.c:835
+#13 0x000000000078c035 in do_start_bgworker (rw=0x2a6cc00) at postmaster.c:5680
+#14 0x000000000078c36f in maybe_start_bgworkers () at postmaster.c:5884
+#15 0x000000000078b455 in sigusr1_handler (postgres_signal_arg=10) at postmaster.c:5073
+#16 <signal handler called>
+#17 0x00007f208c0e9c53 in __select_nocancel () from /lib64/libc.so.6
+#18 0x00000000007872c2 in ServerLoop () at postmaster.c:1717
+#19 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x2a27c40) at postmaster.c:1361
+#20 0x00000000006cf26f in main (argc=1, argv=0x2a27c40) at main.c:228
+[cituscluster@center1 data]$ ps -ef | grep postgres
+cituscl+  64648      1  0 19:49 pts/2    00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  64650  64648  1 19:49 ?        00:00:05 postgres: checkpointer process  
+cituscl+  64651  64648  0 19:49 ?        00:00:03 postgres: writer process   
+cituscl+  64652  64648  1 19:49 ?        00:00:09 postgres: wal writer process  
+cituscl+  64653  64648  0 19:49 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  64654  64648  0 19:49 ?        00:00:00 postgres: stats collector process  
+cituscl+  64655  64648  0 19:49 ?        00:00:00 postgres: bgworker: task tracker  
+cituscl+  64656  64648  0 19:49 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  64658  64648 44 19:49 ?        00:03:56 postgres: bgworker: logical replication worker for subscription 43830 sync 43822  
+cituscl+  64677  64499  0 19:50 pts/3    00:00:00 psql -d postgres
+cituscl+  64678  64648  0 19:50 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  64679  64648  0 19:50 ?        00:00:00 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  64704  64648 44 19:52 ?        00:02:43 postgres: bgworker: logical replication worker for subscription 43830 sync 43814  
+cituscl+  64790  64055  0 19:58 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@center1 data]$ ps -ef | grep postgres
+cituscl+  64648      1  0 19:49 pts/2    00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  64650  64648  0 19:49 ?        00:00:05 postgres: checkpointer process  
+cituscl+  64651  64648  0 19:49 ?        00:00:03 postgres: writer process   
+cituscl+  64652  64648  1 19:49 ?        00:00:10 postgres: wal writer process  
+cituscl+  64653  64648  0 19:49 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  64654  64648  0 19:49 ?        00:00:00 postgres: stats collector process  
+cituscl+  64655  64648  0 19:49 ?        00:00:00 postgres: bgworker: task tracker  
+cituscl+  64656  64648  0 19:49 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  64658  64648 44 19:49 ?        00:04:02 postgres: bgworker: logical replication worker for subscription 43830 sync 43822  
+cituscl+  64677  64499  0 19:50 pts/3    00:00:00 psql -d postgres
+cituscl+  64678  64648  0 19:50 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  64679  64648  0 19:50 ?        00:00:00 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  64704  64648 44 19:52 ?        00:02:50 postgres: bgworker: logical replication worker for subscription 43830 sync 43814  
+cituscl+  64794  64055  0 19:58 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@center1 data]$ pstack 64704
+#0  MarkCurrentTransactionIdLoggedIfAny () at xact.c:446
+#1  0x000000000050ec8c in XLogInsertRecord (rdata=0xe17bf0 <hdr_rdt>, fpw_lsn=6296311408, flags=0 '\000') at xlog.c:1102
+#2  0x0000000000524524 in XLogInsert (rmid=11 '\v', info=0 '\000') at xloginsert.c:462
+#3  0x00000000004d4789 in _bt_insertonpg (rel=0x7f208cea8500, buf=15572, cbuf=0, stack=0x2b3f320, itup=0x2b3f240, newitemoff=194, split_only_page=0 '\000') at nbtinsert.c:919
+#4  0x00000000004d36c4 in _bt_doinsert (rel=0x7f208cea8500, itup=0x2b3f240, checkUnique=UNIQUE_CHECK_YES, heapRel=0x7f208cea4498) at nbtinsert.c:205
+#5  0x00000000004da5d1 in btinsert (rel=0x7f208cea8500, values=0x7ffddb1e3440, isnull=0x7ffddb1e3420 "", ht_ctid=0x2b4dffc, heapRel=0x7f208cea4498, checkUnique=UNIQUE_CHECK_YES, indexInfo=0x2b215f0) at nbtree.c:330
+#6  0x00000000004d2131 in index_insert (indexRelation=0x7f208cea8500, values=0x7ffddb1e3440, isnull=0x7ffddb1e3420 "", heap_t_ctid=0x2b4dffc, heapRelation=0x7f208cea4498, checkUnique=UNIQUE_CHECK_YES, indexInfo=0x2b215f0) at indexam.c:210
+#7  0x000000000067718f in ExecInsertIndexTuples (slot=0x2b10678, tupleid=0x2b4dffc, estate=0x2b3b1c8, noDupErr=0 '\000', specConflict=0x0, arbiterIndexes=0x0) at execIndexing.c:386
+#8  0x00000000005e8a24 in CopyFromInsertBatch (cstate=0x2b117f8, estate=0x2b3b1c8, mycid=0, hi_options=0, resultRelInfo=0x2b21270, myslot=0x2b10678, bistate=0x2b3f220, nBufferedTuples=1000, bufferedTuples=0x2b3d1d8, firstBufferedLineNo=12008001) at copy.c:2942
+#9  0x00000000005e85ab in CopyFrom (cstate=0x2b117f8) at copy.c:2768
+#10 0x00000000007b50cd in copy_table (rel=0x7f208cea4498) at tablesync.c:804
+#11 0x00000000007b5423 in LogicalRepSyncTableStart (origin_startpos=0x7ffddb1e3918) at tablesync.c:921
+#12 0x00000000007b7bff in ApplyWorkerMain (main_arg=2) at worker.c:1577
+#13 0x000000000077a272 in StartBackgroundWorker () at bgworker.c:835
+#14 0x000000000078c035 in do_start_bgworker (rw=0x2a6cc00) at postmaster.c:5680
+#15 0x000000000078c36f in maybe_start_bgworkers () at postmaster.c:5884
+#16 0x000000000078b455 in sigusr1_handler (postgres_signal_arg=10) at postmaster.c:5073
+#17 <signal handler called>
+#18 0x00007f208c0e9c53 in __select_nocancel () from /lib64/libc.so.6
+#19 0x00000000007872c2 in ServerLoop () at postmaster.c:1717
+#20 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x2a27c40) at postmaster.c:1361
+#21 0x00000000006cf26f in main (argc=1, argv=0x2a27c40) at main.c:228
+[cituscluster@center1 data]$ 2019-06-25 19:59:59.691 PDT [64658] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl4" has finished
+2019-06-25 20:00:04.847 PDT [64825] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-06-25 20:00:13.698 PDT [64704] LOG:  logical replication table synchronization worker for subscription "sub1", table "tbl3" has finished
+2019-06-25 20:00:19.994 PDT [64825] ERROR:  could not receive data from WAL stream: server closed the connection unexpectedly
+		This probably means the server terminated abnormally
+		before or while processing the request.
+2019-06-25 20:00:19.995 PDT [64648] LOG:  worker process: logical replication worker for subscription 43830 (PID 64825) exited with exit code 1
+2019-06-25 20:00:20.005 PDT [64834] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-06-25 20:00:20.007 PDT [64834] ERROR:  could not connect to the publisher: could not connect to server: Connection refused
+		Is the server running on host "192.168.221.131" and accepting
+		TCP/IP connections on port 5432?
+2019-06-25 20:00:20.009 PDT [64648] LOG:  worker process: logical replication worker for subscription 43830 (PID 64834) exited with exit code 1
+2019-06-25 20:00:25.023 PDT [64835] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-06-25 20:00:25.025 PDT [64835] ERROR:  could not connect to the publisher: could not connect to server: Connection refused
+		Is the server running on host "192.168.221.131" and accepting
+		TCP/IP connections on port 5432?
+2019-06-25 20:00:25.026 PDT [64648] LOG:  worker process: logical replication worker for subscription 43830 (PID 64835) exited with exit code 1
+2019-06-25 20:00:30.041 PDT [64836] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-06-25 20:00:30.043 PDT [64836] ERROR:  could not connect to the publisher: could not connect to server: Connection refused
+		Is the server running on host "192.168.221.131" and accepting
+		TCP/IP connections on port 5432?
+2019-06-25 20:00:30.045 PDT [64648] LOG:  worker process: logical replication worker for subscription 43830 (PID 64836) exited with exit code 1
+2019-06-25 20:00:35.059 PDT [64838] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-06-25 20:00:35.061 PDT [64838] ERROR:  could not connect to the publisher: could not connect to server: Connection refused
+		Is the server running on host "192.168.221.131" and accepting
+		TCP/IP connections on port 5432?
+2019-06-25 20:00:35.062 PDT [64648] LOG:  worker process: logical replication worker for subscription 43830 (PID 64838) exited with exit code 1
+2019-06-25 20:00:40.071 PDT [64839] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-06-25 20:00:40.073 PDT [64839] ERROR:  could not connect to the publisher: could not connect to server: Connection refused
+		Is the server running on host "192.168.221.131" and accepting
+		TCP/IP connections on port 5432?
+2019-06-25 20:00:40.074 PDT [64648] LOG:  worker process: logical replication worker for subscription 43830 (PID 64839) exited with exit code 1
+2019-06-25 20:00:45.089 PDT [64840] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-06-25 20:00:45.091 PDT [64840] ERROR:  could not connect to the publisher: could not connect to server: Connection refused
+		Is the server running on host "192.168.221.131" and accepting
+		TCP/IP connections on port 5432?
+2019-06-25 20:00:45.092 PDT [64648] LOG:  worker process: logical replication worker for subscription 43830 (PID 64840) exited with exit code 1
+2019-06-25 20:00:50.113 PDT [64842] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-06-25 20:00:50.116 PDT [64842] ERROR:  could not connect to the publisher: could not connect to server: Connection refused
+		Is the server running on host "192.168.221.131" and accepting
+		TCP/IP connections on port 5432?
+2019-06-25 20:00:50.117 PDT [64648] LOG:  worker process: logical replication worker for subscription 43830 (PID 64842) exited with exit code 1
+2019-06-25 20:00:55.127 PDT [64843] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-06-25 20:00:55.129 PDT [64843] ERROR:  could not connect to the publisher: could not connect to server: Connection refused
+		Is the server running on host "192.168.221.131" and accepting
+		TCP/IP connections on port 5432?
+2019-06-25 20:00:55.130 PDT [64648] LOG:  worker process: logical replication worker for subscription 43830 (PID 64843) exited with exit code 1
+2019-06-25 20:01:00.162 PDT [64844] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-06-25 20:01:00.164 PDT [64844] ERROR:  could not connect to the publisher: could not connect to server: Connection refused
+		Is the server running on host "192.168.221.131" and accepting
+		TCP/IP connections on port 5432?
+2019-06-25 20:01:00.165 PDT [64648] LOG:  worker process: logical replication worker for subscription 43830 (PID 64844) exited with exit code 1
+2019-06-25 20:01:05.235 PDT [64865] LOG:  logical replication apply worker for subscription "sub1" has started
+
+[cituscluster@center1 data]$ ps -ef | grep postgres
+cituscl+  64648      1  0 19:49 pts/2    00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  64650  64648  0 19:49 ?        00:00:06 postgres: checkpointer process  
+cituscl+  64651  64648  0 19:49 ?        00:00:04 postgres: writer process   
+cituscl+  64652  64648  1 19:49 ?        00:00:11 postgres: wal writer process  
+cituscl+  64653  64648  0 19:49 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  64654  64648  0 19:49 ?        00:00:00 postgres: stats collector process  
+cituscl+  64655  64648  0 19:49 ?        00:00:00 postgres: bgworker: task tracker  
+cituscl+  64656  64648  0 19:49 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  64677  64499  0 19:50 pts/3    00:00:00 psql -d postgres
+cituscl+  64678  64648  0 19:50 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  64679  64648  0 19:50 ?        00:00:00 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  64841  64648 10 20:00 ?        00:00:09 postgres: autovacuum worker process   postgres
+cituscl+  64865  64648  0 20:01 ?        00:00:00 postgres: bgworker: logical replication worker for subscription 43830  
+cituscl+  64874  64648 12 20:01 ?        00:00:03 postgres: autovacuum worker process   postgres
+cituscl+  64876  64055  0 20:02 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@center1 data]$ pstack 64865
+#0  0x00007f208c0f3163 in __epoll_wait_nocancel () from /lib64/libc.so.6
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x2aa52c8, cur_timeout=1000, occurred_events=0x7ffddb1e37c0, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x2aa52c8, timeout=1000, occurred_events=0x7ffddb1e37c0, nevents=1, wait_event_info=83886086) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f20841380e4, wakeEvents=27, sock=4, timeout=1000, wait_event_info=83886086) at latch.c:385
+#4  0x00000000007b710d in LogicalRepApplyLoop (last_received=24121278688) at worker.c:1167
+#5  0x00000000007b7e48 in ApplyWorkerMain (main_arg=0) at worker.c:1650
+#6  0x000000000077a272 in StartBackgroundWorker () at bgworker.c:835
+#7  0x000000000078c035 in do_start_bgworker (rw=0x2a6ca40) at postmaster.c:5680
+#8  0x000000000078c36f in maybe_start_bgworkers () at postmaster.c:5884
+#9  0x000000000078b455 in sigusr1_handler (postgres_signal_arg=10) at postmaster.c:5073
+#10 <signal handler called>
+#11 0x00007f208c0e9c53 in __select_nocancel () from /lib64/libc.so.6
+#12 0x00000000007872c2 in ServerLoop () at postmaster.c:1717
+#13 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x2a27c40) at postmaster.c:1361
+#14 0x00000000006cf26f in main (argc=1, argv=0x2a27c40) at main.c:228
+[cituscluster@center1 data]$ pg_
+pg_archivecleanup  pg_config          pg_ctl             pg_dumpall         pg_receivewal      pg_resetwal        pg_rewind          pg_test_timing     pg_waldump         
+pg_basebackup      pg_controldata     pg_dump            pg_isready         pg_recvlogical     pg_restore         pg_test_fsync      pg_upgrade         
+[cituscluster@center1 data]$ pg_receivewal 
+base/                 pg_foreign_file/      pg_multixact/         pg_snapshots/         pg_tblspc/            pg_xact/              postmaster.pid        
+global/               pg_hba.conf           pg_notify/            pg_stat/              pg_twophase/          postgresql.auto.conf  
+pg_commit_ts/         pg_ident.conf         pg_replslot/          pg_stat_tmp/          PG_VERSION            postgresql.conf       
+pg_dynshmem/          pg_logical/           pg_serial/            pg_subtrans/          pg_wal/               postmaster.opts       
+[cituscluster@center1 data]$ pg_receivewal --help
+pg_receivewal receives PostgreSQL streaming write-ahead logs.
+
+Usage:
+  pg_receivewal [OPTION]...
+
+Options:
+  -D, --directory=DIR    receive write-ahead log files into this directory
+      --if-not-exists    do not error if slot already exists when creating a slot
+  -n, --no-loop          do not loop on connection lost
+  -s, --status-interval=SECS
+                         time between status packets sent to server (default: 10)
+  -S, --slot=SLOTNAME    replication slot to use
+      --synchronous      flush write-ahead log immediately after writing
+  -v, --verbose          output verbose messages
+  -V, --version          output version information, then exit
+  -Z, --compress=0-9     compress logs with given compression level
+  -?, --help             show this help, then exit
+
+Connection options:
+  -d, --dbname=CONNSTR   connection string
+  -h, --host=HOSTNAME    database server host or socket directory
+  -p, --port=PORT        database server port number
+  -U, --username=NAME    connect as specified database user
+  -w, --no-password      never prompt for password
+  -W, --password         force password prompt (should happen automatically)
+
+Optional actions:
+      --create-slot      create a new replication slot (for the slot's name see --slot)
+      --drop-slot        drop the replication slot (for the slot's name see --slot)
+
+Report bugs to <pgsql-bugs@postgresql.org>.
+[cituscluster@center1 data]$ 
+[cituscluster@center1 data]$ ps -ef | grep postgres
+cituscl+  64648      1  0 Jun25 pts/2    00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  64650  64648  0 Jun25 ?        00:00:07 postgres: checkpointer process  
+cituscl+  64651  64648  0 Jun25 ?        00:00:04 postgres: writer process   
+cituscl+  64652  64648  0 Jun25 ?        00:00:11 postgres: wal writer process  
+cituscl+  64653  64648  0 Jun25 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  64654  64648  0 Jun25 ?        00:00:01 postgres: stats collector process  
+cituscl+  64655  64648  0 Jun25 ?        00:00:08 postgres: bgworker: task tracker  
+cituscl+  64656  64648  0 Jun25 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  64677  64499  0 Jun25 pts/3    00:00:00 psql -d postgres
+cituscl+  64678  64648  0 Jun25 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  64679  64648  0 Jun25 ?        00:00:07 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  64865  64648  0 Jun25 ?        00:00:03 postgres: bgworker: logical replication worker for subscription 43830  
+cituscl+  68947  64055  0 02:18 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@center1 data]$ pstack 64865
+#0  0x00007f208c0f3163 in __epoll_wait_nocancel () from /lib64/libc.so.6
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x2aa52c8, cur_timeout=1000, occurred_events=0x7ffddb1e37c0, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x2aa52c8, timeout=1000, occurred_events=0x7ffddb1e37c0, nevents=1, wait_event_info=83886086) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f20841380e4, wakeEvents=27, sock=4, timeout=1000, wait_event_info=83886086) at latch.c:385
+#4  0x00000000007b710d in LogicalRepApplyLoop (last_received=24121278688) at worker.c:1167
+#5  0x00000000007b7e48 in ApplyWorkerMain (main_arg=0) at worker.c:1650
+#6  0x000000000077a272 in StartBackgroundWorker () at bgworker.c:835
+#7  0x000000000078c035 in do_start_bgworker (rw=0x2a6ca40) at postmaster.c:5680
+#8  0x000000000078c36f in maybe_start_bgworkers () at postmaster.c:5884
+#9  0x000000000078b455 in sigusr1_handler (postgres_signal_arg=10) at postmaster.c:5073
+#10 <signal handler called>
+#11 0x00007f208c0e9c53 in __select_nocancel () from /lib64/libc.so.6
+#12 0x00000000007872c2 in ServerLoop () at postmaster.c:1717
+#13 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x2a27c40) at postmaster.c:1361
+#14 0x00000000006cf26f in main (argc=1, argv=0x2a27c40) at main.c:228
+[cituscluster@center1 data]$ pstack 64865
+#0  0x00007f208c14a3e8 in __memcpy_ssse3_back () from /lib64/libc.so.6
+#1  0x000000000050f420 in CopyXLogRecordToWAL (write_len=54, isLogSwitch=0 '\000', rdata=0x2a7ef68, StartPos=6672363160, EndPos=6672363216) at xlog.c:1518
+#2  0x000000000050ec40 in XLogInsertRecord (rdata=0xe17bf0 <hdr_rdt>, fpw_lsn=6672363160, flags=0 '\000') at xlog.c:1073
+#3  0x0000000000524524 in XLogInsert (rmid=10 '\n', info=96 '`') at xloginsert.c:462
+#4  0x00000000004c0ffd in heap_lock_tuple (relation=0x7f208cea3f68, tuple=0x7ffddb1df2b0, cid=89679, mode=LockTupleExclusive, wait_policy=LockWaitBlock, follow_updates=0 '\000', buffer=0x7ffddb1df2ec, hufd=0x7ffddb1df2d0) at heapam.c:5163
+#5  0x000000000067fd67 in RelationFindReplTupleByIndex (rel=0x7f208cea3f68, idxoid=43820, lockmode=LockTupleExclusive, searchslot=0x2ace538, outslot=0x2ace650) at execReplication.c:178
+#6  0x00000000007b6958 in apply_handle_delete (s=0x7ffddb1e3820) at worker.c:831
+#7  0x00000000007b6aeb in apply_dispatch (s=0x7ffddb1e3820) at worker.c:899
+#8  0x00000000007b6f76 in LogicalRepApplyLoop (last_received=24131012088) at worker.c:1098
+#9  0x00000000007b7e48 in ApplyWorkerMain (main_arg=0) at worker.c:1650
+#10 0x000000000077a272 in StartBackgroundWorker () at bgworker.c:835
+#11 0x000000000078c035 in do_start_bgworker (rw=0x2a6ca40) at postmaster.c:5680
+#12 0x000000000078c36f in maybe_start_bgworkers () at postmaster.c:5884
+#13 0x000000000078b455 in sigusr1_handler (postgres_signal_arg=10) at postmaster.c:5073
+#14 <signal handler called>
+#15 0x00007f208c0e9c53 in __select_nocancel () from /lib64/libc.so.6
+#16 0x00000000007872c2 in ServerLoop () at postmaster.c:1717
+#17 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x2a27c40) at postmaster.c:1361
+#18 0x00000000006cf26f in main (argc=1, argv=0x2a27c40) at main.c:228
+[cituscluster@center1 data]$ pstack 64865
+#0  0x00007f208c0f3163 in __epoll_wait_nocancel () from /lib64/libc.so.6
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x2aaadd8, cur_timeout=1000, occurred_events=0x7ffddb1e37c0, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x2aaadd8, timeout=1000, occurred_events=0x7ffddb1e37c0, nevents=1, wait_event_info=83886086) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f20841380e4, wakeEvents=27, sock=4, timeout=1000, wait_event_info=83886086) at latch.c:385
+#4  0x00000000007b710d in LogicalRepApplyLoop (last_received=24132132000) at worker.c:1167
+#5  0x00000000007b7e48 in ApplyWorkerMain (main_arg=0) at worker.c:1650
+#6  0x000000000077a272 in StartBackgroundWorker () at bgworker.c:835
+#7  0x000000000078c035 in do_start_bgworker (rw=0x2a6ca40) at postmaster.c:5680
+#8  0x000000000078c36f in maybe_start_bgworkers () at postmaster.c:5884
+#9  0x000000000078b455 in sigusr1_handler (postgres_signal_arg=10) at postmaster.c:5073
+#10 <signal handler called>
+#11 0x00007f208c0e9c53 in __select_nocancel () from /lib64/libc.so.6
+#12 0x00000000007872c2 in ServerLoop () at postmaster.c:1717
+#13 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x2a27c40) at postmaster.c:1361
+#14 0x00000000006cf26f in main (argc=1, argv=0x2a27c40) at main.c:228
+[cituscluster@center1 data]$ 
+[cituscluster@center1 data]$ ps -ef | grep postgres
+cituscl+  64648      1  0 Jun25 pts/2    00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  64650  64648  0 Jun25 ?        00:00:07 postgres: checkpointer process  
+cituscl+  64651  64648  0 Jun25 ?        00:00:04 postgres: writer process   
+cituscl+  64652  64648  0 Jun25 ?        00:00:11 postgres: wal writer process  
+cituscl+  64653  64648  0 Jun25 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  64654  64648  0 Jun25 ?        00:00:01 postgres: stats collector process  
+cituscl+  64655  64648  0 Jun25 ?        00:00:09 postgres: bgworker: task tracker  
+cituscl+  64656  64648  0 Jun25 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  64677  64499  0 Jun25 pts/3    00:00:00 psql -d postgres
+cituscl+  64678  64648  0 Jun25 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  64679  64648  0 Jun25 ?        00:00:08 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  64865  64648  0 Jun25 ?        00:00:07 postgres: bgworker: logical replication worker for subscription 43830  
+cituscl+  69307  64055  0 02:49 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@center1 data]$ gdb attach 64865
+GNU gdb (GDB) Red Hat Enterprise Linux 7.6.1-110.el7
+Copyright (C) 2013 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-redhat-linux-gnu".
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>...
+attach: No such file or directory.
+Attaching to process 64865
+Reading symbols from /opt/pgsql-10.1/bin/postgres...done.
+Reading symbols from /lib64/libpthread.so.0...(no debugging symbols found)...done.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib64/libthread_db.so.1".
+Loaded symbols for /lib64/libpthread.so.0
+Reading symbols from /lib64/librt.so.1...(no debugging symbols found)...done.
+Loaded symbols for /lib64/librt.so.1
+Reading symbols from /lib64/libdl.so.2...(no debugging symbols found)...done.
+Loaded symbols for /lib64/libdl.so.2
+Reading symbols from /lib64/libm.so.6...(no debugging symbols found)...done.
+Loaded symbols for /lib64/libm.so.6
+Reading symbols from /lib64/libc.so.6...(no debugging symbols found)...done.
+Loaded symbols for /lib64/libc.so.6
+Reading symbols from /lib64/ld-linux-x86-64.so.2...(no debugging symbols found)...done.
+Loaded symbols for /lib64/ld-linux-x86-64.so.2
+Reading symbols from /opt/pgsql-10.1/lib/citus.so...done.
+Loaded symbols for /opt/pgsql-10.1/lib/citus.so
+Reading symbols from /opt/pgsql-10.1/lib/libpq.so.5...done.
+Loaded symbols for /opt/pgsql-10.1/lib/libpq.so.5
+Reading symbols from /lib64/libnss_files.so.2...(no debugging symbols found)...done.
+Loaded symbols for /lib64/libnss_files.so.2
+Reading symbols from /opt/pgsql-10.1/lib/libpqwalreceiver.so...done.
+Loaded symbols for /opt/pgsql-10.1/lib/libpqwalreceiver.so
+0x00007f208c0f3163 in __epoll_wait_nocancel () from /lib64/libc.so.6
+Missing separate debuginfos, use: debuginfo-install glibc-2.17-222.el7.x86_64
+(gdb) b XLogInsert
+Breakpoint 1 at 0x524441: file xloginsert.c, line 420.
+(gdb) b XLogInsertRecord
+Breakpoint 2 at 0x50ea70: file xlog.c, line 960.
+(gdb) c
+Continuing.
+
+Breakpoint 1, XLogInsert (rmid=10 '\n', info=96 '`') at xloginsert.c:420
+420		if (!begininsert_called)
+(gdb) c
+Continuing.
+
+Breakpoint 2, XLogInsertRecord (rdata=0xe17bf0 <hdr_rdt>, fpw_lsn=0, flags=0 '\000') at xlog.c:960
+960		XLogCtlInsert *Insert = &XLogCtl->Insert;
+(gdb) bt
+#0  XLogInsertRecord (rdata=0xe17bf0 <hdr_rdt>, fpw_lsn=0, flags=0 '\000') at xlog.c:960
+#1  0x0000000000524524 in XLogInsert (rmid=10 '\n', info=96 '`') at xloginsert.c:462
+#2  0x00000000004c0ffd in heap_lock_tuple (relation=0x7f208cea3f68, tuple=0x7ffddb1df2b0, cid=0, mode=LockTupleExclusive, wait_policy=LockWaitBlock, follow_updates=0 '\000', 
+    buffer=0x7ffddb1df2ec, hufd=0x7ffddb1df2d0) at heapam.c:5163
+#3  0x000000000067fd67 in RelationFindReplTupleByIndex (rel=0x7f208cea3f68, idxoid=43820, lockmode=LockTupleExclusive, searchslot=0x2ace538, outslot=0x2ace650) at execReplication.c:178
+#4  0x00000000007b6958 in apply_handle_delete (s=0x7ffddb1e3820) at worker.c:831
+#5  0x00000000007b6aeb in apply_dispatch (s=0x7ffddb1e3820) at worker.c:899
+#6  0x00000000007b6f76 in LogicalRepApplyLoop (last_received=24138129376) at worker.c:1098
+#7  0x00000000007b7e48 in ApplyWorkerMain (main_arg=0) at worker.c:1650
+#8  0x000000000077a272 in StartBackgroundWorker () at bgworker.c:835
+#9  0x000000000078c035 in do_start_bgworker (rw=0x2a6ca40) at postmaster.c:5680
+#10 0x000000000078c36f in maybe_start_bgworkers () at postmaster.c:5884
+#11 0x000000000078b455 in sigusr1_handler (postgres_signal_arg=10) at postmaster.c:5073
+#12 <signal handler called>
+#13 0x00007f208c0e9c53 in __select_nocancel () from /lib64/libc.so.6
+#14 0x00000000007872c2 in ServerLoop () at postmaster.c:1717
+#15 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x2a27c40) at postmaster.c:1361
+#16 0x00000000006cf26f in main (argc=1, argv=0x2a27c40) at main.c:228
+(gdb) n
+963		XLogRecord *rechdr = (XLogRecord *) rdata->data;
+(gdb) 
+964		uint8		info = rechdr->xl_info & ~XLR_INFO_MASK;
+(gdb) 
+965		bool		isLogSwitch = (rechdr->xl_rmid == RM_XLOG_ID &&
+(gdb) 
+974		if (!XLogInsertAllowed())
+(gdb) 
+1009		START_CRIT_SECTION();
+(gdb) 
+1010		if (isLogSwitch)
+(gdb) 
+1013			WALInsertLockAcquire();
+(gdb) 
+1027		if (RedoRecPtr != Insert->RedoRecPtr)
+(gdb) 
+1030			RedoRecPtr = Insert->RedoRecPtr;
+(gdb) 
+1032		doPageWrites = (Insert->fullPageWrites || Insert->forcePageWrites);
+(gdb) 
+1034		if (fpw_lsn != InvalidXLogRecPtr && fpw_lsn <= RedoRecPtr && doPageWrites)
+(gdb) 
+1049		if (isLogSwitch)
+(gdb) 
+1053			ReserveXLogInsertLocation(rechdr->xl_tot_len, &StartPos, &EndPos,
+(gdb) p isLogSwitch
+$1 = 0 '\000'
+(gdb) n
+1055			inserted = true;
+(gdb) 
+1058		if (inserted)
+(gdb) 
+1064			rdata_crc = rechdr->xl_crc;
+(gdb) 
+1065			COMP_CRC32C(rdata_crc, rechdr, offsetof(XLogRecord, xl_crc));
+(gdb) 
+1066			FIN_CRC32C(rdata_crc);
+(gdb) 
+1067			rechdr->xl_crc = rdata_crc;
+(gdb) 
+1073			CopyXLogRecordToWAL(rechdr->xl_tot_len, isLogSwitch, rdata,
+(gdb) 
+1081			if ((flags & XLOG_MARK_UNIMPORTANT) == 0)
+(gdb) 
+1083				int			lockno = holdingAllLocks ? 0 : MyLockNo;
+(gdb) 
+1085				WALInsertLocks[lockno].l.lastImportantAt = StartPos;
+(gdb) 
+1100		WALInsertLockRelease();
+(gdb) 
+1102		MarkCurrentTransactionIdLoggedIfAny();
+(gdb) 
+1104		END_CRIT_SECTION();
+(gdb) p XLogCtl
+$2 = (XLogCtlData *) 0x7f207afff080
+(gdb) p *XLogCtl
+$3 = {Insert = {insertpos_lck = 0 '\000', CurrBytePos = 6654595968, PrevBytePos = 6654595912, pad = '\000' <repeats 127 times>, RedoRecPtr = 6674147016, forcePageWrites = 0 '\000', 
+    fullPageWrites = 1 '\001', exclusiveBackupState = EXCLUSIVE_BACKUP_NONE, nonExclusiveBackups = 0, lastBackupStart = 0, WALInsertLocks = 0x7f207b000700}, LogwrtRqst = {
+    Write = 6674155544, Flush = 6674155544}, RedoRecPtr = 6674147016, ckptXidEpoch = 0, ckptXid = 1200, asyncXactLSN = 6674155544, replicationSlotMinLSN = 0, lastRemovedSegNo = 268, 
+  unloggedLSN = 1, ulsn_lck = 0 '\000', lastSegSwitchTime = 1561540716, lastSegSwitchLSN = 6660554752, LogwrtResult = {Write = 6674155544, Flush = 6674155544}, InitializedUpTo = 6678347776, 
+  pages = 0x7f207b002000 "\227\320\006", xlblocks = 0x7f207afff688, XLogCacheBlck = 511, ThisTimeLineID = 1, PrevTimeLineID = 1, archiveCleanupCommand = '\000' <repeats 1023 times>, 
+  SharedRecoveryInProgress = 0 '\000', SharedHotStandbyActive = 0 '\000', WalWriterSleeping = 1 '\001', recoveryWakeupLatch = {is_set = 0, is_shared = 1 '\001', owner_pid = 0}, 
+  lastCheckPointRecPtr = 3284860024, lastCheckPointEndPtr = 3284860136, lastCheckPoint = {redo = 3284859968, ThisTimeLineID = 1, PrevTimeLineID = 1, fullPageWrites = 1 '\001', 
+    nextXidEpoch = 0, nextXid = 1180, nextOid = 51954, nextMulti = 1, nextMultiOffset = 0, oldestXid = 548, oldestXidDB = 1, oldestMulti = 1, oldestMultiDB = 1, time = 1561517092, 
+    oldestCommitTsXid = 0, newestCommitTsXid = 0, oldestActiveXid = 1180}, lastReplayedEndRecPtr = 3409575912, lastReplayedTLI = 1, replayEndRecPtr = 3409575912, replayEndTLI = 1, 
+  recoveryLastXTime = 614832493900916, currentChunkStartTime = 0, recoveryPause = 0 '\000', lastFpwDisableRecPtr = 0, info_lck = 0 '\000'}
+(gdb) p *XLogCtl->Insert
+Structure has no component named operator*.
+(gdb) p XLogCtl->Insert
+$4 = {insertpos_lck = 0 '\000', CurrBytePos = 6654595968, PrevBytePos = 6654595912, pad = '\000' <repeats 127 times>, RedoRecPtr = 6674147016, forcePageWrites = 0 '\000', 
+  fullPageWrites = 1 '\001', exclusiveBackupState = EXCLUSIVE_BACKUP_NONE, nonExclusiveBackups = 0, lastBackupStart = 0, WALInsertLocks = 0x7f207b000700}
+(gdb) q
+A debugging session is active.
+
+	Inferior 1 [process 64865] will be detached.
+
+Quit anyway? (y or n) y
+Detaching from program: /opt/pgsql-10.1/bin/postgres, process 64865
+[cituscluster@center1 data]$ 2019-06-26 02:52:09.461 PDT [64865] ERROR:  could not receive data from WAL stream: server closed the connection unexpectedly
+		This probably means the server terminated abnormally
+		before or while processing the request.
+2019-06-26 02:52:09.465 PDT [64648] LOG:  worker process: logical replication worker for subscription 43830 (PID 64865) exited with exit code 1
+2019-06-26 02:52:09.486 PDT [69342] LOG:  logical replication apply worker for subscription "sub1" has started
+
+Socket error Event: 32 Error: 10053.
+Connection closing...Socket close.
+
+Connection closed by foreign host.
+
+Disconnected from remote host(citus-wn2) at 18:48:43.
+
+Type `help' to learn how to use Xshell prompt.
+[c:\~]$ 
+
+Connecting to 192.168.221.132:22...
+Connection established.
+To escape to local shell, press 'Ctrl+Alt+]'.
+
+Last login: Tue Jun 25 19:40:47 2019 from 192.168.221.1
+[cituscluster@center1 ~]$ cd data/
+[cituscluster@center1 data]$ ll
+total 68
+drwx------ 6 cituscluster cituscluster    64 Jun 25 19:49 base
+drwx------ 2 cituscluster cituscluster  4096 Jun 25 19:49 global
+drwx------ 2 cituscluster cituscluster     6 May 26 20:25 pg_commit_ts
+drwx------ 2 cituscluster cituscluster     6 May 26 20:25 pg_dynshmem
+drwx------ 3 cituscluster cituscluster    20 May 26 20:27 pg_foreign_file
+-rw------- 1 cituscluster cituscluster  4507 May 26 20:35 pg_hba.conf
+-rw------- 1 cituscluster cituscluster  1636 May 26 20:25 pg_ident.conf
+drwx------ 4 cituscluster cituscluster    68 Jun 26 02:55 pg_logical
+drwx------ 4 cituscluster cituscluster    36 May 26 20:25 pg_multixact
+drwx------ 2 cituscluster cituscluster    18 Jun 25 19:49 pg_notify
+drwx------ 2 cituscluster cituscluster     6 May 26 20:36 pg_replslot
+drwx------ 2 cituscluster cituscluster     6 May 26 20:25 pg_serial
+drwx------ 2 cituscluster cituscluster     6 May 26 20:25 pg_snapshots
+drwx------ 2 cituscluster cituscluster     6 Jun  2 21:03 pg_stat
+drwx------ 2 cituscluster cituscluster    63 Jun 26 18:57 pg_stat_tmp
+drwx------ 2 cituscluster cituscluster    18 May 26 20:25 pg_subtrans
+drwx------ 2 cituscluster cituscluster     6 May 26 20:25 pg_tblspc
+drwx------ 2 cituscluster cituscluster     6 May 26 20:25 pg_twophase
+-rw------- 1 cituscluster cituscluster     3 May 26 20:25 PG_VERSION
+drwx------ 3 cituscluster cituscluster  8192 Jun 26 02:55 pg_wal
+drwx------ 2 cituscluster cituscluster    18 May 26 20:25 pg_xact
+-rw------- 1 cituscluster cituscluster    88 May 26 20:25 postgresql.auto.conf
+-rw------- 1 cituscluster cituscluster 22770 May 26 20:35 postgresql.conf
+-rw------- 1 cituscluster cituscluster    29 Jun 25 19:49 postmaster.opts
+-rw------- 1 cituscluster cituscluster    82 Jun 25 19:49 postmaster.pid
+[cituscluster@center1 data]$ ll replorigin_checkpoint
+ls: cannot access replorigin_checkpoint: No such file or directory
+[cituscluster@center1 data]$ ll pg_logical/
+total 4
+drwx------ 2 cituscluster cituscluster  6 May 26 20:25 mappings
+-rw------- 1 cituscluster cituscluster 24 Jun 26 02:55 replorigin_checkpoint
+drwx------ 2 cituscluster cituscluster  6 May 26 20:25 snapshots
+[cituscluster@center1 data]$ tail -f pg_logical/replorigin_checkpoint
+?W?O¡ã¡ã¡ÀXshell^C
+[cituscluster@center1 data]$ 
+[cituscluster@center1 data]$ pg_
+pg_archivecleanup  pg_config          pg_ctl             pg_dumpall         pg_receivewal      pg_resetwal        pg_rewind          pg_test_timing     pg_waldump         
+pg_basebackup      pg_controldata     pg_dump            pg_isready         pg_recvlogical     pg_restore         pg_test_fsync      pg_upgrade         
+[cituscluster@center1 data]$ pg_waldump pg_logical/replorigin_checkpoint
+pg_waldump: no start WAL location given
+Try "pg_waldump --help" for more information.
+[cituscluster@center1 data]$ 
+[cituscluster@center1 data]$ ll pg_replslot/
+total 0
+[cituscluster@center1 data]$ psql -d postgres
+psql (10.1)
+Type "help" for help.
+
+postgres=# \q
+[cituscluster@center1 data]$ ps -ef | grep postgres
+cituscl+  64648      1  0 Jun26 ?        00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  64650  64648  0 Jun26 ?        00:00:07 postgres: checkpointer process  
+cituscl+  64651  64648  0 Jun26 ?        00:00:05 postgres: writer process   
+cituscl+  64652  64648  0 Jun26 ?        00:00:12 postgres: wal writer process  
+cituscl+  64653  64648  0 Jun26 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  64654  64648  0 Jun26 ?        00:00:01 postgres: stats collector process  
+cituscl+  64655  64648  0 Jun26 ?        00:00:18 postgres: bgworker: task tracker  
+cituscl+  64656  64648  0 Jun26 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  64679  64648  0 Jun26 ?        00:00:17 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  69954  64648  0 Jun26 ?        00:00:03 postgres: bgworker: logical replication worker for subscription 43830  
+cituscl+  73612  70067  0 00:18 pts/0    00:00:00 grep --color=auto postgres
+[cituscluster@center1 data]$ ps -ef | grep postgres
+cituscl+  64648      1  0 Jun26 ?        00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  64650  64648  0 Jun26 ?        00:00:07 postgres: checkpointer process  
+cituscl+  64651  64648  0 Jun26 ?        00:00:05 postgres: writer process   
+cituscl+  64652  64648  0 Jun26 ?        00:00:12 postgres: wal writer process  
+cituscl+  64653  64648  0 Jun26 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  64654  64648  0 Jun26 ?        00:00:01 postgres: stats collector process  
+cituscl+  64655  64648  0 Jun26 ?        00:00:19 postgres: bgworker: task tracker  
+cituscl+  64656  64648  0 Jun26 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  64679  64648  0 Jun26 ?        00:00:17 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  73661  73618  0 00:19 pts/1    00:00:00 psql -d postgres
+cituscl+  73662  64648  0 00:19 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  73673  70067  0 00:19 pts/0    00:00:00 grep --color=auto postgres
+[cituscluster@center1 data]$ ll pg_replslot/
+total 0
+[cituscluster@center1 data]$ ll pg_replslot/
+total 0
+[cituscluster@center1 data]$ ps -ef | grep postgres
+cituscl+  64648      1  0 Jun26 ?        00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  64650  64648  0 Jun26 ?        00:00:07 postgres: checkpointer process  
+cituscl+  64651  64648  0 Jun26 ?        00:00:05 postgres: writer process   
+cituscl+  64652  64648  0 Jun26 ?        00:00:12 postgres: wal writer process  
+cituscl+  64653  64648  0 Jun26 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  64654  64648  0 Jun26 ?        00:00:01 postgres: stats collector process  
+cituscl+  64655  64648  0 Jun26 ?        00:00:19 postgres: bgworker: task tracker  
+cituscl+  64656  64648  0 Jun26 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  64679  64648  0 Jun26 ?        00:00:17 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  73661  73618  0 00:19 pts/1    00:00:00 psql -d postgres
+cituscl+  73662  64648  0 00:19 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  73695  64648  0 00:20 ?        00:00:00 postgres: bgworker: logical replication worker for subscription 51954  
+cituscl+  73704  70067  0 00:20 pts/0    00:00:00 grep --color=auto postgres
+[cituscluster@center1 data]$ ps -ef | grep postgres
+cituscl+  64648      1  0 Jun26 ?        00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  64650  64648  0 Jun26 ?        00:00:07 postgres: checkpointer process  
+cituscl+  64651  64648  0 Jun26 ?        00:00:05 postgres: writer process   
+cituscl+  64652  64648  0 Jun26 ?        00:00:12 postgres: wal writer process  
+cituscl+  64653  64648  0 Jun26 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  64654  64648  0 Jun26 ?        00:00:01 postgres: stats collector process  
+cituscl+  64655  64648  0 Jun26 ?        00:00:19 postgres: bgworker: task tracker  
+cituscl+  64656  64648  0 Jun26 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  64679  64648  0 Jun26 ?        00:00:17 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  73661  73618  0 00:19 pts/1    00:00:00 psql -d postgres
+cituscl+  73662  64648  0 00:19 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  73726  64648  0 00:21 ?        00:00:00 postgres: bgworker: logical replication worker for subscription 51959  
+cituscl+  73727  64648 95 00:21 ?        00:00:07 postgres: bgworker: logical replication worker for subscription 51959 sync 43764  
+cituscl+  73734  70067  0 00:21 pts/0    00:00:00 grep --color=auto postgres
+[cituscluster@center1 data]$ ll
+total 68
+drwx------ 6 cituscluster cituscluster    64 Jun 25 19:49 base
+drwx------ 2 cituscluster cituscluster  4096 Jun 27 16:48 global
+drwx------ 2 cituscluster cituscluster     6 May 26 20:25 pg_commit_ts
+drwx------ 2 cituscluster cituscluster     6 May 26 20:25 pg_dynshmem
+drwx------ 3 cituscluster cituscluster    20 May 26 20:27 pg_foreign_file
+-rw------- 1 cituscluster cituscluster  4507 May 26 20:35 pg_hba.conf
+-rw------- 1 cituscluster cituscluster  1636 May 26 20:25 pg_ident.conf
+drwx------ 4 cituscluster cituscluster    68 Jun 28 00:02 pg_logical
+drwx------ 4 cituscluster cituscluster    36 May 26 20:25 pg_multixact
+drwx------ 2 cituscluster cituscluster    18 Jun 25 19:49 pg_notify
+drwx------ 2 cituscluster cituscluster     6 May 26 20:36 pg_replslot
+drwx------ 2 cituscluster cituscluster     6 May 26 20:25 pg_serial
+drwx------ 2 cituscluster cituscluster     6 May 26 20:25 pg_snapshots
+drwx------ 2 cituscluster cituscluster     6 Jun  2 21:03 pg_stat
+drwx------ 2 cituscluster cituscluster    63 Jun 28 00:04 pg_stat_tmp
+drwx------ 2 cituscluster cituscluster    18 Jun 27 23:12 pg_subtrans
+drwx------ 2 cituscluster cituscluster     6 May 26 20:25 pg_tblspc
+drwx------ 2 cituscluster cituscluster     6 May 26 20:25 pg_twophase
+-rw------- 1 cituscluster cituscluster     3 May 26 20:25 PG_VERSION
+drwx------ 3 cituscluster cituscluster  8192 Jun 27 23:52 pg_wal
+drwx------ 2 cituscluster cituscluster    18 May 26 20:25 pg_xact
+-rw------- 1 cituscluster cituscluster    88 May 26 20:25 postgresql.auto.conf
+-rw------- 1 cituscluster cituscluster 22770 May 26 20:35 postgresql.conf
+-rw------- 1 cituscluster cituscluster    29 Jun 25 19:49 postmaster.opts
+-rw------- 1 cituscluster cituscluster    82 Jun 25 19:49 postmaster.pid
+[cituscluster@center1 data]$ ll pg_logical/
+total 4
+drwx------ 2 cituscluster cituscluster  6 May 26 20:25 mappings
+-rw------- 1 cituscluster cituscluster 24 Jun 28 00:02 replorigin_checkpoint
+drwx------ 2 cituscluster cituscluster  6 May 26 20:25 snapshots
+[cituscluster@center1 data]$ ll pg_logical/mappings/
+total 0
+[cituscluster@center1 data]$ ll pg_logical/snapshots/
+total 0
+[cituscluster@center1 data]$ ll pg_xact/
+total 24
+-rw------- 1 cituscluster cituscluster 24576 Jun 28 00:01 0000
+[cituscluster@center1 data]$ ll global/
+total 628
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1136
+-rw------- 1 cituscluster cituscluster 24576 May 26 20:25 1136_fsm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1136_vm
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 1137
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1213
+-rw------- 1 cituscluster cituscluster 24576 May 26 20:25 1213_fsm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1213_vm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1214
+-rw------- 1 cituscluster cituscluster 24576 May 26 20:25 1214_fsm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1214_vm
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 1232
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 1233
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1260
+-rw------- 1 cituscluster cituscluster 24576 May 26 20:25 1260_fsm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1260_vm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1261
+-rw------- 1 cituscluster cituscluster 24576 May 26 20:25 1261_fsm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1261_vm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1262
+-rw------- 1 cituscluster cituscluster 24576 May 26 20:25 1262_fsm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1262_vm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 2396
+-rw------- 1 cituscluster cituscluster 24576 May 26 20:25 2396_fsm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 2396_vm
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 2397
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 2671
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 2672
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 2676
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 2677
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 2694
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 2695
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 2697
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 2698
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 2846
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 2846_vm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 2847
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 2964
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 2964_vm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 2965
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 2966
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 2966_vm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 2967
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 3592
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 3592_vm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 3593
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 4060
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 4060_vm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 4061
+-rw------- 1 cituscluster cituscluster  8192 Jun 27 00:22 6000
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 6000_vm
+-rw------- 1 cituscluster cituscluster 16384 Jun 27 00:22 6001
+-rw------- 1 cituscluster cituscluster 16384 Jun 27 00:22 6002
+-rw------- 1 cituscluster cituscluster  8192 Jun 27 00:25 6100
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 6100_vm
+-rw------- 1 cituscluster cituscluster 16384 Jun 27 00:26 6114
+-rw------- 1 cituscluster cituscluster 16384 Jun 27 00:22 6115
+-rw------- 1 cituscluster cituscluster  8192 Jun 28 00:02 pg_control
+-rw------- 1 cituscluster cituscluster   512 May 26 20:25 pg_filenode.map
+-rw------- 1 cituscluster cituscluster 21340 Jun 27 16:48 pg_internal.init
+[cituscluster@center1 data]$ ll base/
+total 40
+drwx------ 2 cituscluster cituscluster  8192 May 26 20:25 1
+drwx------ 2 cituscluster cituscluster  8192 May 26 20:25 13211
+drwx------ 2 cituscluster cituscluster 12288 Jun 27 16:48 13212
+drwx------ 2 cituscluster cituscluster     6 Jun 25 19:49 pgsql_job_cache
+[cituscluster@center1 data]$ vi postgresql.conf 
+drwx------ 2 cituscluster cituscluster     6 Jun  2 21:03 pg_stat
+drwx------ 2 cituscluster cituscluster    63 Jun 28 00:04 pg_stat_tmp
+drwx------ 2 cituscluster cituscluster    18 Jun 27 23:12 pg_subtrans
+drwx------ 2 cituscluster cituscluster     6 May 26 20:25 pg_tblspc
+drwx------ 2 cituscluster cituscluster     6 May 26 20:25 pg_twophase
+-rw------- 1 cituscluster cituscluster     3 May 26 20:25 PG_VERSION
+drwx------ 3 cituscluster cituscluster  8192 Jun 27 23:52 pg_wal
+drwx------ 2 cituscluster cituscluster    18 May 26 20:25 pg_xact
+-rw------- 1 cituscluster cituscluster    88 May 26 20:25 postgresql.auto.conf
+-rw------- 1 cituscluster cituscluster 22770 May 26 20:35 postgresql.conf
+-rw------- 1 cituscluster cituscluster    29 Jun 25 19:49 postmaster.opts
+-rw------- 1 cituscluster cituscluster    82 Jun 25 19:49 postmaster.pid
+[cituscluster@center1 data]$ ll pg_logical/
+total 4
+drwx------ 2 cituscluster cituscluster  6 May 26 20:25 mappings
+-rw------- 1 cituscluster cituscluster 24 Jun 28 00:02 replorigin_checkpoint
+drwx------ 2 cituscluster cituscluster  6 May 26 20:25 snapshots
+[cituscluster@center1 data]$ ll pg_logical/mappings/
+total 0
+[cituscluster@center1 data]$ ll pg_logical/snapshots/
+total 0
+[cituscluster@center1 data]$ ll pg_xact/
+total 24
+-rw------- 1 cituscluster cituscluster 24576 Jun 28 00:01 0000
+[cituscluster@center1 data]$ ll global/
+total 628
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1136
+-rw------- 1 cituscluster cituscluster 24576 May 26 20:25 1136_fsm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1136_vm
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 1137
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1213
+-rw------- 1 cituscluster cituscluster 24576 May 26 20:25 1213_fsm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1213_vm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1214
+-rw------- 1 cituscluster cituscluster 24576 May 26 20:25 1214_fsm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1214_vm
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 1232
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 1233
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1260
+-rw------- 1 cituscluster cituscluster 24576 May 26 20:25 1260_fsm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1260_vm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1261
+-rw------- 1 cituscluster cituscluster 24576 May 26 20:25 1261_fsm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1261_vm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1262
+-rw------- 1 cituscluster cituscluster 24576 May 26 20:25 1262_fsm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 1262_vm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 2396
+-rw------- 1 cituscluster cituscluster 24576 May 26 20:25 2396_fsm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 2396_vm
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 2397
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 2671
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 2672
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 2676
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 2677
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 2694
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 2695
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 2697
+-rw------- 1 cituscluster cituscluster 16384 May 26 20:25 2698
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 2846
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 2846_vm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 2847
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 2964
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 2964_vm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 2965
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 2966
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 2966_vm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 2967
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 3592
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 3592_vm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 3593
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 4060
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 4060_vm
+-rw------- 1 cituscluster cituscluster  8192 May 26 20:25 4061
+-rw------- 1 cituscluster cituscluster  8192 Jun 27 00:22 6000
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 6000_vm
+-rw------- 1 cituscluster cituscluster 16384 Jun 27 00:22 6001
+-rw------- 1 cituscluster cituscluster 16384 Jun 27 00:22 6002
+-rw------- 1 cituscluster cituscluster  8192 Jun 27 00:25 6100
+-rw------- 1 cituscluster cituscluster     0 May 26 20:25 6100_vm
+-rw------- 1 cituscluster cituscluster 16384 Jun 27 00:26 6114
+-rw------- 1 cituscluster cituscluster 16384 Jun 27 00:22 6115
+-rw------- 1 cituscluster cituscluster  8192 Jun 28 00:02 pg_control
+-rw------- 1 cituscluster cituscluster   512 May 26 20:25 pg_filenode.map
+-rw------- 1 cituscluster cituscluster 21340 Jun 27 16:48 pg_internal.init
+[cituscluster@center1 data]$ ll base/
+total 40
+drwx------ 2 cituscluster cituscluster  8192 May 26 20:25 1
+drwx------ 2 cituscluster cituscluster  8192 May 26 20:25 13211
+drwx------ 2 cituscluster cituscluster 12288 Jun 27 16:48 13212
+drwx------ 2 cituscluster cituscluster     6 Jun 25 19:49 pgsql_job_cache
+[cituscluster@center1 data]$ vi postgresql.conf 
+[cituscluster@center1 data]$ 
+[cituscluster@center1 data]$ 
+Socket error Event: 32 Error: 10053.
+Connection closing...Socket close.
+
+Connection closed by foreign host.
+
+Disconnected from remote host(citus-wn2) at 19:08:57.
+
+Type `help' to learn how to use Xshell prompt.

@@ -1,0 +1,15 @@
+[BEGIN] 2019/7/4 星期四 下午 2:54:43
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+   6156      1  0 20:19 pts/1    00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+   6158   6156  0 20:19 ?        00:00:02 postgres: checkpointer process  
+cituscl+   6159   6156  0 20:19 ?        00:00:01 postgres: writer process   
+cituscl+   6160   6156  0 20:19 ?        00:00:05 postgres: wal writer process  
+cituscl+   6161   6156  0 20:19 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+   6162   6156  0 20:19 ?        00:00:00 postgres: stats collector process  
+cituscl+   6163   6156  0 20:19 ?        00:00:05 postgres: bgworker: task tracker  
+cituscl+   6164   6156  0 20:19 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+   8649   5365  0 23:43 pts/1    00:00:00 psql -d postgres
+cituscl+   8650   6156  0 23:43 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+   8858   8783  0 23:56 pts/0    00:00:00 grep --color=auto postgres
+
+[END] 2019/7/4 星期四 下午 3:36:51

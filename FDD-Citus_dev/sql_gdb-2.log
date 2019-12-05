@@ -1,0 +1,3232 @@
+[BEGIN] 2019/3/18 ÐÇÆÚÒ» ÉÏÎç 1:02:41
+(gdb) p *job
+$1 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d438 "Job"}, citus_tag = T_Job}, jobId = 29309796353, jobQuery = 0x1fa6fc0, taskList = 0x0, 
+  dependedJobList = 0x0, subqueryPushdown = 0 '\000', requiresMasterEvaluation = 0 '\000', deferredPruning = 0 '\000', partitionKeyValue = 0x0}
+(gdb) n
+1978			jobStack = list_delete_ptr(jobStack, job);
+(gdb) 
+1979			jobStack = list_union_ptr(jobStack, job->dependedJobList);
+(gdb) 
+1972		while (jobStack != NIL)
+(gdb) 
+1987		flattenedJobCount = (int32) list_length(flattenedJobList);
+(gdb) 
+1988		for (jobIndex = (flattenedJobCount - 1); jobIndex >= 0; jobIndex--)
+(gdb) p flattenedJobCount
+$2 = 1
+(gdb) n
+1990			Job *job = (Job *) list_nth(flattenedJobList, jobIndex);
+(gdb) 
+1991			List *sqlTaskList = NIL;
+(gdb) p *job
+$3 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d438 "Job"}, citus_tag = T_Job}, jobId = 29309796353, jobQuery = 0x1fa6fc0, taskList = 0x0, 
+  dependedJobList = 0x0, subqueryPushdown = 0 '\000', requiresMasterEvaluation = 0 '\000', deferredPruning = 0 '\000', partitionKeyValue = 0x0}
+(gdb) n
+1992			List *assignedSqlTaskList = NIL;
+(gdb) 
+1993			ListCell *assignedSqlTaskCell = NULL;
+(gdb) 
+1996			if (job->subqueryPushdown)
+(gdb) 
+2014				sqlTaskList = SqlTaskList(job);
+(gdb) 
+2017			sqlTaskList = PruneSqlTaskDependencies(sqlTaskList);
+(gdb) s
+PruneSqlTaskDependencies (sqlTaskList=0x1fb3b00) at planner/multi_physical_planner.c:4166
+4166		ListCell *sqlTaskCell = NULL;
+(gdb) n
+4167		foreach(sqlTaskCell, sqlTaskList)
+(gdb) 
+4169			Task *sqlTask = (Task *) lfirst(sqlTaskCell);
+(gdb) 
+4170			List *dependedTaskList = sqlTask->dependedTaskList;
+(gdb) 
+4171			List *prunedDependedTaskList = NIL;
+(gdb) p *sqlTask
+$4 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d46b "Task"}, citus_tag = T_Task}, taskType = SQL_TASK, jobId = 29309796353, taskId = 1, 
+  queryString = 0x1fb2c00 "SELECT id, name FROM test2_102687 test2 WHERE (id OPERATOR(pg_catalog.>) 10)", anchorShardId = 102687, taskPlacementList = 0x0, dependedTaskList = 0x0, 
+  partitionId = 0, upstreamTaskId = 0, shardInterval = 0x0, assignmentConstrained = 0 '\000', taskExecution = 0x0, upsertQuery = 0 '\000', replicationModel = 105 'i', 
+  relationRowLockList = 0x0, modifyWithSubquery = 0 '\000', relationShardList = 0x1fb3ab0, rowValuesLists = 0x0}
+(gdb) p *dependedTaskList
+Cannot access memory at address 0x0
+(gdb) n
+4173			ListCell *dependedTaskCell = NULL;
+(gdb) 
+4174			foreach(dependedTaskCell, dependedTaskList)
+(gdb) 
+4200			sqlTask->dependedTaskList = prunedDependedTaskList;
+(gdb) 
+4167		foreach(sqlTaskCell, sqlTaskList)
+(gdb) 
+4169			Task *sqlTask = (Task *) lfirst(sqlTaskCell);
+(gdb) 
+4170			List *dependedTaskList = sqlTask->dependedTaskList;
+(gdb) p *sqlTask
+$5 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d46b "Task"}, citus_tag = T_Task}, taskType = SQL_TASK, jobId = 29309796353, taskId = 2, 
+  queryString = 0x1fb4cc0 "SELECT id, name FROM test2_102688 test2 WHERE (id OPERATOR(pg_catalog.>) 10)", anchorShardId = 102688, taskPlacementList = 0x0, dependedTaskList = 0x0, 
+  partitionId = 0, upstreamTaskId = 0, shardInterval = 0x0, assignmentConstrained = 0 '\000', taskExecution = 0x0, upsertQuery = 0 '\000', replicationModel = 105 'i', 
+  relationRowLockList = 0x0, modifyWithSubquery = 0 '\000', relationShardList = 0x1fb5c80, rowValuesLists = 0x0}
+(gdb) n
+4171			List *prunedDependedTaskList = NIL;
+(gdb) 
+4173			ListCell *dependedTaskCell = NULL;
+(gdb) 
+4174			foreach(dependedTaskCell, dependedTaskList)
+(gdb) 
+4200			sqlTask->dependedTaskList = prunedDependedTaskList;
+(gdb) 
+4167		foreach(sqlTaskCell, sqlTaskList)
+(gdb) 
+4169			Task *sqlTask = (Task *) lfirst(sqlTaskCell);
+(gdb) 
+4170			List *dependedTaskList = sqlTask->dependedTaskList;
+(gdb) p *sqlTask
+$6 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d46b "Task"}, citus_tag = T_Task}, taskType = SQL_TASK, jobId = 29309796353, taskId = 3, 
+  queryString = 0x1fb7048 "SELECT id, name FROM test2_102689 test2 WHERE (id OPERATOR(pg_catalog.>) 10)", anchorShardId = 102689, taskPlacementList = 0x0, dependedTaskList = 0x0, 
+  partitionId = 0, upstreamTaskId = 0, shardInterval = 0x0, assignmentConstrained = 0 '\000', taskExecution = 0x0, upsertQuery = 0 '\000', replicationModel = 105 'i', 
+  relationRowLockList = 0x0, modifyWithSubquery = 0 '\000', relationShardList = 0x1fb8008, rowValuesLists = 0x0}
+(gdb) n
+4171			List *prunedDependedTaskList = NIL;
+(gdb) 
+4173			ListCell *dependedTaskCell = NULL;
+(gdb) 
+4174			foreach(dependedTaskCell, dependedTaskList)
+(gdb) 
+4200			sqlTask->dependedTaskList = prunedDependedTaskList;
+(gdb) 
+4167		foreach(sqlTaskCell, sqlTaskList)
+(gdb) p *sqlTask->dependedTaskList
+No symbol "sqlTask" in current context.
+(gdb) n
+4203		return sqlTaskList;
+(gdb) p *sqlTaskList
+$7 = {type = T_List, length = 3, head = 0x1fb3ae0, tail = 0x1fb8038}
+(gdb) p *sqlTaskList->head
+$8 = {data = {ptr_value = 0x1fb0fb8, int_value = 33230776, oid_value = 33230776}, next = 0x1fb5cb0}
+(gdb) p *sqlTaskList->head->data.ptr_value
+Attempt to dereference a generic pointer.
+(gdb) p sqlTaskList->head->data.ptr_value
+$9 = (void *) 0x1fb0fb8
+(gdb) p *(Task *)(sqlTaskList->head->data.ptr_value)
+$10 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d46b "Task"}, citus_tag = T_Task}, taskType = SQL_TASK, jobId = 29309796353, taskId = 1, 
+  queryString = 0x1fb2c00 "SELECT id, name FROM test2_102687 test2 WHERE (id OPERATOR(pg_catalog.>) 10)", anchorShardId = 102687, taskPlacementList = 0x0, dependedTaskList = 0x0, 
+  partitionId = 0, upstreamTaskId = 0, shardInterval = 0x0, assignmentConstrained = 0 '\000', taskExecution = 0x0, upsertQuery = 0 '\000', replicationModel = 105 'i', 
+  relationRowLockList = 0x0, modifyWithSubquery = 0 '\000', relationShardList = 0x1fb3ab0, rowValuesLists = 0x0}
+(gdb) n
+4204	}
+(gdb) 
+BuildJobTreeTaskList (jobTree=0x1faf1f8, plannerRestrictionContext=0x1fa4208) at planner/multi_physical_planner.c:2023
+2023			assignedSqlTaskList = AssignTaskList(sqlTaskList);
+(gdb) s
+AssignTaskList (sqlTaskList=0x1fb3b00) at planner/multi_physical_planner.c:4633
+4633		List *assignedSqlTaskList = NIL;
+(gdb) n
+4634		Task *firstSqlTask = NULL;
+(gdb) 
+4635		bool hasAnchorShardId = false;
+(gdb) 
+4636		bool hasMergeTaskDependencies = false;
+(gdb) 
+4637		ListCell *sqlTaskCell = NULL;
+(gdb) 
+4638		List *primarySqlTaskList = NIL;
+(gdb) 
+4639		ListCell *primarySqlTaskCell = NULL;
+(gdb) 
+4640		List *constrainedSqlTaskList = NIL;
+(gdb) 
+4641		ListCell *constrainedSqlTaskCell = NULL;
+(gdb) 
+4644		if (sqlTaskList == NIL)
+(gdb) 
+4649		firstSqlTask = (Task *) linitial(sqlTaskList);
+(gdb) bt
+#0  AssignTaskList (sqlTaskList=0x1fb3b00) at planner/multi_physical_planner.c:4649
+#1  0x00007f536bfccee1 in BuildJobTreeTaskList (jobTree=0x1faf1f8, plannerRestrictionContext=0x1fa4208) at planner/multi_physical_planner.c:2023
+#2  0x00007f536bfc9dc5 in CreatePhysicalDistributedPlan (multiTree=0x1faf288, plannerRestrictionContext=0x1fa4208) at planner/multi_physical_planner.c:219
+#3  0x00007f536bfb846c in CreateDistributedPlan (planId=1, originalQuery=0x1f18018, query=0x1f17a78, boundParams=0x0, hasUnresolvedParams=0 '\000', plannerRestrictionContext=0x1fa4208)
+    at planner/distributed_planner.c:771
+#4  0x00007f536bfb807f in CreateDistributedPlannedStmt (planId=1, localPlan=0x1fa55a0, originalQuery=0x1f18018, query=0x1f17a78, boundParams=0x0, plannerRestrictionContext=0x1fa4208)
+    at planner/distributed_planner.c:498
+#5  0x00007f536bfb7b2e in distributed_planner (parse=0x1f17a78, cursorOptions=256, boundParams=0x0) at planner/distributed_planner.c:158
+#6  0x00000000007428cc in planner (parse=0x1f17a78, cursorOptions=256, boundParams=0x0) at planner.c:208
+#7  0x000000000081361a in pg_plan_query (querytree=0x1f17a78, cursorOptions=256, boundParams=0x0) at postgres.c:796
+#8  0x000000000081373a in pg_plan_queries (querytrees=0x1f12e30, cursorOptions=256, boundParams=0x0) at postgres.c:862
+#9  0x00000000008139ec in exec_simple_query (query_string=0x1f16708 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1027
+#10 0x0000000000817b1f in PostgresMain (argc=1, argv=0x1eb40c8, dbname=0x1eb3f78 "postgres", username=0x1e6bd08 "cituscluster") at postgres.c:4088
+#11 0x000000000078b2d2 in BackendRun (port=0x1eae550) at postmaster.c:4357
+#12 0x000000000078aa7b in BackendStartup (port=0x1eae550) at postmaster.c:4029
+#13 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#14 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1e69be0) at postmaster.c:1361
+#15 0x00000000006cf26f in main (argc=1, argv=0x1e69be0) at main.c:228
+(gdb) n
+4650		if (firstSqlTask->anchorShardId != INVALID_SHARD_ID)
+(gdb) p *firstSqlTask
+$11 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d46b "Task"}, citus_tag = T_Task}, taskType = SQL_TASK, jobId = 29309796353, taskId = 1, 
+  queryString = 0x1fb2c00 "SELECT id, name FROM test2_102687 test2 WHERE (id OPERATOR(pg_catalog.>) 10)", anchorShardId = 102687, taskPlacementList = 0x0, dependedTaskList = 0x0, 
+  partitionId = 0, upstreamTaskId = 0, shardInterval = 0x0, assignmentConstrained = 0 '\000', taskExecution = 0x0, upsertQuery = 0 '\000', replicationModel = 105 'i', 
+  relationRowLockList = 0x0, modifyWithSubquery = 0 '\000', relationShardList = 0x1fb3ab0, rowValuesLists = 0x0}
+(gdb) n
+4652			hasAnchorShardId = true;
+(gdb) 
+4660		hasMergeTaskDependencies = HasMergeTaskDependencies(sqlTaskList);
+(gdb) s
+HasMergeTaskDependencies (sqlTaskList=0x1fb3b00) at planner/multi_physical_planner.c:4766
+4766		bool hasMergeTaskDependencies = false;
+(gdb) n
+4767		Task *sqlTask = (Task *) linitial(sqlTaskList);
+(gdb) 
+4768		List *dependedTaskList = sqlTask->dependedTaskList;
+(gdb) 
+4770		ListCell *dependedTaskCell = NULL;
+(gdb) 
+4771		foreach(dependedTaskCell, dependedTaskList)
+(gdb) 
+4781		return hasMergeTaskDependencies;
+(gdb) p hasMergeTaskDependencies
+$12 = 0 '\000'
+(gdb) n
+4782	}
+(gdb) 
+AssignTaskList (sqlTaskList=0x1fb3b00) at planner/multi_physical_planner.c:4661
+4661		if (!hasMergeTaskDependencies)
+(gdb) 
+4665			assignedSqlTaskList = AssignAnchorShardTaskList(sqlTaskList);
+(gdb) s
+AssignAnchorShardTaskList (taskList=0x1fb3b00) at planner/multi_physical_planner.c:4905
+4905		List *assignedTaskList = NIL;
+(gdb) n
+4908		if (TaskAssignmentPolicy == TASK_ASSIGNMENT_GREEDY)
+(gdb) 
+4910			assignedTaskList = GreedyAssignTaskList(taskList);
+(gdb) s
+GreedyAssignTaskList (taskList=0x1fb3b00) at planner/multi_physical_planner.c:4936
+4936		List *assignedTaskList = NIL;
+(gdb) n
+4937		List *activeShardPlacementLists = NIL;
+(gdb) 
+4938		uint32 assignedTaskCount = 0;
+(gdb) 
+4939		uint32 taskCount = list_length(taskList);
+(gdb) 
+4942		List *workerNodeList = ActiveReadableNodeList();
+(gdb) p taskCount
+$13 = 3
+(gdb) n
+4943		workerNodeList = SortList(workerNodeList, CompareWorkerNodes);
+(gdb) p workerNodeList
+$14 = (List *) 0x1fb8bc8
+(gdb) p *workerNodeList
+$15 = {type = T_List, length = 3, head = 0x1fb9a60, tail = 0x1fb9aa0}
+(gdb) p *workerNodeList->head
+$16 = {data = {ptr_value = 0x1fb9528, int_value = 33264936, oid_value = 33264936}, next = 0x1fb9a80}
+(gdb) p *workerNodeList->head->data.ptr_value
+Attempt to dereference a generic pointer.
+(gdb) p workerNodeList->head->data.ptr_value
+$17 = (void *) 0x1fb9528
+(gdb) p (WorkNode *)workerNodeList->head->data.ptr_value
+No symbol "WorkNode" in current context.
+(gdb) p ((WorkerNode *)workerNodeList->head->data.ptr_value
+A syntax error in expression, near `'.
+(gdb) p *(WorkerNode *)workerNodeList->head->data.ptr_value
+$18 = {nodeId = 9, workerPort = 5432, workerName = "192.168.221.132", '\000' <repeats 240 times>, groupId = 9, workerRack = "default", '\000' <repeats 248 times>, hasMetadata = 0 '\000', 
+  isActive = 1 '\001', nodeRole = 17072, nodeCluster = "default", '\000' <repeats 56 times>}
+(gdb) p *(WorkerNode *)workerNodeList->head->next->data.ptr_value
+$19 = {nodeId = 10, workerPort = 5432, workerName = "192.168.221.133", '\000' <repeats 240 times>, groupId = 10, workerRack = "default", '\000' <repeats 248 times>, hasMetadata = 0 '\000', 
+  isActive = 1 '\001', nodeRole = 17072, nodeCluster = "default", '\000' <repeats 56 times>}
+(gdb) p *(WorkerNode *)workerNodeList->head->next->next->data.ptr_value
+$20 = {nodeId = 11, workerPort = 5432, workerName = "192.168.221.131", '\000' <repeats 240 times>, groupId = 11, workerRack = "default", '\000' <repeats 248 times>, hasMetadata = 0 '\000', 
+  isActive = 1 '\001', nodeRole = 17072, nodeCluster = "default", '\000' <repeats 56 times>}
+(gdb) n
+4951		taskList = SortList(taskList, CompareTasksByShardId);
+(gdb) 
+4952		activeShardPlacementLists = ActiveShardPlacementLists(taskList);
+(gdb) p *(WorkerNode *)workerNodeList->head->data.ptr_value
+$21 = {nodeId = 11, workerPort = 5432, workerName = "192.168.221.131", '\000' <repeats 240 times>, groupId = 11, workerRack = "default", '\000' <repeats 248 times>, hasMetadata = 0 '\000', 
+  isActive = 1 '\001', nodeRole = 17072, nodeCluster = "default", '\000' <repeats 56 times>}
+(gdb) p *(WorkerNode *)workerNodeList->head->next->data.ptr_value
+$22 = {nodeId = 9, workerPort = 5432, workerName = "192.168.221.132", '\000' <repeats 240 times>, groupId = 9, workerRack = "default", '\000' <repeats 248 times>, hasMetadata = 0 '\000', 
+  isActive = 1 '\001', nodeRole = 17072, nodeCluster = "default", '\000' <repeats 56 times>}
+(gdb) p *(WorkerNode *)workerNodeList->head->next->next->data.ptr_value
+$23 = {nodeId = 10, workerPort = 5432, workerName = "192.168.221.133", '\000' <repeats 240 times>, groupId = 10, workerRack = "default", '\000' <repeats 248 times>, hasMetadata = 0 '\000', 
+  isActive = 1 '\001', nodeRole = 17072, nodeCluster = "default", '\000' <repeats 56 times>}
+(gdb) s
+ActiveShardPlacementLists (taskList=0x1fb9b70) at planner/multi_physical_planner.c:5226
+5226		List *shardPlacementLists = NIL;
+(gdb) n
+5227		ListCell *taskCell = NULL;
+(gdb) 
+5229		foreach(taskCell, taskList)
+(gdb) 
+5231			Task *task = (Task *) lfirst(taskCell);
+(gdb) 
+5232			uint64 anchorShardId = task->anchorShardId;
+(gdb) 
+5234			List *shardPlacementList = FinalizedShardPlacementList(anchorShardId);
+(gdb) p anchorShardId
+$24 = 102687
+(gdb) s
+FinalizedShardPlacementList (shardId=102687) at master/master_metadata_utility.c:680
+680		List *finalizedPlacementList = NIL;
+(gdb) n
+681		List *shardPlacementList = ShardPlacementList(shardId);
+(gdb) s
+ShardPlacementList (shardId=102687) at utils/metadata_cache.c:648
+648		ShardCacheEntry *shardEntry = NULL;
+(gdb) n
+649		DistTableCacheEntry *tableEntry = NULL;
+(gdb) 
+650		GroupShardPlacement *placementArray = NULL;
+(gdb) 
+651		int numberOfPlacements = 0;
+(gdb) 
+652		List *placementList = NIL;
+(gdb) 
+653		int i = 0;
+(gdb) 
+655		shardEntry = LookupShardCacheEntry(shardId);
+(gdb) 
+656		tableEntry = shardEntry->tableEntry;
+(gdb) 
+661		placementArray = tableEntry->arrayOfPlacementArrays[shardEntry->shardIndex];
+(gdb) p *shardEntry
+$25 = {shardId = 102687, tableEntry = 0x1f9a4a8, shardIndex = 0}
+(gdb) p *shardEntry->tableEntry 
+$26 = {relationId = 41849, isValid = 1 '\001', isDistributedTable = 1 '\001', hasUninitializedShardInterval = 0 '\000', hasUniformHashDistribution = 1 '\001', 
+  hasOverlappingShardInterval = 0 '\000', 
+  partitionKeyString = 0x7f5373679ea8 "{VAR :varno 1 :varattno 1 :vartype 23 :vartypmod -1 :varcollid 0 :varlevelsup 0 :varnoold 1 :varoattno 1 :location -1}", 
+  partitionColumn = 0x7f5373679f38, partitionMethod = 104 'h', colocationId = 0, replicationModel = 99 'c', shardIntervalArrayLength = 3, sortedShardIntervalArray = 0x7f537367af38, 
+  shardColumnCompareFunction = 0x7f537367b418, shardIntervalCompareFunction = 0x7f537367b468, hashFunction = 0x7f53735bcd38, referencedRelationsViaForeignKey = 0x0, 
+  referencingRelationsViaForeignKey = 0x0, arrayOfPlacementArrays = 0x7f537367b218, arrayOfPlacementArrayLengths = 0x7f537367b248}
+(gdb) n
+662		numberOfPlacements = tableEntry->arrayOfPlacementArrayLengths[shardEntry->shardIndex];
+(gdb) p 
+$27 = {relationId = 41849, isValid = 1 '\001', isDistributedTable = 1 '\001', hasUninitializedShardInterval = 0 '\000', hasUniformHashDistribution = 1 '\001', 
+  hasOverlappingShardInterval = 0 '\000', 
+  partitionKeyString = 0x7f5373679ea8 "{VAR :varno 1 :varattno 1 :vartype 23 :vartypmod -1 :varcollid 0 :varlevelsup 0 :varnoold 1 :varoattno 1 :location -1}", 
+  partitionColumn = 0x7f5373679f38, partitionMethod = 104 'h', colocationId = 0, replicationModel = 99 'c', shardIntervalArrayLength = 3, sortedShardIntervalArray = 0x7f537367af38, 
+  shardColumnCompareFunction = 0x7f537367b418, shardIntervalCompareFunction = 0x7f537367b468, hashFunction = 0x7f53735bcd38, referencedRelationsViaForeignKey = 0x0, 
+  referencingRelationsViaForeignKey = 0x0, arrayOfPlacementArrays = 0x7f537367b218, arrayOfPlacementArrayLengths = 0x7f537367b248}
+(gdb) p placementArray
+$28 = (GroupShardPlacement *) 0x7f53735bc7c8
+(gdb) p placementArray[0]
+$29 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d4ce "GroupShardPlacement"}, citus_tag = T_GroupShardPlacement}, placementId = 693, shardId = 102687, 
+  shardLength = 0, shardState = FILE_FINALIZED, groupId = 9}
+(gdb) n
+664		for (i = 0; i < numberOfPlacements; i++)
+(gdb) p numberOfPlacements
+$30 = 2
+(gdb) p placementArray[1]
+$31 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d4ce "GroupShardPlacement"}, citus_tag = T_GroupShardPlacement}, placementId = 692, shardId = 102687, 
+  shardLength = 0, shardState = FILE_FINALIZED, groupId = 11}
+(gdb) n
+666			GroupShardPlacement *groupShardPlacement = &placementArray[i];
+(gdb) 
+667			ShardPlacement *shardPlacement = ResolveGroupShardPlacement(groupShardPlacement,
+(gdb) 
+670			placementList = lappend(placementList, shardPlacement);
+(gdb) p *shardPlacement
+$32 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d48c "ShardPlacement"}, citus_tag = T_ShardPlacement}, placementId = 693, shardId = 102687, shardLength = 0, 
+  shardState = FILE_FINALIZED, groupId = 9, nodeName = 0x1fb9be0 "192.168.221.132", nodePort = 5432, partitionMethod = 104 'h', colocationGroupId = 0, representativeValue = 2147483648}
+(gdb) n
+664		for (i = 0; i < numberOfPlacements; i++)
+(gdb) 
+666			GroupShardPlacement *groupShardPlacement = &placementArray[i];
+(gdb) 
+667			ShardPlacement *shardPlacement = ResolveGroupShardPlacement(groupShardPlacement,
+(gdb) 
+670			placementList = lappend(placementList, shardPlacement);
+(gdb) 
+664		for (i = 0; i < numberOfPlacements; i++)
+(gdb) p *shardPlacement
+No symbol "shardPlacement" in current context.
+(gdb) n
+674		if (numberOfPlacements == 0)
+(gdb) 
+680		return placementList;
+(gdb) p *placementList
+$33 = {type = T_List, length = 2, head = 0x1fb9c00, tail = 0x1fb9c40}
+(gdb) p *placementList->head->next
+$34 = {data = {ptr_value = 0x1fb8408, int_value = 33260552, oid_value = 33260552}, next = 0x0}
+(gdb) p *placementList->head->next->data.ptr_value
+Attempt to dereference a generic pointer.
+(gdb) p placementList->head->next->data.ptr_value
+$35 = (void *) 0x1fb8408
+(gdb) p (ShardPlacement*)placementList->head->next->data.ptr_value
+$36 = (ShardPlacement *) 0x1fb8408
+(gdb) p *(ShardPlacement*)placementList->head->next->data.ptr_value
+$37 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d48c "ShardPlacement"}, citus_tag = T_ShardPlacement}, placementId = 692, shardId = 102687, shardLength = 0, 
+  shardState = FILE_FINALIZED, groupId = 11, nodeName = 0x1fb9c20 "192.168.221.131", nodePort = 5432, partitionMethod = 104 'h', colocationGroupId = 0, representativeValue = 2147483648}
+(gdb) n
+681	}
+(gdb) 
+FinalizedShardPlacementList (shardId=102687) at master/master_metadata_utility.c:683
+683		ListCell *shardPlacementCell = NULL;
+(gdb) 
+684		foreach(shardPlacementCell, shardPlacementList)
+(gdb) 
+686			ShardPlacement *shardPlacement = (ShardPlacement *) lfirst(shardPlacementCell);
+(gdb) 
+687			if (shardPlacement->shardState == FILE_FINALIZED)
+(gdb) 
+689				finalizedPlacementList = lappend(finalizedPlacementList, shardPlacement);
+(gdb) 
+684		foreach(shardPlacementCell, shardPlacementList)
+(gdb) 
+686			ShardPlacement *shardPlacement = (ShardPlacement *) lfirst(shardPlacementCell);
+(gdb) 
+687			if (shardPlacement->shardState == FILE_FINALIZED)
+(gdb) n
+689				finalizedPlacementList = lappend(finalizedPlacementList, shardPlacement);
+(gdb) 
+684		foreach(shardPlacementCell, shardPlacementList)
+(gdb) 
+693		return finalizedPlacementList;
+(gdb) 
+694	}
+(gdb) 
+ActiveShardPlacementLists (taskList=0x1fb9b70) at planner/multi_physical_planner.c:5237
+5237			List *activeShardPlacementList = ActivePlacementList(shardPlacementList);
+(gdb) s
+ActivePlacementList (placementList=0x1fb9c80) at planner/multi_physical_planner.c:5286
+5286		List *activePlacementList = NIL;
+(gdb) n
+5287		ListCell *placementCell = NULL;
+(gdb) 
+5289		foreach(placementCell, placementList)
+(gdb) 
+5291			ShardPlacement *placement = (ShardPlacement *) lfirst(placementCell);
+(gdb) 
+5292			WorkerNode *workerNode = NULL;
+(gdb) 
+5295			workerNode = FindWorkerNode(placement->nodeName, placement->nodePort);
+(gdb) s
+FindWorkerNode (nodeName=0x1fb9be0 "192.168.221.132", nodePort=5432) at utils/node_metadata.c:729
+729		WorkerNode *workerNode = NULL;
+(gdb) n
+730		HTAB *workerNodeHash = GetWorkerNodeHash();
+(gdb) 
+731		bool handleFound = false;
+(gdb) 
+732		void *hashKey = NULL;
+(gdb) 
+734		WorkerNode *searchedNode = (WorkerNode *) palloc0(sizeof(WorkerNode));
+(gdb) 
+735		strlcpy(searchedNode->workerName, nodeName, WORKER_LENGTH);
+(gdb) 
+736		searchedNode->workerPort = nodePort;
+(gdb) 
+738		hashKey = (void *) searchedNode;
+(gdb) 
+739		workerNode = (WorkerNode *) hash_search(workerNodeHash, hashKey,
+(gdb) 
+742		return workerNode;
+(gdb) 
+743	}
+(gdb) 
+ActivePlacementList (placementList=0x1fb9c80) at planner/multi_physical_planner.c:5296
+5296			if (workerNode != NULL)
+(gdb) 
+5298				activePlacementList = lappend(activePlacementList, placement);
+(gdb) n
+5289		foreach(placementCell, placementList)
+(gdb) 
+5291			ShardPlacement *placement = (ShardPlacement *) lfirst(placementCell);
+(gdb) 
+5292			WorkerNode *workerNode = NULL;
+(gdb) 
+5295			workerNode = FindWorkerNode(placement->nodeName, placement->nodePort);
+(gdb) 
+5296			if (workerNode != NULL)
+(gdb) 
+5298				activePlacementList = lappend(activePlacementList, placement);
+(gdb) 
+5289		foreach(placementCell, placementList)
+(gdb) 
+5302		return activePlacementList;
+(gdb) 
+5303	}
+(gdb) 
+ActiveShardPlacementLists (taskList=0x1fb9b70) at planner/multi_physical_planner.c:5240
+5240			activeShardPlacementList = SortList(activeShardPlacementList,
+(gdb) 
+5242			shardPlacementLists = lappend(shardPlacementLists, activeShardPlacementList);
+(gdb) 
+5229		foreach(taskCell, taskList)
+(gdb) 
+5231			Task *task = (Task *) lfirst(taskCell);
+(gdb) 
+5232			uint64 anchorShardId = task->anchorShardId;
+(gdb) 
+5234			List *shardPlacementList = FinalizedShardPlacementList(anchorShardId);
+(gdb) p *task
+$38 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d46b "Task"}, citus_tag = T_Task}, taskType = SQL_TASK, jobId = 29309796353, taskId = 2, 
+  queryString = 0x1fb4cc0 "SELECT id, name FROM test2_102688 test2 WHERE (id OPERATOR(pg_catalog.>) 10)", anchorShardId = 102688, taskPlacementList = 0x0, dependedTaskList = 0x0, 
+  partitionId = 0, upstreamTaskId = 0, shardInterval = 0x0, assignmentConstrained = 0 '\000', taskExecution = 0x0, upsertQuery = 0 '\000', replicationModel = 105 'i', 
+  relationRowLockList = 0x0, modifyWithSubquery = 0 '\000', relationShardList = 0x1fb5c80, rowValuesLists = 0x0}
+(gdb) n
+5237			List *activeShardPlacementList = ActivePlacementList(shardPlacementList);
+(gdb) 
+5240			activeShardPlacementList = SortList(activeShardPlacementList,
+(gdb) 
+5242			shardPlacementLists = lappend(shardPlacementLists, activeShardPlacementList);
+(gdb) 
+5229		foreach(taskCell, taskList)
+(gdb) 
+5231			Task *task = (Task *) lfirst(taskCell);
+(gdb) 
+5232			uint64 anchorShardId = task->anchorShardId;
+(gdb) 
+5234			List *shardPlacementList = FinalizedShardPlacementList(anchorShardId);
+(gdb) 
+5237			List *activeShardPlacementList = ActivePlacementList(shardPlacementList);
+(gdb) p *task
+$39 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d46b "Task"}, citus_tag = T_Task}, taskType = SQL_TASK, jobId = 29309796353, taskId = 3, 
+  queryString = 0x1fb7048 "SELECT id, name FROM test2_102689 test2 WHERE (id OPERATOR(pg_catalog.>) 10)", anchorShardId = 102689, taskPlacementList = 0x0, dependedTaskList = 0x0, 
+  partitionId = 0, upstreamTaskId = 0, shardInterval = 0x0, assignmentConstrained = 0 '\000', taskExecution = 0x0, upsertQuery = 0 '\000', replicationModel = 105 'i', 
+  relationRowLockList = 0x0, modifyWithSubquery = 0 '\000', relationShardList = 0x1fb8008, rowValuesLists = 0x0}
+(gdb) n
+5240			activeShardPlacementList = SortList(activeShardPlacementList,
+(gdb) 
+5242			shardPlacementLists = lappend(shardPlacementLists, activeShardPlacementList);
+(gdb) 
+5229		foreach(taskCell, taskList)
+(gdb) 
+5245		return shardPlacementLists;
+(gdb) p n
+No symbol "n" in current context.
+(gdb) n
+5246	}
+(gdb) 
+GreedyAssignTaskList (taskList=0x1fb9b70) at planner/multi_physical_planner.c:4954
+4954		while (assignedTaskCount < taskCount)
+(gdb) 
+4956			ListCell *workerNodeCell = NULL;
+(gdb) p assignedTaskCount
+$40 = 0
+(gdb) p taskCount
+$41 = 3
+(gdb) n
+4957			uint32 loopStartTaskCount = assignedTaskCount;
+(gdb) 
+4960			foreach(workerNodeCell, workerNodeList)
+(gdb) 
+4962				WorkerNode *workerNode = (WorkerNode *) lfirst(workerNodeCell);
+(gdb) 
+4964				Task *assignedTask = GreedyAssignTask(workerNode, taskList,
+(gdb) n
+4966				if (assignedTask != NULL)
+(gdb) p *assignedTask
+$42 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d46b "Task"}, citus_tag = T_Task}, taskType = SQL_TASK, jobId = 29309796353, taskId = 1, 
+  queryString = 0x1fb2c00 "SELECT id, name FROM test2_102687 test2 WHERE (id OPERATOR(pg_catalog.>) 10)", anchorShardId = 102687, taskPlacementList = 0x1fbb8f0, dependedTaskList = 0x0, 
+  partitionId = 0, upstreamTaskId = 0, shardInterval = 0x0, assignmentConstrained = 0 '\000', taskExecution = 0x0, upsertQuery = 0 '\000', replicationModel = 105 'i', 
+  relationRowLockList = 0x0, modifyWithSubquery = 0 '\000', relationShardList = 0x1fb3ab0, rowValuesLists = 0x0}
+(gdb) n
+4968					assignedTaskList = lappend(assignedTaskList, assignedTask);
+(gdb) 
+4969					assignedTaskCount++;
+(gdb) 
+4960			foreach(workerNodeCell, workerNodeList)
+(gdb) 
+4962				WorkerNode *workerNode = (WorkerNode *) lfirst(workerNodeCell);
+(gdb) 
+4964				Task *assignedTask = GreedyAssignTask(workerNode, taskList,
+(gdb) 
+4966				if (assignedTask != NULL)
+(gdb) 
+4968					assignedTaskList = lappend(assignedTaskList, assignedTask);
+(gdb) 
+4969					assignedTaskCount++;
+(gdb) 
+4960			foreach(workerNodeCell, workerNodeList)
+(gdb) 
+4962				WorkerNode *workerNode = (WorkerNode *) lfirst(workerNodeCell);
+(gdb) 
+4964				Task *assignedTask = GreedyAssignTask(workerNode, taskList,
+(gdb) 
+4966				if (assignedTask != NULL)
+(gdb) 
+4968					assignedTaskList = lappend(assignedTaskList, assignedTask);
+(gdb) 
+4969					assignedTaskCount++;
+(gdb) 
+4960			foreach(workerNodeCell, workerNodeList)
+(gdb) 
+4974			if (assignedTaskCount == loopStartTaskCount)
+(gdb) 
+4954		while (assignedTaskCount < taskCount)
+(gdb) 
+4982		return assignedTaskList;
+(gdb) 
+4983	}
+(gdb) 
+AssignAnchorShardTaskList (taskList=0x1fb3b00) at planner/multi_physical_planner.c:4922
+4922		return assignedTaskList;
+(gdb) 
+4923	}
+(gdb) 
+AssignTaskList (sqlTaskList=0x1fb3b00) at planner/multi_physical_planner.c:4667
+4667			return assignedSqlTaskList;
+(gdb) bt
+#0  AssignTaskList (sqlTaskList=0x1fb3b00) at planner/multi_physical_planner.c:4667
+#1  0x00007f536bfccee1 in BuildJobTreeTaskList (jobTree=0x1faf1f8, plannerRestrictionContext=0x1fa4208) at planner/multi_physical_planner.c:2023
+#2  0x00007f536bfc9dc5 in CreatePhysicalDistributedPlan (multiTree=0x1faf288, plannerRestrictionContext=0x1fa4208) at planner/multi_physical_planner.c:219
+#3  0x00007f536bfb846c in CreateDistributedPlan (planId=1, originalQuery=0x1f18018, query=0x1f17a78, boundParams=0x0, hasUnresolvedParams=0 '\000', plannerRestrictionContext=0x1fa4208)
+    at planner/distributed_planner.c:771
+#4  0x00007f536bfb807f in CreateDistributedPlannedStmt (planId=1, localPlan=0x1fa55a0, originalQuery=0x1f18018, query=0x1f17a78, boundParams=0x0, plannerRestrictionContext=0x1fa4208)
+    at planner/distributed_planner.c:498
+#5  0x00007f536bfb7b2e in distributed_planner (parse=0x1f17a78, cursorOptions=256, boundParams=0x0) at planner/distributed_planner.c:158
+#6  0x00000000007428cc in planner (parse=0x1f17a78, cursorOptions=256, boundParams=0x0) at planner.c:208
+#7  0x000000000081361a in pg_plan_query (querytree=0x1f17a78, cursorOptions=256, boundParams=0x0) at postgres.c:796
+#8  0x000000000081373a in pg_plan_queries (querytrees=0x1f12e30, cursorOptions=256, boundParams=0x0) at postgres.c:862
+#9  0x00000000008139ec in exec_simple_query (query_string=0x1f16708 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1027
+#10 0x0000000000817b1f in PostgresMain (argc=1, argv=0x1eb40c8, dbname=0x1eb3f78 "postgres", username=0x1e6bd08 "cituscluster") at postgres.c:4088
+#11 0x000000000078b2d2 in BackendRun (port=0x1eae550) at postmaster.c:4357
+#12 0x000000000078aa7b in BackendStartup (port=0x1eae550) at postmaster.c:4029
+#13 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#14 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1e69be0) at postmaster.c:1361
+#15 0x00000000006cf26f in main (argc=1, argv=0x1e69be0) at main.c:228
+(gdb) n
+4756	}
+(gdb) 
+BuildJobTreeTaskList (jobTree=0x1faf1f8, plannerRestrictionContext=0x1fa4208) at planner/multi_physical_planner.c:2024
+2024			AssignDataFetchDependencies(assignedSqlTaskList);
+(gdb) s
+AssignDataFetchDependencies (taskList=0x1fbb960) at planner/multi_physical_planner.c:5441
+5441		ListCell *taskCell = NULL;
+(gdb) n
+5442		foreach(taskCell, taskList)
+(gdb) 
+5444			Task *task = (Task *) lfirst(taskCell);
+(gdb) 
+5445			List *dependedTaskList = task->dependedTaskList;
+(gdb) n
+5446			ListCell *dependedTaskCell = NULL;
+(gdb) 
+5451			foreach(dependedTaskCell, dependedTaskList)
+(gdb) 
+5442		foreach(taskCell, taskList)
+(gdb) 
+5444			Task *task = (Task *) lfirst(taskCell);
+(gdb) n
+5445			List *dependedTaskList = task->dependedTaskList;
+(gdb) 
+5446			ListCell *dependedTaskCell = NULL;
+(gdb) 
+5451			foreach(dependedTaskCell, dependedTaskList)
+(gdb) 
+5442		foreach(taskCell, taskList)
+(gdb) 
+5444			Task *task = (Task *) lfirst(taskCell);
+(gdb) 
+5445			List *dependedTaskList = task->dependedTaskList;
+(gdb) 
+5446			ListCell *dependedTaskCell = NULL;
+(gdb) 
+5451			foreach(dependedTaskCell, dependedTaskList)
+(gdb) 
+5442		foreach(taskCell, taskList)
+(gdb) 
+5460	}
+(gdb) 
+BuildJobTreeTaskList (jobTree=0x1faf1f8, plannerRestrictionContext=0x1fa4208) at planner/multi_physical_planner.c:2027
+2027			foreach(assignedSqlTaskCell, assignedSqlTaskList)
+(gdb) n
+2029				Task *assignedSqlTask = (Task *) lfirst(assignedSqlTaskCell);
+(gdb) 
+2030				List *assignedMergeTaskList = FindDependedMergeTaskList(assignedSqlTask);
+(gdb) 
+2032				AssignDataFetchDependencies(assignedMergeTaskList);
+(gdb) p *assignedMergeTaskList
+Cannot access memory at address 0x0
+(gdb) n
+2027			foreach(assignedSqlTaskCell, assignedSqlTaskList)
+(gdb) 
+2029				Task *assignedSqlTask = (Task *) lfirst(assignedSqlTaskCell);
+(gdb) 
+2030				List *assignedMergeTaskList = FindDependedMergeTaskList(assignedSqlTask);
+(gdb) p *assignedSqlTask
+$43 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d46b "Task"}, citus_tag = T_Task}, taskType = SQL_TASK, jobId = 29309796353, taskId = 2, 
+  queryString = 0x1fb4cc0 "SELECT id, name FROM test2_102688 test2 WHERE (id OPERATOR(pg_catalog.>) 10)", anchorShardId = 102688, taskPlacementList = 0x1fbb9b0, dependedTaskList = 0x0, 
+  partitionId = 0, upstreamTaskId = 0, shardInterval = 0x0, assignmentConstrained = 0 '\000', taskExecution = 0x0, upsertQuery = 0 '\000', replicationModel = 105 'i', 
+  relationRowLockList = 0x0, modifyWithSubquery = 0 '\000', relationShardList = 0x1fb5c80, rowValuesLists = 0x0}
+(gdb) n
+2032				AssignDataFetchDependencies(assignedMergeTaskList);
+(gdb) 
+2027			foreach(assignedSqlTaskCell, assignedSqlTaskList)
+(gdb) 
+2029				Task *assignedSqlTask = (Task *) lfirst(assignedSqlTaskCell);
+(gdb) 
+2030				List *assignedMergeTaskList = FindDependedMergeTaskList(assignedSqlTask);
+(gdb) 
+2032				AssignDataFetchDependencies(assignedMergeTaskList);
+(gdb) 
+2027			foreach(assignedSqlTaskCell, assignedSqlTaskList)
+(gdb) 
+2039			if (CitusIsA(job, MapMergeJob))
+(gdb) p job->type
+$44 = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d438 "Job"}, citus_tag = T_Job}
+(gdb) n
+2052				job->taskList = assignedSqlTaskList;
+(gdb) n
+1988		for (jobIndex = (flattenedJobCount - 1); jobIndex >= 0; jobIndex--)
+(gdb) 
+2056		return jobTree;
+(gdb) 
+2057	}
+(gdb) 
+CreatePhysicalDistributedPlan (multiTree=0x1faf288, plannerRestrictionContext=0x1fa4208) at planner/multi_physical_planner.c:222
+222		masterDependedJobList = list_make1(workerJob);
+(gdb) n
+223		masterQuery = BuildJobQuery((MultiNode *) multiTree, masterDependedJobList);
+(gdb) s
+BuildJobQuery (multiNode=0x1faf288, dependedJobList=0x1fbbad0) at planner/multi_physical_planner.c:573
+573		Query *jobQuery = NULL;
+(gdb) n
+574		MultiNode *parentNode = NULL;
+(gdb) 
+575		bool updateColumnAttributes = false;
+(gdb) 
+576		List *rangeTableList = NIL;
+(gdb) 
+577		List *targetList = NIL;
+(gdb) 
+578		List *extendedOpNodeList = NIL;
+(gdb) 
+579		List *sortClauseList = NIL;
+(gdb) 
+580		List *groupClauseList = NIL;
+(gdb) 
+581		List *selectClauseList = NIL;
+(gdb) 
+582		List *columnList = NIL;
+(gdb) 
+583		Node *limitCount = NULL;
+(gdb) 
+584		Node *limitOffset = NULL;
+(gdb) 
+585		ListCell *columnCell = NULL;
+(gdb) 
+586		FromExpr *joinTree = NULL;
+(gdb) 
+587		Node *joinRoot = NULL;
+(gdb) 
+588		Node *havingQual = NULL;
+(gdb) 
+589		bool hasDistinctOn = false;
+(gdb) 
+590		List *distinctClause = NIL;
+(gdb) 
+605		parentNode = ParentNode(multiNode);
+(gdb) s
+ParentNode (multiNode=0x1faf288) at planner/multi_logical_planner.c:1901
+1901		MultiNode *parentNode = multiNode->parentNode;
+(gdb) n
+1902		return parentNode;
+(gdb) p *parentNode
+Cannot access memory at address 0x0
+(gdb) n
+1903	}
+(gdb) 
+BuildJobQuery (multiNode=0x1faf288, dependedJobList=0x1fbbad0) at planner/multi_physical_planner.c:606
+606		if (parentNode != NULL)
+(gdb) 
+615		if (dependedJobList != NIL)
+(gdb) n
+617			Job *job = (Job *) linitial(dependedJobList);
+(gdb) n
+618			if (CitusIsA(job, MapMergeJob))
+(gdb) 
+633		extendedOpNodeList = FindNodesOfType(multiNode, T_MultiExtendedOp);
+(gdb) p *multiNode
+$45 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d3ba "MultiTreeRoot"}, citus_tag = T_MultiTreeRoot}, parentNode = 0x0}
+(gdb) n
+634		if (extendedOpNodeList != NIL)
+(gdb) 
+636			MultiExtendedOp *extendedOp = (MultiExtendedOp *) linitial(extendedOpNodeList);
+(gdb) 
+637			targetList = copyObject(extendedOp->targetList);
+(gdb) 
+638			distinctClause = extendedOp->distinctClause;
+(gdb) p  *extendedOp
+$46 = {unaryNode = {node = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d428 "MultiExtendedOp"}, citus_tag = T_MultiExtendedOp}, parentNode = 0x1faf288}, 
+    childNode = 0x1faead8}, targetList = 0x1faf868, groupClauseList = 0x0, sortClauseList = 0x0, limitCount = 0x0, limitOffset = 0x0, havingQual = 0x0, distinctClause = 0x0, 
+  hasDistinctOn = 0 '\000', hasWindowFuncs = 0 '\000', windowClause = 0x0}
+(gdb) n
+639			hasDistinctOn = extendedOp->hasDistinctOn;
+(gdb) 
+647		rangeTableList = BaseRangeTableList(multiNode);
+(gdb) s
+BaseRangeTableList (multiNode=0x1faf288) at planner/multi_physical_planner.c:821
+821		List *baseRangeTableList = NIL;
+(gdb) n
+822		List *pendingNodeList = list_make1(multiNode);
+(gdb) 
+824		while (pendingNodeList != NIL)
+(gdb) 
+826			MultiNode *multiNode = (MultiNode *) linitial(pendingNodeList);
+(gdb) 
+827			CitusNodeTag nodeType = CitusNodeTag(multiNode);
+(gdb) 
+828			pendingNodeList = list_delete_first(pendingNodeList);
+(gdb) p nodeType
+$47 = T_MultiTreeRoot
+(gdb) n
+830			if (nodeType == T_MultiTable)
+(gdb) 
+853			if (nodeType != T_MultiCollect)
+(gdb) 
+855				List *childNodeList = ChildNodeList(multiNode);
+(gdb) 
+856				pendingNodeList = list_concat(pendingNodeList, childNodeList);
+(gdb) p *childNodeList
+$48 = {type = T_List, length = 1, head = 0x1fbbd30, tail = 0x1fbbd30}
+(gdb) p *childNodeList->head
+$49 = {data = {ptr_value = 0x1faf9c0, int_value = 33225152, oid_value = 33225152}, next = 0x0}
+(gdb) p *childNodeList->head->data.ptr_value
+Attempt to dereference a generic pointer.
+(gdb) p childNodeList->head->data.ptr_value
+$50 = (void *) 0x1faf9c0
+(gdb) p (MultiUnaryNode*)childNodeList->head->data.ptr_value
+$51 = (MultiUnaryNode *) 0x1faf9c0
+(gdb) p *(MultiUnaryNode*)childNodeList->head->data.ptr_value
+$52 = {node = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d428 "MultiExtendedOp"}, citus_tag = T_MultiExtendedOp}, parentNode = 0x1faf288}, childNode = 0x1faead8}
+(gdb) p *(MultiBinaryNode*)childNodeList->head->data.ptr_value
+$53 = {node = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d428 "MultiExtendedOp"}, citus_tag = T_MultiExtendedOp}, parentNode = 0x1faf288}, 
+  leftChildNode = 0x1faead8, rightChildNode = 0x1faf868}
+(gdb) p multiNode->type
+$54 = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d3ba "MultiTreeRoot"}, citus_tag = T_MultiTreeRoot}
+(gdb) n
+824		while (pendingNodeList != NIL)
+(gdb) 
+826			MultiNode *multiNode = (MultiNode *) linitial(pendingNodeList);
+(gdb) 
+827			CitusNodeTag nodeType = CitusNodeTag(multiNode);
+(gdb) 
+828			pendingNodeList = list_delete_first(pendingNodeList);
+(gdb) 
+830			if (nodeType == T_MultiTable)
+(gdb) 
+853			if (nodeType != T_MultiCollect)
+(gdb) p nodeType
+$55 = T_MultiExtendedOp
+(gdb) n
+855				List *childNodeList = ChildNodeList(multiNode);
+(gdb) s
+ChildNodeList (multiNode=0x1faf9c0) at planner/multi_physical_planner.c:1718
+1718		List *childNodeList = NIL;
+(gdb) n
+1719		bool unaryNode = UnaryOperator(multiNode);
+(gdb) 
+1720		bool binaryNode = BinaryOperator(multiNode);
+(gdb) 
+1723		if (CitusIsA(multiNode, MultiTable))
+(gdb) p unaryNode
+$56 = 1 '\001'
+(gdb) n
+1732		if (unaryNode)
+(gdb) 
+1734			MultiUnaryNode *unaryNode = (MultiUnaryNode *) multiNode;
+(gdb) 
+1735			childNodeList = list_make1(unaryNode->childNode);
+(gdb) p *unaryNode 
+$57 = {node = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d428 "MultiExtendedOp"}, citus_tag = T_MultiExtendedOp}, parentNode = 0x1faf288}, childNode = 0x1faead8}
+(gdb) n
+1744		return childNodeList;
+(gdb) 
+1745	}
+(gdb) 
+BaseRangeTableList (multiNode=0x1faf288) at planner/multi_physical_planner.c:856
+856				pendingNodeList = list_concat(pendingNodeList, childNodeList);
+(gdb) 
+824		while (pendingNodeList != NIL)
+(gdb) 
+826			MultiNode *multiNode = (MultiNode *) linitial(pendingNodeList);
+(gdb) 
+827			CitusNodeTag nodeType = CitusNodeTag(multiNode);
+(gdb) 
+828			pendingNodeList = list_delete_first(pendingNodeList);
+(gdb) p nodeType
+$58 = T_MultiCollect
+(gdb) n
+830			if (nodeType == T_MultiTable)
+(gdb) 
+853			if (nodeType != T_MultiCollect)
+(gdb) 
+824		while (pendingNodeList != NIL)
+(gdb) 
+860		return baseRangeTableList;
+(gdb) 
+861	}
+(gdb) 
+BuildJobQuery (multiNode=0x1faf288, dependedJobList=0x1fbbad0) at planner/multi_physical_planner.c:648
+648		joinRoot = QueryJoinTree(multiNode, dependedJobList, &rangeTableList);
+(gdb) s
+QueryJoinTree (multiNode=0x1faf288, dependedJobList=0x1fbbad0, rangeTableList=0x7ffe17bedc80) at planner/multi_physical_planner.c:1083
+1083		CitusNodeTag nodeType = CitusNodeTag(multiNode);
+(gdb) n
+1085		switch (nodeType)
+(gdb) 
+1218				MultiUnaryNode *unaryNode = (MultiUnaryNode *) multiNode;
+(gdb) 
+1219				Node *childNode = NULL;
+(gdb) 
+1223				childNode = QueryJoinTree(unaryNode->childNode, dependedJobList,
+(gdb) s
+QueryJoinTree (multiNode=0x1faf9c0, dependedJobList=0x1fbbad0, rangeTableList=0x7ffe17bedc80) at planner/multi_physical_planner.c:1083
+1083		CitusNodeTag nodeType = CitusNodeTag(multiNode);
+(gdb) n
+1085		switch (nodeType)
+(gdb) 
+1218				MultiUnaryNode *unaryNode = (MultiUnaryNode *) multiNode;
+(gdb) 
+1219				Node *childNode = NULL;
+(gdb) 
+1223				childNode = QueryJoinTree(unaryNode->childNode, dependedJobList,
+(gdb) s
+QueryJoinTree (multiNode=0x1faead8, dependedJobList=0x1fbbad0, rangeTableList=0x7ffe17bedc80) at planner/multi_physical_planner.c:1083
+1083		CitusNodeTag nodeType = CitusNodeTag(multiNode);
+(gdb) n
+1085		switch (nodeType)
+(gdb) 
+1169				List *tableIdList = OutputTableIdList(multiNode);
+(gdb) n
+1170				Job *dependedJob = JobForTableIdList(dependedJobList, tableIdList);
+(gdb) 
+1171				List *dependedTargetList = dependedJob->jobQuery->targetList;
+(gdb) 
+1174				uint32 columnCount = (uint32) list_length(dependedTargetList);
+(gdb) 
+1175				List *columnNameList = DerivedColumnNameList(columnCount, dependedJob->jobId);
+(gdb) p columnCount
+$59 = 2
+(gdb) n
+1177				RangeTblEntry *rangeTableEntry = DerivedRangeTableEntry(multiNode,
+(gdb) 
+1180				RangeTblRef *rangeTableRef = makeNode(RangeTblRef);
+(gdb) 
+1182				rangeTableRef->rtindex = list_length(*rangeTableList) + 1;
+(gdb) p *rangeTableEntry
+$60 = {type = T_RangeTblEntry, rtekind = RTE_FUNCTION, relid = 0, relkind = 0 '\000', tablesample = 0x0, subquery = 0x0, security_barrier = 0 '\000', jointype = JOIN_INNER, 
+  joinaliasvars = 0x0, functions = 0x1fbce90, funcordinality = 0 '\000', tablefunc = 0x0, values_lists = 0x0, ctename = 0x0, ctelevelsup = 0, self_reference = 0 '\000', coltypes = 0x0, 
+  coltypmods = 0x0, colcollations = 0x0, enrname = 0x0, enrtuples = 0, alias = 0x0, eref = 0x1fbc7a0, lateral = 0 '\000', inh = 0 '\000', inFromCl = 1 '\001', requiredPerms = 0, 
+  checkAsUser = 0, selectedCols = 0x0, insertedCols = 0x0, updatedCols = 0x0, securityQuals = 0x0}
+(gdb) n
+1183				*rangeTableList = lappend(*rangeTableList, rangeTableEntry);
+(gdb) 
+1185				return (Node *) rangeTableRef;
+(gdb) 
+1234	}
+(gdb) p *
+A syntax error in expression, near `'.
+(gdb) p *columnNameList
+No symbol "columnNameList" in current context.
+(gdb) n
+1226				return childNode;
+(gdb) p *columnNameList
+No symbol "columnNameList" in current context.
+(gdb) p rangeTableEntry->eref->colnames
+No symbol "rangeTableEntry" in current context.
+(gdb) p *rangeTableEntry->eref->colnames
+No symbol "rangeTableEntry" in current context.
+(gdb) n
+1234	}
+(gdb) 
+1226				return childNode;
+(gdb) 
+1234	}
+(gdb) 
+BuildJobQuery (multiNode=0x1faf288, dependedJobList=0x1fbbad0) at planner/multi_physical_planner.c:651
+651		if (updateColumnAttributes)
+(gdb) n
+663		if (extendedOpNodeList != NIL)
+(gdb) 
+665			MultiExtendedOp *extendedOp = (MultiExtendedOp *) linitial(extendedOpNodeList);
+(gdb) n
+667			limitCount = extendedOp->limitCount;
+(gdb) 
+668			limitOffset = extendedOp->limitOffset;
+(gdb) 
+669			sortClauseList = extendedOp->sortClauseList;
+(gdb) 
+670			havingQual = extendedOp->havingQual;
+(gdb) 
+674		groupClauseList = QueryGroupClauseList(multiNode);
+(gdb) s
+QueryGroupClauseList (multiNode=0x1faf288) at planner/multi_physical_planner.c:970
+970		List *groupClauseList = NIL;
+(gdb) n
+971		List *pendingNodeList = list_make1(multiNode);
+(gdb) 
+973		while (pendingNodeList != NIL)
+(gdb) 
+975			MultiNode *multiNode = (MultiNode *) linitial(pendingNodeList);
+(gdb) 
+976			CitusNodeTag nodeType = CitusNodeTag(multiNode);
+(gdb) 
+977			pendingNodeList = list_delete_first(pendingNodeList);
+(gdb) n
+980			if (nodeType == T_MultiExtendedOp)
+(gdb) 
+987			if (nodeType != T_MultiCollect && nodeType != T_MultiTable)
+(gdb) p nodeType
+$61 = T_MultiTreeRoot
+(gdb) n
+989				List *childNodeList = ChildNodeList(multiNode);
+(gdb) 
+990				pendingNodeList = list_concat(pendingNodeList, childNodeList);
+(gdb) 
+973		while (pendingNodeList != NIL)
+(gdb) 
+975			MultiNode *multiNode = (MultiNode *) linitial(pendingNodeList);
+(gdb) 
+976			CitusNodeTag nodeType = CitusNodeTag(multiNode);
+(gdb) 
+977			pendingNodeList = list_delete_first(pendingNodeList);
+(gdb) 
+980			if (nodeType == T_MultiExtendedOp)
+(gdb) p nodeType
+$62 = T_MultiExtendedOp
+(gdb) n
+982				MultiExtendedOp *extendedOpNode = (MultiExtendedOp *) multiNode;
+(gdb) 
+983				groupClauseList = extendedOpNode->groupClauseList;
+(gdb) 
+987			if (nodeType != T_MultiCollect && nodeType != T_MultiTable)
+(gdb) p groupClauseList
+$63 = (List *) 0x0
+(gdb) n
+989				List *childNodeList = ChildNodeList(multiNode);
+(gdb) 
+990				pendingNodeList = list_concat(pendingNodeList, childNodeList);
+(gdb) 
+973		while (pendingNodeList != NIL)
+(gdb) 
+975			MultiNode *multiNode = (MultiNode *) linitial(pendingNodeList);
+(gdb) 
+976			CitusNodeTag nodeType = CitusNodeTag(multiNode);
+(gdb) 
+977			pendingNodeList = list_delete_first(pendingNodeList);
+(gdb) 
+980			if (nodeType == T_MultiExtendedOp)
+(gdb) p groupClauseList
+$64 = (List *) 0x0
+(gdb) p nodeType
+$65 = T_MultiCollect
+(gdb) n
+987			if (nodeType != T_MultiCollect && nodeType != T_MultiTable)
+(gdb) 
+973		while (pendingNodeList != NIL)
+(gdb) 
+994		return groupClauseList;
+(gdb) 
+995	}
+(gdb) 
+BuildJobQuery (multiNode=0x1faf288, dependedJobList=0x1fbbad0) at planner/multi_physical_planner.c:677
+677		selectClauseList = QuerySelectClauseList(multiNode);
+(gdb) s
+QuerySelectClauseList (multiNode=0x1faf288) at planner/multi_physical_planner.c:1007
+1007		List *selectClauseList = NIL;
+(gdb) n
+1008		List *pendingNodeList = list_make1(multiNode);
+(gdb) 
+1010		while (pendingNodeList != NIL)
+(gdb) 
+1012			MultiNode *multiNode = (MultiNode *) linitial(pendingNodeList);
+(gdb) 
+1013			CitusNodeTag nodeType = CitusNodeTag(multiNode);
+(gdb) 
+1014			pendingNodeList = list_delete_first(pendingNodeList);
+(gdb) 
+1017			if (nodeType == T_MultiSelect)
+(gdb) 
+1025			if (nodeType != T_MultiCollect)
+(gdb) 
+1027				List *childNodeList = ChildNodeList(multiNode);
+(gdb) 
+1028				pendingNodeList = list_concat(pendingNodeList, childNodeList);
+(gdb) 
+1010		while (pendingNodeList != NIL)
+(gdb) 
+1012			MultiNode *multiNode = (MultiNode *) linitial(pendingNodeList);
+(gdb) 
+1013			CitusNodeTag nodeType = CitusNodeTag(multiNode);
+(gdb) 
+1014			pendingNodeList = list_delete_first(pendingNodeList);
+(gdb) 
+1017			if (nodeType == T_MultiSelect)
+(gdb) 
+1025			if (nodeType != T_MultiCollect)
+(gdb) 
+1027				List *childNodeList = ChildNodeList(multiNode);
+(gdb) 
+1028				pendingNodeList = list_concat(pendingNodeList, childNodeList);
+(gdb) p *childNodeList
+$66 = {type = T_List, length = 1, head = 0x1fbcf28, tail = 0x1fbcf28}
+(gdb) p *childNodeList->head
+$67 = {data = {ptr_value = 0x1faead8, int_value = 33221336, oid_value = 33221336}, next = 0x0}
+(gdb) p childNodeList->head->data.ptr_value
+$68 = (void *) 0x1faead8
+(gdb) n
+1010		while (pendingNodeList != NIL)
+(gdb) 
+1012			MultiNode *multiNode = (MultiNode *) linitial(pendingNodeList);
+(gdb) 
+1013			CitusNodeTag nodeType = CitusNodeTag(multiNode);
+(gdb) 
+1014			pendingNodeList = list_delete_first(pendingNodeList);
+(gdb) 
+1017			if (nodeType == T_MultiSelect)
+(gdb) 
+1025			if (nodeType != T_MultiCollect)
+(gdb) 
+1010		while (pendingNodeList != NIL)
+(gdb) 
+1032		return selectClauseList;
+(gdb) 
+1033	}
+(gdb) 
+BuildJobQuery (multiNode=0x1faf288, dependedJobList=0x1fbbad0) at planner/multi_physical_planner.c:680
+680		if (updateColumnAttributes)
+(gdb) 
+696		joinTree = makeNode(FromExpr);
+(gdb) n
+697		joinTree->quals = (Node *) list_copy(selectClauseList);
+(gdb) 
+698		joinTree->fromlist = list_make1(joinRoot);
+(gdb) 
+701		jobQuery = makeNode(Query);
+(gdb) 
+702		jobQuery->commandType = CMD_SELECT;
+(gdb) 
+703		jobQuery->querySource = QSRC_ORIGINAL;
+(gdb) 
+704		jobQuery->canSetTag = true;
+(gdb) 
+705		jobQuery->rtable = rangeTableList;
+(gdb) 
+706		jobQuery->targetList = targetList;
+(gdb) 
+707		jobQuery->jointree = joinTree;
+(gdb) 
+708		jobQuery->sortClause = sortClauseList;
+(gdb) 
+709		jobQuery->groupClause = groupClauseList;
+(gdb) 
+710		jobQuery->limitOffset = limitOffset;
+(gdb) 
+711		jobQuery->limitCount = limitCount;
+(gdb) 
+712		jobQuery->havingQual = havingQual;
+(gdb) 
+713		jobQuery->hasAggs = contain_agg_clause((Node *) targetList);
+(gdb) 
+714		jobQuery->distinctClause = distinctClause;
+(gdb) p jobQuery
+$69 = (Query *) 0x1fb80a8
+(gdb) p *jobQuery
+$70 = {type = T_Query, commandType = CMD_SELECT, querySource = QSRC_ORIGINAL, queryId = 0, canSetTag = 1 '\001', utilityStmt = 0x0, resultRelation = 0, hasAggs = 0 '\000', 
+  hasWindowFuncs = 0 '\000', hasTargetSRFs = 0 '\000', hasSubLinks = 0 '\000', hasDistinctOn = 0 '\000', hasRecursive = 0 '\000', hasModifyingCTE = 0 '\000', hasForUpdate = 0 '\000', 
+  hasRowSecurity = 0 '\000', cteList = 0x0, rtable = 0x1fbcef8, jointree = 0x1fbcf48, targetList = 0x1fbbba0, override = OVERRIDING_NOT_SET, onConflict = 0x0, returningList = 0x0, 
+  groupClause = 0x0, groupingSets = 0x0, havingQual = 0x0, windowClause = 0x0, distinctClause = 0x0, sortClause = 0x0, limitOffset = 0x0, limitCount = 0x0, rowMarks = 0x0, 
+  setOperations = 0x0, constraintDeps = 0x0, withCheckOptions = 0x0, stmt_location = 0, stmt_len = 0}
+(gdb) n
+715		jobQuery->hasDistinctOn = hasDistinctOn;
+(gdb) 
+717		return jobQuery;
+(gdb) 
+718	}
+(gdb) 
+CreatePhysicalDistributedPlan (multiTree=0x1faf288, plannerRestrictionContext=0x1fa4208) at planner/multi_physical_planner.c:225
+225		distributedPlan = CitusMakeNode(DistributedPlan);
+(gdb) n
+226		distributedPlan->workerJob = workerJob;
+(gdb) 
+227		distributedPlan->masterQuery = masterQuery;
+(gdb) 
+228		distributedPlan->routerExecutable = DistributedPlanRouterExecutable(distributedPlan);
+(gdb) s
+DistributedPlanRouterExecutable (distributedPlan=0x1fbcfa8) at planner/multi_physical_planner.c:246
+246		Query *masterQuery = distributedPlan->masterQuery;
+(gdb) n
+247		Job *job = distributedPlan->workerJob;
+(gdb) 
+248		List *workerTaskList = job->taskList;
+(gdb) 
+249		int taskCount = list_length(workerTaskList);
+(gdb) 
+250		int dependedJobCount = list_length(job->dependedJobList);
+(gdb) p taskCount
+$71 = 3
+(gdb) n
+251		bool masterQueryHasAggregates = false;
+(gdb) 
+253		if (!EnableRouterExecution)
+(gdb) 
+259		if (taskCount != 1)
+(gdb) n
+261			return false;
+(gdb) 
+292	}
+(gdb) 
+CreatePhysicalDistributedPlan (multiTree=0x1faf288, plannerRestrictionContext=0x1fa4208) at planner/multi_physical_planner.c:229
+229		distributedPlan->operation = CMD_SELECT;
+(gdb) 
+231		return distributedPlan;
+(gdb) 
+232	}
+(gdb) 
+CreateDistributedPlan (planId=1, originalQuery=0x1f18018, query=0x1f17a78, boundParams=0x0, hasUnresolvedParams=0 '\000', plannerRestrictionContext=0x1fa4208)
+    at planner/distributed_planner.c:777
+777		return distributedPlan;
+(gdb) 
+778	}
+(gdb) 
+CreateDistributedPlannedStmt (planId=1, localPlan=0x1fa55a0, originalQuery=0x1f18018, query=0x1f17a78, boundParams=0x0, plannerRestrictionContext=0x1fa4208)
+    at planner/distributed_planner.c:511
+511		if (!distributedPlan)
+(gdb) list
+506		 * the logic below will force a custom plan (i.e. with parameters bound to
+507		 * specific values) to be generated.  But sql (not plpgsql) functions
+508		 * unfortunately don't go through a codepath supporting custom plans - so
+509		 * we still need to have an error prepared.
+510		 */
+511		if (!distributedPlan)
+512		{
+513			/* currently always should have a more specific error otherwise */
+514			Assert(hasUnresolvedParams);
+515			distributedPlan = CitusMakeNode(DistributedPlan);
+(gdb) n
+536		if (distributedPlan->planningError && !hasUnresolvedParams)
+(gdb) 
+542		distributedPlan->planId = planId;
+(gdb) p distributedPlan->planningError
+$72 = (DeferredErrorMessage *) 0x0
+(gdb) p hasUnresolvedParams
+$73 = 0 '\000'
+(gdb) p planId
+$74 = 1
+(gdb) n
+545		resultPlan = FinalizePlan(localPlan, distributedPlan);
+(gdb) s
+FinalizePlan (localPlan=0x1fa55a0, distributedPlan=0x1fbcfa8) at planner/distributed_planner.c:953
+953		PlannedStmt *finalPlan = NULL;
+(gdb) p *localPlan
+$75 = {type = T_PlannedStmt, commandType = CMD_SELECT, queryId = 0, hasReturning = 0 '\000', hasModifyingCTE = 0 '\000', canSetTag = 1 '\001', transientPlan = 0 '\000', 
+  dependsOnRole = 0 '\000', parallelModeNeeded = 0 '\000', planTree = 0x1f18478, rtable = 0x1fa6c00, resultRelations = 0x0, nonleafResultRelations = 0x0, rootResultRelations = 0x0, 
+  subplans = 0x0, rewindPlanIDs = 0x0, rowMarks = 0x0, relationOids = 0x1fa6d80, invalItems = 0x0, nParamExec = 0, utilityStmt = 0x0, stmt_location = 0, stmt_len = 57}
+(gdb) n
+954		CustomScan *customScan = makeNode(CustomScan);
+(gdb) p *planTree
+No symbol "planTree" in current context.
+(gdb) p *localPlan->planTree
+$76 = {type = T_BitmapHeapScan, startup_cost = 9.9907500000000002, total_cost = 29.40325, plan_rows = 753, plan_width = 8, parallel_aware = 0 '\000', parallel_safe = 1 '\001', 
+  plan_node_id = 0, targetlist = 0x1fa6740, qual = 0x0, lefttree = 0x1fa5838, righttree = 0x0, initPlan = 0x0, extParam = 0x0, allParam = 0x0}
+(gdb) n
+955		Node *distributedPlanData = NULL;
+(gdb) 
+956		MultiExecutorType executorType = MULTI_EXECUTOR_INVALID_FIRST;
+(gdb) 
+958		if (!distributedPlan->planningError)
+(gdb) p *distributedPlan
+$77 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d448 "DistributedPlan"}, citus_tag = T_DistributedPlan}, planId = 1, operation = CMD_SELECT, 
+  hasReturning = 0 '\000', workerJob = 0x1faf1f8, masterQuery = 0x1fb80a8, routerExecutable = 0 '\000', queryId = 0, relationIdList = 0x0, insertSelectSubquery = 0x0, 
+  insertTargetList = 0x0, targetRelationId = 0, intermediateResultIdPrefix = 0x0, subPlanList = 0x0, planningError = 0x0}
+(gdb) n
+960			executorType = JobExecutorType(distributedPlan);
+(gdb) s
+JobExecutorType (distributedPlan=0x1fbcfa8) at executor/multi_server_executor.c:46
+46		Job *job = distributedPlan->workerJob;
+(gdb) n
+47		List *workerNodeList = NIL;
+(gdb) 
+48		int workerNodeCount = 0;
+(gdb) 
+49		int taskCount = 0;
+(gdb) 
+50		double tasksPerNode = 0.;
+(gdb) 
+51		MultiExecutorType executorType = TaskExecutorType;
+(gdb) p TaskExecutorType
+$78 = 1
+(gdb) n
+52		bool routerExecutablePlan = distributedPlan->routerExecutable;
+(gdb) 
+55		if (routerExecutablePlan)
+(gdb) p routerExecutablePlan
+$79 = 0 '\000'
+(gdb) n
+80		if (distributedPlan->insertSelectSubquery != NULL)
+(gdb) 
+87		workerNodeList = ActiveReadableNodeList();
+(gdb) 
+88		workerNodeCount = list_length(workerNodeList);
+(gdb) 
+89		taskCount = list_length(job->taskList);
+(gdb) p workerNodeCount 
+$80 = 3
+(gdb) n
+90		tasksPerNode = taskCount / ((double) workerNodeCount);
+(gdb) p taskCount
+$81 = 3
+(gdb) n
+92		if (executorType == MULTI_EXECUTOR_REAL_TIME)
+(gdb) 
+94			double reasonableConnectionCount = 0;
+(gdb) 
+95			int dependedJobCount = 0;
+(gdb) 
+98			if (tasksPerNode >= MaxConnections)
+(gdb) 
+112			reasonableConnectionCount = MaxMasterConnectionCount();
+(gdb) 
+113			if (taskCount >= reasonableConnectionCount)
+(gdb) p reasonableConnectionCount
+$82 = 468
+(gdb) n
+125			dependedJobCount = list_length(job->dependedJobList);
+(gdb) 
+126			if (dependedJobCount > 0)
+(gdb) p dependedJobCount
+$83 = 0
+(gdb) n
+153		return executorType;
+(gdb) 
+154	}
+(gdb) 
+FinalizePlan (localPlan=0x1fa55a0, distributedPlan=0x1fbcfa8) at planner/distributed_planner.c:963
+963		switch (executorType)
+(gdb) 
+967				customScan->methods = &RealTimeCustomScanMethods;
+(gdb) n
+968				break;
+(gdb) 
+996		if (IsMultiTaskPlan(distributedPlan))
+(gdb) s
+IsMultiTaskPlan (distributedPlan=0x1fbcfa8) at planner/distributed_planner.c:428
+428		Job *workerJob = distributedPlan->workerJob;
+(gdb) n
+430		if (workerJob != NULL && list_length(workerJob->taskList) > 1)
+(gdb) 
+432			return true;
+(gdb) 
+436	}
+(gdb) 
+FinalizePlan (localPlan=0x1fa55a0, distributedPlan=0x1fbcfa8) at planner/distributed_planner.c:999
+999			if (MultiTaskQueryLogLevel != MULTI_TASK_QUERY_INFO_OFF)
+(gdb) p MultiTaskQueryLogLevel
+$84 = 0
+(gdb) n
+1010		distributedPlan->relationIdList = localPlan->relationOids;
+(gdb) 
+1011		distributedPlan->queryId = localPlan->queryId;
+(gdb) p localPlan->relationOids
+$85 = (List *) 0x1fa6d80
+(gdb) p *localPlan->relationOids
+$86 = {type = T_OidList, length = 1, head = 0x1fa6d60, tail = 0x1fa6d60}
+(gdb) n
+1013		distributedPlanData = (Node *) distributedPlan;
+(gdb) p localPlan->queryId
+$87 = 0
+(gdb) n
+1015		customScan->custom_private = list_make1(distributedPlanData);
+(gdb) 
+1016		customScan->flags = CUSTOMPATH_SUPPORT_BACKWARD_SCAN;
+(gdb) 
+1018		if (distributedPlan->masterQuery)
+(gdb) 
+1020			finalPlan = FinalizeNonRouterPlan(localPlan, distributedPlan, customScan);
+(gdb) s
+FinalizeNonRouterPlan (localPlan=0x1fa55a0, distributedPlan=0x1fbcfa8, customScan=0x1fb82c8) at planner/distributed_planner.c:1040
+1040		PlannedStmt *finalPlan = NULL;
+(gdb) n
+1042		finalPlan = MasterNodeSelectPlan(distributedPlan, customScan);
+(gdb) s
+MasterNodeSelectPlan (distributedPlan=0x1fbcfa8, remoteScan=0x1fb82c8) at planner/multi_master_planner.c:63
+63		Query *masterQuery = distributedPlan->masterQuery;
+(gdb) n
+64		PlannedStmt *masterSelectPlan = NULL;
+(gdb) p *masterQuery 
+$88 = {type = T_Query, commandType = CMD_SELECT, querySource = QSRC_ORIGINAL, queryId = 0, canSetTag = 1 '\001', utilityStmt = 0x0, resultRelation = 0, hasAggs = 0 '\000', 
+  hasWindowFuncs = 0 '\000', hasTargetSRFs = 0 '\000', hasSubLinks = 0 '\000', hasDistinctOn = 0 '\000', hasRecursive = 0 '\000', hasModifyingCTE = 0 '\000', hasForUpdate = 0 '\000', 
+  hasRowSecurity = 0 '\000', cteList = 0x0, rtable = 0x1fbcef8, jointree = 0x1fbcf48, targetList = 0x1fbbba0, override = OVERRIDING_NOT_SET, onConflict = 0x0, returningList = 0x0, 
+  groupClause = 0x0, groupingSets = 0x0, havingQual = 0x0, windowClause = 0x0, distinctClause = 0x0, sortClause = 0x0, limitOffset = 0x0, limitCount = 0x0, rowMarks = 0x0, 
+  setOperations = 0x0, constraintDeps = 0x0, withCheckOptions = 0x0, stmt_location = 0, stmt_len = 0}
+(gdb) n
+66		Job *workerJob = distributedPlan->workerJob;
+(gdb) 
+67		List *workerTargetList = workerJob->jobQuery->targetList;
+(gdb) 
+68		List *masterTargetList = MasterTargetList(workerTargetList);
+(gdb) p  *workerTargetList
+$89 = {type = T_List, length = 2, head = 0x1faff80, tail = 0x1fb0008}
+(gdb) p  *(TargetEntry*)workerTargetList->head->data.ptr_value
+$90 = {xpr = {type = T_TargetEntry}, expr = 0x1faffa0, resno = 1, resname = 0x1fafff0 "id", ressortgroupref = 0, resorigtbl = 41849, resorigcol = 1, resjunk = 0 '\000'}
+(gdb) n
+70		masterSelectPlan = BuildSelectStatement(masterQuery, masterTargetList, remoteScan);
+(gdb) s
+BuildSelectStatement (masterQuery=0x1fb80a8, masterTargetList=0x1fbde70, remoteScan=0x1fb82c8) at planner/multi_master_planner.c:131
+131		PlannedStmt *selectStatement = NULL;
+(gdb) n
+132		RangeTblEntry *customScanRangeTableEntry = NULL;
+(gdb) 
+133		Agg *aggregationPlan = NULL;
+(gdb) 
+134		Plan *topLevelPlan = NULL;
+(gdb) 
+135		ListCell *targetEntryCell = NULL;
+(gdb) 
+136		List *columnNameList = NULL;
+(gdb) 
+137		List *sortClauseList = copyObject(masterQuery->sortClause);
+(gdb) 
+140		selectStatement = makeNode(PlannedStmt);
+(gdb) 
+141		selectStatement->canSetTag = true;
+(gdb) 
+142		selectStatement->relationOids = NIL;
+(gdb) 
+143		selectStatement->commandType = CMD_SELECT;
+(gdb) 
+149		foreach(targetEntryCell, masterTargetList)
+(gdb) 
+151			TargetEntry *targetEntry = lfirst(targetEntryCell);
+(gdb) 
+152			columnNameList = lappend(columnNameList, makeString(targetEntry->resname));
+(gdb) 
+149		foreach(targetEntryCell, masterTargetList)
+(gdb) p *targetEntry 
+No symbol "targetEntry" in current context.
+(gdb) n
+151			TargetEntry *targetEntry = lfirst(targetEntryCell);
+(gdb) 
+152			columnNameList = lappend(columnNameList, makeString(targetEntry->resname));
+(gdb) p *targetEntry 
+$91 = {xpr = {type = T_TargetEntry}, expr = 0x1fbdf58, resno = 2, resname = 0x1fbdf40 "name", ressortgroupref = 0, resorigtbl = 41849, resorigcol = 2, resjunk = 0 '\000'}
+(gdb) n
+149		foreach(targetEntryCell, masterTargetList)
+(gdb) 
+155		customScanRangeTableEntry = RemoteScanRangeTableEntry(columnNameList);
+(gdb) s
+RemoteScanRangeTableEntry (columnNameList=0x1fbe098) at planner/distributed_planner.c:1131
+1131		RangeTblEntry *remoteScanRangeTableEntry = makeNode(RangeTblEntry);
+(gdb) n
+1134		remoteScanRangeTableEntry->rtekind = RTE_VALUES;
+(gdb) 
+1135		remoteScanRangeTableEntry->eref = makeAlias("remote_scan", columnNameList);
+(gdb) 
+1136		remoteScanRangeTableEntry->inh = false;
+(gdb) 
+1137		remoteScanRangeTableEntry->inFromCl = true;
+(gdb) 
+1139		return remoteScanRangeTableEntry;
+(gdb) p *remoteScanRangeTableEntry
+$92 = {type = T_RangeTblEntry, rtekind = RTE_VALUES, relid = 0, relkind = 0 '\000', tablesample = 0x0, subquery = 0x0, security_barrier = 0 '\000', jointype = JOIN_INNER, 
+  joinaliasvars = 0x0, functions = 0x0, funcordinality = 0 '\000', tablefunc = 0x0, values_lists = 0x0, ctename = 0x0, ctelevelsup = 0, self_reference = 0 '\000', coltypes = 0x0, 
+  coltypmods = 0x0, colcollations = 0x0, enrname = 0x0, enrtuples = 0, alias = 0x0, eref = 0x1fbe108, lateral = 0 '\000', inh = 0 '\000', inFromCl = 1 '\001', requiredPerms = 0, 
+  checkAsUser = 0, selectedCols = 0x0, insertedCols = 0x0, updatedCols = 0x0, securityQuals = 0x0}
+(gdb) p *remoteScanRangeTableEntry->eref
+$93 = {type = T_Alias, aliasname = 0x1fbe138 "remote_scan", colnames = 0x1fbe098}
+(gdb) p *remoteScanRangeTableEntry->eref->colnames 
+$94 = {type = T_List, length = 2, head = 0x1fbe078, tail = 0x1fbe0e8}
+(gdb) n
+1140	}
+(gdb) 
+BuildSelectStatement (masterQuery=0x1fb80a8, masterTargetList=0x1fbde70, remoteScan=0x1fb82c8) at planner/multi_master_planner.c:158
+158		selectStatement->rtable = list_make1(customScanRangeTableEntry);
+(gdb) 
+161		if (masterQuery->hasAggs || masterQuery->groupClause)
+(gdb) 
+171			remoteScan->scan.plan.targetlist = masterQuery->targetList;
+(gdb) 
+172			topLevelPlan = &remoteScan->scan.plan;
+(gdb) 
+193		if (masterQuery->hasDistinctOn)
+(gdb) 
+207		else if (masterQuery->distinctClause)
+(gdb) 
+214		if (sortClauseList)
+(gdb) 
+231		if (masterQuery->hasDistinctOn)
+(gdb) 
+240		if (masterQuery->limitCount || masterQuery->limitOffset)
+(gdb) 
+249		selectStatement->planTree = topLevelPlan;
+(gdb) 
+251		return selectStatement;
+(gdb) 
+252	}
+(gdb) 
+MasterNodeSelectPlan (distributedPlan=0x1fbcfa8, remoteScan=0x1fb82c8) at planner/multi_master_planner.c:72
+72		return masterSelectPlan;
+(gdb) 
+73	}
+(gdb) 
+FinalizeNonRouterPlan (localPlan=0x1fa55a0, distributedPlan=0x1fbcfa8, customScan=0x1fb82c8) at planner/distributed_planner.c:1043
+1043		finalPlan->queryId = localPlan->queryId;
+(gdb) 
+1044		finalPlan->utilityStmt = localPlan->utilityStmt;
+(gdb) 
+1047		finalPlan->rtable = list_concat(finalPlan->rtable, localPlan->rtable);
+(gdb) p finalPlan->utilityStmt
+$95 = (Node *) 0x0
+(gdb) n
+1049		return finalPlan;
+(gdb) p finalPlan->rtable 
+$96 = (List *) 0x1fbe178
+(gdb) p finalPlan->rtable->head
+$97 = (ListCell *) 0x1fbe158
+(gdb) p *finalPlan->rtable->head->data.ptr_value
+Attempt to dereference a generic pointer.
+(gdb) p finalPlan->rtable->head->data.ptr_value
+$98 = (void *) 0x1fb8498
+(gdb) n
+1050	}
+(gdb) 
+FinalizePlan (localPlan=0x1fa55a0, distributedPlan=0x1fbcfa8) at planner/distributed_planner.c:1027
+1027		return finalPlan;
+(gdb) 
+1028	}
+(gdb) 
+CreateDistributedPlannedStmt (planId=1, localPlan=0x1fa55a0, originalQuery=0x1f18018, query=0x1f17a78, boundParams=0x0, plannerRestrictionContext=0x1fa4208)
+    at planner/distributed_planner.c:552
+552		if ((distributedPlan->planningError || IsMultiShardModifyPlan(distributedPlan)) &&
+(gdb) n
+562		return resultPlan;
+(gdb) 
+563	}
+(gdb) 
+distributed_planner (parse=0x1f17a78, cursorOptions=256, boundParams=0x0) at planner/distributed_planner.c:161
+161				setPartitionedTablesInherited = true;
+(gdb) 
+162				AdjustPartitioningForDistributedPlanning(parse,
+(gdb) list
+157	
+158				result = CreateDistributedPlannedStmt(planId, result, originalQuery, parse,
+159													  boundParams, plannerRestrictionContext);
+160	
+161				setPartitionedTablesInherited = true;
+162				AdjustPartitioningForDistributedPlanning(parse,
+163														 setPartitionedTablesInherited);
+164			}
+165		}
+166		PG_CATCH();
+(gdb) s
+AdjustPartitioningForDistributedPlanning (queryTree=0x1f17a78, setPartitionedTablesInherited=1 '\001') at planner/distributed_planner.c:319
+319		List *rangeTableList = NIL;
+(gdb) n
+320		ListCell *rangeTableCell = NULL;
+(gdb) 
+323		ExtractRangeTableEntryWalker((Node *) queryTree, &rangeTableList);
+(gdb) n
+325		foreach(rangeTableCell, rangeTableList)
+(gdb) 
+327			RangeTblEntry *rangeTableEntry = (RangeTblEntry *) lfirst(rangeTableCell);
+(gdb) 
+335			if (IsDistributedTable(rangeTableEntry->relid) &&
+(gdb) p *rangeTableEntry
+$99 = {type = T_RangeTblEntry, rtekind = RTE_SUBQUERY, relid = 0, relkind = 0 '\000', tablesample = 0x0, subquery = 0x1f17c98, security_barrier = 0 '\000', jointype = JOIN_INNER, 
+  joinaliasvars = 0x0, functions = 0x0, funcordinality = 0 '\000', tablefunc = 0x0, values_lists = 0x0, ctename = 0x0, ctelevelsup = 0, self_reference = 0 '\000', coltypes = 0x0, 
+  coltypmods = 0x0, colcollations = 0x0, enrname = 0x0, enrtuples = 0, alias = 0x1f17728, eref = 0x1f12860, lateral = 0 '\000', inh = 0 '\000', inFromCl = 1 '\001', requiredPerms = 2, 
+  checkAsUser = 0, selectedCols = 0x0, insertedCols = 0x0, updatedCols = 0x0, securityQuals = 0x0}
+(gdb) n
+325		foreach(rangeTableCell, rangeTableList)
+(gdb) 
+327			RangeTblEntry *rangeTableEntry = (RangeTblEntry *) lfirst(rangeTableCell);
+(gdb) 
+335			if (IsDistributedTable(rangeTableEntry->relid) &&
+(gdb) p *rangeTableEntry
+$100 = {type = T_RangeTblEntry, rtekind = RTE_RELATION, relid = 41849, relkind = 114 'r', tablesample = 0x0, subquery = 0x0, security_barrier = 0 '\000', jointype = JOIN_INNER, 
+  joinaliasvars = 0x0, functions = 0x0, funcordinality = 0 '\000', tablefunc = 0x0, values_lists = 0x1fa3898, ctename = 0x0, ctelevelsup = 0, self_reference = 0 '\000', coltypes = 0x0, 
+  coltypmods = 0x0, colcollations = 0x0, enrname = 0x0, enrtuples = 0, alias = 0x0, eref = 0x1f186a8, lateral = 0 '\000', inh = 1 '\001', inFromCl = 1 '\001', requiredPerms = 2, 
+  checkAsUser = 0, selectedCols = 0x1f12518, insertedCols = 0x0, updatedCols = 0x0, securityQuals = 0x0}
+(gdb) n
+336				PartitionedTable(rangeTableEntry->relid))
+(gdb) n
+335			if (IsDistributedTable(rangeTableEntry->relid) &&
+(gdb) 
+325		foreach(rangeTableCell, rangeTableList)
+(gdb) n
+327			RangeTblEntry *rangeTableEntry = (RangeTblEntry *) lfirst(rangeTableCell);
+(gdb) 
+335			if (IsDistributedTable(rangeTableEntry->relid) &&
+(gdb) p *rangeTableEntry
+$101 = {type = T_RangeTblEntry, rtekind = RTE_RELATION, relid = 41849, relkind = 114 'r', tablesample = 0x0, subquery = 0x0, security_barrier = 0 '\000', jointype = JOIN_INNER, 
+  joinaliasvars = 0x0, functions = 0x0, funcordinality = 0 '\000', tablefunc = 0x0, values_lists = 0x1fa4330, ctename = 0x0, ctelevelsup = 0, self_reference = 0 '\000', coltypes = 0x0, 
+  coltypmods = 0x0, colcollations = 0x0, enrname = 0x0, enrtuples = 0, alias = 0x0, eref = 0x1fa4360, lateral = 0 '\000', inh = 0 '\000', inFromCl = 1 '\001', requiredPerms = 2, 
+  checkAsUser = 0, selectedCols = 0x1fa4488, insertedCols = 0x0, updatedCols = 0x0, securityQuals = 0x0}
+(gdb) n
+336				PartitionedTable(rangeTableEntry->relid))
+(gdb) 
+335			if (IsDistributedTable(rangeTableEntry->relid) &&
+(gdb) 
+325		foreach(rangeTableCell, rangeTableList)
+(gdb) 
+352	}
+(gdb) 
+distributed_planner (parse=0x1f17a78, cursorOptions=256, boundParams=0x0) at planner/distributed_planner.c:171
+171		PG_END_TRY();
+(gdb) 
+174		PopPlannerRestrictionContext();
+(gdb) 
+182		if (!needsDistributedPlanning && NeedsDistributedPlanning(parse))
+(gdb) 
+192		return result;
+(gdb) 
+193	}
+(gdb) bt
+#0  distributed_planner (parse=0x1f17a78, cursorOptions=256, boundParams=0x0) at planner/distributed_planner.c:193
+#1  0x00000000007428cc in planner (parse=0x1f17a78, cursorOptions=256, boundParams=0x0) at planner.c:208
+#2  0x000000000081361a in pg_plan_query (querytree=0x1f17a78, cursorOptions=256, boundParams=0x0) at postgres.c:796
+#3  0x000000000081373a in pg_plan_queries (querytrees=0x1f12e30, cursorOptions=256, boundParams=0x0) at postgres.c:862
+#4  0x00000000008139ec in exec_simple_query (query_string=0x1f16708 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1027
+#5  0x0000000000817b1f in PostgresMain (argc=1, argv=0x1eb40c8, dbname=0x1eb3f78 "postgres", username=0x1e6bd08 "cituscluster") at postgres.c:4088
+#6  0x000000000078b2d2 in BackendRun (port=0x1eae550) at postmaster.c:4357
+#7  0x000000000078aa7b in BackendStartup (port=0x1eae550) at postmaster.c:4029
+#8  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#9  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1e69be0) at postmaster.c:1361
+#10 0x00000000006cf26f in main (argc=1, argv=0x1e69be0) at main.c:228
+(gdb) n
+planner (parse=0x1f17a78, cursorOptions=256, boundParams=0x0) at planner.c:211
+211		return result;
+(gdb) n
+212	}
+(gdb) 
+pg_plan_query (querytree=0x1f17a78, cursorOptions=256, boundParams=0x0) at postgres.c:798
+798		if (log_planner_stats)
+(gdb) 
+823		if (Debug_print_plan)
+(gdb) 
+828		return plan;
+(gdb) 
+829	}
+(gdb) 
+pg_plan_queries (querytrees=0x1f12e30, cursorOptions=256, boundParams=0x0) at postgres.c:865
+865			stmt_list = lappend(stmt_list, stmt);
+(gdb) 
+845		foreach(query_list, querytrees)
+(gdb) 
+868		return stmt_list;
+(gdb) 
+869	}
+(gdb) 
+exec_simple_query (query_string=0x1f16708 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1031
+1031			if (snapshot_set)
+(gdb) 
+1032				PopActiveSnapshot();
+(gdb) 
+1035			CHECK_FOR_INTERRUPTS();
+(gdb) 
+1041			portal = CreatePortal("", true, true);
+(gdb) 
+1043			portal->visible = false;
+(gdb) 
+1050			PortalDefineQuery(portal,
+(gdb) list
+1045			/*
+1046			 * We don't have to copy anything into the portal, because everything
+1047			 * we are passing here is in MessageContext, which will outlive the
+1048			 * portal anyway.
+1049			 */
+1050			PortalDefineQuery(portal,
+1051							  NULL,
+1052							  query_string,
+1053							  commandTag,
+1054							  plantree_list,
+(gdb) p portal
+$102 = (Portal) 0x1f97588
+(gdb) p *portal
+$103 = {name = 0x1ef14a0 "", prepStmtName = 0x0, heap = 0x1f789c8, resowner = 0x1f77938, cleanup = 0x61c848 <PortalCleanup>, createSubid = 1, activeSubid = 1, sourceText = 0x0, 
+  commandTag = 0x0, stmts = 0x0, cplan = 0x0, portalParams = 0x0, queryEnv = 0x0, strategy = PORTAL_MULTI_QUERY, cursorOptions = 4, run_once = 0 '\000', status = PORTAL_NEW, 
+  portalPinned = 0 '\000', queryDesc = 0x0, tupDesc = 0x0, formats = 0x0, holdStore = 0x0, holdContext = 0x0, holdSnapshot = 0x0, atStart = 1 '\001', atEnd = 1 '\001', portalPos = 0, 
+  creation_time = 606157236378113, visible = 0 '\000'}
+(gdb) n
+1060			PortalStart(portal, NULL, 0, InvalidSnapshot);
+(gdb) s
+
+Breakpoint 10, PortalStart (portal=0x1f97588, params=0x0, eflags=0, snapshot=0x0) at pquery.c:461
+461		saveActivePortal = ActivePortal;
+(gdb) n
+462		saveResourceOwner = CurrentResourceOwner;
+(gdb) 
+463		savePortalContext = PortalContext;
+(gdb) 
+464		PG_TRY();
+(gdb) 
+466			ActivePortal = portal;
+(gdb) 
+467			if (portal->resowner)
+(gdb) 
+468				CurrentResourceOwner = portal->resowner;
+(gdb) 
+469			PortalContext = PortalGetHeapMemory(portal);
+(gdb) 
+471			oldContext = MemoryContextSwitchTo(PortalGetHeapMemory(portal));
+(gdb) 
+474			portal->portalParams = params;
+(gdb) 
+479			portal->strategy = ChoosePortalStrategy(portal->stmts);
+(gdb) s
+ChoosePortalStrategy (stmts=0x1fa4290) at pquery.c:232
+232		if (list_length(stmts) == 1)
+(gdb) n
+234			Node	   *stmt = (Node *) linitial(stmts);
+(gdb) 
+236			if (IsA(stmt, Query))
+(gdb) 
+258			else if (IsA(stmt, PlannedStmt))
+(gdb) p stmt->type
+$104 = T_PlannedStmt
+(gdb) n
+260				PlannedStmt *pstmt = (PlannedStmt *) stmt;
+(gdb) 
+262				if (pstmt->canSetTag)
+(gdb) p *pstmt
+$105 = {type = T_PlannedStmt, commandType = CMD_SELECT, queryId = 0, hasReturning = 0 '\000', hasModifyingCTE = 0 '\000', canSetTag = 1 '\001', transientPlan = 0 '\000', 
+  dependsOnRole = 0 '\000', parallelModeNeeded = 0 '\000', planTree = 0x1fb82c8, rtable = 0x1fbe178, resultRelations = 0x0, nonleafResultRelations = 0x0, rootResultRelations = 0x0, 
+  subplans = 0x0, rewindPlanIDs = 0x0, rowMarks = 0x0, relationOids = 0x0, invalItems = 0x0, nParamExec = 0, utilityStmt = 0x0, stmt_location = 0, stmt_len = 0}
+(gdb) n
+264					if (pstmt->commandType == CMD_SELECT)
+(gdb) 
+266						if (pstmt->hasModifyingCTE)
+(gdb) 
+269							return PORTAL_ONE_SELECT;
+(gdb) 
+328	}
+(gdb) 
+PortalStart (portal=0x1f97588, params=0x0, eflags=0, snapshot=0x0) at pquery.c:484
+484			switch (portal->strategy)
+(gdb) 
+489					if (snapshot)
+(gdb) 
+492						PushActiveSnapshot(GetTransactionSnapshot());
+(gdb) 
+498					queryDesc = CreateQueryDesc(linitial_node(PlannedStmt, portal->stmts),
+(gdb) s
+GetActiveSnapshot () at snapmgr.c:843
+843		return ActiveSnapshot->as_snap;
+(gdb) n
+844	}
+(gdb) 
+PortalStart (portal=0x1f97588, params=0x0, eflags=0, snapshot=0x0) at pquery.c:512
+512					if (portal->cursorOptions & CURSOR_OPT_SCROLL)
+(gdb) p portal->queryEnv
+$106 = (QueryEnvironment *) 0x0
+(gdb) n
+515						myeflags = eflags;
+(gdb) n
+520					ExecutorStart(queryDesc, myeflags);
+(gdb) s
+ExecutorStart (queryDesc=0x1faae98, eflags=0) at execMain.c:149
+149		if (ExecutorStart_hook)
+(gdb) n
+150			(*ExecutorStart_hook) (queryDesc, eflags);
+(gdb) p p ExecutorStart_hook
+No symbol "p" in current context.
+(gdb)  p ExecutorStart_hook
+$107 = (ExecutorStart_hook_type) 0x7f536bfa12d1 <CitusExecutorStart>
+(gdb) s
+CitusExecutorStart (queryDesc=0x1faae98, eflags=0) at executor/multi_executor.c:63
+63		PlannedStmt *plannedStmt = queryDesc->plannedstmt;
+(gdb) n
+70		if (RecoveryInProgress() && WritableStandbyCoordinator &&
+(gdb) list
+65		/*
+66		 * We cannot modify XactReadOnly on Windows because it is not
+67		 * declared with PGDLLIMPORT.
+68		 */
+69	#ifndef WIN32
+70		if (RecoveryInProgress() && WritableStandbyCoordinator &&
+71			IsCitusPlan(plannedStmt->planTree))
+72		{
+73			PG_TRY();
+74			{
+(gdb) n
+94			standard_ExecutorStart(queryDesc, eflags);
+(gdb) s
+standard_ExecutorStart (queryDesc=0x1faae98, eflags=0) at execMain.c:180
+180		if ((XactReadOnly || IsInParallelMode()) &&
+(gdb) n
+187		estate = CreateExecutorState();
+(gdb) list
+182			ExecCheckXactReadOnly(queryDesc->plannedstmt);
+183	
+184		/*
+185		 * Build EState, switch into per-query memory context for startup.
+186		 */
+187		estate = CreateExecutorState();
+188		queryDesc->estate = estate;
+189	
+190		oldcontext = MemoryContextSwitchTo(estate->es_query_cxt);
+191	
+(gdb) s
+CreateExecutorState () at execUtils.c:89
+89		qcontext = AllocSetContextCreate(CurrentMemoryContext,
+(gdb) n
+97		oldcontext = MemoryContextSwitchTo(qcontext);
+(gdb) 
+99		estate = makeNode(EState);
+(gdb) 
+104		estate->es_direction = ForwardScanDirection;
+(gdb) 
+105		estate->es_snapshot = InvalidSnapshot;	/* caller must initialize this */
+(gdb) 
+106		estate->es_crosscheck_snapshot = InvalidSnapshot;	/* no crosscheck */
+(gdb) 
+107		estate->es_range_table = NIL;
+(gdb) 
+108		estate->es_plannedstmt = NULL;
+(gdb) 
+110		estate->es_junkFilter = NULL;
+(gdb) 
+112		estate->es_output_cid = (CommandId) 0;
+(gdb) 
+114		estate->es_result_relations = NULL;
+(gdb) 
+115		estate->es_num_result_relations = 0;
+(gdb) 
+116		estate->es_result_relation_info = NULL;
+(gdb) 
+118		estate->es_root_result_relations = NULL;
+(gdb) 
+119		estate->es_num_root_result_relations = 0;
+(gdb) 
+121		estate->es_leaf_result_relations = NIL;
+(gdb) 
+123		estate->es_trig_target_relations = NIL;
+(gdb) 
+124		estate->es_trig_tuple_slot = NULL;
+(gdb) 
+125		estate->es_trig_oldtup_slot = NULL;
+(gdb) 
+126		estate->es_trig_newtup_slot = NULL;
+(gdb) 
+128		estate->es_param_list_info = NULL;
+(gdb) 
+129		estate->es_param_exec_vals = NULL;
+(gdb) 
+131		estate->es_queryEnv = NULL;
+(gdb) 
+133		estate->es_query_cxt = qcontext;
+(gdb) 
+135		estate->es_tupleTable = NIL;
+(gdb) 
+137		estate->es_rowMarks = NIL;
+(gdb) 
+139		estate->es_processed = 0;
+(gdb) 
+140		estate->es_lastoid = InvalidOid;
+(gdb) 
+142		estate->es_top_eflags = 0;
+(gdb) 
+143		estate->es_instrument = 0;
+(gdb) 
+144		estate->es_finished = false;
+(gdb) 
+146		estate->es_exprcontexts = NIL;
+(gdb) 
+148		estate->es_subplanstates = NIL;
+(gdb) 
+150		estate->es_auxmodifytables = NIL;
+(gdb) 
+152		estate->es_per_tuple_exprcontext = NULL;
+(gdb) 
+154		estate->es_epqTuple = NULL;
+(gdb) 
+155		estate->es_epqTupleSet = NULL;
+(gdb) 
+156		estate->es_epqScanDone = NULL;
+(gdb) 
+157		estate->es_sourceText = NULL;
+(gdb) 
+159		estate->es_use_parallel_mode = false;
+(gdb) 
+164		MemoryContextSwitchTo(oldcontext);
+(gdb) 
+166		return estate;
+(gdb) 
+167	}
+(gdb) 
+standard_ExecutorStart (queryDesc=0x1faae98, eflags=0) at execMain.c:188
+188		queryDesc->estate = estate;
+(gdb) 
+190		oldcontext = MemoryContextSwitchTo(estate->es_query_cxt);
+(gdb) 
+196		estate->es_param_list_info = queryDesc->params;
+(gdb) 
+198		if (queryDesc->plannedstmt->nParamExec > 0)
+(gdb) 
+202		estate->es_sourceText = queryDesc->sourceText;
+(gdb) 
+207		estate->es_queryEnv = queryDesc->queryEnv;
+(gdb) 
+212		switch (queryDesc->operation)
+(gdb) 
+220				if (queryDesc->plannedstmt->rowMarks != NIL ||
+(gdb) p *estate
+$108 = {type = T_EState, es_direction = ForwardScanDirection, es_snapshot = 0x0, es_crosscheck_snapshot = 0x0, es_range_table = 0x0, es_plannedstmt = 0x0, 
+  es_sourceText = 0x1f16708 "select * from (select * from test2 where id >10) as temp1;", es_junkFilter = 0x0, es_output_cid = 0, es_result_relations = 0x0, es_num_result_relations = 0, 
+  es_result_relation_info = 0x0, es_root_result_relations = 0x0, es_num_root_result_relations = 0, es_leaf_result_relations = 0x0, es_trig_target_relations = 0x0, es_trig_tuple_slot = 0x0, 
+  es_trig_oldtup_slot = 0x0, es_trig_newtup_slot = 0x0, es_param_list_info = 0x0, es_param_exec_vals = 0x0, es_queryEnv = 0x0, es_query_cxt = 0x1f78ad8, es_tupleTable = 0x0, 
+  es_rowMarks = 0x0, es_processed = 0, es_lastoid = 0, es_top_eflags = 0, es_instrument = 0, es_finished = 0 '\000', es_exprcontexts = 0x0, es_subplanstates = 0x0, es_auxmodifytables = 0x0, 
+  es_per_tuple_exprcontext = 0x0, es_epqTuple = 0x0, es_epqTupleSet = 0x0, es_epqScanDone = 0x0, es_query_dsa = 0x0, es_use_parallel_mode = 0 '\000'}
+(gdb) p queryDesc->operation
+$109 = CMD_SELECT
+(gdb) n
+221					queryDesc->plannedstmt->hasModifyingCTE)
+(gdb) 
+220				if (queryDesc->plannedstmt->rowMarks != NIL ||
+(gdb) 
+230				if (!queryDesc->plannedstmt->hasModifyingCTE)
+(gdb) 
+231					eflags |= EXEC_FLAG_SKIP_TRIGGERS;
+(gdb) 
+232				break;
+(gdb) 
+249		estate->es_snapshot = RegisterSnapshot(queryDesc->snapshot);
+(gdb) 
+250		estate->es_crosscheck_snapshot = RegisterSnapshot(queryDesc->crosscheck_snapshot);
+(gdb) 
+251		estate->es_top_eflags = eflags;
+(gdb) 
+252		estate->es_instrument = queryDesc->instrument_options;
+(gdb) 
+258		if (!(eflags & (EXEC_FLAG_SKIP_TRIGGERS | EXEC_FLAG_EXPLAIN_ONLY)))
+(gdb) 
+264		InitPlan(queryDesc, eflags);
+(gdb) s
+InitPlan (queryDesc=0x1faae98, eflags=16) at execMain.c:807
+807		CmdType		operation = queryDesc->operation;
+(gdb) bt
+#0  InitPlan (queryDesc=0x1faae98, eflags=16) at execMain.c:807
+#1  0x0000000000678719 in standard_ExecutorStart (queryDesc=0x1faae98, eflags=16) at execMain.c:264
+#2  0x00007f536bfa13ff in CitusExecutorStart (queryDesc=0x1faae98, eflags=0) at executor/multi_executor.c:94
+#3  0x0000000000678516 in ExecutorStart (queryDesc=0x1faae98, eflags=0) at execMain.c:150
+#4  0x0000000000819080 in PortalStart (portal=0x1f97588, params=0x0, eflags=0, snapshot=0x0) at pquery.c:520
+#5  0x0000000000813a72 in exec_simple_query (query_string=0x1f16708 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1060
+#6  0x0000000000817b1f in PostgresMain (argc=1, argv=0x1eb40c8, dbname=0x1eb3f78 "postgres", username=0x1e6bd08 "cituscluster") at postgres.c:4088
+#7  0x000000000078b2d2 in BackendRun (port=0x1eae550) at postmaster.c:4357
+#8  0x000000000078aa7b in BackendStartup (port=0x1eae550) at postmaster.c:4029
+#9  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#10 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1e69be0) at postmaster.c:1361
+#11 0x00000000006cf26f in main (argc=1, argv=0x1e69be0) at main.c:228
+(gdb) n
+808		PlannedStmt *plannedstmt = queryDesc->plannedstmt;
+(gdb) 
+809		Plan	   *plan = plannedstmt->planTree;
+(gdb) 
+810		List	   *rangeTable = plannedstmt->rtable;
+(gdb) 
+811		EState	   *estate = queryDesc->estate;
+(gdb) 
+820		ExecCheckRTPerms(rangeTable, true);
+(gdb) 
+825		estate->es_range_table = rangeTable;
+(gdb) 
+826		estate->es_plannedstmt = plannedstmt;
+(gdb) 
+834		if (plannedstmt->resultRelations)
+(gdb) 
+921			estate->es_result_relations = NULL;
+(gdb) 
+922			estate->es_num_result_relations = 0;
+(gdb) 
+923			estate->es_result_relation_info = NULL;
+(gdb) 
+924			estate->es_root_result_relations = NULL;
+(gdb) 
+925			estate->es_num_root_result_relations = 0;
+(gdb) 
+937		estate->es_rowMarks = NIL;
+(gdb) 
+938		foreach(l, plannedstmt->rowMarks)
+(gdb) 
+999		estate->es_tupleTable = NIL;
+(gdb) 
+1000		estate->es_trig_tuple_slot = NULL;
+(gdb) 
+1001		estate->es_trig_oldtup_slot = NULL;
+(gdb) 
+1002		estate->es_trig_newtup_slot = NULL;
+(gdb) 
+1005		estate->es_epqTuple = NULL;
+(gdb) 
+1006		estate->es_epqTupleSet = NULL;
+(gdb) 
+1007		estate->es_epqScanDone = NULL;
+(gdb) 
+1015		i = 1;						/* subplan indices count from 1 */
+(gdb) 
+1016		foreach(l, plannedstmt->subplans)
+(gdb) 
+1045		planstate = ExecInitNode(plan, estate, eflags);
+(gdb) 
+1050		tupType = ExecGetResultType(planstate);
+(gdb) 
+1056		if (operation == CMD_SELECT)
+(gdb) 
+1058			bool		junk_filter_needed = false;
+(gdb) 
+1061			foreach(tlist, plan->targetlist)
+(gdb) 
+1063				TargetEntry *tle = (TargetEntry *) lfirst(tlist);
+(gdb) 
+1065				if (tle->resjunk)
+(gdb) 
+1061			foreach(tlist, plan->targetlist)
+(gdb) 
+1063				TargetEntry *tle = (TargetEntry *) lfirst(tlist);
+(gdb) 
+1065				if (tle->resjunk)
+(gdb) 
+1061			foreach(tlist, plan->targetlist)
+(gdb) 
+1072			if (junk_filter_needed)
+(gdb) 
+1086		queryDesc->tupDesc = tupType;
+(gdb) 
+1087		queryDesc->planstate = planstate;
+(gdb) 
+1088	}
+(gdb) 
+standard_ExecutorStart (queryDesc=0x1faae98, eflags=16) at execMain.c:266
+266		MemoryContextSwitchTo(oldcontext);
+(gdb) 
+267	}
+(gdb) 
+CitusExecutorStart (queryDesc=0x1faae98, eflags=0) at executor/multi_executor.c:96
+96	}
+(gdb) 
+ExecutorStart (queryDesc=0x1faae98, eflags=0) at execMain.c:153
+153	}
+(gdb) 
+PortalStart (portal=0x1f97588, params=0x0, eflags=0, snapshot=0x0) at pquery.c:525
+525					portal->queryDesc = queryDesc;
+(gdb) 
+530					portal->tupDesc = queryDesc->tupDesc;
+(gdb) 
+535					portal->atStart = true;
+(gdb) bt
+#0  PortalStart (portal=0x1f97588, params=0x0, eflags=0, snapshot=0x0) at pquery.c:535
+#1  0x0000000000813a72 in exec_simple_query (query_string=0x1f16708 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1060
+#2  0x0000000000817b1f in PostgresMain (argc=1, argv=0x1eb40c8, dbname=0x1eb3f78 "postgres", username=0x1e6bd08 "cituscluster") at postgres.c:4088
+#3  0x000000000078b2d2 in BackendRun (port=0x1eae550) at postmaster.c:4357
+#4  0x000000000078aa7b in BackendStartup (port=0x1eae550) at postmaster.c:4029
+#5  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#6  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1e69be0) at postmaster.c:1361
+#7  0x00000000006cf26f in main (argc=1, argv=0x1e69be0) at main.c:228
+(gdb) n
+536					portal->atEnd = false;	/* allow fetches */
+(gdb) 
+537					portal->portalPos = 0;
+(gdb) 
+539					PopActiveSnapshot();
+(gdb) 
+540					break;
+(gdb) 
+605		PG_END_TRY();
+(gdb) 
+607		MemoryContextSwitchTo(oldContext);
+(gdb) 
+609		ActivePortal = saveActivePortal;
+(gdb) 
+610		CurrentResourceOwner = saveResourceOwner;
+(gdb) 
+611		PortalContext = savePortalContext;
+(gdb) p CurrentResourceOwner
+$110 = (ResourceOwner) 0x1eb9b18
+(gdb) p *CurrentResourceOwner
+$111 = {parent = 0x0, firstchild = 0x1f77938, nextchild = 0x0, name = 0x9d3035 "TopTransaction", bufferarr = {itemsarr = 0x1eba218, invalidval = 0, capacity = 16, nitems = 0, maxitems = 16, 
+    lastidx = 4294967295}, catrefarr = {itemsarr = 0x1eba0f8, invalidval = 0, capacity = 16, nitems = 0, maxitems = 16, lastidx = 4294967295}, catlistrefarr = {itemsarr = 0x1eb9db8, 
+    invalidval = 0, capacity = 16, nitems = 0, maxitems = 16, lastidx = 4294967295}, relrefarr = {itemsarr = 0x1eba188, invalidval = 0, capacity = 16, nitems = 0, maxitems = 16, 
+    lastidx = 4294967295}, planrefarr = {itemsarr = 0x0, invalidval = 0, capacity = 0, nitems = 0, maxitems = 0, lastidx = 0}, tupdescarr = {itemsarr = 0x0, invalidval = 0, capacity = 0, 
+    nitems = 0, maxitems = 0, lastidx = 0}, snapshotarr = {itemsarr = 0x1eb9f58, invalidval = 0, capacity = 16, nitems = 0, maxitems = 16, lastidx = 4294967295}, filearr = {itemsarr = 0x0, 
+    invalidval = 4294967295, capacity = 0, nitems = 0, maxitems = 0, lastidx = 0}, dsmarr = {itemsarr = 0x0, invalidval = 0, capacity = 0, nitems = 0, maxitems = 0, lastidx = 0}, 
+  nlocks = 5, locks = {0x1eadd48, 0x1eadce8, 0x1eadc88, 0x1eadc28, 0x1eadbc8, 0x1eadb68, 0x1eadb08, 0x1eadaa8, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}}
+(gdb) n
+613		portal->status = PORTAL_READY;
+(gdb) 
+614	}
+(gdb) 
+exec_simple_query (query_string=0x1f16708 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1068
+1068			format = 0;				/* TEXT is default */
+(gdb) 
+1069			if (IsA(parsetree->stmt, FetchStmt))
+(gdb) 
+1082			PortalSetResultFormat(portal, 1, &format);
+(gdb) 
+1087			receiver = CreateDestReceiver(dest);
+(gdb) s
+CreateDestReceiver (dest=DestRemote) at dest.c:111
+111		switch (dest)
+(gdb) n
+115				return printtup_create_DR(dest);
+(gdb) s
+printtup_create_DR (dest=DestRemote) at printtup.c:75
+75		DR_printtup *self = (DR_printtup *) palloc0(sizeof(DR_printtup));
+(gdb) n
+77		self->pub.receiveSlot = printtup;	/* might get changed later */
+(gdb) 
+78		self->pub.rStartup = printtup_startup;
+(gdb) 
+79		self->pub.rShutdown = printtup_shutdown;
+(gdb) 
+80		self->pub.rDestroy = printtup_destroy;
+(gdb) 
+81		self->pub.mydest = dest;
+(gdb) 
+87		self->sendDescrip = (dest == DestRemote);
+(gdb) 
+89		self->attrinfo = NULL;
+(gdb) 
+90		self->nattrs = 0;
+(gdb) 
+91		self->myinfo = NULL;
+(gdb) 
+92		self->tmpcontext = NULL;
+(gdb) 
+94		return (DestReceiver *) self;
+(gdb) 
+95	}
+(gdb) 
+CreateDestReceiver (dest=DestRemote) at dest.c:150
+150	}
+(gdb) 
+exec_simple_query (query_string=0x1f16708 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1088
+1088			if (dest == DestRemote)
+(gdb) 
+1089				SetRemoteDestReceiverParams(receiver, portal);
+(gdb) s
+SetRemoteDestReceiverParams (self=0x1fbe238, portal=0x1f97588) at printtup.c:103
+103		DR_printtup *myState = (DR_printtup *) self;
+(gdb) n
+108		myState->portal = portal;
+(gdb) 
+110		if (PG_PROTOCOL_MAJOR(FrontendProtocol) < 3)
+(gdb) 
+122	}
+(gdb) 
+exec_simple_query (query_string=0x1f16708 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1094
+1094			MemoryContextSwitchTo(oldcontext);
+(gdb) 
+1099			(void) PortalRun(portal,
+(gdb) 
+
+Breakpoint 11, PortalRun (portal=0x1f97588, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x1fbe238, altdest=0x1fbe238, completionTag=0x7ffe17bee0f0 "\001")
+    at pquery.c:707
+707		if (completionTag)
+(gdb) bt
+#0  PortalRun (portal=0x1f97588, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x1fbe238, altdest=0x1fbe238, completionTag=0x7ffe17bee0f0 "\001") at pquery.c:707
+#1  0x0000000000813b59 in exec_simple_query (query_string=0x1f16708 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1099
+#2  0x0000000000817b1f in PostgresMain (argc=1, argv=0x1eb40c8, dbname=0x1eb3f78 "postgres", username=0x1e6bd08 "cituscluster") at postgres.c:4088
+#3  0x000000000078b2d2 in BackendRun (port=0x1eae550) at postmaster.c:4357
+#4  0x000000000078aa7b in BackendStartup (port=0x1eae550) at postmaster.c:4029
+#5  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#6  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1e69be0) at postmaster.c:1361
+#7  0x00000000006cf26f in main (argc=1, argv=0x1e69be0) at main.c:228
+(gdb) n
+708			completionTag[0] = '\0';
+(gdb) 
+710		if (log_executor_stats && portal->strategy != PORTAL_MULTI_QUERY)
+(gdb) 
+720		MarkPortalActive(portal);
+(gdb) s
+MarkPortalActive (portal=0x1f97588) at portalmem.c:391
+391		if (portal->status != PORTAL_READY)
+(gdb) n
+396		portal->status = PORTAL_ACTIVE;
+(gdb) p portal->status
+$112 = PORTAL_READY
+(gdb) n
+397		portal->activeSubid = GetCurrentSubTransactionId();
+(gdb) 
+398	}
+(gdb) p portal->activeSubid
+$113 = 1
+(gdb) n
+PortalRun (portal=0x1f97588, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x1fbe238, altdest=0x1fbe238, completionTag=0x7ffe17bee0f0 "") at pquery.c:724
+724		portal->run_once = run_once;
+(gdb) 
+740		saveTopTransactionResourceOwner = TopTransactionResourceOwner;
+(gdb) 
+741		saveTopTransactionContext = TopTransactionContext;
+(gdb) 
+742		saveActivePortal = ActivePortal;
+(gdb) 
+743		saveResourceOwner = CurrentResourceOwner;
+(gdb) 
+744		savePortalContext = PortalContext;
+(gdb) 
+745		saveMemoryContext = CurrentMemoryContext;
+(gdb) 
+746		PG_TRY();
+(gdb) 
+748			ActivePortal = portal;
+(gdb) 
+749			if (portal->resowner)
+(gdb) 
+750				CurrentResourceOwner = portal->resowner;
+(gdb) 
+751			PortalContext = PortalGetHeapMemory(portal);
+(gdb) 
+753			MemoryContextSwitchTo(PortalContext);
+(gdb) 
+755			switch (portal->strategy)
+(gdb) 
+767					if (portal->strategy != PORTAL_ONE_SELECT && !portal->holdStore)
+(gdb) p portal
+$114 = (Portal) 0x1f97588
+(gdb) p* portal
+$115 = {name = 0x1ef14a0 "", prepStmtName = 0x0, heap = 0x1f789c8, resowner = 0x1f77938, cleanup = 0x61c848 <PortalCleanup>, createSubid = 1, activeSubid = 1, 
+  sourceText = 0x1f16708 "select * from (select * from test2 where id >10) as temp1;", commandTag = 0xafd32d "SELECT", stmts = 0x1fa4290, cplan = 0x0, portalParams = 0x0, queryEnv = 0x0, 
+  strategy = PORTAL_ONE_SELECT, cursorOptions = 4, run_once = 1 '\001', status = PORTAL_ACTIVE, portalPinned = 0 '\000', queryDesc = 0x1faae98, tupDesc = 0x1fd4568, formats = 0x1faaf28, 
+  holdStore = 0x0, holdContext = 0x0, holdSnapshot = 0x0, atStart = 1 '\001', atEnd = 0 '\000', portalPos = 0, creation_time = 606157236378113, visible = 0 '\000'}
+(gdb) n
+773					nprocessed = PortalRunSelect(portal, true, count, dest);
+(gdb) s
+PortalRunSelect (portal=0x1f97588, forward=1 '\001', count=9223372036854775807, dest=0x1fbe238) at pquery.c:888
+888		queryDesc = PortalGetQueryDesc(portal);
+(gdb) n
+899		if (queryDesc)
+(gdb) 
+900			queryDesc->dest = dest;
+(gdb) 
+913		if (forward)
+(gdb) 
+915			if (portal->atEnd || count <= 0)
+(gdb) list
+910		 * the portal position state depending on the number of tuples that were
+911		 * retrieved.
+912		 */
+913		if (forward)
+914		{
+915			if (portal->atEnd || count <= 0)
+916			{
+917				direction = NoMovementScanDirection;
+918				count = 0;			/* don't pass negative count to executor */
+919			}
+(gdb) n
+921				direction = ForwardScanDirection;
+(gdb) 
+924			if (count == FETCH_ALL)
+(gdb) 
+925				count = 0;
+(gdb) 
+927			if (portal->holdStore)
+(gdb) 
+931				PushActiveSnapshot(queryDesc->snapshot);
+(gdb) 
+933							portal->run_once);
+(gdb) 
+932				ExecutorRun(queryDesc, direction, (uint64) count,
+(gdb) s
+ExecutorRun (queryDesc=0x1faae98, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:303
+303		if (ExecutorRun_hook)
+(gdb) 
+306			standard_ExecutorRun(queryDesc, direction, count, execute_once);
+(gdb) s
+standard_ExecutorRun (queryDesc=0x1faae98, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:322
+322		estate = queryDesc->estate;
+(gdb) n
+330		oldcontext = MemoryContextSwitchTo(estate->es_query_cxt);
+(gdb) 
+333		if (queryDesc->totaltime)
+(gdb) 
+339		operation = queryDesc->operation;
+(gdb) 
+340		dest = queryDesc->dest;
+(gdb) 
+345		estate->es_processed = 0;
+(gdb) 
+346		estate->es_lastoid = InvalidOid;
+(gdb) 
+348		sendTuples = (operation == CMD_SELECT ||
+(gdb) 
+351		if (sendTuples)
+(gdb) 
+352			(*dest->rStartup) (dest, operation, queryDesc->tupDesc);
+(gdb) s
+printtup_startup (self=0x1fbe238, operation=1, typeinfo=0x1fd4568) at printtup.c:127
+127		DR_printtup *myState = (DR_printtup *) self;
+(gdb) n
+128		Portal		portal = myState->portal;
+(gdb) 
+136		myState->tmpcontext = AllocSetContextCreate(CurrentMemoryContext,
+(gdb) 
+140		if (PG_PROTOCOL_MAJOR(FrontendProtocol) < 3)
+(gdb) 
+159		if (myState->sendDescrip)
+(gdb) p *myState
+$116 = {pub = {receiveSlot = 0x480313 <printtup>, rStartup = 0x47fdda <printtup_startup>, rShutdown = 0x480708 <printtup_shutdown>, rDestroy = 0x48077c <printtup_destroy>, 
+    mydest = DestRemote}, portal = 0x1f97588, sendDescrip = 1 '\001', attrinfo = 0x0, nattrs = 0, myinfo = 0x0, tmpcontext = 0x1f78cf8}
+(gdb) n
+160			SendRowDescriptionMessage(typeinfo,
+(gdb) p typeinfo
+$117 = (TupleDesc) 0x1fd4568
+(gdb) p *typeinfo
+$118 = {natts = 2, attrs = 0x1fd4590, constr = 0x0, tdtypeid = 2249, tdtypmod = -1, tdhasoid = 0 '\000', tdrefcount = -1}
+(gdb) bt
+#0  printtup_startup (self=0x1fbe238, operation=1, typeinfo=0x1fd4568) at printtup.c:160
+#1  0x000000000067884f in standard_ExecutorRun (queryDesc=0x1faae98, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:352
+#2  0x000000000067877c in ExecutorRun (queryDesc=0x1faae98, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:306
+#3  0x00000000008198f0 in PortalRunSelect (portal=0x1f97588, forward=1 '\001', count=0, dest=0x1fbe238) at pquery.c:932
+#4  0x00000000008195c7 in PortalRun (portal=0x1f97588, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x1fbe238, altdest=0x1fbe238, completionTag=0x7ffe17bee0f0 "")
+    at pquery.c:773
+#5  0x0000000000813b59 in exec_simple_query (query_string=0x1f16708 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1099
+#6  0x0000000000817b1f in PostgresMain (argc=1, argv=0x1eb40c8, dbname=0x1eb3f78 "postgres", username=0x1e6bd08 "cituscluster") at postgres.c:4088
+#7  0x000000000078b2d2 in BackendRun (port=0x1eae550) at postmaster.c:4357
+#8  0x000000000078aa7b in BackendStartup (port=0x1eae550) at postmaster.c:4029
+#9  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#10 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1e69be0) at postmaster.c:1361
+#11 0x00000000006cf26f in main (argc=1, argv=0x1e69be0) at main.c:228
+(gdb) s
+FetchPortalTargetList (portal=0x1f97588) at pquery.c:341
+341		if (portal->strategy == PORTAL_MULTI_QUERY)
+(gdb) bt
+#0  FetchPortalTargetList (portal=0x1f97588) at pquery.c:341
+#1  0x000000000047fe95 in printtup_startup (self=0x1fbe238, operation=1, typeinfo=0x1fd4568) at printtup.c:160
+#2  0x000000000067884f in standard_ExecutorRun (queryDesc=0x1faae98, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:352
+#3  0x000000000067877c in ExecutorRun (queryDesc=0x1faae98, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:306
+#4  0x00000000008198f0 in PortalRunSelect (portal=0x1f97588, forward=1 '\001', count=0, dest=0x1fbe238) at pquery.c:932
+#5  0x00000000008195c7 in PortalRun (portal=0x1f97588, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x1fbe238, altdest=0x1fbe238, completionTag=0x7ffe17bee0f0 "")
+    at pquery.c:773
+#6  0x0000000000813b59 in exec_simple_query (query_string=0x1f16708 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1099
+#7  0x0000000000817b1f in PostgresMain (argc=1, argv=0x1eb40c8, dbname=0x1eb3f78 "postgres", username=0x1e6bd08 "cituscluster") at postgres.c:4088
+#8  0x000000000078b2d2 in BackendRun (port=0x1eae550) at postmaster.c:4357
+#9  0x000000000078aa7b in BackendStartup (port=0x1eae550) at postmaster.c:4029
+#10 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#11 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1e69be0) at postmaster.c:1361
+#12 0x00000000006cf26f in main (argc=1, argv=0x1e69be0) at main.c:228
+(gdb) list
+336	 */
+337	List *
+338	FetchPortalTargetList(Portal portal)
+339	{
+340		/* no point in looking if we determined it doesn't return tuples */
+341		if (portal->strategy == PORTAL_MULTI_QUERY)
+342			return NIL;
+343		/* get the primary statement and find out what it returns */
+344		return FetchStatementTargetList((Node *) PortalGetPrimaryStmt(portal));
+345	}
+(gdb) n
+344		return FetchStatementTargetList((Node *) PortalGetPrimaryStmt(portal));
+(gdb) s
+PortalGetPrimaryStmt (portal=0x1f97588) at portalmem.c:154
+154		foreach(lc, portal->stmts)
+(gdb) n
+156			PlannedStmt *stmt = lfirst_node(PlannedStmt, lc);
+(gdb) 
+158			if (stmt->canSetTag)
+(gdb) p *stmt
+$119 = {type = T_PlannedStmt, commandType = CMD_SELECT, queryId = 0, hasReturning = 0 '\000', hasModifyingCTE = 0 '\000', canSetTag = 1 '\001', transientPlan = 0 '\000', 
+  dependsOnRole = 0 '\000', parallelModeNeeded = 0 '\000', planTree = 0x1fb82c8, rtable = 0x1fbe178, resultRelations = 0x0, nonleafResultRelations = 0x0, rootResultRelations = 0x0, 
+  subplans = 0x0, rewindPlanIDs = 0x0, rowMarks = 0x0, relationOids = 0x0, invalItems = 0x0, nParamExec = 0, utilityStmt = 0x0, stmt_location = 0, stmt_len = 0}
+(gdb) 
+$120 = {type = T_PlannedStmt, commandType = CMD_SELECT, queryId = 0, hasReturning = 0 '\000', hasModifyingCTE = 0 '\000', canSetTag = 1 '\001', transientPlan = 0 '\000', 
+  dependsOnRole = 0 '\000', parallelModeNeeded = 0 '\000', planTree = 0x1fb82c8, rtable = 0x1fbe178, resultRelations = 0x0, nonleafResultRelations = 0x0, rootResultRelations = 0x0, 
+  subplans = 0x0, rewindPlanIDs = 0x0, rowMarks = 0x0, relationOids = 0x0, invalItems = 0x0, nParamExec = 0, utilityStmt = 0x0, stmt_location = 0, stmt_len = 0}
+(gdb) n
+159				return stmt;
+(gdb) 
+162	}
+(gdb) 
+FetchPortalTargetList (portal=0x1f97588) at pquery.c:345
+345	}
+(gdb) 
+printtup_startup (self=0x1fbe238, operation=1, typeinfo=0x1fd4568) at printtup.c:174
+174	}
+(gdb) list
+169		 * 2. Checking in printtup allows us to handle the case that the tuples
+170		 *	  change type midway through (although this probably can't happen in
+171		 *	  the current executor).
+172		 * ----------------
+173		 */
+174	}
+175	
+176	/*
+177	 * SendRowDescriptionMessage --- send a RowDescription message to the frontend
+178	 *
+(gdb) n
+standard_ExecutorRun (queryDesc=0x1faae98, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:357
+357		if (!ScanDirectionIsNoMovement(direction))
+(gdb) 
+359			if (execute_once && queryDesc->already_executed)
+(gdb) 
+361			queryDesc->already_executed = true;
+(gdb) 
+363			ExecutePlan(estate,
+(gdb) s
+365						queryDesc->plannedstmt->parallelModeNeeded,
+(gdb) s
+363			ExecutePlan(estate,
+(gdb) s
+ExecutePlan (estate=0x1fd3f58, planstate=0x1fd4168, use_parallel_mode=0 '\000', operation=CMD_SELECT, sendTuples=1 '\001', numberTuples=0, direction=ForwardScanDirection, dest=0x1fbe238, 
+    execute_once=1 '\001') at execMain.c:1691
+1691		current_tuple_count = 0;
+(gdb) n
+1696		estate->es_direction = direction;
+(gdb) 
+1704		if (!execute_once || dest->mydest == DestIntoRel)
+(gdb) 
+1707		estate->es_use_parallel_mode = use_parallel_mode;
+(gdb) 
+1708		if (use_parallel_mode)
+(gdb) 
+1717			ResetPerTupleExprContext(estate);
+(gdb) p use_parallel_mode
+$121 = 0 '\000'
+(gdb) n
+1722			slot = ExecProcNode(planstate);
+(gdb) s
+ExecProcNode (node=0x1fd4168) at ../../../src/include/executor/executor.h:247
+247		if (node->chgParam != NULL) /* something changed? */
+(gdb) n
+250		return node->ExecProcNode(node);
+(gdb) s
+ExecProcNodeFirst (node=0x1fd4168) at execProcnode.c:418
+418		check_stack_depth();
+(gdb) ^CQuit
+(gdb) n
+425		if (node->instrument)
+(gdb) bt
+#0  ExecProcNodeFirst (node=0x1fd4168) at execProcnode.c:425
+#1  0x0000000000678445 in ExecProcNode (node=0x1fd4168) at ../../../src/include/executor/executor.h:250
+#2  0x000000000067a888 in ExecutePlan (estate=0x1fd3f58, planstate=0x1fd4168, use_parallel_mode=0 '\000', operation=CMD_SELECT, sendTuples=1 '\001', numberTuples=0, 
+    direction=ForwardScanDirection, dest=0x1fbe238, execute_once=1 '\001') at execMain.c:1722
+#3  0x00000000006788e1 in standard_ExecutorRun (queryDesc=0x1faae98, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:363
+#4  0x000000000067877c in ExecutorRun (queryDesc=0x1faae98, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:306
+#5  0x00000000008198f0 in PortalRunSelect (portal=0x1f97588, forward=1 '\001', count=0, dest=0x1fbe238) at pquery.c:932
+#6  0x00000000008195c7 in PortalRun (portal=0x1f97588, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x1fbe238, altdest=0x1fbe238, completionTag=0x7ffe17bee0f0 "")
+    at pquery.c:773
+#7  0x0000000000813b59 in exec_simple_query (query_string=0x1f16708 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1099
+#8  0x0000000000817b1f in PostgresMain (argc=1, argv=0x1eb40c8, dbname=0x1eb3f78 "postgres", username=0x1e6bd08 "cituscluster") at postgres.c:4088
+#9  0x000000000078b2d2 in BackendRun (port=0x1eae550) at postmaster.c:4357
+#10 0x000000000078aa7b in BackendStartup (port=0x1eae550) at postmaster.c:4029
+#11 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#12 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1e69be0) at postmaster.c:1361
+#13 0x00000000006cf26f in main (argc=1, argv=0x1e69be0) at main.c:228
+(gdb) n
+428			node->ExecProcNode = node->ExecProcNodeReal;
+(gdb) n
+430		return node->ExecProcNode(node);
+(gdb) p *(PlanState)node
+Structure has no component named operator*.
+(gdb) p *(PlanState *)node
+$122 = {type = T_CustomScanState, plan = 0x1fb82c8, state = 0x1fd3f58, ExecProcNode = 0x69186e <ExecCustomScan>, ExecProcNodeReal = 0x69186e <ExecCustomScan>, instrument = 0x0, 
+  worker_instrument = 0x0, qual = 0x0, lefttree = 0x0, righttree = 0x0, initPlan = 0x0, subPlan = 0x0, chgParam = 0x0, ps_ResultTupleSlot = 0x1fd4438, ps_ExprContext = 0x1fd4278, 
+  ps_ProjInfo = 0x1fd47b0}
+(gdb) s
+ExecCustomScan (pstate=0x1fd4168) at nodeCustom.c:113
+113		CustomScanState *node = castNode(CustomScanState, pstate);
+(gdb) n
+115		CHECK_FOR_INTERRUPTS();
+(gdb) 
+118		return node->methods->ExecCustomScan(node);
+(gdb) s
+RealTimeExecScan (node=0x1fd4168) at executor/multi_real_time_executor.c:1034
+1034		CitusScanState *scanState = (CitusScanState *) node;
+(gdb) n
+1035		TupleTableSlot *resultSlot = NULL;
+(gdb) n
+1037		if (!scanState->finishedRemoteScan)
+(gdb) 
+1039			DistributedPlan *distributedPlan = scanState->distributedPlan;
+(gdb) 
+1040			Job *workerJob = distributedPlan->workerJob;
+(gdb) 
+1043			LockPartitionsInRelationList(distributedPlan->relationIdList, AccessShareLock);
+(gdb) s
+LockPartitionsInRelationList (relationIdList=0x1fa6d80, lockmode=1) at utils/resource_lock.c:625
+625		ListCell *relationIdCell = NULL;
+(gdb) n
+627		foreach(relationIdCell, relationIdList)
+(gdb) bt
+#0  LockPartitionsInRelationList (relationIdList=0x1fa6d80, lockmode=1) at utils/resource_lock.c:627
+#1  0x00007f536bfa34d7 in RealTimeExecScan (node=0x1fd4168) at executor/multi_real_time_executor.c:1043
+#2  0x00000000006918aa in ExecCustomScan (pstate=0x1fd4168) at nodeCustom.c:118
+#3  0x000000000067f485 in ExecProcNodeFirst (node=0x1fd4168) at execProcnode.c:430
+#4  0x0000000000678445 in ExecProcNode (node=0x1fd4168) at ../../../src/include/executor/executor.h:250
+#5  0x000000000067a888 in ExecutePlan (estate=0x1fd3f58, planstate=0x1fd4168, use_parallel_mode=0 '\000', operation=CMD_SELECT, sendTuples=1 '\001', numberTuples=0, 
+    direction=ForwardScanDirection, dest=0x1fbe238, execute_once=1 '\001') at execMain.c:1722
+#6  0x00000000006788e1 in standard_ExecutorRun (queryDesc=0x1faae98, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:363
+#7  0x000000000067877c in ExecutorRun (queryDesc=0x1faae98, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:306
+#8  0x00000000008198f0 in PortalRunSelect (portal=0x1f97588, forward=1 '\001', count=0, dest=0x1fbe238) at pquery.c:932
+#9  0x00000000008195c7 in PortalRun (portal=0x1f97588, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x1fbe238, altdest=0x1fbe238, completionTag=0x7ffe17bee0f0 "")
+    at pquery.c:773
+#10 0x0000000000813b59 in exec_simple_query (query_string=0x1f16708 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1099
+#11 0x0000000000817b1f in PostgresMain (argc=1, argv=0x1eb40c8, dbname=0x1eb3f78 "postgres", username=0x1e6bd08 "cituscluster") at postgres.c:4088
+#12 0x000000000078b2d2 in BackendRun (port=0x1eae550) at postmaster.c:4357
+#13 0x000000000078aa7b in BackendStartup (port=0x1eae550) at postmaster.c:4029
+#14 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#15 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1e69be0) at postmaster.c:1361
+#16 0x00000000006cf26f in main (argc=1, argv=0x1e69be0) at main.c:228
+(gdb) n
+629			Oid relationId = lfirst_oid(relationIdCell);
+(gdb) 
+630			if (PartitionedTable(relationId))
+(gdb) p relationId
+$123 = 41849
+(gdb) n
+627		foreach(relationIdCell, relationIdList)
+(gdb) 
+635	}
+(gdb) 
+RealTimeExecScan (node=0x1fd4168) at executor/multi_real_time_executor.c:1045
+1045			PrepareMasterJobDirectory(workerJob);
+(gdb) s
+
+Breakpoint 8, PrepareMasterJobDirectory (workerJob=0x1faf1f8) at executor/multi_real_time_executor.c:1069
+1069		StringInfo jobDirectoryName = MasterJobDirectoryName(workerJob->jobId);
+(gdb) n
+1070		CitusCreateDirectory(jobDirectoryName);
+(gdb) p jobDirectoryName
+$124 = (StringInfo) 0x1fd5060
+(gdb) p *jobDirectoryName
+$125 = {data = 0x1fd4c50 "base/pgsql_job_cache/master_job_29309796353", len = 43, maxlen = 1024, cursor = 0}
+(gdb) n
+1072		ResourceOwnerEnlargeJobDirectories(CurrentResourceOwner);
+(gdb) p *workerJob
+$126 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d438 "Job"}, citus_tag = T_Job}, jobId = 29309796353, jobQuery = 0x1fa6fc0, taskList = 0x1fbb960, 
+  dependedJobList = 0x0, subqueryPushdown = 0 '\000', requiresMasterEvaluation = 0 '\000', deferredPruning = 0 '\000', partitionKeyValue = 0x0}
+(gdb) n
+1073		ResourceOwnerRememberJobDirectory(CurrentResourceOwner, workerJob->jobId);
+(gdb) s
+ResourceOwnerRememberJobDirectory (owner=0x1f77938, jobId=29309796353) at utils/multi_resowner.c:116
+116		JobDirectoryEntry *entry = NULL;
+(gdb) n
+119		entry = &RegisteredJobDirectories[NumRegisteredJobDirectories];
+(gdb) 
+120		entry->owner = owner;
+(gdb) p NumRegisteredJobDirectories
+$127 = 0
+(gdb) n
+121		entry->jobId = jobId;
+(gdb) 
+122		NumRegisteredJobDirectories++;
+(gdb) 
+123	}
+(gdb) p NumRegisteredJobDirectories
+$128 = 1
+(gdb) n
+PrepareMasterJobDirectory (workerJob=0x1faf1f8) at executor/multi_real_time_executor.c:1074
+1074	}
+(gdb) 
+RealTimeExecScan (node=0x1fd4168) at executor/multi_real_time_executor.c:1047
+1047			ExecuteSubPlans(distributedPlan);
+(gdb) s
+
+Breakpoint 9, ExecuteSubPlans (distributedPlan=0x1fbcfa8) at executor/subplan_execution.c:35
+35		uint64 planId = distributedPlan->planId;
+(gdb) n
+36		List *subPlanList = distributedPlan->subPlanList;
+(gdb) 
+37		ListCell *subPlanCell = NULL;
+(gdb) 
+38		List *nodeList = NIL;
+(gdb) 
+39		bool writeLocalFile = false;
+(gdb) 
+41		if (subPlanList == NIL)
+(gdb) 
+44			return;
+(gdb) 
+79	}
+(gdb) 
+RealTimeExecScan (node=0x1fd4168) at executor/multi_real_time_executor.c:1048
+1048			MultiRealTimeExecute(workerJob);
+(gdb) s
+
+Breakpoint 12, MultiRealTimeExecute (job=0x1faf1f8) at executor/multi_real_time_executor.c:88
+88		List *taskList = job->taskList;
+(gdb) n
+89		List *taskExecutionList = NIL;
+(gdb) 
+90		ListCell *taskExecutionCell = NULL;
+(gdb) 
+91		ListCell *taskCell = NULL;
+(gdb) 
+92		uint32 failedTaskId = 0;
+(gdb) 
+93		bool allTasksCompleted = false;
+(gdb) 
+94		bool taskCompleted = false;
+(gdb) 
+95		bool taskFailed = false;
+(gdb) 
+96		bool sizeLimitIsExceeded = false;
+(gdb) 
+97		DistributedExecutionStats executionStats = { 0 };
+(gdb) 
+99		List *workerNodeList = NIL;
+(gdb) 
+100		HTAB *workerHash = NULL;
+(gdb) 
+101		const char *workerHashName = "Worker node hash";
+(gdb) 
+102		WaitInfo *waitInfo = MultiClientCreateWaitInfo(list_length(taskList));
+(gdb) 
+104		workerNodeList = ActiveReadableNodeList();
+(gdb) 
+105		workerHash = WorkerHash(workerHashName, workerNodeList);
+(gdb) 
+107		if (IsTransactionBlock() && SelectOpensTransactionBlock)
+(gdb) p workerHash
+$129 = (HTAB *) 0x1fd5f68
+(gdb) p *workerHash
+$130 = {hctl = 0x1fd5ff8, dir = 0x1fd6408, hash = 0x9779a4 <tag_hash>, match = 0x471ee0 <memcmp@plt>, keycopy = 0x472210 <memcpy@plt>, alloc = 0x9752e6 <DynaHashAlloc>, hcxt = 0x1f78f18, 
+  tabname = 0x1fd5fc8 "Worker node hash", isshared = 0 '\000', isfixed = 0 '\000', frozen = 0 '\000', keysize = 260, ssize = 256, sshift = 8}
+(gdb) n
+113		foreach(taskCell, taskList)
+(gdb) 
+115			Task *task = (Task *) lfirst(taskCell);
+(gdb) 
+116			TaskExecution *taskExecution = NULL;
+(gdb) p *task
+$131 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d46b "Task"}, citus_tag = T_Task}, taskType = SQL_TASK, jobId = 29309796353, taskId = 1, 
+  queryString = 0x1fb2c00 "SELECT id, name FROM test2_102687 test2 WHERE (id OPERATOR(pg_catalog.>) 10)", anchorShardId = 102687, taskPlacementList = 0x1fbb8f0, dependedTaskList = 0x0, 
+  partitionId = 0, upstreamTaskId = 0, shardInterval = 0x0, assignmentConstrained = 0 '\000', taskExecution = 0x0, upsertQuery = 0 '\000', replicationModel = 105 'i', 
+  relationRowLockList = 0x0, modifyWithSubquery = 0 '\000', relationShardList = 0x1fb3ab0, rowValuesLists = 0x0}
+(gdb) bt
+#0  MultiRealTimeExecute (job=0x1faf1f8) at executor/multi_real_time_executor.c:116
+#1  0x00007f536bfa34fb in RealTimeExecScan (node=0x1fd4168) at executor/multi_real_time_executor.c:1048
+#2  0x00000000006918aa in ExecCustomScan (pstate=0x1fd4168) at nodeCustom.c:118
+#3  0x000000000067f485 in ExecProcNodeFirst (node=0x1fd4168) at execProcnode.c:430
+#4  0x0000000000678445 in ExecProcNode (node=0x1fd4168) at ../../../src/include/executor/executor.h:250
+#5  0x000000000067a888 in ExecutePlan (estate=0x1fd3f58, planstate=0x1fd4168, use_parallel_mode=0 '\000', operation=CMD_SELECT, sendTuples=1 '\001', numberTuples=0, 
+    direction=ForwardScanDirection, dest=0x1fbe238, execute_once=1 '\001') at execMain.c:1722
+#6  0x00000000006788e1 in standard_ExecutorRun (queryDesc=0x1faae98, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:363
+#7  0x000000000067877c in ExecutorRun (queryDesc=0x1faae98, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:306
+#8  0x00000000008198f0 in PortalRunSelect (portal=0x1f97588, forward=1 '\001', count=0, dest=0x1fbe238) at pquery.c:932
+#9  0x00000000008195c7 in PortalRun (portal=0x1f97588, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x1fbe238, altdest=0x1fbe238, completionTag=0x7ffe17bee0f0 "")
+    at pquery.c:773
+#10 0x0000000000813b59 in exec_simple_query (query_string=0x1f16708 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1099
+#11 0x0000000000817b1f in PostgresMain (argc=1, argv=0x1eb40c8, dbname=0x1eb3f78 "postgres", username=0x1e6bd08 "cituscluster") at postgres.c:4088
+#12 0x000000000078b2d2 in BackendRun (port=0x1eae550) at postmaster.c:4357
+#13 0x000000000078aa7b in BackendStartup (port=0x1eae550) at postmaster.c:4029
+#14 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#15 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1e69be0) at postmaster.c:1361
+#16 0x00000000006cf26f in main (argc=1, argv=0x1e69be0) at main.c:228
+(gdb) n
+119			if (MultiShardConnectionType == PARALLEL_CONNECTION)
+(gdb) 
+121				RecordRelationParallelSelectAccessForTask(task);
+(gdb) p MultiShardConnectionType
+$132 = 0
+(gdb) n
+124			taskExecution = InitTaskExecution(task, EXEC_TASK_CONNECT_START);
+(gdb) s
+InitTaskExecution (task=0x1fb0fb8, initialTaskExecStatus=EXEC_TASK_CONNECT_START) at executor/multi_server_executor.c:195
+195		uint32 nodeCount = list_length(task->taskPlacementList);
+(gdb) n
+196		uint32 nodeIndex = 0;
+(gdb) p nodeCount 
+$133 = 2
+(gdb) n
+198		TaskExecution *taskExecution = CitusMakeNode(TaskExecution);
+(gdb) 
+200		taskExecution->jobId = task->jobId;
+(gdb) 
+201		taskExecution->taskId = task->taskId;
+(gdb) 
+202		taskExecution->nodeCount = nodeCount;
+(gdb) 
+203		taskExecution->connectStartTime = 0;
+(gdb) 
+204		taskExecution->currentNodeIndex = 0;
+(gdb) 
+205		taskExecution->failureCount = 0;
+(gdb) 
+207		taskExecution->taskStatusArray = palloc0(nodeCount * sizeof(TaskExecStatus));
+(gdb) 
+208		taskExecution->transmitStatusArray = palloc0(nodeCount * sizeof(TransmitExecStatus));
+(gdb) 
+209		taskExecution->connectionIdArray = palloc0(nodeCount * sizeof(int32));
+(gdb) 
+210		taskExecution->fileDescriptorArray = palloc0(nodeCount * sizeof(int32));
+(gdb) 
+212		for (nodeIndex = 0; nodeIndex < nodeCount; nodeIndex++)
+(gdb) 
+214			taskExecution->taskStatusArray[nodeIndex] = initialTaskExecStatus;
+(gdb) 
+215			taskExecution->transmitStatusArray[nodeIndex] = EXEC_TRANSMIT_UNASSIGNED;
+(gdb) 
+216			taskExecution->connectionIdArray[nodeIndex] = INVALID_CONNECTION_ID;
+(gdb) 
+217			taskExecution->fileDescriptorArray[nodeIndex] = -1;
+(gdb) 
+212		for (nodeIndex = 0; nodeIndex < nodeCount; nodeIndex++)
+(gdb) 
+214			taskExecution->taskStatusArray[nodeIndex] = initialTaskExecStatus;
+(gdb) 
+215			taskExecution->transmitStatusArray[nodeIndex] = EXEC_TRANSMIT_UNASSIGNED;
+(gdb) 
+216			taskExecution->connectionIdArray[nodeIndex] = INVALID_CONNECTION_ID;
+(gdb) 
+217			taskExecution->fileDescriptorArray[nodeIndex] = -1;
+(gdb) 
+212		for (nodeIndex = 0; nodeIndex < nodeCount; nodeIndex++)
+(gdb) 
+220		return taskExecution;
+(gdb) p taskExecution 
+$134 = (TaskExecution *) 0x1fd5db0
+(gdb) p* taskExecution 
+$135 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d470 "TaskExecution"}, citus_tag = T_TaskExecution}, jobId = 29309796353, taskId = 1, 
+  taskStatusArray = 0x1fd5e40, transmitStatusArray = 0x1fd5e58, connectionIdArray = 0x1fd5e70, fileDescriptorArray = 0x1fd5e88, connectStartTime = 0, nodeCount = 2, currentNodeIndex = 0, 
+  querySourceNodeIndex = 0, failureCount = 0, criticalErrorOccurred = 0 '\000'}
+(gdb) n
+221	}
+(gdb) 
+MultiRealTimeExecute (job=0x1faf1f8) at executor/multi_real_time_executor.c:125
+125			taskExecutionList = lappend(taskExecutionList, taskExecution);
+(gdb) 
+113		foreach(taskCell, taskList)
+(gdb) 
+115			Task *task = (Task *) lfirst(taskCell);
+(gdb) 
+116			TaskExecution *taskExecution = NULL;
+(gdb) 
+119			if (MultiShardConnectionType == PARALLEL_CONNECTION)
+(gdb) 
+121				RecordRelationParallelSelectAccessForTask(task);
+(gdb) 
+124			taskExecution = InitTaskExecution(task, EXEC_TASK_CONNECT_START);
+(gdb) 
+125			taskExecutionList = lappend(taskExecutionList, taskExecution);
+(gdb) 
+113		foreach(taskCell, taskList)
+(gdb) 
+115			Task *task = (Task *) lfirst(taskCell);
+(gdb) 
+116			TaskExecution *taskExecution = NULL;
+(gdb) 
+119			if (MultiShardConnectionType == PARALLEL_CONNECTION)
+(gdb) 
+121				RecordRelationParallelSelectAccessForTask(task);
+(gdb) 
+124			taskExecution = InitTaskExecution(task, EXEC_TASK_CONNECT_START);
+(gdb) 
+125			taskExecutionList = lappend(taskExecutionList, taskExecution);
+(gdb) 
+113		foreach(taskCell, taskList)
+(gdb) 
+129		while (!(allTasksCompleted || taskFailed || QueryCancelPending ||
+(gdb) 
+132			uint32 taskCount = list_length(taskList);
+(gdb) 
+133			uint32 completedTaskCount = 0;
+(gdb) 
+136			ListCell *taskCell = NULL;
+(gdb) 
+137			ListCell *taskExecutionCell = NULL;
+(gdb) 
+139			MultiClientResetWaitInfo(waitInfo);
+(gdb) 
+141			forboth(taskCell, taskList, taskExecutionCell, taskExecutionList)
+(gdb) 
+143				Task *task = (Task *) lfirst(taskCell);
+(gdb) 
+144				TaskExecution *taskExecution = (TaskExecution *) lfirst(taskExecutionCell);
+(gdb) 
+145				ConnectAction connectAction = CONNECT_ACTION_NONE;
+(gdb) 
+146				WorkerNodeState *workerNodeState = NULL;
+(gdb) 
+149				workerNodeState = LookupWorkerForTask(workerHash, task, taskExecution);
+(gdb) s
+LookupWorkerForTask (workerHash=0x1fd5f68, task=0x1fb0fb8, taskExecution=0x1fd5db0) at executor/multi_real_time_executor.c:916
+916		uint32 currentIndex = taskExecution->currentNodeIndex;
+(gdb) n
+917		List *taskPlacementList = task->taskPlacementList;
+(gdb) 
+918		ShardPlacement *taskPlacement = list_nth(taskPlacementList, currentIndex);
+(gdb) 
+919		char *nodeName = taskPlacement->nodeName;
+(gdb) 
+920		uint32 nodePort = taskPlacement->nodePort;
+(gdb) 
+922		WorkerNodeState *workerNodeState = WorkerHashLookup(workerHash, nodeName, nodePort);
+(gdb) 
+924		return workerNodeState;
+(gdb) p *workerNodeState
+$136 = {workerPort = 5432, workerName = "192.168.221.131", '\000' <repeats 240 times>, openConnectionCount = 0}
+(gdb) n
+925	}
+(gdb) 
+MultiRealTimeExecute (job=0x1faf1f8) at executor/multi_real_time_executor.c:152
+152				if (TaskExecutionReadyToStart(taskExecution) &&
+(gdb) p * taskExecution
+$137 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d470 "TaskExecution"}, citus_tag = T_TaskExecution}, jobId = 29309796353, taskId = 1, 
+  taskStatusArray = 0x1fd5e40, transmitStatusArray = 0x1fd5e58, connectionIdArray = 0x1fd5e70, fileDescriptorArray = 0x1fd5e88, connectStartTime = 0, nodeCount = 2, currentNodeIndex = 0, 
+  querySourceNodeIndex = 0, failureCount = 0, criticalErrorOccurred = 0 '\000'}
+(gdb) n
+153					(WorkerConnectionsExhausted(workerNodeState) ||
+(gdb) 
+152				if (TaskExecutionReadyToStart(taskExecution) &&
+(gdb) 
+154					 MasterConnectionsExhausted(workerHash)))
+(gdb) 
+153					(WorkerConnectionsExhausted(workerNodeState) ||
+(gdb) 
+160				connectAction = ManageTaskExecution(task, taskExecution, &executionStatus,
+(gdb) s
+ManageTaskExecution (task=0x1fb0fb8, taskExecution=0x1fd5db0, executionStatus=0x7ffe17bedc8c, executionStats=0x7ffe17bedc90) at executor/multi_real_time_executor.c:306
+306		TaskExecStatus *taskStatusArray = taskExecution->taskStatusArray;
+(gdb) n
+307		int32 *connectionIdArray = taskExecution->connectionIdArray;
+(gdb) p taskStatusArray
+$138 = (TaskExecStatus *) 0x1fd5e40
+(gdb) p taskStatusArray[0]
+$139 = EXEC_TASK_CONNECT_START
+(gdb) p taskStatusArray[1]
+$140 = EXEC_TASK_CONNECT_START
+(gdb) n
+308		int32 *fileDescriptorArray = taskExecution->fileDescriptorArray;
+(gdb) 
+309		uint32 currentIndex = taskExecution->currentNodeIndex;
+(gdb) p connectionIdArray[1]
+$141 = -1
+(gdb) p connectionIdArray[0]
+$142 = -1
+(gdb) p [0]
+A syntax error in expression, near `[0]'.
+(gdb) p fileDescriptorArray[0]
+$143 = -1
+(gdb) p fileDescriptorArray[1]
+$144 = -1
+(gdb) n
+310		TaskExecStatus currentStatus = taskStatusArray[currentIndex];
+(gdb) 
+311		List *taskPlacementList = task->taskPlacementList;
+(gdb) n
+312		ShardPlacement *taskPlacement = list_nth(taskPlacementList, currentIndex);
+(gdb) 
+313		ConnectAction connectAction = CONNECT_ACTION_NONE;
+(gdb) 
+316		*executionStatus = TASK_STATUS_READY;
+(gdb) 
+318		switch (currentStatus)
+(gdb) p *taskPlacement
+$145 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d48c "ShardPlacement"}, citus_tag = T_ShardPlacement}, placementId = 692, shardId = 102687, shardLength = 0, 
+  shardState = FILE_FINALIZED, groupId = 11, nodeName = 0x1fb9c20 "192.168.221.131", nodePort = 5432, partitionMethod = 104 'h', colocationGroupId = 0, representativeValue = 2147483648}
+(gdb) n
+322				int32 connectionId = INVALID_CONNECTION_ID;
+(gdb) 
+323				List *relationShardList = task->relationShardList;
+(gdb) 
+324				List *placementAccessList = NIL;
+(gdb) 
+327				placementAccessList = BuildPlacementSelectList(taskPlacement->groupId,
+(gdb) s
+BuildPlacementSelectList (groupId=11, relationShardList=0x1fb3ab0) at executor/multi_router_executor.c:895
+895		return BuildPlacementAccessList(groupId, relationShardList, PLACEMENT_ACCESS_SELECT);
+(gdb) p relationShardList
+$146 = (List *) 0x1fb3ab0
+(gdb) p *relationShardList
+$147 = {type = T_List, length = 1, head = 0x1fb3a90, tail = 0x1fb3a90}
+(gdb) n
+896	}
+(gdb) 
+ManageTaskExecution (task=0x1fb0fb8, taskExecution=0x1fd5db0, executionStatus=0x7ffe17bedc8c, executionStats=0x7ffe17bedc90) at executor/multi_real_time_executor.c:336
+336				if (placementAccessList == NIL)
+(gdb) p placementAccessList
+$148 = (List *) 0x1fd5ef0
+(gdb) p *placementAccessList
+$149 = {type = T_List, length = 1, head = 0x1fd8268, tail = 0x1fd8268}
+(gdb) p *placementAccessList->head
+$150 = {data = {ptr_value = 0x1fd8248, int_value = 33391176, oid_value = 33391176}, next = 0x0}
+(gdb) n
+345				connectionId = MultiClientPlacementConnectStart(placementAccessList,
+(gdb) s
+MultiClientPlacementConnectStart (placementAccessList=0x1fd5ef0, userName=0x0) at executor/multi_client_executor.c:189
+189		MultiConnection *connection = NULL;
+(gdb) n
+190		ConnStatusType connStatusType = CONNECTION_OK;
+(gdb) 
+191		int32 connectionId = AllocateConnectionId();
+(gdb) 
+192		int connectionFlags = 0;
+(gdb) p connectionId
+$151 = 0
+(gdb) n
+199		if (MultiShardConnectionType == PARALLEL_CONNECTION)
+(gdb) 
+201			connectionFlags = CONNECTION_PER_PLACEMENT;
+(gdb) 
+204		if (connectionId == INVALID_CONNECTION_ID)
+(gdb) 
+211		connection = StartPlacementListConnection(connectionFlags, placementAccessList,
+(gdb) s
+StartPlacementListConnection (flags=16, placementAccessList=0x1fd5ef0, userName=0x0) at connection/placement_connection.c:288
+288		char *freeUserName = NULL;
+(gdb) n
+289		ListCell *placementAccessCell = NULL;
+(gdb) 
+290		List *placementEntryList = NIL;
+(gdb) 
+291		ListCell *placementEntryCell = NULL;
+(gdb) 
+292		MultiConnection *chosenConnection = NULL;
+(gdb) 
+294		if (userName == NULL)
+(gdb) 
+296			userName = freeUserName = CurrentUserName();
+(gdb) 
+299		chosenConnection = FindPlacementListConnection(flags, placementAccessList, userName,
+(gdb) s
+FindPlacementListConnection (flags=16, placementAccessList=0x1fd5ef0, userName=0x1fd8288 "cituscluster", placementEntryList=0x7ffe17beda68) at connection/placement_connection.c:456
+456		bool foundModifyingConnection = false;
+(gdb) n
+457		ListCell *placementAccessCell = NULL;
+(gdb) bt
+#0  FindPlacementListConnection (flags=16, placementAccessList=0x1fd5ef0, userName=0x1fd8288 "cituscluster", placementEntryList=0x7ffe17beda68) at connection/placement_connection.c:457
+#1  0x00007f536bf9b92e in StartPlacementListConnection (flags=16, placementAccessList=0x1fd5ef0, userName=0x1fd8288 "cituscluster") at connection/placement_connection.c:299
+#2  0x00007f536bf9ffbf in MultiClientPlacementConnectStart (placementAccessList=0x1fd5ef0, userName=0x0) at executor/multi_client_executor.c:211
+#3  0x00007f536bfa230b in ManageTaskExecution (task=0x1fb0fb8, taskExecution=0x1fd5db0, executionStatus=0x7ffe17bedc8c, executionStats=0x7ffe17bedc90)
+    at executor/multi_real_time_executor.c:345
+#4  0x00007f536bfa1ea6 in MultiRealTimeExecute (job=0x1faf1f8) at executor/multi_real_time_executor.c:160
+#5  0x00007f536bfa34fb in RealTimeExecScan (node=0x1fd4168) at executor/multi_real_time_executor.c:1048
+#6  0x00000000006918aa in ExecCustomScan (pstate=0x1fd4168) at nodeCustom.c:118
+#7  0x000000000067f485 in ExecProcNodeFirst (node=0x1fd4168) at execProcnode.c:430
+#8  0x0000000000678445 in ExecProcNode (node=0x1fd4168) at ../../../src/include/executor/executor.h:250
+#9  0x000000000067a888 in ExecutePlan (estate=0x1fd3f58, planstate=0x1fd4168, use_parallel_mode=0 '\000', operation=CMD_SELECT, sendTuples=1 '\001', numberTuples=0, 
+    direction=ForwardScanDirection, dest=0x1fbe238, execute_once=1 '\001') at execMain.c:1722
+#10 0x00000000006788e1 in standard_ExecutorRun (queryDesc=0x1faae98, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:363
+#11 0x000000000067877c in ExecutorRun (queryDesc=0x1faae98, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:306
+#12 0x00000000008198f0 in PortalRunSelect (portal=0x1f97588, forward=1 '\001', count=0, dest=0x1fbe238) at pquery.c:932
+#13 0x00000000008195c7 in PortalRun (portal=0x1f97588, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x1fbe238, altdest=0x1fbe238, completionTag=0x7ffe17bee0f0 "")
+    at pquery.c:773
+#14 0x0000000000813b59 in exec_simple_query (query_string=0x1f16708 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1099
+#15 0x0000000000817b1f in PostgresMain (argc=1, argv=0x1eb40c8, dbname=0x1eb3f78 "postgres", username=0x1e6bd08 "cituscluster") at postgres.c:4088
+#16 0x000000000078b2d2 in BackendRun (port=0x1eae550) at postmaster.c:4357
+#17 0x000000000078aa7b in BackendStartup (port=0x1eae550) at postmaster.c:4029
+#18 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#19 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1e69be0) at postmaster.c:1361
+#20 0x00000000006cf26f in main (argc=1, argv=0x1e69be0) at main.c:228
+(gdb) n
+458		MultiConnection *chosenConnection = NULL;
+(gdb) 
+473		foreach(placementAccessCell, placementAccessList)
+(gdb) 
+475			ShardPlacementAccess *placementAccess =
+(gdb) 
+477			ShardPlacement *placement = placementAccess->placement;
+(gdb) p *placementAccess
+$152 = {placement = 0x1fd8198, accessType = PLACEMENT_ACCESS_SELECT}
+(gdb) n
+478			ShardPlacementAccessType accessType = placementAccess->accessType;
+(gdb) p *placement
+$153 = {type = {extensible = {type = T_ExtensibleNode, extnodename = 0x7f536c02d48c "ShardPlacement"}, citus_tag = T_ShardPlacement}, placementId = 692, shardId = 102687, shardLength = 0, 
+  shardState = FILE_FINALIZED, groupId = 11, nodeName = 0x1fd8228 "192.168.221.131", nodePort = 5432, partitionMethod = 104 'h', colocationGroupId = 0, representativeValue = 2147483648}
+(gdb) n
+480			ConnectionPlacementHashEntry *placementEntry = NULL;
+(gdb) 
+481			ColocatedPlacementsHashEntry *colocatedEntry = NULL;
+(gdb) 
+482			ConnectionReference *placementConnection = NULL;
+(gdb) 
+484			if (placement->shardId == INVALID_SHARD_ID)
+(gdb) 
+495			placementEntry = FindOrCreatePlacementEntry(placement);
+(gdb) s
+FindOrCreatePlacementEntry (placement=0x1fd8198) at connection/placement_connection.c:672
+672		ConnectionPlacementHashEntry *placementEntry = NULL;
+(gdb) n
+673		bool found = false;
+(gdb) 
+675		key.placementId = placement->placementId;
+(gdb) 
+677		placementEntry = hash_search(ConnectionPlacementHash, &key, HASH_ENTER, &found);
+(gdb) 
+678		if (!found)
+(gdb) 
+681			placementEntry->failed = false;
+(gdb) 
+682			placementEntry->primaryConnection = NULL;
+(gdb) 
+683			placementEntry->hasSecondaryConnections = false;
+(gdb) 
+684			placementEntry->colocatedEntry = NULL;
+(gdb) 
+686			if (placement->partitionMethod == DISTRIBUTE_BY_HASH ||
+(gdb) 
+690				ColocatedPlacementsHashEntry *colocatedEntry = NULL;
+(gdb) 
+692				strlcpy(key.nodeName, placement->nodeName, MAX_NODE_LENGTH);
+(gdb) 
+693				key.nodePort = placement->nodePort;
+(gdb) 
+694				key.colocationGroupId = placement->colocationGroupId;
+(gdb) 
+695				key.representativeValue = placement->representativeValue;
+(gdb) 
+698				colocatedEntry = hash_search(ColocatedPlacementsHash, &key, HASH_ENTER,
+(gdb) 
+700				if (!found)
+(gdb) 
+702					void *conRef = MemoryContextAllocZero(TopTransactionContext,
+(gdb) 
+705					ConnectionReference *connectionReference = (ConnectionReference *) conRef;
+(gdb) 
+712					connectionReference->colocationGroupId = placement->colocationGroupId;
+(gdb) 
+713					connectionReference->representativeValue = placement->representativeValue;
+(gdb) 
+719					colocatedEntry->primaryConnection = connectionReference;
+(gdb) 
+721					colocatedEntry->hasSecondaryConnections = false;
+(gdb) 
+728				placementEntry->primaryConnection = colocatedEntry->primaryConnection;
+(gdb) 
+729				placementEntry->colocatedEntry = colocatedEntry;
+(gdb) 
+688			{
+(gdb) 
+741		AssociatePlacementWithShard(placementEntry, placement);
+(gdb) p *placementEntry
+$154 = {key = {placementId = 692}, failed = 0 '\000', primaryConnection = 0x1e892e8, hasSecondaryConnections = 0 '\000', colocatedEntry = 0x1fe3d68, shardNode = {prev = 0x0, next = 0x0}}
+(gdb) p *placementEntry->primaryConnection
+$155 = {userName = 0x0, connection = 0x0, hadDML = 0 '\000', hadDDL = 0 '\000', colocationGroupId = 0, representativeValue = 2147483648, placementId = 0, connectionNode = {prev = 0x0, 
+    next = 0x0}}
+(gdb) s
+AssociatePlacementWithShard (placementEntry=0x1fdcf10, placement=0x1fd8198) at connection/placement_connection.c:844
+844		ConnectionShardHashEntry *shardEntry = NULL;
+(gdb) n
+845		bool found = false;
+(gdb) 
+848		shardKey.shardId = placement->shardId;
+(gdb) 
+849		shardEntry = hash_search(ConnectionShardHash, &shardKey, HASH_ENTER, &found);
+(gdb) 
+850		if (!found)
+(gdb) 
+852			dlist_init(&shardEntry->placementConnections);
+(gdb) 
+860		dlist_foreach(placementIter, &shardEntry->placementConnections)
+(gdb) 
+872		dlist_push_tail(&shardEntry->placementConnections, &placementEntry->shardNode);
+(gdb) 
+873	}
+(gdb) p shardEntry
+$156 = (ConnectionShardHashEntry *) 0x1ea9e88
+(gdb) p *shardEntry
+$157 = {key = {shardId = 102687}, placementConnections = {head = {prev = 0x1fdcf38, next = 0x1fdcf38}}}
+(gdb) n
+FindOrCreatePlacementEntry (placement=0x1fd8198) at connection/placement_connection.c:743
+743		return placementEntry;
+(gdb) 
+744	}
+(gdb) 
+FindPlacementListConnection (flags=16, placementAccessList=0x1fd5ef0, userName=0x1fd8288 "cituscluster", placementEntryList=0x7ffe17beda68) at connection/placement_connection.c:496
+496			colocatedEntry = placementEntry->colocatedEntry;
+(gdb) 
+497			placementConnection = placementEntry->primaryConnection;
+(gdb) 
+501			if (placementConnection->connection == NULL)
+(gdb) 
+652			*placementEntryList = lappend(*placementEntryList, placementEntry);
+(gdb) p placementConnection
+$158 = (ConnectionReference *) 0x1e892e8
+(gdb) p *placementConnection
+$159 = {userName = 0x0, connection = 0x0, hadDML = 0 '\000', hadDDL = 0 '\000', colocationGroupId = 0, representativeValue = 2147483648, placementId = 0, connectionNode = {prev = 0x0, 
+    next = 0x0}}
+(gdb) n
+655			AssociatePlacementAccessWithRelation(placement, accessType);
+(gdb) bt
+#0  FindPlacementListConnection (flags=16, placementAccessList=0x1fd5ef0, userName=0x1fd8288 "cituscluster", placementEntryList=0x7ffe17beda68) at connection/placement_connection.c:655
+#1  0x00007f536bf9b92e in StartPlacementListConnection (flags=16, placementAccessList=0x1fd5ef0, userName=0x1fd8288 "cituscluster") at connection/placement_connection.c:299
+#2  0x00007f536bf9ffbf in MultiClientPlacementConnectStart (placementAccessList=0x1fd5ef0, userName=0x0) at executor/multi_client_executor.c:211
+#3  0x00007f536bfa230b in ManageTaskExecution (task=0x1fb0fb8, taskExecution=0x1fd5db0, executionStatus=0x7ffe17bedc8c, executionStats=0x7ffe17bedc90)
+    at executor/multi_real_time_executor.c:345
+#4  0x00007f536bfa1ea6 in MultiRealTimeExecute (job=0x1faf1f8) at executor/multi_real_time_executor.c:160
+#5  0x00007f536bfa34fb in RealTimeExecScan (node=0x1fd4168) at executor/multi_real_time_executor.c:1048
+#6  0x00000000006918aa in ExecCustomScan (pstate=0x1fd4168) at nodeCustom.c:118
+#7  0x000000000067f485 in ExecProcNodeFirst (node=0x1fd4168) at execProcnode.c:430
+#8  0x0000000000678445 in ExecProcNode (node=0x1fd4168) at ../../../src/include/executor/executor.h:250
+#9  0x000000000067a888 in ExecutePlan (estate=0x1fd3f58, planstate=0x1fd4168, use_parallel_mode=0 '\000', operation=CMD_SELECT, sendTuples=1 '\001', numberTuples=0, 
+    direction=ForwardScanDirection, dest=0x1fbe238, execute_once=1 '\001') at execMain.c:1722
+#10 0x00000000006788e1 in standard_ExecutorRun (queryDesc=0x1faae98, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:363
+#11 0x000000000067877c in ExecutorRun (queryDesc=0x1faae98, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:306
+#12 0x00000000008198f0 in PortalRunSelect (portal=0x1f97588, forward=1 '\001', count=0, dest=0x1fbe238) at pquery.c:932
+#13 0x00000000008195c7 in PortalRun (portal=0x1f97588, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x1fbe238, altdest=0x1fbe238, completionTag=0x7ffe17bee0f0 "")
+    at pquery.c:773
+#14 0x0000000000813b59 in exec_simple_query (query_string=0x1f16708 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1099
+#15 0x0000000000817b1f in PostgresMain (argc=1, argv=0x1eb40c8, dbname=0x1eb3f78 "postgres", username=0x1e6bd08 "cituscluster") at postgres.c:4088
+#16 0x000000000078b2d2 in BackendRun (port=0x1eae550) at postmaster.c:4357
+#17 0x000000000078aa7b in BackendStartup (port=0x1eae550) at postmaster.c:4029
+#18 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#19 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1e69be0) at postmaster.c:1361
+#20 0x00000000006cf26f in main (argc=1, argv=0x1e69be0) at main.c:228
+(gdb) p accessType
+$160 = PLACEMENT_ACCESS_SELECT
+(gdb) n
+473		foreach(placementAccessCell, placementAccessList)
+(gdb) 
+658		return chosenConnection;
+(gdb) p chosenConnection
+$161 = (MultiConnection *) 0x0
+(gdb) n
+659	}
+(gdb) 
+StartPlacementListConnection (flags=16, placementAccessList=0x1fd5ef0, userName=0x1fd8288 "cituscluster") at connection/placement_connection.c:301
+301		if (chosenConnection == NULL)
+(gdb) 
+305				(ShardPlacementAccess *) linitial(placementAccessList);
+(gdb) 
+304			ShardPlacementAccess *placementAccess =
+(gdb) 
+306			ShardPlacement *placement = placementAccess->placement;
+(gdb) 
+307			char *nodeName = placement->nodeName;
+(gdb) 
+308			int nodePort = placement->nodePort;
+(gdb) 
+314			chosenConnection = StartNodeUserDatabaseConnection(flags, nodeName, nodePort,
+(gdb) s
+StartNodeUserDatabaseConnection (flags=16, hostname=0x1fd8228 "192.168.221.131", port=5432, user=0x1fd8288 "cituscluster", database=0x0) at connection/connection_management.c:226
+226		ConnectionHashEntry *entry = NULL;
+(gdb) n
+231		strlcpy(key.hostname, hostname, MAX_NODE_LENGTH);
+(gdb) 
+232		if (strlen(hostname) > MAX_NODE_LENGTH)
+(gdb) 
+239		key.port = port;
+(gdb) 
+240		if (user)
+(gdb) 
+242			strlcpy(key.user, user, NAMEDATALEN);
+(gdb) 
+248		if (database)
+(gdb) 
+254			strlcpy(key.database, get_database_name(MyDatabaseId), NAMEDATALEN);
+(gdb) 
+257		if (CurrentCoordinatedTransactionState == COORD_TRANS_NONE)
+(gdb) 
+259			CurrentCoordinatedTransactionState = COORD_TRANS_IDLE;
+(gdb) 
+268		entry = hash_search(ConnectionHash, &key, HASH_ENTER, &found);
+(gdb) 
+269		if (!found)
+(gdb) 
+271			entry->connections = MemoryContextAlloc(ConnectionContext,
+(gdb) 
+273			dlist_init(entry->connections);
+(gdb) 
+277		if (!(flags & FORCE_NEW_CONNECTION))
+(gdb) 
+280			connection = FindAvailableConnection(entry->connections, flags);
+(gdb) s
+FindAvailableConnection (connections=0x1fe7e68, flags=16) at connection/connection_management.c:316
+316		dlist_foreach(iter, connections)
+(gdb) n
+330		return NULL;
+(gdb) 
+331	}
+(gdb) 
+StartNodeUserDatabaseConnection (flags=16, hostname=0x1fd8228 "192.168.221.131", port=5432, user=0x1fd8288 "cituscluster", database=0x0) at connection/connection_management.c:281
+281			if (connection)
+(gdb) 
+296		connection = StartConnectionEstablishment(&key);
+(gdb) s
+StartConnectionEstablishment (key=0x7ffe17bed880) at connection/connection_management.c:689
+689		bool found = false;
+(gdb) n
+690		MultiConnection *connection = NULL;
+(gdb) 
+691		ConnParamsHashEntry *entry = NULL;
+(gdb) 
+694		entry = hash_search(ConnParamsHash, key, HASH_ENTER, &found);
+(gdb) 
+695		if (!found || !entry->isValid)
+(gdb) 
+698			GetConnParams(key, &entry->keywords, &entry->values, ConnectionContext);
+(gdb) 
+700			entry->isValid = true;
+(gdb) 
+703		connection = MemoryContextAllocZero(ConnectionContext, sizeof(MultiConnection));
+(gdb) 
+705		strlcpy(connection->hostname, key->hostname, MAX_NODE_LENGTH);
+(gdb) 
+706		connection->port = key->port;
+(gdb) 
+707		strlcpy(connection->database, key->database, NAMEDATALEN);
+(gdb) 
+708		strlcpy(connection->user, key->user, NAMEDATALEN);
+(gdb) 
+712												  (const char **) entry->values,
+(gdb) 
+711		connection->pgConn = PQconnectStartParams((const char **) entry->keywords,
+(gdb) 
+714		connection->connectionStart = GetCurrentTimestamp();
+(gdb) 
+721		PQsetnonblocking(connection->pgConn, true);
+(gdb) 
+723		SetCitusNoticeProcessor(connection);
+(gdb) s
+SetCitusNoticeProcessor (connection=0x1fe8198) at connection/connection_management.c:814
+814		PQsetNoticeProcessor(connection->pgConn, DefaultCitusNoticeProcessor,
+(gdb) n
+816	}
+(gdb) 
+StartConnectionEstablishment (key=0x7ffe17bed880) at connection/connection_management.c:725
+725		return connection;
+(gdb) p connect
+$162 = {<text variable, no debug info>} 0x7f5373269ab0 <connect>
+(gdb) p connection
+$163 = (MultiConnection *) 0x1fe8198
+(gdb) p *connection
+$164 = {hostname = "192.168.221.131", '\000' <repeats 239 times>, port = 5432, user = "cituscluster", '\000' <repeats 51 times>, database = "postgres", '\000' <repeats 55 times>, 
+  pgConn = 0x1eaf520, sessionLifespan = 0 '\000', claimedExclusively = 0 '\000', connectionStart = 606192107590147, connectionNode = {prev = 0x0, next = 0x0}, remoteTransaction = {
+    transactionState = REMOTE_TRANS_INVALID, transactionCritical = 0 '\000', transactionFailed = 0 '\000', lastSuccessfulSubXact = 0, lastQueuedSubXact = 0, 
+    transactionRecovering = 0 '\000', preparedName = '\000' <repeats 63 times>}, transactionNode = {prev = 0x0, next = 0x0}, referencedPlacements = {head = {prev = 0x0, next = 0x0}}, 
+  copyBytesWrittenSinceLastFlush = 0}
+(gdb) n
+726	}
+(gdb) 
+StartNodeUserDatabaseConnection (flags=16, hostname=0x1fd8228 "192.168.221.131", port=5432, user=0x1fd8288 "cituscluster", database=0x0) at connection/connection_management.c:298
+298		dlist_push_tail(entry->connections, &connection->connectionNode);
+(gdb) 
+299		ResetShardPlacementAssociation(connection);
+(gdb) s
+ResetShardPlacementAssociation (connection=0x1fe8198) at connection/placement_connection.c:914
+914		dlist_init(&connection->referencedPlacements);
+(gdb) n
+915	}
+(gdb) 
+StartNodeUserDatabaseConnection (flags=16, hostname=0x1fd8228 "192.168.221.131", port=5432, user=0x1fd8288 "cituscluster", database=0x0) at connection/connection_management.c:301
+301		if (flags & SESSION_LIFESPAN)
+(gdb) 
+306		return connection;
+(gdb) 
+307	}
+(gdb) 
+StartPlacementListConnection (flags=16, placementAccessList=0x1fd5ef0, userName=0x1fd8288 "cituscluster") at connection/placement_connection.c:317
+317			if (flags & CONNECTION_PER_PLACEMENT &&
+(gdb) 
+318				ConnectionAccessedDifferentPlacement(chosenConnection, placement))
+(gdb) s
+ConnectionAccessedDifferentPlacement (connection=0x1fe8198, placement=0x1fd8198) at connection/placement_connection.c:795
+795		dlist_foreach(placementIter, &connection->referencedPlacements)
+(gdb) n
+817		return false;
+(gdb) 
+818	}
+(gdb) 
+StartPlacementListConnection (flags=16, placementAccessList=0x1fd5ef0, userName=0x1fd8288 "cituscluster") at connection/placement_connection.c:317
+317			if (flags & CONNECTION_PER_PLACEMENT &&
+(gdb) 
+345		forboth(placementAccessCell, placementAccessList,
+(gdb) 
+348			ShardPlacementAccess *placementAccess =
+(gdb) 
+350			ShardPlacementAccessType accessType = placementAccess->accessType;
+(gdb) 
+351			ConnectionPlacementHashEntry *placementEntry =
+(gdb) 
+Socket error Event: 32 Error: 10053.
+Connection closing...Socket close.
+
+Connection closed by foreign host.
+
+Disconnected from remote host(citus1) at 22:54:00.
+
+Type `help' to learn how to use Xshell prompt.

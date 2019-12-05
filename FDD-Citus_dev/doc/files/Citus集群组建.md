@@ -84,6 +84,8 @@ export PGDATA=~/data
 # 将pg相关bin与lib添加到相应路径
 export LD_LIBRARY_PATH=/lib64:$PGHOME/lib:$LD_LIBRARY_PATH
 export PATH=$HOME/.local/bin:$HOME/bin:$PGHOME/bin:$PATH
+
+[cituscluster@center3 ~]$ source .bashrc 
 ```
 
 
@@ -139,11 +141,15 @@ Success. You can now start the database server using:
 [cituscluster@center3 ~]$
 ```
 
+## 7. 配置PgSQL
 
 
-## 7. 创建流复制从库
 
-### 7.1 设置主库配置项
+
+
+## 8. 创建流复制从库
+
+### 8.1 设置主库配置项
 
 ```shell
 [cituscluster@center3 data]$ vi postgresql.conf 
@@ -156,18 +162,27 @@ wal_sender_timeout = 60s        # in milliseconds; 0 disables
 
 
 
-### 7.2 创建从库
+### 8.2 创建从库
+
+### 8.2.1 PG10
 
 ```shell
-# 以192.168.221.131(center3)为主库，在主机dns1上创建备库. 将以主库为例本在本机创建一个data文件夹
+# 以192.168.221.131(center3)为主库，在主机dns1上创建备库. 将以主库为例本在$PGDATA创建一个文件夹
 [cituscluster@dns1 ~]$ pg_basebackup -F p --progress -D $PGDATA -h 192.168.221.131 -p 5432 -U cituscluster --password
 Password: 
 48293/48293 kB (100%), 1/1 tablespace
 ```
 
+### 8.2.2 PG12
+
+```shell
+# 以192.168.221.131(center3)为主库，在主机dns1上创建备库. 将以主库为例本在$PGDATA创建一个文件夹
+[cituscluster@dns1 ~]$ pg_basebackup -h 192.168.221.131 -p 5432 -U cituscluster -W -Fp -Xs -Pv -R -D $PGDATA
+```
 
 
-### 7.3 设置从库配置项
+
+### 8.3 设置从库配置项
 
 ```shell
 # 在已有postgresql.conf文件基础上修改配置项
@@ -185,7 +200,7 @@ primary_conninfo = 'host=192.168.221.131 port=5432 user=cituscluster password=12
 
 
 
-## 8. 使能citus插件
+## 9. 使能citus插件
 
 ```shell
 # 在pg配置文件中使能citus
@@ -218,5 +233,24 @@ psql (10.1)
 Type "help" for help.
 
 postgres=# create extension citus;
+```
+
+## 10. 备升主
+
+```shell
+[cituscluster@dn1 ~]$pg_ctl promote
+```
+
+
+
+## 11. 主降备
+
+```shell
+[cituscluster@gtm2 ~]$ pg_rewind --target-pgdata $PGDATA --source-server='host=192.168.221.135 port=5432 user=cituscluster dbname=postgres'
+
+[cituscluster@gtm2 ~]$ touch $PGDATA/standby.signal
+[cituscluster@gtm2 ~]$ vi postgresql.conf
+primary_conninfo = 'host=192.168.221.135 port=5432 user=cituscluster password=123456' 
+[cituscluster@gtm2 ~]$ pg_ctl start
 ```
 

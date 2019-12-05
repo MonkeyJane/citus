@@ -1,0 +1,1045 @@
+Xshell 5 (Build 1326)
+Copyright (c) 2002-2017 NetSarang Computer, Inc. All rights reserved.
+
+Type `help' to learn how to use Xshell prompt.
+[c:\~]$ 
+
+Connecting to 192.168.221.130:22...
+Connection established.
+To escape to local shell, press 'Ctrl+Alt+]'.
+
+Last login: Thu Mar 14 18:28:41 2019 from 192.168.221.1
+[cituscluster@gtm1 ~]$ 
+
+Connection closed.
+
+Disconnected from remote host(citus1) at 09:30:12.
+
+Type `help' to learn how to use Xshell prompt.
+[c:\~]$ ps -ef | grep postgres
+'ps' 不是内部或外部命令，也不是可运行的程序
+或批处理文件。
+
+[c:\~]$ ps -ef | grep gdb
+'ps' 不是内部或外部命令，也不是可运行的程序
+或批处理文件。
+
+[c:\~]$ gdb attach 119492
+'gdb' 不是内部或外部命令，也不是可运行的程序
+或批处理文件。
+
+[c:\~]$ list
+Directory of C:\Users\Administrator\Documents\NetSarang\Xshell\Sessions
+
+Name                      Host                  Protocol  User Name  
+------------------------- --------------------- --------- -----------
+center1                   192.168.221.132        SSH       postgres
+center2                   192.168.221.133        SSH       postgres
+center3                   192.168.221.134        SSH       postgres
+citus1                    192.168.221.130        SSH       cituscluster
+citus2                    192.168.221.131        SSH       cituscluster
+citus3                    192.168.221.132        SSH       cituscluster
+citus4                    192.168.221.133        SSH       cituscluster
+dn1                       192.168.221.135        SSH       postgres
+dns1                      192.168.221.136        SSH       postgres
+gtm1                      192.168.221.130        SSH       postgres
+gtm2                      192.168.221.131        SSH       postgres
+
+[c:\~]$ info b
+'info' 不是内部或外部命令，也不是可运行的程序
+或批处理文件。
+
+[c:\~]$ q
+'q' 不是内部或外部命令，也不是可运行的程序
+或批处理文件。
+
+[c:\~]$ y
+'y' 不是内部或外部命令，也不是可运行的程序
+或批处理文件。
+
+[c:\~]$ 
+
+Connecting to 192.168.221.130:22...
+Connection established.
+To escape to local shell, press 'Ctrl+Alt+]'.
+
+Last login: Thu Mar 14 18:29:04 2019 from 192.168.221.1
+[cituscluster@gtm1 ~]$ gdb attach 129059
+GNU gdb (GDB) Red Hat Enterprise Linux 7.6.1-110.el7
+Copyright (C) 2013 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-redhat-linux-gnu".
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>...
+attach: No such file or directory.
+Attaching to process 129059
+Reading symbols from /opt/pgsql-10.1/bin/postgres...done.
+Reading symbols from /lib64/libpthread.so.0...Reading symbols from /usr/lib/debug/usr/lib64/libpthread-2.17.so.debug...done.
+done.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib64/libthread_db.so.1".
+Loaded symbols for /lib64/libpthread.so.0
+Reading symbols from /lib64/librt.so.1...Reading symbols from /usr/lib/debug/usr/lib64/librt-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/librt.so.1
+Reading symbols from /lib64/libdl.so.2...Reading symbols from /usr/lib/debug/usr/lib64/libdl-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libdl.so.2
+Reading symbols from /lib64/libm.so.6...Reading symbols from /usr/lib/debug/usr/lib64/libm-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libm.so.6
+Reading symbols from /lib64/libc.so.6...Reading symbols from /usr/lib/debug/usr/lib64/libc-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libc.so.6
+Reading symbols from /lib64/ld-linux-x86-64.so.2...Reading symbols from /usr/lib/debug/usr/lib64/ld-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/ld-linux-x86-64.so.2
+Reading symbols from /opt/pgsql-10.1/lib/citus.so...done.
+Loaded symbols for /opt/pgsql-10.1/lib/citus.so
+Reading symbols from /opt/pgsql-10.1/lib/libpq.so.5...done.
+Loaded symbols for /opt/pgsql-10.1/lib/libpq.so.5
+Reading symbols from /lib64/libnss_files.so.2...Reading symbols from /usr/lib/debug/usr/lib64/libnss_files-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libnss_files.so.2
+0x00007f274fc22163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+81	T_PSEUDO (SYSCALL_SYMBOL, SYSCALL_NAME, SYSCALL_NARGS)
+(gdb) b PostgresMain
+Breakpoint 1 at 0x81741b: file postgres.c, line 3587.
+(gdb) b exec_simple_query
+Breakpoint 2 at 0x813787: file postgres.c, line 880.
+(gdb) 
+terJobDirectory
+b ExecuteSubPlans
+b PortalStart
+b PortalRun
+b MultiRealTimeExecute
+Note: breakpoint 2 also set at pc 0x813787.
+Breakpoint 3 at 0x813787: file postgres.c, line 880.
+(gdb) b transformOptionalSelectInto
+Breakpoint 4 at 0x56e339: file analyze.c, line 213.
+(gdb) b transformStmt
+Breakpoint 5 at 0x56e414: file analyze.c, line 273.
+(gdb) b transformSelectStmt
+Breakpoint 6 at 0x56fc5c: file analyze.c, line 1182.
+(gdb) b transformFromClause
+Breakpoint 7 at 0x5a4292: file parse_clause.c, line 125.
+(gdb) b transformFromClauseItem
+Breakpoint 8 at 0x5a612b: file parse_clause.c, line 1101.
+(gdb) b transformRangeSubselect
+Breakpoint 9 at 0x5a495a: file parse_clause.c, line 449.
+(gdb) 
+Note: breakpoint 9 also set at pc 0x5a495a.
+Breakpoint 10 at 0x5a495a: file parse_clause.c, line 449.
+(gdb) b pg_plan_queries
+Breakpoint 11 at 0x813679: file postgres.c, line 842.
+(gdb) b pg_plan_query
+Breakpoint 12 at 0x8135e2: file postgres.c, line 784.
+(gdb) b distributed_planner
+Breakpoint 13 at 0x7f274935a96d: file planner/distributed_planner.c, line 94.
+(gdb) b standard_planner
+Breakpoint 14 at 0x742910: file planner.c, line 233.
+(gdb) b CreateDistributedPlan
+Breakpoint 15 at 0x7f274935b1c7: file planner/distributed_planner.c, line 580.
+(gdb) 
+Note: breakpoint 15 also set at pc 0x7f274935b1c7.
+Breakpoint 16 at 0x7f274935b1c7: file planner/distributed_planner.c, line 580.
+(gdb) b PrepareMasterJobDirectory
+Breakpoint 17 at 0x7f274934653b: file executor/multi_real_time_executor.c, line 1069.
+(gdb) b ExecuteSubPlans
+Breakpoint 18 at 0x7f274934d56e: file executor/subplan_execution.c, line 35.
+(gdb) b PortalStart
+Breakpoint 19 at 0x818eac: file pquery.c, line 461.
+(gdb) b PortalRun
+Breakpoint 20 at 0x819407: file pquery.c, line 707.
+(gdb) b MultiRealTimeExecute
+Breakpoint 21 at 0x7f2749344c5f: file executor/multi_real_time_executor.c, line 88.
+(gdb) info b
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000081741b in PostgresMain at postgres.c:3587
+2       breakpoint     keep y   0x0000000000813787 in exec_simple_query at postgres.c:880
+3       breakpoint     keep y   0x0000000000813787 in exec_simple_query at postgres.c:880
+4       breakpoint     keep y   0x000000000056e339 in transformOptionalSelectInto at analyze.c:213
+5       breakpoint     keep y   0x000000000056e414 in transformStmt at analyze.c:273
+6       breakpoint     keep y   0x000000000056fc5c in transformSelectStmt at analyze.c:1182
+7       breakpoint     keep y   0x00000000005a4292 in transformFromClause at parse_clause.c:125
+8       breakpoint     keep y   0x00000000005a612b in transformFromClauseItem at parse_clause.c:1101
+9       breakpoint     keep y   0x00000000005a495a in transformRangeSubselect at parse_clause.c:449
+10      breakpoint     keep y   0x00000000005a495a in transformRangeSubselect at parse_clause.c:449
+11      breakpoint     keep y   0x0000000000813679 in pg_plan_queries at postgres.c:842
+12      breakpoint     keep y   0x00000000008135e2 in pg_plan_query at postgres.c:784
+13      breakpoint     keep y   0x00007f274935a96d in distributed_planner at planner/distributed_planner.c:94
+14      breakpoint     keep y   0x0000000000742910 in standard_planner at planner.c:233
+15      breakpoint     keep y   0x00007f274935b1c7 in CreateDistributedPlan at planner/distributed_planner.c:580
+16      breakpoint     keep y   0x00007f274935b1c7 in CreateDistributedPlan at planner/distributed_planner.c:580
+17      breakpoint     keep y   0x00007f274934653b in PrepareMasterJobDirectory at executor/multi_real_time_executor.c:1069
+18      breakpoint     keep y   0x00007f274934d56e in ExecuteSubPlans at executor/subplan_execution.c:35
+19      breakpoint     keep y   0x0000000000818eac in PortalStart at pquery.c:461
+20      breakpoint     keep y   0x0000000000819407 in PortalRun at pquery.c:707
+21      breakpoint     keep y   0x00007f2749344c5f in MultiRealTimeExecute at executor/multi_real_time_executor.c:88
+(gdb) n
+epoll_wait () at ../sysdeps/unix/syscall-template.S:83
+83	T_PSEUDO_END (SYSCALL_SYMBOL)
+(gdb) 
+WaitEventSetWaitBlock (set=0x16f8728, cur_timeout=-1, occurred_events=0x7ffe485cf350, nevents=1) at latch.c:1052
+1052		if (rc < 0)
+(gdb) 
+1055			if (errno != EINTR)
+(gdb) 
+1062			return 0;
+(gdb) 
+1151	}
+(gdb) 
+WaitEventSetWait (set=0x16f8728, timeout=-1, occurred_events=0x7ffe485cf350, nevents=1, wait_event_info=100663296) at latch.c:1003
+1003			if (rc == -1)
+(gdb) 
+1006				returned_events = rc;
+(gdb) 
+1009			if (returned_events == 0 && timeout >= 0)
+(gdb) 
+951		while (returned_events == 0)
+(gdb) 
+982			if (set->latch && set->latch->is_set)
+(gdb) 
+984				occurred_events->fd = PGINVALID_SOCKET;
+(gdb) 
+985				occurred_events->pos = set->latch_pos;
+(gdb) 
+987					set->events[set->latch_pos].user_data;
+(gdb) 
+986				occurred_events->user_data =
+(gdb) 
+988				occurred_events->events = WL_LATCH_SET;
+(gdb) 
+989				occurred_events++;
+(gdb) 
+990				returned_events++;
+(gdb) 
+992				break;
+(gdb) 
+1019		waiting = false;
+(gdb) 
+1022		pgstat_report_wait_end();
+(gdb) 
+1024		return returned_events;
+(gdb) 
+1025	}
+(gdb) 
+secure_read (port=0x173b3d0, ptr=0xe182c0 <PqRecvBuffer>, len=8192) at be-secure.c:186
+186			if (event.events & WL_POSTMASTER_DEATH)
+(gdb) 
+192			if (event.events & WL_LATCH_SET)
+(gdb) 
+194				ResetLatch(MyLatch);
+(gdb) 
+195				ProcessClientReadInterrupt(true);
+(gdb) 
+203			goto retry;
+(gdb) 
+153			n = secure_raw_read(port, ptr, len);
+(gdb) 
+154			waitfor = WL_SOCKET_READABLE;
+(gdb) 
+158		if (n < 0 && !port->noblock && (errno == EWOULDBLOCK || errno == EAGAIN))
+(gdb) 
+211		ProcessClientReadInterrupt(false);
+(gdb) 
+213		return n;
+(gdb) 
+214	}
+(gdb) 
+pq_recvbuf () at pqcomm.c:966
+966			if (r < 0)
+(gdb) 
+981			if (r == 0)
+(gdb) 
+990			PqRecvLength += r;
+(gdb) 
+991			return 0;
+(gdb) 
+993	}
+(gdb) 
+pq_getbyte () at pqcomm.c:1004
+1004		while (PqRecvPointer >= PqRecvLength)
+(gdb) 
+1009		return (unsigned char) PqRecvBuffer[PqRecvPointer++];
+(gdb) 
+1010	}
+(gdb) 
+SocketBackend (inBuf=0x7ffe485cf560) at postgres.c:330
+330		if (qtype == EOF)			/* frontend disconnected */
+(gdb) 
+359		switch (qtype)
+(gdb) 
+362				doing_extended_query_message = false;
+(gdb) 
+363				if (PG_PROTOCOL_MAJOR(FrontendProtocol) < 3)
+(gdb) 
+387				break;
+(gdb) 
+476		if (PG_PROTOCOL_MAJOR(FrontendProtocol) >= 3)
+(gdb) 
+478			if (pq_getmessage(inBuf, 0))
+(gdb) 
+483		RESUME_CANCEL_INTERRUPTS();
+(gdb) 
+485		return qtype;
+(gdb) 
+486	}
+(gdb) 
+ReadCommand (inBuf=0x7ffe485cf560) at postgres.c:504
+504		return result;
+(gdb) 
+505	}
+(gdb) bt
+#0  ReadCommand (inBuf=0x7ffe485cf560) at postgres.c:505
+#1  0x0000000000817a41 in PostgresMain (argc=1, argv=0x1741358, dbname=0x1741238 "postgres", username=0x1741218 "cituscluster") at postgres.c:4030
+#2  0x000000000078b2d2 in BackendRun (port=0x173b3d0) at postmaster.c:4357
+#3  0x000000000078aa7b in BackendStartup (port=0x173b3d0) at postmaster.c:4029
+#4  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#5  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x16f6b40) at postmaster.c:1361
+#6  0x00000000006cf26f in main (argc=1, argv=0x16f6b40) at main.c:228
+(gdb) list
+500		if (whereToSendOutput == DestRemote)
+501			result = SocketBackend(inBuf);
+502		else
+503			result = InteractiveBackend(inBuf);
+504		return result;
+505	}
+506	
+507	/*
+508	 * ProcessClientReadInterrupt() - Process interrupts specific to client reads
+509	 *
+(gdb) n
+PostgresMain (argc=1, argv=0x1741358, dbname=0x1741238 "postgres", username=0x1741218 "cituscluster") at postgres.c:4041
+4041			CHECK_FOR_INTERRUPTS();
+(gdb) 
+4042			DoingCommandRead = false;
+(gdb) 
+4047			if (disable_idle_in_transaction_timeout)
+(gdb) 
+4057			if (ConfigReloadPending)
+(gdb) 
+4067			if (ignore_till_sync && firstchar != EOF)
+(gdb) 
+4070			switch (firstchar)
+(gdb) 
+4077						SetCurrentStatementStartTimestamp();
+(gdb) 
+4079						query_string = pq_getmsgstring(&input_message);
+(gdb) 
+4080						pq_getmsgend(&input_message);
+(gdb) 
+4082						if (am_walsender)
+(gdb) 
+4088							exec_simple_query(query_string);
+(gdb) 
+
+Breakpoint 2, exec_simple_query (query_string=0x1716108 "F") at postgres.c:880
+880		CommandDest dest = whereToSendOutput;
+(gdb) 
+884		bool		save_log_statement_stats = log_statement_stats;
+(gdb) p am_walsender
+$1 = 0 '\000'
+(gdb) n
+885		bool		was_logged = false;
+(gdb) 
+893		debug_query_string = query_string;
+(gdb) 
+895		pgstat_report_activity(STATE_RUNNING, query_string);
+(gdb) 
+903		if (save_log_statement_stats)
+(gdb) 
+913		start_xact_command();
+(gdb) 
+921		drop_unnamed_stmt();
+(gdb) 
+926		oldcontext = MemoryContextSwitchTo(MessageContext);
+(gdb) 
+932		parsetree_list = pg_parse_query(query_string);
+(gdb) 
+935		if (check_log_statement(parsetree_list))
+(gdb) 
+947		MemoryContextSwitchTo(oldcontext);
+(gdb) 
+956		isTopLevel = (list_length(parsetree_list) == 1);
+(gdb) 
+961		foreach(parsetree_item, parsetree_list)
+(gdb) 
+963			RawStmt    *parsetree = lfirst_node(RawStmt, parsetree_item);
+(gdb) 
+964			bool		snapshot_set = false;
+(gdb) p *parsetree
+$2 = {type = T_RawStmt, stmt = 0x17171d8, stmt_location = 0, stmt_len = 57}
+(gdb) p (const SelectStmt*)parsetree->stmt
+$3 = (const SelectStmt *) 0x17171d8
+(gdb) n
+979			commandTag = CreateCommandTag(parsetree->stmt);
+(gdb) 
+981			set_ps_display(commandTag, false);
+(gdb) 
+983			BeginCommand(commandTag, dest);
+(gdb) 
+993			if (IsAbortedTransactionBlockState() &&
+(gdb) p dest
+$4 = DestRemote
+(gdb) n
+1002			start_xact_command();
+(gdb) 
+1005			CHECK_FOR_INTERRUPTS();
+(gdb) 
+1010			if (analyze_requires_snapshot(parsetree))
+(gdb) 
+1012				PushActiveSnapshot(GetTransactionSnapshot());
+(gdb) 
+1013				snapshot_set = true;
+(gdb) bt
+#0  exec_simple_query (query_string=0x1716108 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1013
+#1  0x0000000000817b1f in PostgresMain (argc=1, argv=0x1741358, dbname=0x1741238 "postgres", username=0x1741218 "cituscluster") at postgres.c:4088
+#2  0x000000000078b2d2 in BackendRun (port=0x173b3d0) at postmaster.c:4357
+#3  0x000000000078aa7b in BackendStartup (port=0x173b3d0) at postmaster.c:4029
+#4  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#5  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x16f6b40) at postmaster.c:1361
+#6  0x00000000006cf26f in main (argc=1, argv=0x16f6b40) at main.c:228
+(gdb) n
+1022			oldcontext = MemoryContextSwitchTo(MessageContext);
+(gdb) 
+1024			querytree_list = pg_analyze_and_rewrite(parsetree, query_string,
+(gdb) bt
+#0  exec_simple_query (query_string=0x1716108 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1024
+#1  0x0000000000817b1f in PostgresMain (argc=1, argv=0x1741358, dbname=0x1741238 "postgres", username=0x1741218 "cituscluster") at postgres.c:4088
+#2  0x000000000078b2d2 in BackendRun (port=0x173b3d0) at postmaster.c:4357
+#3  0x000000000078aa7b in BackendStartup (port=0x173b3d0) at postmaster.c:4029
+#4  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#5  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x16f6b40) at postmaster.c:1361
+#6  0x00000000006cf26f in main (argc=1, argv=0x16f6b40) at main.c:228
+(gdb) n
+
+Breakpoint 4, transformOptionalSelectInto (pstate=0x1717368, parseTree=0x17171d8) at analyze.c:213
+213		if (IsA(parseTree, SelectStmt))
+(gdb) 
+215			SelectStmt *stmt = (SelectStmt *) parseTree;
+(gdb) 
+218			while (stmt && stmt->op != SETOP_NONE)
+(gdb) p *parseTree
+$5 = {type = T_SelectStmt}
+(gdb) n
+222			if (stmt->intoClause)
+(gdb) p parseTree
+$6 = (Node *) 0x17171d8
+(gdb) p parseTree->stmt
+There is no member named stmt.
+(gdb) p (SelectStmt*)parseTree->stmt
+There is no member named stmt.
+(gdb) p (SelectStmt*)parseTree
+$7 = (SelectStmt *) 0x17171d8
+(gdb) n
+242		return transformStmt(pstate, parseTree);
+(gdb) p stmt
+No symbol "stmt" in current context.
+(gdb) n
+
+Breakpoint 5, transformStmt (pstate=0x1717368, parseTree=0x17171d8) at analyze.c:273
+273		switch (nodeTag(parseTree))
+(gdb) 
+292					SelectStmt *n = (SelectStmt *) parseTree;
+(gdb) 
+294					if (n->valuesLists)
+(gdb) 
+296					else if (n->op == SETOP_NONE)
+(gdb) 
+297						result = transformSelectStmt(pstate, n);
+(gdb) p n
+$8 = (SelectStmt *) 0x17171d8
+(gdb) p *n
+$9 = {type = T_SelectStmt, distinctClause = 0x0, intoClause = 0x0, targetList = 0x1716c38, fromClause = 0x17171a8, whereClause = 0x0, groupClause = 0x0, havingClause = 0x0, 
+  windowClause = 0x0, valuesLists = 0x0, sortClause = 0x0, limitOffset = 0x0, limitCount = 0x0, lockingClause = 0x0, withClause = 0x0, op = SETOP_NONE, all = 0 '\000', larg = 0x0, 
+  rarg = 0x0}
+(gdb) n
+
+Breakpoint 6, transformSelectStmt (pstate=0x1717368, stmt=0x17171d8) at analyze.c:1182
+1182		Query	   *qry = makeNode(Query);
+(gdb) 
+1186		qry->commandType = CMD_SELECT;
+(gdb) 
+1189		if (stmt->withClause)
+(gdb) 
+1197		if (stmt->intoClause)
+(gdb) 
+1205		pstate->p_locking_clause = stmt->lockingClause;
+(gdb) 
+1208		pstate->p_windowdefs = stmt->windowClause;
+(gdb) 
+1211		transformFromClause(pstate, stmt->fromClause);
+(gdb) 
+
+Breakpoint 7, transformFromClause (pstate=0x1717368, frmList=0x17171a8) at parse_clause.c:125
+125		foreach(fl, frmList)
+(gdb) 
+127			Node	   *n = lfirst(fl);
+(gdb) 
+132			n = transformFromClauseItem(pstate, n,
+(gdb) p n
+$10 = (Node *) 0x1717158
+(gdb) p fl
+$11 = (ListCell *) 0x1717188
+(gdb) p *fl
+$12 = {data = {ptr_value = 0x1717158, int_value = 24211800, oid_value = 24211800}, next = 0x0}
+(gdb) s
+
+Breakpoint 8, transformFromClauseItem (pstate=0x1717368, n=0x1717158, top_rte=0x7ffe485cf168, top_rti=0x7ffe485cf164, namespace=0x7ffe485cf158) at parse_clause.c:1101
+1101		if (IsA(n, RangeVar))
+(gdb) n
+1126		else if (IsA(n, RangeSubselect))
+(gdb) 
+1133			rte = transformRangeSubselect(pstate, (RangeSubselect *) n);
+(gdb) 
+
+Breakpoint 9, transformRangeSubselect (pstate=0x1717368, r=0x1717158) at parse_clause.c:449
+449		if (r->alias == NULL)
+(gdb) p r
+$13 = (RangeSubselect *) 0x1717158
+(gdb) p *r
+$14 = {type = T_RangeSubselect, lateral = 0 '\000', subquery = 0x1717000, alias = 0x1717128}
+(gdb) n
+458		pstate->p_expr_kind = EXPR_KIND_FROM_SUBSELECT;
+(gdb) 
+466		pstate->p_lateral_active = r->lateral;
+(gdb) 
+472								  isLockedRefname(pstate, r->alias->aliasname),
+(gdb) 
+471		query = parse_sub_analyze(r->subquery, pstate, NULL,
+(gdb) s
+parse_sub_analyze (parseTree=0x1717000, parentParseState=0x1717368, parentCTE=0x0, locked_from_parent=0 '\000', resolve_unknowns=1 '\001') at analyze.c:165
+165		ParseState *pstate = make_parsestate(parentParseState);
+(gdb) n
+168		pstate->p_parent_cte = parentCTE;
+(gdb) 
+169		pstate->p_locked_from_parent = locked_from_parent;
+(gdb) 
+170		pstate->p_resolve_unknowns = resolve_unknowns;
+(gdb) 
+172		query = transformStmt(pstate, parseTree);
+(gdb) p parseTree
+$15 = (Node *) 0x1717000
+(gdb) 
+$16 = (Node *) 0x1717000
+(gdb) 
+$17 = (Node *) 0x1717000
+(gdb) n
+
+Breakpoint 5, transformStmt (pstate=0x1717588, parseTree=0x1717000) at analyze.c:273
+273		switch (nodeTag(parseTree))
+(gdb) 
+292					SelectStmt *n = (SelectStmt *) parseTree;
+(gdb) 
+294					if (n->valuesLists)
+(gdb) p n
+$18 = (SelectStmt *) 0x1717000
+(gdb) p *n
+$19 = {type = T_SelectStmt, distinctClause = 0x0, intoClause = 0x0, targetList = 0x1716d70, fromClause = 0x1716e28, whereClause = 0x1716f40, groupClause = 0x0, havingClause = 0x0, 
+  windowClause = 0x0, valuesLists = 0x0, sortClause = 0x0, limitOffset = 0x0, limitCount = 0x0, lockingClause = 0x0, withClause = 0x0, op = SETOP_NONE, all = 0 '\000', larg = 0x0, 
+  rarg = 0x0}
+(gdb) n
+296					else if (n->op == SETOP_NONE)
+(gdb) 
+297						result = transformSelectStmt(pstate, n);
+(gdb) 
+
+Breakpoint 6, transformSelectStmt (pstate=0x1717588, stmt=0x1717000) at analyze.c:1182
+1182		Query	   *qry = makeNode(Query);
+(gdb) 
+1186		qry->commandType = CMD_SELECT;
+(gdb) 
+1189		if (stmt->withClause)
+(gdb) 
+1197		if (stmt->intoClause)
+(gdb) 
+1205		pstate->p_locking_clause = stmt->lockingClause;
+(gdb) 
+1208		pstate->p_windowdefs = stmt->windowClause;
+(gdb) 
+1211		transformFromClause(pstate, stmt->fromClause);
+(gdb) 
+
+Breakpoint 7, transformFromClause (pstate=0x1717588, frmList=0x1716e28) at parse_clause.c:125
+125		foreach(fl, frmList)
+(gdb) 
+127			Node	   *n = lfirst(fl);
+(gdb) 
+132			n = transformFromClauseItem(pstate, n,
+(gdb) s
+
+Breakpoint 8, transformFromClauseItem (pstate=0x1717588, n=0x1716db8, top_rte=0x7ffe485cedf8, top_rti=0x7ffe485cedf4, namespace=0x7ffe485cede8) at parse_clause.c:1101
+1101		if (IsA(n, RangeVar))
+(gdb) p n
+$20 = (Node *) 0x1716db8
+(gdb) n
+1104			RangeVar   *rv = (RangeVar *) n;
+(gdb) 
+1110			rte = getRTEForSpecialRelationTypes(pstate, rv);
+(gdb) p rv
+$21 = (RangeVar *) 0x1716db8
+(gdb) p *rv
+$22 = {type = T_RangeVar, catalogname = 0x0, schemaname = 0x0, relname = 0x1716da0 "test2", inh = 1 '\001', relpersistence = 112 'p', alias = 0x0, location = 29}
+(gdb) n
+1113			if (!rte)
+(gdb) 
+1114				rte = transformTableEntry(pstate, rv);
+(gdb) 
+1117			rtindex = list_length(pstate->p_rtable);
+(gdb) 
+1119			*top_rte = rte;
+(gdb) 
+1120			*top_rti = rtindex;
+(gdb) 
+1121			*namespace = list_make1(makeDefaultNSItem(rte));
+(gdb) 
+1122			rtr = makeNode(RangeTblRef);
+(gdb) 
+1123			rtr->rtindex = rtindex;
+(gdb) p reindex
+No symbol "reindex" in current context.
+(gdb) p rtindex
+$23 = 1
+(gdb) bt
+#0  transformFromClauseItem (pstate=0x1717588, n=0x1716db8, top_rte=0x7ffe485cedf8, top_rti=0x7ffe485cedf4, namespace=0x7ffe485cede8) at parse_clause.c:1123
+#1  0x00000000005a42d1 in transformFromClause (pstate=0x1717588, frmList=0x1716e28) at parse_clause.c:132
+#2  0x000000000056fd9b in transformSelectStmt (pstate=0x1717588, stmt=0x1717000) at analyze.c:1211
+#3  0x000000000056e4d4 in transformStmt (pstate=0x1717588, parseTree=0x1717000) at analyze.c:297
+#4  0x000000000056e2c0 in parse_sub_analyze (parseTree=0x1717000, parentParseState=0x1717368, parentCTE=0x0, locked_from_parent=0 '\000', resolve_unknowns=1 '\001') at analyze.c:172
+#5  0x00000000005a49e8 in transformRangeSubselect (pstate=0x1717368, r=0x1717158) at parse_clause.c:471
+#6  0x00000000005a6279 in transformFromClauseItem (pstate=0x1717368, n=0x1717158, top_rte=0x7ffe485cf168, top_rti=0x7ffe485cf164, namespace=0x7ffe485cf158) at parse_clause.c:1133
+#7  0x00000000005a42d1 in transformFromClause (pstate=0x1717368, frmList=0x17171a8) at parse_clause.c:132
+#8  0x000000000056fd9b in transformSelectStmt (pstate=0x1717368, stmt=0x17171d8) at analyze.c:1211
+#9  0x000000000056e4d4 in transformStmt (pstate=0x1717368, parseTree=0x17171d8) at analyze.c:297
+#10 0x000000000056e402 in transformOptionalSelectInto (pstate=0x1717368, parseTree=0x17171d8) at analyze.c:242
+#11 0x000000000056e2fd in transformTopLevelStmt (pstate=0x1717368, parseTree=0x17172e8) at analyze.c:192
+#12 0x000000000056e175 in parse_analyze (parseTree=0x17172e8, sourceText=0x1716108 "select * from (select * from test2 where id >10) as temp1;", paramTypes=0x0, numParams=0, queryEnv=0x0)
+    at analyze.c:112
+#13 0x0000000000813402 in pg_analyze_and_rewrite (parsetree=0x17172e8, query_string=0x1716108 "select * from (select * from test2 where id >10) as temp1;", paramTypes=0x0, numParams=0, 
+    queryEnv=0x0) at postgres.c:653
+#14 0x00000000008139d2 in exec_simple_query (query_string=0x1716108 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1024
+#15 0x0000000000817b1f in PostgresMain (argc=1, argv=0x1741358, dbname=0x1741238 "postgres", username=0x1741218 "cituscluster") at postgres.c:4088
+#16 0x000000000078b2d2 in BackendRun (port=0x173b3d0) at postmaster.c:4357
+#17 0x000000000078aa7b in BackendStartup (port=0x173b3d0) at postmaster.c:4029
+#18 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#19 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x16f6b40) at postmaster.c:1361
+#20 0x00000000006cf26f in main (argc=1, argv=0x16f6b40) at main.c:228
+(gdb) n
+1124			return (Node *) rtr;
+(gdb) n
+1531	}
+(gdb) 
+transformFromClause (pstate=0x1717588, frmList=0x1716e28) at parse_clause.c:137
+137			checkNameSpaceConflicts(pstate, pstate->p_namespace, namespace);
+(gdb) p pstate
+$24 = (ParseState *) 0x1717588
+(gdb) p *pstate
+$25 = {parentParseState = 0x1717368, p_sourcetext = 0x1716108 "select * from (select * from test2 where id >10) as temp1;", p_rtable = 0x17a4050, p_joinexprs = 0x0, p_joinlist = 0x0, 
+  p_namespace = 0x0, p_lateral_active = 0 '\000', p_ctenamespace = 0x0, p_future_ctes = 0x0, p_parent_cte = 0x0, p_target_relation = 0x0, p_target_rangetblentry = 0x0, 
+  p_is_insert = 0 '\000', p_windowdefs = 0x0, p_expr_kind = EXPR_KIND_NONE, p_next_resno = 1, p_multiassign_exprs = 0x0, p_locking_clause = 0x0, p_locked_from_parent = 0 '\000', 
+  p_resolve_unknowns = 1 '\001', p_queryEnv = 0x0, p_hasAggs = 0 '\000', p_hasWindowFuncs = 0 '\000', p_hasTargetSRFs = 0 '\000', p_hasSubLinks = 0 '\000', p_hasModifyingCTE = 0 '\000', 
+  p_last_srf = 0x0, p_pre_columnref_hook = 0x0, p_post_columnref_hook = 0x0, p_paramref_hook = 0x0, p_coerce_param_hook = 0x0, p_ref_hook_state = 0x0}
+(gdb) p pstate->p_namespace
+$26 = (List *) 0x0
+(gdb) p namesapce
+No symbol "namesapce" in current context.
+(gdb) p namespace
+$27 = (List *) 0x17a40c0
+(gdb) n
+140			setNamespaceLateralState(namespace, true, true);
+(gdb) s
+setNamespaceLateralState (namespace=0x17a40c0, lateral_only=1 '\001', lateral_ok=1 '\001') at parse_clause.c:1697
+1697		foreach(lc, namespace)
+(gdb) n
+1699			ParseNamespaceItem *nsitem = (ParseNamespaceItem *) lfirst(lc);
+(gdb) 
+1701			nsitem->p_lateral_only = lateral_only;
+(gdb) p nsitem
+$28 = (ParseNamespaceItem *) 0x17a4080
+(gdb) p *nsitem
+$29 = {p_rte = 0x17177a8, p_rel_visible = 1 '\001', p_cols_visible = 1 '\001', p_lateral_only = 0 '\000', p_lateral_ok = 1 '\001'}
+(gdb) n
+1702			nsitem->p_lateral_ok = lateral_ok;
+(gdb) 
+1697		foreach(lc, namespace)
+(gdb) 
+1704	}
+(gdb) p *namespace
+$30 = {type = T_List, length = 1, head = 0x17a40a0, tail = 0x17a40a0}
+(gdb) n
+transformFromClause (pstate=0x1717588, frmList=0x1716e28) at parse_clause.c:142
+142			pstate->p_joinlist = lappend(pstate->p_joinlist, n);
+(gdb) 
+143			pstate->p_namespace = list_concat(pstate->p_namespace, namespace);
+(gdb) p *n
+$31 = {type = T_RangeTblRef}
+(gdb) p *pstate->p_joinlist
+$32 = {type = T_List, length = 1, head = 0x17a4108, tail = 0x17a4108}
+(gdb) p *pstate->p_namespace
+Cannot access memory at address 0x0
+(gdb) n
+125		foreach(fl, frmList)
+(gdb) p *pstate->p_namespace
+$33 = {type = T_List, length = 1, head = 0x17a40a0, tail = 0x17a40a0}
+(gdb) p *pstate->p_namespace->head
+$34 = {data = {ptr_value = 0x17a4080, int_value = 24789120, oid_value = 24789120}, next = 0x0}
+(gdb) n
+152		setNamespaceLateralState(pstate->p_namespace, false, true);
+(gdb) list
+147		 * We're done parsing the FROM list, so make all namespace items
+148		 * unconditionally visible.  Note that this will also reset lateral_only
+149		 * for any namespace items that were already present when we were called;
+150		 * but those should have been that way already.
+151		 */
+152		setNamespaceLateralState(pstate->p_namespace, false, true);
+153	}
+154	
+155	/*
+156	 * setTargetTable
+(gdb) n
+153	}
+(gdb) bt
+#0  transformFromClause (pstate=0x1717588, frmList=0x1716e28) at parse_clause.c:153
+#1  0x000000000056fd9b in transformSelectStmt (pstate=0x1717588, stmt=0x1717000) at analyze.c:1211
+#2  0x000000000056e4d4 in transformStmt (pstate=0x1717588, parseTree=0x1717000) at analyze.c:297
+#3  0x000000000056e2c0 in parse_sub_analyze (parseTree=0x1717000, parentParseState=0x1717368, parentCTE=0x0, locked_from_parent=0 '\000', resolve_unknowns=1 '\001') at analyze.c:172
+#4  0x00000000005a49e8 in transformRangeSubselect (pstate=0x1717368, r=0x1717158) at parse_clause.c:471
+#5  0x00000000005a6279 in transformFromClauseItem (pstate=0x1717368, n=0x1717158, top_rte=0x7ffe485cf168, top_rti=0x7ffe485cf164, namespace=0x7ffe485cf158) at parse_clause.c:1133
+#6  0x00000000005a42d1 in transformFromClause (pstate=0x1717368, frmList=0x17171a8) at parse_clause.c:132
+#7  0x000000000056fd9b in transformSelectStmt (pstate=0x1717368, stmt=0x17171d8) at analyze.c:1211
+#8  0x000000000056e4d4 in transformStmt (pstate=0x1717368, parseTree=0x17171d8) at analyze.c:297
+#9  0x000000000056e402 in transformOptionalSelectInto (pstate=0x1717368, parseTree=0x17171d8) at analyze.c:242
+#10 0x000000000056e2fd in transformTopLevelStmt (pstate=0x1717368, parseTree=0x17172e8) at analyze.c:192
+#11 0x000000000056e175 in parse_analyze (parseTree=0x17172e8, sourceText=0x1716108 "select * from (select * from test2 where id >10) as temp1;", paramTypes=0x0, numParams=0, queryEnv=0x0)
+    at analyze.c:112
+#12 0x0000000000813402 in pg_analyze_and_rewrite (parsetree=0x17172e8, query_string=0x1716108 "select * from (select * from test2 where id >10) as temp1;", paramTypes=0x0, numParams=0, 
+    queryEnv=0x0) at postgres.c:653
+#13 0x00000000008139d2 in exec_simple_query (query_string=0x1716108 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1024
+#14 0x0000000000817b1f in PostgresMain (argc=1, argv=0x1741358, dbname=0x1741238 "postgres", username=0x1741218 "cituscluster") at postgres.c:4088
+#15 0x000000000078b2d2 in BackendRun (port=0x173b3d0) at postmaster.c:4357
+#16 0x000000000078aa7b in BackendStartup (port=0x173b3d0) at postmaster.c:4029
+#17 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#18 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x16f6b40) at postmaster.c:1361
+#19 0x00000000006cf26f in main (argc=1, argv=0x16f6b40) at main.c:228
+(gdb) n
+transformSelectStmt (pstate=0x1717588, stmt=0x1717000) at analyze.c:1214
+1214		qry->targetList = transformTargetList(pstate, stmt->targetList,
+(gdb) s
+transformTargetList (pstate=0x1717588, targetlist=0x1716d70, exprKind=EXPR_KIND_SELECT_TARGET) at parse_target.c:134
+134		List	   *p_target = NIL;
+(gdb) n
+142		expand_star = (exprKind != EXPR_KIND_UPDATE_SOURCE);
+(gdb) 
+144		foreach(o_target, targetlist)
+(gdb) 
+146			ResTarget  *res = (ResTarget *) lfirst(o_target);
+(gdb) 
+153			if (expand_star)
+(gdb) p res
+$35 = (ResTarget *) 0x1716d00
+(gdb) p *res
+$36 = {type = T_ResTarget, name = 0x0, indirection = 0x0, val = 0x1716c68, location = 22}
+(gdb) n
+155				if (IsA(res->val, ColumnRef))
+(gdb) p ((const Node*)(res->val))->type
+$37 = T_ColumnRef
+(gdb) n
+157					ColumnRef  *cref = (ColumnRef *) res->val;
+(gdb) 
+159					if (IsA(llast(cref->fields), A_Star))
+(gdb) p cref
+$38 = (ColumnRef *) 0x1716c68
+(gdb) p *cref
+$39 = {type = T_ColumnRef, fields = 0x1716cd0, location = 22}
+(gdb) n
+162						p_target = list_concat(p_target,
+(gdb) p ((const Node*)(cref->fields))->type
+$40 = T_List
+(gdb) p ((const Node*)(cref->fields->head))->type
+$41 = 24210584
+(gdb) n
+166						continue;
+(gdb) p p_target
+$42 = (List *) 0x17a4368
+(gdb) n
+144		foreach(o_target, targetlist)
+(gdb) 
+205		if (pstate->p_multiassign_exprs)
+(gdb) p pstate
+$43 = (ParseState *) 0x1717588
+(gdb) p *pstate
+$44 = {parentParseState = 0x1717368, p_sourcetext = 0x1716108 "select * from (select * from test2 where id >10) as temp1;", p_rtable = 0x17a4050, p_joinexprs = 0x0, p_joinlist = 0x17a4128, 
+  p_namespace = 0x17a40c0, p_lateral_active = 0 '\000', p_ctenamespace = 0x0, p_future_ctes = 0x0, p_parent_cte = 0x0, p_target_relation = 0x0, p_target_rangetblentry = 0x0, 
+  p_is_insert = 0 '\000', p_windowdefs = 0x0, p_expr_kind = EXPR_KIND_NONE, p_next_resno = 3, p_multiassign_exprs = 0x0, p_locking_clause = 0x0, p_locked_from_parent = 0 '\000', 
+  p_resolve_unknowns = 1 '\001', p_queryEnv = 0x0, p_hasAggs = 0 '\000', p_hasWindowFuncs = 0 '\000', p_hasTargetSRFs = 0 '\000', p_hasSubLinks = 0 '\000', p_hasModifyingCTE = 0 '\000', 
+  p_last_srf = 0x0, p_pre_columnref_hook = 0x0, p_post_columnref_hook = 0x0, p_paramref_hook = 0x0, p_coerce_param_hook = 0x0, p_ref_hook_state = 0x0}
+(gdb) p pstate->head
+There is no member named head.
+(gdb) p p_target->head
+$45 = (ListCell *) 0x17a4348
+(gdb) p (TargetEntry*)p_target->head
+$46 = (TargetEntry *) 0x17a4348
+(gdb) p *((TargetEntry*)p_target->head)
+$47 = {xpr = {type = 24789752}, expr = 0x17a4400, resno = 32, resname = 0x16f6dc8 <incomplete sequence \321>, ressortgroupref = 217, resorigtbl = 2, resorigcol = 17224, resjunk = 122 'z'}
+(gdb) p *((TargetEntry*)p_target->head).resname
+$48 = -47 '\321'
+(gdb) list
+200		 * If any multiassign resjunk items were created, attach them to the end
+201		 * of the targetlist.  This should only happen in an UPDATE tlist.  We
+202		 * don't need to worry about numbering of these items; transformUpdateStmt
+203		 * will set their resnos.
+204		 */
+205		if (pstate->p_multiassign_exprs)
+206		{
+207			Assert(exprKind == EXPR_KIND_UPDATE_SOURCE);
+208			p_target = list_concat(p_target, pstate->p_multiassign_exprs);
+209			pstate->p_multiassign_exprs = NIL;
+(gdb) n
+212		return p_target;
+(gdb) bt
+#0  transformTargetList (pstate=0x1717588, targetlist=0x1716d70, exprKind=EXPR_KIND_SELECT_TARGET) at parse_target.c:212
+#1  0x000000000056fdb7 in transformSelectStmt (pstate=0x1717588, stmt=0x1717000) at analyze.c:1214
+#2  0x000000000056e4d4 in transformStmt (pstate=0x1717588, parseTree=0x1717000) at analyze.c:297
+#3  0x000000000056e2c0 in parse_sub_analyze (parseTree=0x1717000, parentParseState=0x1717368, parentCTE=0x0, locked_from_parent=0 '\000', resolve_unknowns=1 '\001') at analyze.c:172
+#4  0x00000000005a49e8 in transformRangeSubselect (pstate=0x1717368, r=0x1717158) at parse_clause.c:471
+#5  0x00000000005a6279 in transformFromClauseItem (pstate=0x1717368, n=0x1717158, top_rte=0x7ffe485cf168, top_rti=0x7ffe485cf164, namespace=0x7ffe485cf158) at parse_clause.c:1133
+#6  0x00000000005a42d1 in transformFromClause (pstate=0x1717368, frmList=0x17171a8) at parse_clause.c:132
+#7  0x000000000056fd9b in transformSelectStmt (pstate=0x1717368, stmt=0x17171d8) at analyze.c:1211
+#8  0x000000000056e4d4 in transformStmt (pstate=0x1717368, parseTree=0x17171d8) at analyze.c:297
+#9  0x000000000056e402 in transformOptionalSelectInto (pstate=0x1717368, parseTree=0x17171d8) at analyze.c:242
+#10 0x000000000056e2fd in transformTopLevelStmt (pstate=0x1717368, parseTree=0x17172e8) at analyze.c:192
+#11 0x000000000056e175 in parse_analyze (parseTree=0x17172e8, sourceText=0x1716108 "select * from (select * from test2 where id >10) as temp1;", paramTypes=0x0, numParams=0, queryEnv=0x0)
+    at analyze.c:112
+#12 0x0000000000813402 in pg_analyze_and_rewrite (parsetree=0x17172e8, query_string=0x1716108 "select * from (select * from test2 where id >10) as temp1;", paramTypes=0x0, numParams=0, 
+    queryEnv=0x0) at postgres.c:653
+#13 0x00000000008139d2 in exec_simple_query (query_string=0x1716108 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1024
+#14 0x0000000000817b1f in PostgresMain (argc=1, argv=0x1741358, dbname=0x1741238 "postgres", username=0x1741218 "cituscluster") at postgres.c:4088
+#15 0x000000000078b2d2 in BackendRun (port=0x173b3d0) at postmaster.c:4357
+#16 0x000000000078aa7b in BackendStartup (port=0x173b3d0) at postmaster.c:4029
+#17 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#18 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x16f6b40) at postmaster.c:1361
+#19 0x00000000006cf26f in main (argc=1, argv=0x16f6b40) at main.c:228
+(gdb) n
+213	}
+(gdb) 
+transformSelectStmt (pstate=0x1717588, stmt=0x1717000) at analyze.c:1218
+1218		markTargetListOrigins(pstate, qry->targetList);
+(gdb) s
+markTargetListOrigins (pstate=0x1717588, targetlist=0x17a4368) at parse_target.c:333
+333		foreach(l, targetlist)
+(gdb) n
+335			TargetEntry *tle = (TargetEntry *) lfirst(l);
+(gdb) 
+337			markTargetListOrigin(pstate, tle, (Var *) tle->expr, 0);
+(gdb) p tle
+$49 = (TargetEntry *) 0x17a42f8
+(gdb) p *tle
+$50 = {xpr = {type = T_TargetEntry}, expr = 0x17178b8, resno = 1, resname = 0x17a4158 "id", ressortgroupref = 0, resorigtbl = 0, resorigcol = 0, resjunk = 0 '\000'}
+(gdb) s
+markTargetListOrigin (pstate=0x1717588, tle=0x17a42f8, var=0x17178b8, levelsup=0) at parse_target.c:358
+358		if (var == NULL || !IsA(var, Var))
+(gdb) p ((const Node*)(val))->type
+No symbol "val" in current context.
+(gdb) n
+360		netlevelsup = var->varlevelsup + levelsup;
+(gdb) p ((const Node*)(val))->type
+No symbol "val" in current context.
+(gdb) p *val
+No symbol "val" in current context.
+(gdb) list
+355		RangeTblEntry *rte;
+356		AttrNumber	attnum;
+357	
+358		if (var == NULL || !IsA(var, Var))
+359			return;
+360		netlevelsup = var->varlevelsup + levelsup;
+361		rte = GetRTEByRangeTablePosn(pstate, var->varno, netlevelsup);
+362		attnum = var->varattno;
+363	
+364		switch (rte->rtekind)
+(gdb) p val
+No symbol "val" in current context.
+(gdb) p netlevelsup
+$51 = 0
+(gdb) n
+361		rte = GetRTEByRangeTablePosn(pstate, var->varno, netlevelsup);
+(gdb) n
+362		attnum = var->varattno;
+(gdb) p netlevelsup
+$52 = 0
+(gdb) p rte
+$53 = (RangeTblEntry *) 0x17177a8
+(gdb) p *rte
+$54 = {type = T_RangeTblEntry, rtekind = RTE_RELATION, relid = 41849, relkind = 114 'r', tablesample = 0x0, subquery = 0x0, security_barrier = 0 '\000', jointype = JOIN_INNER, 
+  joinaliasvars = 0x0, functions = 0x0, funcordinality = 0 '\000', tablefunc = 0x0, values_lists = 0x0, ctename = 0x0, ctelevelsup = 0, self_reference = 0 '\000', coltypes = 0x0, 
+  coltypmods = 0x0, colcollations = 0x0, enrname = 0x0, enrtuples = 0, alias = 0x0, eref = 0x17180a8, lateral = 0 '\000', inh = 1 '\001', inFromCl = 1 '\001', requiredPerms = 2, 
+  checkAsUser = 0, selectedCols = 0x17a4398, insertedCols = 0x0, updatedCols = 0x0, securityQuals = 0x0}
+(gdb) p tle->expr
+$55 = (Expr *) 0x17178b8
+(gdb) p *tle->expr
+$56 = {type = T_Var}
+(gdb) list
+357	
+358		if (var == NULL || !IsA(var, Var))
+359			return;
+360		netlevelsup = var->varlevelsup + levelsup;
+361		rte = GetRTEByRangeTablePosn(pstate, var->varno, netlevelsup);
+362		attnum = var->varattno;
+363	
+364		switch (rte->rtekind)
+365		{
+366			case RTE_RELATION:
+(gdb) n
+364		switch (rte->rtekind)
+(gdb) 
+368				tle->resorigtbl = rte->relid;
+(gdb) 
+369				tle->resorigcol = attnum;
+(gdb) 
+370				break;
+(gdb) 
+427	}
+(gdb) 
+markTargetListOrigins (pstate=0x1717588, targetlist=0x17a4368) at parse_target.c:333
+333		foreach(l, targetlist)
+(gdb) 
+335			TargetEntry *tle = (TargetEntry *) lfirst(l);
+(gdb) 
+337			markTargetListOrigin(pstate, tle, (Var *) tle->expr, 0);
+(gdb) p tle
+$57 = (TargetEntry *) 0x17a43b0
+(gdb) p *tle
+$58 = {xpr = {type = T_TargetEntry}, expr = 0x17a4288, resno = 2, resname = 0x17a4230 "name", ressortgroupref = 0, resorigtbl = 0, resorigcol = 0, resjunk = 0 '\000'}
+(gdb) s
+markTargetListOrigin (pstate=0x1717588, tle=0x17a43b0, var=0x17a4288, levelsup=0) at parse_target.c:358
+358		if (var == NULL || !IsA(var, Var))
+(gdb) n
+360		netlevelsup = var->varlevelsup + levelsup;
+(gdb) p val
+No symbol "val" in current context.
+(gdb) n
+361		rte = GetRTEByRangeTablePosn(pstate, var->varno, netlevelsup);
+(gdb) 
+362		attnum = var->varattno;
+(gdb) p rte
+$59 = (RangeTblEntry *) 0x17177a8
+(gdb) p *rte
+$60 = {type = T_RangeTblEntry, rtekind = RTE_RELATION, relid = 41849, relkind = 114 'r', tablesample = 0x0, subquery = 0x0, security_barrier = 0 '\000', jointype = JOIN_INNER, 
+  joinaliasvars = 0x0, functions = 0x0, funcordinality = 0 '\000', tablefunc = 0x0, values_lists = 0x0, ctename = 0x0, ctelevelsup = 0, self_reference = 0 '\000', coltypes = 0x0, 
+  coltypmods = 0x0, colcollations = 0x0, enrname = 0x0, enrtuples = 0, alias = 0x0, eref = 0x17180a8, lateral = 0 '\000', inh = 1 '\001', inFromCl = 1 '\001', requiredPerms = 2, 
+  checkAsUser = 0, selectedCols = 0x17a4398, insertedCols = 0x0, updatedCols = 0x0, securityQuals = 0x0}
+(gdb) n
+364		switch (rte->rtekind)
+(gdb) 
+368				tle->resorigtbl = rte->relid;
+(gdb) 
+369				tle->resorigcol = attnum;
+(gdb) 
+370				break;
+(gdb) p tle
+$61 = (TargetEntry *) 0x17a43b0
+(gdb) p *tle
+$62 = {xpr = {type = T_TargetEntry}, expr = 0x17a4288, resno = 2, resname = 0x17a4230 "name", ressortgroupref = 0, resorigtbl = 41849, resorigcol = 2, resjunk = 0 '\000'}
+(gdb) n
+427	}
+(gdb) 
+markTargetListOrigins (pstate=0x1717588, targetlist=0x17a4368) at parse_target.c:333
+333		foreach(l, targetlist)
+(gdb) n
+339	}
+(gdb) 
+transformSelectStmt (pstate=0x1717588, stmt=0x1717000) at analyze.c:1221
+1221		qual = transformWhereClause(pstate, stmt->whereClause,
+(gdb) p targetList
+No symbol "targetList" in current context.
+(gdb) p stmt->targetList
+$63 = (List *) 0x1716d70
+(gdb) p *stmt->targetList
+$64 = {type = T_List, length = 1, head = 0x1716d50, tail = 0x1716d50}
+(gdb) p *stmt->targetList->head
+$65 = {data = {ptr_value = 0x1716d00, int_value = 24210688, oid_value = 24210688}, next = 0x0}
+(gdb) p qry->targetList
+$66 = (List *) 0x17a4368
+(gdb) p *qry->targetList
+$67 = {type = T_List, length = 2, head = 0x17a4348, tail = 0x17a4400}
+(gdb) list
+1216	
+1217		/* mark column origins */
+1218		markTargetListOrigins(pstate, qry->targetList);
+1219	
+1220		/* transform WHERE */
+1221		qual = transformWhereClause(pstate, stmt->whereClause,
+1222									EXPR_KIND_WHERE, "WHERE");
+1223	
+1224		/* initial processing of HAVING clause is much like WHERE clause */
+1225		qry->havingQual = transformWhereClause(pstate, stmt->havingClause,
+(gdb) s
+transformWhereClause (pstate=0x1717588, clause=0x1716f40, exprKind=EXPR_KIND_WHERE, constructName=0x9e8358 "WHERE") at parse_clause.c:1720
+1720		if (clause == NULL)
+(gdb) bt
+#0  transformWhereClause (pstate=0x1717588, clause=0x1716f40, exprKind=EXPR_KIND_WHERE, constructName=0x9e8358 "WHERE") at parse_clause.c:1720
+#1  0x000000000056fdf4 in transformSelectStmt (pstate=0x1717588, stmt=0x1717000) at analyze.c:1221
+#2  0x000000000056e4d4 in transformStmt (pstate=0x1717588, parseTree=0x1717000) at analyze.c:297
+#3  0x000000000056e2c0 in parse_sub_analyze (parseTree=0x1717000, parentParseState=0x1717368, parentCTE=0x0, locked_from_parent=0 '\000', resolve_unknowns=1 '\001') at analyze.c:172
+#4  0x00000000005a49e8 in transformRangeSubselect (pstate=0x1717368, r=0x1717158) at parse_clause.c:471
+#5  0x00000000005a6279 in transformFromClauseItem (pstate=0x1717368, n=0x1717158, top_rte=0x7ffe485cf168, top_rti=0x7ffe485cf164, namespace=0x7ffe485cf158) at parse_clause.c:1133
+#6  0x00000000005a42d1 in transformFromClause (pstate=0x1717368, frmList=0x17171a8) at parse_clause.c:132
+#7  0x000000000056fd9b in transformSelectStmt (pstate=0x1717368, stmt=0x17171d8) at analyze.c:1211
+#8  0x000000000056e4d4 in transformStmt (pstate=0x1717368, parseTree=0x17171d8) at analyze.c:297
+#9  0x000000000056e402 in transformOptionalSelectInto (pstate=0x1717368, parseTree=0x17171d8) at analyze.c:242
+#10 0x000000000056e2fd in transformTopLevelStmt (pstate=0x1717368, parseTree=0x17172e8) at analyze.c:192
+#11 0x000000000056e175 in parse_analyze (parseTree=0x17172e8, sourceText=0x1716108 "select * from (select * from test2 where id >10) as temp1;", paramTypes=0x0, numParams=0, queryEnv=0x0)
+    at analyze.c:112
+#12 0x0000000000813402 in pg_analyze_and_rewrite (parsetree=0x17172e8, query_string=0x1716108 "select * from (select * from test2 where id >10) as temp1;", paramTypes=0x0, numParams=0, 
+    queryEnv=0x0) at postgres.c:653
+#13 0x00000000008139d2 in exec_simple_query (query_string=0x1716108 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1024
+#14 0x0000000000817b1f in PostgresMain (argc=1, argv=0x1741358, dbname=0x1741238 "postgres", username=0x1741218 "cituscluster") at postgres.c:4088
+#15 0x000000000078b2d2 in BackendRun (port=0x173b3d0) at postmaster.c:4357
+#16 0x000000000078aa7b in BackendStartup (port=0x173b3d0) at postmaster.c:4029
+#17 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#18 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x16f6b40) at postmaster.c:1361
+#19 0x00000000006cf26f in main (argc=1, argv=0x16f6b40) at main.c:228
+(gdb) p stmt->whereClause
+No symbol "stmt" in current context.
+(gdb) n
+1723		qual = transformExpr(pstate, clause, exprKind);
+(gdb) s
+transformExpr (pstate=0x1717588, expr=0x1716f40, exprKind=EXPR_KIND_WHERE) at parse_expr.c:153
+153		sv_expr_kind = pstate->p_expr_kind;
+(gdb) n
+154		pstate->p_expr_kind = exprKind;
+(gdb) 
+156		result = transformExprRecurse(pstate, expr);
+(gdb) s
+transformExprRecurse (pstate=0x1717588, expr=0x1716f40) at parse_expr.c:168
+168		if (expr == NULL)
+(gdb) n
+172		check_stack_depth();
+(gdb) 
+174		switch (nodeTag(expr))
+(gdb) p expr
+$68 = (Node *) 0x1716f40
+(gdb) p expr->type
+$69 = T_A_Expr
+(gdb) n
+212					A_Expr	   *a = (A_Expr *) expr;
+(gdb) 
+214					switch (a->kind)
+(gdb) p a
+$70 = (A_Expr *) 0x1716f40
+(gdb) p *a
+$71 = {type = T_A_Expr, kind = AEXPR_OP, name = 0x1716fd0, lexpr = 0x1716e70, rexpr = 0x1716f10, location = 44}
+(gdb) 
+Socket error Event: 32 Error: 10053.
+Connection closing...Socket close.
+
+Connection closed by foreign host.
+
+Disconnected from remote host(citus1) at 12:19:59.
+
+Type `help' to learn how to use Xshell prompt.
+[c:\~]$ 

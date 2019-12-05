@@ -1,0 +1,935 @@
+Xshell 5 (Build 1326)
+Copyright (c) 2002-2017 NetSarang Computer, Inc. All rights reserved.
+
+Type `help' to learn how to use Xshell prompt.
+[c:\~]$ 
+
+Connecting to 192.168.221.130:22...
+Connection established.
+To escape to local shell, press 'Ctrl+Alt+]'.
+
+Last login: Thu Mar 14 00:48:13 2019 from 192.168.221.1
+[cituscluster@gtm1 ~]$ gdb attach 119494
+GNU gdb (GDB) Red Hat Enterprise Linux 7.6.1-110.el7
+Copyright (C) 2013 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-redhat-linux-gnu".
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>...
+attach: No such file or directory.
+Attaching to process 119494
+Reading symbols from /opt/pgsql-10.1/bin/postgres...done.
+Reading symbols from /lib64/libpthread.so.0...Reading symbols from /usr/lib/debug/usr/lib64/libpthread-2.17.so.debug...done.
+done.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib64/libthread_db.so.1".
+Loaded symbols for /lib64/libpthread.so.0
+Reading symbols from /lib64/librt.so.1...Reading symbols from /usr/lib/debug/usr/lib64/librt-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/librt.so.1
+Reading symbols from /lib64/libdl.so.2...Reading symbols from /usr/lib/debug/usr/lib64/libdl-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libdl.so.2
+Reading symbols from /lib64/libm.so.6...Reading symbols from /usr/lib/debug/usr/lib64/libm-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libm.so.6
+Reading symbols from /lib64/libc.so.6...Reading symbols from /usr/lib/debug/usr/lib64/libc-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libc.so.6
+Reading symbols from /lib64/ld-linux-x86-64.so.2...Reading symbols from /usr/lib/debug/usr/lib64/ld-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/ld-linux-x86-64.so.2
+Reading symbols from /opt/pgsql-10.1/lib/citus.so...done.
+Loaded symbols for /opt/pgsql-10.1/lib/citus.so
+Reading symbols from /opt/pgsql-10.1/lib/libpq.so.5...done.
+Loaded symbols for /opt/pgsql-10.1/lib/libpq.so.5
+Reading symbols from /lib64/libnss_files.so.2...Reading symbols from /usr/lib/debug/usr/lib64/libnss_files-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libnss_files.so.2
+0x00007f274fc22163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+81	T_PSEUDO (SYSCALL_SYMBOL, SYSCALL_NAME, SYSCALL_NARGS)
+(gdb) q
+A debugging session is active.
+
+	Inferior 1 [process 119494] will be detached.
+
+Quit anyway? (y or n) y
+Detaching from program: /opt/pgsql-10.1/bin/postgres, process 119494
+[cituscluster@gtm1 ~]$ gdb attach 119494
+GNU gdb (GDB) Red Hat Enterprise Linux 7.6.1-110.el7
+Copyright (C) 2013 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-redhat-linux-gnu".
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>...
+attach: No such file or directory.
+Attaching to process 119494
+Reading symbols from /opt/pgsql-10.1/bin/postgres...done.
+Reading symbols from /lib64/libpthread.so.0...Reading symbols from /usr/lib/debug/usr/lib64/libpthread-2.17.so.debug...done.
+done.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib64/libthread_db.so.1".
+Loaded symbols for /lib64/libpthread.so.0
+Reading symbols from /lib64/librt.so.1...Reading symbols from /usr/lib/debug/usr/lib64/librt-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/librt.so.1
+Reading symbols from /lib64/libdl.so.2...Reading symbols from /usr/lib/debug/usr/lib64/libdl-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libdl.so.2
+Reading symbols from /lib64/libm.so.6...Reading symbols from /usr/lib/debug/usr/lib64/libm-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libm.so.6
+Reading symbols from /lib64/libc.so.6...Reading symbols from /usr/lib/debug/usr/lib64/libc-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libc.so.6
+Reading symbols from /lib64/ld-linux-x86-64.so.2...Reading symbols from /usr/lib/debug/usr/lib64/ld-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/ld-linux-x86-64.so.2
+Reading symbols from /opt/pgsql-10.1/lib/citus.so...done.
+Loaded symbols for /opt/pgsql-10.1/lib/citus.so
+Reading symbols from /opt/pgsql-10.1/lib/libpq.so.5...done.
+Loaded symbols for /opt/pgsql-10.1/lib/libpq.so.5
+Reading symbols from /lib64/libnss_files.so.2...Reading symbols from /usr/lib/debug/usr/lib64/libnss_files-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libnss_files.so.2
+0x00007f274fc22163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+81	T_PSEUDO (SYSCALL_SYMBOL, SYSCALL_NAME, SYSCALL_NARGS)
+(gdb) 
+(gdb) b PostgresMain
+Breakpoint 1 at 0x81741b: file postgres.c, line 3587.
+(gdb) b exec_simple_query
+Breakpoint 2 at 0x813787: file postgres.c, line 880.
+(gdb) b pg_plan_queries
+Breakpoint 3 at 0x813679: file postgres.c, line 842.
+(gdb) b pg_plan_query
+Breakpoint 4 at 0x8135e2: file postgres.c, line 784.
+(gdb) b distributed_planner
+Breakpoint 5 at 0x7f274935a96d: file planner/distributed_planner.c, line 94.
+(gdb) b standard_planner
+Breakpoint 6 at 0x742910: file planner.c, line 233.
+(gdb) b CreateDistributedPlan
+Breakpoint 7 at 0x7f274935b1c7: file planner/distributed_planner.c, line 580.
+(gdb) 
+Note: breakpoint 7 also set at pc 0x7f274935b1c7.
+Breakpoint 8 at 0x7f274935b1c7: file planner/distributed_planner.c, line 580.
+(gdb) b PrepareMasterJobDirectory
+Breakpoint 9 at 0x7f274934653b: file executor/multi_real_time_executor.c, line 1069.
+(gdb) b ExecuteSubPlans
+Breakpoint 10 at 0x7f274934d56e: file executor/subplan_execution.c, line 35.
+(gdb) b PortalStart
+Breakpoint 11 at 0x818eac: file pquery.c, line 461.
+(gdb) b PortalRun
+Breakpoint 12 at 0x819407: file pquery.c, line 707.
+(gdb) b MultiRealTimeExecute
+Breakpoint 13 at 0x7f2749344c5f: file executor/multi_real_time_executor.c, line 88.
+(gdb) info b
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000081741b in PostgresMain at postgres.c:3587
+2       breakpoint     keep y   0x0000000000813787 in exec_simple_query at postgres.c:880
+3       breakpoint     keep y   0x0000000000813679 in pg_plan_queries at postgres.c:842
+4       breakpoint     keep y   0x00000000008135e2 in pg_plan_query at postgres.c:784
+5       breakpoint     keep y   0x00007f274935a96d in distributed_planner at planner/distributed_planner.c:94
+6       breakpoint     keep y   0x0000000000742910 in standard_planner at planner.c:233
+7       breakpoint     keep y   0x00007f274935b1c7 in CreateDistributedPlan at planner/distributed_planner.c:580
+8       breakpoint     keep y   0x00007f274935b1c7 in CreateDistributedPlan at planner/distributed_planner.c:580
+9       breakpoint     keep y   0x00007f274934653b in PrepareMasterJobDirectory at executor/multi_real_time_executor.c:1069
+10      breakpoint     keep y   0x00007f274934d56e in ExecuteSubPlans at executor/subplan_execution.c:35
+11      breakpoint     keep y   0x0000000000818eac in PortalStart at pquery.c:461
+12      breakpoint     keep y   0x0000000000819407 in PortalRun at pquery.c:707
+13      breakpoint     keep y   0x00007f2749344c5f in MultiRealTimeExecute at executor/multi_real_time_executor.c:88
+(gdb) n
+epoll_wait () at ../sysdeps/unix/syscall-template.S:83
+83	T_PSEUDO_END (SYSCALL_SYMBOL)
+(gdb) 
+WaitEventSetWaitBlock (set=0x16f8728, cur_timeout=-1, occurred_events=0x7ffe485cf350, nevents=1) at latch.c:1052
+1052		if (rc < 0)
+(gdb) 
+1055			if (errno != EINTR)
+(gdb) 
+1062			return 0;
+(gdb) 
+1151	}
+(gdb) 
+WaitEventSetWait (set=0x16f8728, timeout=-1, occurred_events=0x7ffe485cf350, nevents=1, wait_event_info=100663296) at latch.c:1003
+1003			if (rc == -1)
+(gdb) 
+1006				returned_events = rc;
+(gdb) 
+1009			if (returned_events == 0 && timeout >= 0)
+(gdb) 
+951		while (returned_events == 0)
+(gdb) 
+982			if (set->latch && set->latch->is_set)
+(gdb) 
+1000			rc = WaitEventSetWaitBlock(set, cur_timeout,
+(gdb) 
+1003			if (rc == -1)
+(gdb) 
+1006				returned_events = rc;
+(gdb) 
+1009			if (returned_events == 0 && timeout >= 0)
+(gdb) 
+951		while (returned_events == 0)
+(gdb) 
+1019		waiting = false;
+(gdb) 
+1022		pgstat_report_wait_end();
+(gdb) 
+1024		return returned_events;
+(gdb) 
+1025	}
+(gdb) 
+secure_read (port=0x173b6b0, ptr=0xe182c0 <PqRecvBuffer>, len=8192) at be-secure.c:186
+186			if (event.events & WL_POSTMASTER_DEATH)
+(gdb) p event
+$1 = {pos = 0, events = 2, fd = 9, user_data = 0x0}
+(gdb) n
+192			if (event.events & WL_LATCH_SET)
+(gdb) 
+203			goto retry;
+(gdb) 
+153			n = secure_raw_read(port, ptr, len);
+(gdb) 
+154			waitfor = WL_SOCKET_READABLE;
+(gdb) 
+158		if (n < 0 && !port->noblock && (errno == EWOULDBLOCK || errno == EAGAIN))
+(gdb) 
+211		ProcessClientReadInterrupt(false);
+(gdb) 
+213		return n;
+(gdb) 
+214	}
+(gdb) 
+pq_recvbuf () at pqcomm.c:966
+966			if (r < 0)
+(gdb) 
+981			if (r == 0)
+(gdb) 
+990			PqRecvLength += r;
+(gdb) 
+991			return 0;
+(gdb) 
+993	}
+(gdb) 
+pq_getbyte () at pqcomm.c:1004
+1004		while (PqRecvPointer >= PqRecvLength)
+(gdb) 
+1009		return (unsigned char) PqRecvBuffer[PqRecvPointer++];
+(gdb) 
+1010	}
+(gdb) 
+SocketBackend (inBuf=0x7ffe485cf560) at postgres.c:330
+330		if (qtype == EOF)			/* frontend disconnected */
+(gdb) 
+359		switch (qtype)
+(gdb) 
+362				doing_extended_query_message = false;
+(gdb) 
+363				if (PG_PROTOCOL_MAJOR(FrontendProtocol) < 3)
+(gdb) 
+387				break;
+(gdb) 
+476		if (PG_PROTOCOL_MAJOR(FrontendProtocol) >= 3)
+(gdb) 
+478			if (pq_getmessage(inBuf, 0))
+(gdb) 
+483		RESUME_CANCEL_INTERRUPTS();
+(gdb) 
+485		return qtype;
+(gdb) 
+486	}
+(gdb) 
+ReadCommand (inBuf=0x7ffe485cf560) at postgres.c:504
+504		return result;
+(gdb) 
+505	}
+(gdb) bt
+#0  ReadCommand (inBuf=0x7ffe485cf560) at postgres.c:505
+#1  0x0000000000817a41 in PostgresMain (argc=1, argv=0x1741008, dbname=0x1740eb8 "postgres", username=0x16f8c68 "cituscluster") at postgres.c:4030
+#2  0x000000000078b2d2 in BackendRun (port=0x173b6b0) at postmaster.c:4357
+#3  0x000000000078aa7b in BackendStartup (port=0x173b6b0) at postmaster.c:4029
+#4  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#5  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x16f6b40) at postmaster.c:1361
+#6  0x00000000006cf26f in main (argc=1, argv=0x16f6b40) at main.c:228
+(gdb) n
+PostgresMain (argc=1, argv=0x1741008, dbname=0x1740eb8 "postgres", username=0x16f8c68 "cituscluster") at postgres.c:4041
+4041			CHECK_FOR_INTERRUPTS();
+(gdb) 
+4042			DoingCommandRead = false;
+(gdb) 
+4047			if (disable_idle_in_transaction_timeout)
+(gdb) 
+4057			if (ConfigReloadPending)
+(gdb) 
+4067			if (ignore_till_sync && firstchar != EOF)
+(gdb) p ConfigReloadPending
+$2 = 0
+(gdb) n
+4070			switch (firstchar)
+(gdb) 
+4077						SetCurrentStatementStartTimestamp();
+(gdb) p firstchar
+$3 = 81
+(gdb) n
+4079						query_string = pq_getmsgstring(&input_message);
+(gdb) p input_message
+$4 = {data = 0x17a57a8 "select * from (select * from test2 where id >10) as temp1;", len = 59, maxlen = 1024, cursor = 0}
+(gdb) n
+4080						pq_getmsgend(&input_message);
+(gdb) n
+4082						if (am_walsender)
+(gdb) p query_string
+$5 = 0x17a57a8 "select * from (select * from test2 where id >10) as temp1;"
+(gdb) n
+4088							exec_simple_query(query_string);
+(gdb) 
+
+Breakpoint 2, exec_simple_query (query_string=0x17a57a8 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:880
+880		CommandDest dest = whereToSendOutput;
+(gdb) n
+884		bool		save_log_statement_stats = log_statement_stats;
+(gdb) p dest
+$6 = DestRemote
+(gdb) p whereToSendOutput
+$7 = DestRemote
+(gdb) n
+885		bool		was_logged = false;
+(gdb) 
+893		debug_query_string = query_string;
+(gdb) 
+895		pgstat_report_activity(STATE_RUNNING, query_string);
+(gdb) 
+903		if (save_log_statement_stats)
+(gdb) p save_log_statement_stats
+$8 = 0 '\000'
+(gdb) n
+913		start_xact_command();
+(gdb) bt
+#0  exec_simple_query (query_string=0x17a57a8 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:913
+#1  0x0000000000817b1f in PostgresMain (argc=1, argv=0x1741008, dbname=0x1740eb8 "postgres", username=0x16f8c68 "cituscluster") at postgres.c:4088
+#2  0x000000000078b2d2 in BackendRun (port=0x173b6b0) at postmaster.c:4357
+#3  0x000000000078aa7b in BackendStartup (port=0x173b6b0) at postmaster.c:4029
+#4  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#5  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x16f6b40) at postmaster.c:1361
+#6  0x00000000006cf26f in main (argc=1, argv=0x16f6b40) at main.c:228
+(gdb) s
+start_xact_command () at postgres.c:2436
+2436		if (!xact_started)
+(gdb) n
+2438			StartTransactionCommand();
+(gdb) p xact_starte
+No symbol "xact_starte" in current context.
+(gdb) p xact_started
+$9 = 0 '\000'
+(gdb) s
+StartTransactionCommand () at xact.c:2682
+2682		TransactionState s = CurrentTransactionState;
+(gdb) n
+2684		switch (s->blockState)
+(gdb) p s
+$10 = (TransactionState) 0xe176c0 <TopTransactionStateData>
+(gdb) p *s
+$11 = {transactionId = 0, subTransactionId = 0, name = 0x0, savepointLevel = 0, state = TRANS_DEFAULT, blockState = TBLOCK_DEFAULT, nestingLevel = 0, gucNestLevel = 0, 
+  curTransactionContext = 0x0, curTransactionOwner = 0x0, childXids = 0x0, nChildXids = 0, maxChildXids = 0, prevUser = 16814, prevSecContext = 0, prevXactReadOnly = 0 '\000', 
+  startedInRecovery = 0 '\000', didLogXid = 0 '\000', parallelModeLevel = 0, parent = 0x0}
+(gdb) n
+2691				StartTransaction();
+(gdb) s
+StartTransaction () at xact.c:1810
+1810		s = &TopTransactionStateData;
+(gdb) n
+1811		CurrentTransactionState = s;
+(gdb) 
+1818		if (s->state != TRANS_DEFAULT)
+(gdb) p *s
+$12 = {transactionId = 0, subTransactionId = 0, name = 0x0, savepointLevel = 0, state = TRANS_DEFAULT, blockState = TBLOCK_DEFAULT, nestingLevel = 0, gucNestLevel = 0, 
+  curTransactionContext = 0x0, curTransactionOwner = 0x0, childXids = 0x0, nChildXids = 0, maxChildXids = 0, prevUser = 16814, prevSecContext = 0, prevXactReadOnly = 0 '\000', 
+  startedInRecovery = 0 '\000', didLogXid = 0 '\000', parallelModeLevel = 0, parent = 0x0}
+(gdb) n
+1826		s->state = TRANS_START;
+(gdb) 
+1827		s->transactionId = InvalidTransactionId;	/* until assigned */
+(gdb) 
+1837		if (RecoveryInProgress())
+(gdb) 
+1844			s->startedInRecovery = false;
+(gdb) 
+1845			XactReadOnly = DefaultXactReadOnly;
+(gdb) 
+1847		XactDeferrable = DefaultXactDeferrable;
+(gdb) p DefaultXactReadOnly
+$13 = 0 '\000'
+(gdb) p DefaultXactDeferrable
+$14 = 0 '\000'
+(gdb) n
+1848		XactIsoLevel = DefaultXactIsoLevel;
+(gdb) 
+1849		forceSyncCommit = false;
+(gdb) 
+1850		MyXactFlags = 0;
+(gdb) 
+1855		s->subTransactionId = TopSubTransactionId;
+(gdb) 
+1856		currentSubTransactionId = TopSubTransactionId;
+(gdb) p TopSubTransactionId
+No symbol "TopSubTransactionId" in current context.
+(gdb) n
+1857		currentCommandId = FirstCommandId;
+(gdb) p *s
+$15 = {transactionId = 0, subTransactionId = 1, name = 0x0, savepointLevel = 0, state = TRANS_START, blockState = TBLOCK_DEFAULT, nestingLevel = 0, gucNestLevel = 0, 
+  curTransactionContext = 0x0, curTransactionOwner = 0x0, childXids = 0x0, nChildXids = 0, maxChildXids = 0, prevUser = 16814, prevSecContext = 0, prevXactReadOnly = 0 '\000', 
+  startedInRecovery = 0 '\000', didLogXid = 0 '\000', parallelModeLevel = 0, parent = 0x0}
+(gdb) n
+1858		currentCommandIdUsed = false;
+(gdb) 
+1863		nUnreportedXids = 0;
+(gdb) 
+1864		s->didLogXid = false;
+(gdb) 
+1869		AtStart_Memory();
+(gdb) 
+1870		AtStart_ResourceOwner();
+(gdb) s
+AtStart_ResourceOwner () at xact.c:1043
+1043		TransactionState s = CurrentTransactionState;
+(gdb) 
+1053		s->curTransactionOwner = ResourceOwnerCreate(NULL, "TopTransaction");
+(gdb) n
+1055		TopTransactionResourceOwner = s->curTransactionOwner;
+(gdb) 
+1056		CurTransactionResourceOwner = s->curTransactionOwner;
+(gdb) 
+1057		CurrentResourceOwner = s->curTransactionOwner;
+(gdb) p *s
+$16 = {transactionId = 0, subTransactionId = 1, name = 0x0, savepointLevel = 0, state = TRANS_START, blockState = TBLOCK_DEFAULT, nestingLevel = 0, gucNestLevel = 0, 
+  curTransactionContext = 0x1805328, curTransactionOwner = 0x1747718, childXids = 0x0, nChildXids = 0, maxChildXids = 0, prevUser = 16814, prevSecContext = 0, prevXactReadOnly = 0 '\000', 
+  startedInRecovery = 0 '\000', didLogXid = 0 '\000', parallelModeLevel = 0, parent = 0x0}
+(gdb) p *curTransactionOwner
+No symbol "curTransactionOwner" in current context.
+(gdb) p *s->curTransactionOwner
+$17 = {parent = 0x0, firstchild = 0x0, nextchild = 0x0, name = 0x9d3035 "TopTransaction", bufferarr = {itemsarr = 0x0, invalidval = 0, capacity = 0, nitems = 0, maxitems = 0, lastidx = 0}, 
+  catrefarr = {itemsarr = 0x0, invalidval = 0, capacity = 0, nitems = 0, maxitems = 0, lastidx = 0}, catlistrefarr = {itemsarr = 0x0, invalidval = 0, capacity = 0, nitems = 0, maxitems = 0, 
+    lastidx = 0}, relrefarr = {itemsarr = 0x0, invalidval = 0, capacity = 0, nitems = 0, maxitems = 0, lastidx = 0}, planrefarr = {itemsarr = 0x0, invalidval = 0, capacity = 0, nitems = 0, 
+    maxitems = 0, lastidx = 0}, tupdescarr = {itemsarr = 0x0, invalidval = 0, capacity = 0, nitems = 0, maxitems = 0, lastidx = 0}, snapshotarr = {itemsarr = 0x0, invalidval = 0, 
+    capacity = 0, nitems = 0, maxitems = 0, lastidx = 0}, filearr = {itemsarr = 0x0, invalidval = 4294967295, capacity = 0, nitems = 0, maxitems = 0, lastidx = 0}, dsmarr = {itemsarr = 0x0, 
+    invalidval = 0, capacity = 0, nitems = 0, maxitems = 0, lastidx = 0}, nlocks = 0, locks = {0x0 <repeats 15 times>}}
+(gdb) n
+1058	}
+(gdb) 
+StartTransaction () at xact.c:1876
+1876		vxid.backendId = MyBackendId;
+(gdb) p MyBackendId
+$18 = 4
+(gdb) n
+1877		vxid.localTransactionId = GetNextLocalTransactionId();
+(gdb) 
+1882		VirtualXactLockTableInsert(vxid);
+(gdb) p vxid
+$19 = {backendId = 4, localTransactionId = 4774}
+(gdb) n
+1889		MyProc->lxid = vxid.localTransactionId;
+(gdb) 
+1899		xactStartTimestamp = stmtStartTimestamp;
+(gdb) 
+1900		xactStopTimestamp = 0;
+(gdb) list
+1895		 * as the first command's statement_timestamp(), so don't do a fresh
+1896		 * GetCurrentTimestamp() call (which'd be expensive anyway).  Also, mark
+1897		 * xactStopTimestamp as unset.
+1898		 */
+1899		xactStartTimestamp = stmtStartTimestamp;
+1900		xactStopTimestamp = 0;
+1901		pgstat_report_xact_timestamp(xactStartTimestamp);
+1902	
+1903		/*
+1904		 * initialize current transaction state fields
+(gdb) bt
+#0  StartTransaction () at xact.c:1900
+#1  0x000000000050b0f5 in StartTransactionCommand () at xact.c:2691
+#2  0x0000000000815d46 in start_xact_command () at postgres.c:2438
+#3  0x00000000008137d0 in exec_simple_query (query_string=0x17a57a8 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:913
+#4  0x0000000000817b1f in PostgresMain (argc=1, argv=0x1741008, dbname=0x1740eb8 "postgres", username=0x16f8c68 "cituscluster") at postgres.c:4088
+#5  0x000000000078b2d2 in BackendRun (port=0x173b6b0) at postmaster.c:4357
+#6  0x000000000078aa7b in BackendStartup (port=0x173b6b0) at postmaster.c:4029
+#7  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#8  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x16f6b40) at postmaster.c:1361
+#9  0x00000000006cf26f in main (argc=1, argv=0x16f6b40) at main.c:228
+(gdb) p xactStartTimestamp
+$20 = 605866251634088
+(gdb) n
+1901		pgstat_report_xact_timestamp(xactStartTimestamp);
+(gdb) 
+1908		s->nestingLevel = 1;
+(gdb) 
+1909		s->gucNestLevel = 1;
+(gdb) 
+1910		s->childXids = NULL;
+(gdb) 
+1911		s->nChildXids = 0;
+(gdb) 
+1912		s->maxChildXids = 0;
+(gdb) 
+1913		GetUserIdAndSecContext(&s->prevUser, &s->prevSecContext);
+(gdb) 
+1920		AtStart_GUC();
+(gdb) 
+1921		AtStart_Cache();
+(gdb) 
+1922		AfterTriggerBeginXact();
+(gdb) s
+AfterTriggerBeginXact () at trigger.c:4513
+4513		afterTriggers.firing_counter = (CommandId) 1;	/* mustn't be 0 */
+(gdb) list
+4508	AfterTriggerBeginXact(void)
+4509	{
+4510		/*
+4511		 * Initialize after-trigger state structure to empty
+4512		 */
+4513		afterTriggers.firing_counter = (CommandId) 1;	/* mustn't be 0 */
+4514		afterTriggers.query_depth = -1;
+4515	
+4516		/*
+4517		 * Verify that there is no leftover state remaining.  If these assertions
+(gdb) n
+4514		afterTriggers.query_depth = -1;
+(gdb) 
+4528	}
+(gdb) 
+StartTransaction () at xact.c:1928
+1928		s->state = TRANS_INPROGRESS;
+(gdb) n
+1930		ShowTransactionState("StartTransaction");
+(gdb) 
+1931	}
+(gdb) 
+StartTransactionCommand () at xact.c:2692
+2692				s->blockState = TBLOCK_STARTED;
+(gdb) 
+2693				break;
+(gdb) 
+2743		MemoryContextSwitchTo(CurTransactionContext);
+(gdb) 
+2744	}
+(gdb) 
+start_xact_command () at postgres.c:2442
+2442			if (StatementTimeout > 0)
+(gdb) 
+2445				disable_timeout(STATEMENT_TIMEOUT, false);
+(gdb) 
+2447			xact_started = true;
+(gdb) 
+2449	}
+(gdb) 
+exec_simple_query (query_string=0x17a57a8 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:921
+921		drop_unnamed_stmt();
+(gdb) list
+916		 * Zap any pre-existing unnamed statement.  (While not strictly necessary,
+917		 * it seems best to define simple-Query mode as if it used the unnamed
+918		 * statement and portal; this ensures we recover any storage used by prior
+919		 * unnamed operations.)
+920		 */
+921		drop_unnamed_stmt();
+922	
+923		/*
+924		 * Switch to appropriate context for constructing parsetrees.
+925		 */
+(gdb) n
+926		oldcontext = MemoryContextSwitchTo(MessageContext);
+(gdb) 
+932		parsetree_list = pg_parse_query(query_string);
+(gdb) s
+pg_parse_query (query_string=0x17a57a8 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:602
+602		if (log_parser_stats)
+(gdb) n
+605		raw_parsetree_list = raw_parser(query_string);
+(gdb) 
+607		if (log_parser_stats)
+(gdb) p raw_parsetree_list
+$21 = (List *) 0x17a69d8
+(gdb) p *raw_parsetree_list
+$22 = {type = T_List, length = 1, head = 0x17a69b8, tail = 0x17a69b8}
+(gdb) p *raw_parsetree_list->tail
+$23 = {data = {ptr_value = 0x17a6988, int_value = 24799624, oid_value = 24799624}, next = 0x0}
+(gdb) p *raw_parsetree_list->head
+$24 = {data = {ptr_value = 0x17a6988, int_value = 24799624, oid_value = 24799624}, next = 0x0}
+(gdb) p *raw_parsetree_list->head->data
+Attempt to take contents of a non-pointer value.
+(gdb) p *raw_parsetree_list->head.data
+Attempt to take contents of a non-pointer value.
+(gdb) n
+625		return raw_parsetree_list;
+(gdb) list
+620		}
+621	#endif
+622	
+623		TRACE_POSTGRESQL_QUERY_PARSE_DONE(query_string);
+624	
+625		return raw_parsetree_list;
+626	}
+627	
+628	/*
+629	 * Given a raw parsetree (gram.y output), and optionally information about
+(gdb) list
+630	 * types of parameter symbols ($n), perform parse analysis and rule rewriting.
+631	 *
+632	 * A list of Query nodes is returned, since either the analyzer or the
+633	 * rewriter might expand one query to several.
+634	 *
+635	 * NOTE: for reasons mentioned above, this must be separate from raw parsing.
+636	 */
+637	List *
+638	pg_analyze_and_rewrite(RawStmt *parsetree, const char *query_string,
+639						   Oid *paramTypes, int numParams,
+(gdb) bt
+#0  pg_parse_query (query_string=0x17a57a8 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:625
+#1  0x00000000008137f7 in exec_simple_query (query_string=0x17a57a8 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:932
+#2  0x0000000000817b1f in PostgresMain (argc=1, argv=0x1741008, dbname=0x1740eb8 "postgres", username=0x16f8c68 "cituscluster") at postgres.c:4088
+#3  0x000000000078b2d2 in BackendRun (port=0x173b6b0) at postmaster.c:4357
+#4  0x000000000078aa7b in BackendStartup (port=0x173b6b0) at postmaster.c:4029
+#5  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#6  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x16f6b40) at postmaster.c:1361
+#7  0x00000000006cf26f in main (argc=1, argv=0x16f6b40) at main.c:228
+(gdb) n
+626	}
+(gdb) 
+exec_simple_query (query_string=0x17a57a8 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:935
+935		if (check_log_statement(parsetree_list))
+(gdb) display parsetree_list
+1: parsetree_list = (List *) 0x17a69d8
+(gdb) display *parsetree_list
+2: *parsetree_list = {type = T_List, length = 1, head = 0x17a69b8, tail = 0x17a69b8}
+(gdb) display *parsetree_list->head
+3: *parsetree_list->head = {data = {ptr_value = 0x17a6988, int_value = 24799624, oid_value = 24799624}, next = 0x0}
+(gdb) display *parsetree_list->head.data
+4: *parsetree_list->head.data = <error: Attempt to take contents of a non-pointer value.>
+(gdb) display *parsetree_list->head.data.ptr_value
+5: *parsetree_list->head.data.ptr_value = <error: Attempt to dereference a generic pointer.>
+(gdb) s
+check_log_statement (stmt_list=0x17a69d8) at postgres.c:2067
+2067		if (log_statement == LOGSTMT_NONE)
+(gdb) n
+2068			return false;
+(gdb) 
+2082	}
+(gdb) 
+exec_simple_query (query_string=0x17a57a8 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:947
+947		MemoryContextSwitchTo(oldcontext);
+(gdb) n
+956		isTopLevel = (list_length(parsetree_list) == 1);
+(gdb) n
+961		foreach(parsetree_item, parsetree_list)
+(gdb) n
+963			RawStmt    *parsetree = lfirst_node(RawStmt, parsetree_item);
+(gdb) p *parsetree
+$25 = {type = 1701602675, stmt = 0x7328206d6f726620, stmt_location = 1667591269, stmt_len = 539631732}
+(gdb) p *parsetree->stmt
+Cannot access memory at address 0x7328206d6f726620
+(gdb) p parsetree->stmt
+$26 = (Node *) 0x7328206d6f726620
+(gdb) p *(Node *)(parsetree->stmt)
+Cannot access memory at address 0x7328206d6f726620
+(gdb) list
+958		/*
+959		 * Run through the raw parsetree(s) and process each one.
+960		 */
+961		foreach(parsetree_item, parsetree_list)
+962		{
+963			RawStmt    *parsetree = lfirst_node(RawStmt, parsetree_item);
+964			bool		snapshot_set = false;
+965			const char *commandTag;
+966			char		completionTag[COMPLETION_TAG_BUFSIZE];
+967			List	   *querytree_list,
+(gdb) n
+964			bool		snapshot_set = false;
+(gdb) 
+979			commandTag = CreateCommandTag(parsetree->stmt);
+(gdb) s
+CreateCommandTag (parsetree=0x17a6878) at utility.c:2040
+2040		switch (nodeTag(parsetree))
+(gdb) n
+2061				tag = "SELECT";
+(gdb) p ((const Node*)(parsetree))->type
+$27 = T_SelectStmt
+(gdb) n
+2062				break;
+(gdb) 
+2856		return tag;
+(gdb) 
+2857	}
+(gdb) 
+exec_simple_query (query_string=0x17a57a8 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:981
+981			set_ps_display(commandTag, false);
+(gdb) 
+983			BeginCommand(commandTag, dest);
+(gdb) 
+993			if (IsAbortedTransactionBlockState() &&
+(gdb) list
+988			 * to do parse analysis, rewrite, or planning, since all those phases
+989			 * try to do database accesses, which may fail in abort state. (It
+990			 * might be safe to allow some additional utility commands in this
+991			 * state, but not many...)
+992			 */
+993			if (IsAbortedTransactionBlockState() &&
+994				!IsTransactionExitStmt(parsetree->stmt))
+995				ereport(ERROR,
+996						(errcode(ERRCODE_IN_FAILED_SQL_TRANSACTION),
+997						 errmsg("current transaction is aborted, "
+(gdb) p ((const Node*)(parsetree))
+$28 = (const Node *) 0x17a6988
+(gdb) p *((const Node*)(parsetree))
+$29 = {type = T_RawStmt}
+(gdb) p (const Node*)(parsetree->stmt)
+$32 = (const Node *) 0x17a6878
+(gdb) p *(const Node*)(parsetree->stmt)
+$33 = {type = T_SelectStmt}
+(gdb) p *(const TransactionStmt*)(parsetree->stmt)
+$34 = {type = T_SelectStmt, kind = TRANS_STMT_BEGIN, options = 0x0, gid = 0x0}
+(gdb) list
+998								"commands ignored until end of transaction block"),
+999						 errdetail_abort()));
+1000	
+1001			/* Make sure we are in a transaction command */
+1002			start_xact_command();
+1003	
+1004			/* If we got a cancel signal in parsing or prior command, quit */
+1005			CHECK_FOR_INTERRUPTS();
+1006	
+1007			/*
+(gdb) n
+1002			start_xact_command();
+(gdb) n
+1005			CHECK_FOR_INTERRUPTS();
+(gdb) n
+1010			if (analyze_requires_snapshot(parsetree))
+(gdb) s
+analyze_requires_snapshot (parseTree=0x17a6988) at analyze.c:352
+352		switch (nodeTag(parseTree->stmt))
+(gdb) n
+361				result = true;
+(gdb) 
+362				break;
+(gdb) 
+380		return result;
+(gdb) 
+381	}
+(gdb) 
+exec_simple_query (query_string=0x17a57a8 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1012
+1012				PushActiveSnapshot(GetTransactionSnapshot());
+(gdb) s
+GetTransactionSnapshot () at snapmgr.c:312
+312		if (HistoricSnapshotActive())
+(gdb) n
+319		if (!FirstSnapshotSet)
+(gdb) 
+325			InvalidateCatalogSnapshot();
+(gdb) 
+330			if (IsInParallelMode())
+(gdb) 
+341			if (IsolationUsesXactSnapshot())
+(gdb) 
+356				CurrentSnapshot = GetSnapshotData(&CurrentSnapshotData);
+(gdb) 
+358			FirstSnapshotSet = true;
+(gdb) 
+359			return CurrentSnapshot;
+(gdb) p CurrentSnapshot
+$35 = (Snapshot) 0xe16f20 <CurrentSnapshotData>
+(gdb) n
+371	}
+(gdb) 
+exec_simple_query (query_string=0x17a57a8 "select * from (select * from test2 where id >10) as temp1;") at postgres.c:1013
+1013				snapshot_set = true;
+(gdb) 
+1022			oldcontext = MemoryContextSwitchTo(MessageContext);
+(gdb) 
+1024			querytree_list = pg_analyze_and_rewrite(parsetree, query_string,
+(gdb) s
+pg_analyze_and_rewrite (parsetree=0x17a6988, query_string=0x17a57a8 "select * from (select * from test2 where id >10) as temp1;", paramTypes=0x0, numParams=0, queryEnv=0x0) at postgres.c:650
+650		if (log_parser_stats)
+(gdb) n
+653		query = parse_analyze(parsetree, query_string, paramTypes, numParams,
+(gdb) s
+parse_analyze (parseTree=0x17a6988, sourceText=0x17a57a8 "select * from (select * from test2 where id >10) as temp1;", paramTypes=0x0, numParams=0, queryEnv=0x0) at analyze.c:100
+100		ParseState *pstate = make_parsestate(NULL);
+(gdb) n
+105		pstate->p_sourcetext = sourceText;
+(gdb) p *(const TransactionStmt*)(parseTree->stmt)
+$36 = {type = T_SelectStmt, kind = TRANS_STMT_BEGIN, options = 0x0, gid = 0x0}
+(gdb) p *(const SelectStmt*)(parseTree->stmt)
+$37 = {type = T_SelectStmt, distinctClause = 0x0, intoClause = 0x0, targetList = 0x17a62d8, fromClause = 0x17a6848, whereClause = 0x0, groupClause = 0x0, havingClause = 0x0, 
+  windowClause = 0x0, valuesLists = 0x0, sortClause = 0x0, limitOffset = 0x0, limitCount = 0x0, lockingClause = 0x0, withClause = 0x0, op = SETOP_NONE, all = 0 '\000', larg = 0x0, 
+  rarg = 0x0}
+(gdb) p ((const SelectStmt*)(parseTree->stmt))->type
+$39 = T_SelectStmt
+(gdb) p ((const SelectStmt*)(parseTree->stmt))->fromClause
+$40 = (List *) 0x17a6848
+(gdb) n
+107		if (numParams > 0)
+(gdb) 
+110		pstate->p_queryEnv = queryEnv;
+(gdb) 
+112		query = transformTopLevelStmt(pstate, parseTree);
+(gdb) s
+transformTopLevelStmt (pstate=0x17a6a08, parseTree=0x17a6988) at analyze.c:192
+192		result = transformOptionalSelectInto(pstate, parseTree->stmt);
+(gdb) s
+transformOptionalSelectInto (pstate=0x17a6a08, parseTree=0x17a6878) at analyze.c:213
+213		if (IsA(parseTree, SelectStmt))
+(gdb) n
+215			SelectStmt *stmt = (SelectStmt *) parseTree;
+(gdb) n
+218			while (stmt && stmt->op != SETOP_NONE)
+(gdb) p stmt
+$41 = (SelectStmt *) 0x17a6878
+(gdb) p *stmt
+$42 = {type = T_SelectStmt, distinctClause = 0x0, intoClause = 0x0, targetList = 0x17a62d8, fromClause = 0x17a6848, whereClause = 0x0, groupClause = 0x0, havingClause = 0x0, 
+  windowClause = 0x0, valuesLists = 0x0, sortClause = 0x0, limitOffset = 0x0, limitCount = 0x0, lockingClause = 0x0, withClause = 0x0, op = SETOP_NONE, all = 0 '\000', larg = 0x0, 
+  rarg = 0x0}
+(gdb) n
+222			if (stmt->intoClause)
+(gdb) p stmt->op
+$43 = SETOP_NONE
+(gdb) n
+242		return transformStmt(pstate, parseTree);
+(gdb) s
+transformStmt (pstate=0x17a6a08, parseTree=0x17a6878) at analyze.c:273
+273		switch (nodeTag(parseTree))
+(gdb) n
+292					SelectStmt *n = (SelectStmt *) parseTree;
+(gdb) 
+294					if (n->valuesLists)
+(gdb) p *n
+$44 = {type = T_SelectStmt, distinctClause = 0x0, intoClause = 0x0, targetList = 0x17a62d8, fromClause = 0x17a6848, whereClause = 0x0, groupClause = 0x0, havingClause = 0x0, 
+  windowClause = 0x0, valuesLists = 0x0, sortClause = 0x0, limitOffset = 0x0, limitCount = 0x0, lockingClause = 0x0, withClause = 0x0, op = SETOP_NONE, all = 0 '\000', larg = 0x0, 
+  rarg = 0x0}
+(gdb) p n->valuesLists
+$45 = (List *) 0x0
+(gdb) n
+296					else if (n->op == SETOP_NONE)
+(gdb) 
+297						result = transformSelectStmt(pstate, n);
+(gdb) p pstate
+$46 = (ParseState *) 0x17a6a08
+(gdb) p *pstate
+$47 = {parentParseState = 0x0, p_sourcetext = 0x17a57a8 "select * from (select * from test2 where id >10) as temp1;", p_rtable = 0x0, p_joinexprs = 0x0, p_joinlist = 0x0, p_namespace = 0x0, 
+  p_lateral_active = 0 '\000', p_ctenamespace = 0x0, p_future_ctes = 0x0, p_parent_cte = 0x0, p_target_relation = 0x0, p_target_rangetblentry = 0x0, p_is_insert = 0 '\000', 
+  p_windowdefs = 0x0, p_expr_kind = EXPR_KIND_NONE, p_next_resno = 1, p_multiassign_exprs = 0x0, p_locking_clause = 0x0, p_locked_from_parent = 0 '\000', p_resolve_unknowns = 1 '\001', 
+  p_queryEnv = 0x0, p_hasAggs = 0 '\000', p_hasWindowFuncs = 0 '\000', p_hasTargetSRFs = 0 '\000', p_hasSubLinks = 0 '\000', p_hasModifyingCTE = 0 '\000', p_last_srf = 0x0, 
+  p_pre_columnref_hook = 0x0, p_post_columnref_hook = 0x0, p_paramref_hook = 0x0, p_coerce_param_hook = 0x0, p_ref_hook_state = 0x0}
+(gdb) p *n
+$48 = {type = T_SelectStmt, distinctClause = 0x0, intoClause = 0x0, targetList = 0x17a62d8, fromClause = 0x17a6848, whereClause = 0x0, groupClause = 0x0, havingClause = 0x0, 
+  windowClause = 0x0, valuesLists = 0x0, sortClause = 0x0, limitOffset = 0x0, limitCount = 0x0, lockingClause = 0x0, withClause = 0x0, op = SETOP_NONE, all = 0 '\000', larg = 0x0, 
+  rarg = 0x0}
+(gdb) s
+transformSelectStmt (pstate=0x17a6a08, stmt=0x17a6878) at analyze.c:1182
+1182		Query	   *qry = makeNode(Query);
+(gdb) n
+1186		qry->commandType = CMD_SELECT;
+(gdb) n
+1189		if (stmt->withClause)
+(gdb) n
+1197		if (stmt->intoClause)
+(gdb) n
+1205		pstate->p_locking_clause = stmt->lockingClause;
+(gdb) n
+1208		pstate->p_windowdefs = stmt->windowClause;
+(gdb) n
+1211		transformFromClause(pstate, stmt->fromClause);
+(gdb) s
+transformFromClause (pstate=0x17a6a08, frmList=0x17a6848) at parse_clause.c:125
+125		foreach(fl, frmList)
+(gdb) n
+127			Node	   *n = lfirst(fl);
+(gdb) n
+132			n = transformFromClauseItem(pstate, n,
+(gdb) p *n
+$49 = {type = T_RangeSubselect}
+(gdb) s
+transformFromClauseItem (pstate=0x17a6a08, n=0x17a67f8, top_rte=0x7ffe485cf168, top_rti=0x7ffe485cf164, namespace=0x7ffe485cf158) at parse_clause.c:1101
+1101		if (IsA(n, RangeVar))
+(gdb) n
+1126		else if (IsA(n, RangeSubselect))
+(gdb) 
+1133			rte = transformRangeSubselect(pstate, (RangeSubselect *) n);
+(gdb) s
+transformRangeSubselect (pstate=0x17a6a08, r=0x17a67f8) at parse_clause.c:449
+449		if (r->alias == NULL)
+(gdb) p r
+$50 = (RangeSubselect *) 0x17a67f8
+(gdb) p *r
+$51 = {type = T_RangeSubselect, lateral = 0 '\000', subquery = 0x17a66a0, alias = 0x17a67c8}
+(gdb) p r->alids
+There is no member named alids.
+(gdb) p r->alias
+$52 = (Alias *) 0x17a67c8
+(gdb) p *(r->alias)
+$53 = {type = T_Alias, aliasname = 0x17a67b0 "temp1", colnames = 0x0}
+(gdb) n
+458		pstate->p_expr_kind = EXPR_KIND_FROM_SUBSELECT;
+(gdb) 
+466		pstate->p_lateral_active = r->lateral;
+(gdb) 
+472								  isLockedRefname(pstate, r->alias->aliasname),
+(gdb) 
+471		query = parse_sub_analyze(r->subquery, pstate, NULL,
+(gdb) p r->subquery
+$54 = (Node *) 0x17a66a0
+(gdb) s
+parse_sub_analyze (parseTree=0x17a66a0, parentParseState=0x17a6a08, parentCTE=0x0, locked_from_parent=0 '\000', resolve_unknowns=1 '\001') at analyze.c:165
+165		ParseState *pstate = make_parsestate(parentParseState);
+(gdb) n
+168		pstate->p_parent_cte = parentCTE;
+(gdb) p pstate
+$55 = (ParseState *) 0x17a6c28
+(gdb) p *pstate
+$56 = {parentParseState = 0x17a6a08, p_sourcetext = 0x17a57a8 "select * from (select * from test2 where id >10) as temp1;", p_rtable = 0x0, p_joinexprs = 0x0, p_joinlist = 0x0, 
+  p_namespace = 0x0, p_lateral_active = 0 '\000', p_ctenamespace = 0x0, p_future_ctes = 0x0, p_parent_cte = 0x0, p_target_relation = 0x0, p_target_rangetblentry = 0x0, 
+  p_is_insert = 0 '\000', p_windowdefs = 0x0, p_expr_kind = EXPR_KIND_NONE, p_next_resno = 1, p_multiassign_exprs = 0x0, p_locking_clause = 0x0, p_locked_from_parent = 0 '\000', 
+  p_resolve_unknowns = 1 '\001', p_queryEnv = 0x0, p_hasAggs = 0 '\000', p_hasWindowFuncs = 0 '\000', p_hasTargetSRFs = 0 '\000', p_hasSubLinks = 0 '\000', p_hasModifyingCTE = 0 '\000', 
+  p_last_srf = 0x0, p_pre_columnref_hook = 0x0, p_post_columnref_hook = 0x0, p_paramref_hook = 0x0, p_coerce_param_hook = 0x0, p_ref_hook_state = 0x0}
+(gdb) list
+163					  bool resolve_unknowns)
+164	{
+165		ParseState *pstate = make_parsestate(parentParseState);
+166		Query	   *query;
+167	
+168		pstate->p_parent_cte = parentCTE;
+169		pstate->p_locked_from_parent = locked_from_parent;
+170		pstate->p_resolve_unknowns = resolve_unknowns;
+171	
+172		query = transformStmt(pstate, parseTree);
+(gdb) p parentCTE
+$57 = (CommonTableExpr *) 0x0
+(gdb) n
+169		pstate->p_locked_from_parent = locked_from_parent;
+(gdb) 
+170		pstate->p_resolve_unknowns = resolve_unknowns;
+(gdb) 
+172		query = transformStmt(pstate, parseTree);
+(gdb) s
+transformStmt (pstate=0x17a6c28, parseTree=0x17a66a0) at analyze.c:273
+273		switch (nodeTag(parseTree))
+(gdb) n
+292					SelectStmt *n = (SelectStmt *) parseTree;
+(gdb) list
+287				result = transformUpdateStmt(pstate, (UpdateStmt *) parseTree);
+288				break;
+289	
+290			case T_SelectStmt:
+291				{
+292					SelectStmt *n = (SelectStmt *) parseTree;
+293	
+294					if (n->valuesLists)
+295						result = transformValuesClause(pstate, n);
+296					else if (n->op == SETOP_NONE)
+(gdb) p *n
+$58 = {type = T_IndexInfo, distinctClause = 0x7ffe485d06ec, intoClause = 0x0, targetList = 0x7ffe485d0709, fromClause = 0x7ffe485d071c, whereClause = 0x7ffe485d072a, 
+  groupClause = 0x7ffe485d0735, havingClause = 0x7ffe485d0745, windowClause = 0x7ffe485d0753, valuesLists = 0x7ffe485d076c, sortClause = 0x7ffe485d077e, limitOffset = 0x7ffe485d0d1a, 
+  limitCount = 0x7ffe485d0d3e, lockingClause = 0x7ffe485d0e0c, withClause = 0x7ffe485d0e2e, op = 1214058059, all = -2 '\376', larg = 0x7ffe485d0e62, rarg = 0x7ffe485d0e73}
+(gdb) 

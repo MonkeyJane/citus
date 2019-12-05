@@ -1,0 +1,21 @@
+workerNodeHashValid 失效流程：
+1. InvalidateMetadataSystemCache
+3. InvalidateNodeRelationCacheCallback
+
+LocalGroupId 失效流程：
+1. InvalidateMetadataSystemCache
+2. InvalidateLocalGroupIdRelationCacheCallback
+
+LocalNodeRole 失效流程：
+1. InvalidateMetadataSystemCache
+2. InvalidateLocalGroupIdRelationCacheCallback
+3. InvalidateNodeRelationCacheCallback
+
+
+Citus 2PC远端事务以及连接应用
+1. FinishConnectionEstablishment 完成一条新连接或继承连接的建立
+2. RemoteTransactionsBeginIfNecessary 开启或者复用当前连接远端事务(开启时将标记'in transaction')
+3. CoordinatedTransactionCallback(XACT_EVENT_PRE_COMMIT)->CoordinatedRemoteTransactionsPrepare 遍历所有相关连接，按顺序完成远端事务预提交(清除标记'in transaction')
+4. CoordinatedTransactionCallback(XACT_EVENT_COMMIT)->CoordinatedRemoteTransactionsCommit 遍历所有相关连接，按顺序完成远端事务提交
+5. CoordinatedTransactionCallback(XACT_EVENT_COMMIT)->AfterXactConnectionHandling 遍历所有相关连接，根据连接属性，关闭或者把连接放到连接池
+

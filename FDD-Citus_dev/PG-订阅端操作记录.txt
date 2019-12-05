@@ -1,0 +1,257 @@
+[cituscluster@center1 ~]$ ps -ef | grep postgres
+cituscl+   2085      1  0 Jun20 ?        00:00:03 /opt/pgsql-10.1/bin/postgres
+cituscl+   2087   2085  0 Jun20 ?        00:00:00 postgres: checkpointer process  
+cituscl+   2088   2085  0 Jun20 ?        00:00:07 postgres: writer process   
+cituscl+   2089   2085  0 Jun20 ?        00:00:07 postgres: wal writer process  
+cituscl+   2090   2085  0 Jun20 ?        00:00:04 postgres: autovacuum launcher process  
+cituscl+   2091   2085  0 Jun20 ?        00:00:08 postgres: stats collector process  
+cituscl+   2092   2085  0 Jun20 ?        00:02:04 postgres: bgworker: task tracker  
+cituscl+   2093   2085  0 Jun20 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  25181   2085  0 Jun22 ?        00:01:07 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  52850  52795  0 00:16 pts/1    00:00:00 grep --color=auto postgres
+[cituscluster@center1 ~]$ psql -d postgres
+psql (10.1)
+Type "help" for help.
+
+postgres=# CREATE SUBSCRIPTION sub_tbl2 CONNECTION 'host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres' PUBLICATION pub_tbl2;
+ERROR:  relation "public.tbl2" does not exist
+postgres=# create table tbl2(id int primary key, name text);
+CREATE TABLE
+postgres=# CREATE SUBSCRIPTION sub_tbl2 CONNECTION 'host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres' PUBLICATION pub_tbl2;
+NOTICE:  created replication slot "sub_tbl2" on publisher
+CREATE SUBSCRIPTION
+postgres=# select * from pg_subscription;
+ subdbid | subname  | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+----------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub_tbl2 |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub_tbl2    | off           | {pub_tbl2}
+(1 row)
+
+postgres=# select * from pg_subscription_rel;
+ srsubid | srrelid | srsubstate | srsublsn 
+---------+---------+------------+----------
+   43772 |   43764 | d          | 
+(1 row)
+
+postgres=# select * from stat_subscription;
+ERROR:  relation "stat_subscription" does not exist
+LINE 1: select * from stat_subscription;
+                      ^
+postgres=# select * from pg_stat_subscription;
+ subid | subname  |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+----------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 43772 | sub_tbl2 | 53486 | 43764 |              | 2019-06-24 01:10:50.77875-07  | 2019-06-24 01:10:50.77875-07  |                | 2019-06-24 01:10:50.77875-07
+ 43772 | sub_tbl2 | 53485 |       | 5/9DBC9A50   | 2019-06-24 01:13:00.291524-07 | 2019-06-24 01:10:51.257345-07 | 5/9DBC9A50     | 2019-06-24 01:13:00.291524-07
+(2 rows)
+
+postgres=# select * from pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn 
+----------+-------------+------------+-----------
+        1 | pg_43772    | 0/0        | 0/0
+(1 row)
+
+postgres=# select * from pg_replication_origin;
+ roident |  roname  
+---------+----------
+       1 | pg_43772
+(1 row)
+
+postgres=# select * from pg_replication_origin;
+ roident |  roname  
+---------+----------
+       1 | pg_43772
+(1 row)
+
+postgres=# select * from pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_43772    | 0/0        | 0/1C0382D0
+(1 row)
+
+postgres=# select * from pg_stat_subscription;
+ subid | subname  |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+----------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 43772 | sub_tbl2 | 53585 |       | 5/9DBC9B30   | 2019-06-24 01:16:49.647437-07 | 2019-06-24 01:14:42.986088-07 | 5/9DBC9B30     | 2019-06-24 01:16:49.647437-07
+(1 row)
+
+postgres=# select * from pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   43772 |   43764 | r          | 5/9DBC9B30
+(1 row)
+
+postgres=# select * from pg_subscription;
+ subdbid | subname  | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+----------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub_tbl2 |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub_tbl2    | off           | {pub_tbl2}
+(1 row)
+
+postgres=# ALTER SUBSCRIPTION sub_tbl2 disable;
+ALTER SUBSCRIPTION
+postgres=# select * from pg_subscription;
+ subdbid | subname  | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+----------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub_tbl2 |       10 | f          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub_tbl2    | off           | {pub_tbl2}
+(1 row)
+
+postgres=# select * from pg_subscription;
+ subdbid | subname  | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+----------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub_tbl2 |       10 | f          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub_tbl2    | off           | {pub_tbl2}
+(1 row)
+
+postgres=# select * from pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   43772 |   43764 | r          | 5/9DBC9B30
+(1 row)
+
+postgres=# select * from pg_stat_subscription;
+ subid | subname  | pid | relid | received_lsn | last_msg_send_time | last_msg_receipt_time | latest_end_lsn | latest_end_time 
+-------+----------+-----+-------+--------------+--------------------+-----------------------+----------------+-----------------
+ 43772 | sub_tbl2 |     |       |              |                    |                       |                | 
+(1 row)
+
+postgres=# select * from pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_43772    | 0/0        | 0/1C0382D0
+(1 row)
+
+postgres=# select * from pg_replication_origin;
+ roident |  roname  
+---------+----------
+       1 | pg_43772
+(1 row)
+
+postgres=# 
+
+
+-- app worker 调用栈
+[cituscluster@center1 ~]$ ps -ef | grep postgres
+cituscl+   2085      1  0 Jun20 ?        00:00:03 /opt/pgsql-10.1/bin/postgres
+cituscl+   2087   2085  0 Jun20 ?        00:00:00 postgres: checkpointer process  
+cituscl+   2088   2085  0 Jun20 ?        00:00:07 postgres: writer process   
+cituscl+   2089   2085  0 Jun20 ?        00:00:07 postgres: wal writer process  
+cituscl+   2090   2085  0 Jun20 ?        00:00:04 postgres: autovacuum launcher process  
+cituscl+   2091   2085  0 Jun20 ?        00:00:08 postgres: stats collector process  
+cituscl+   2092   2085  0 Jun20 ?        00:02:06 postgres: bgworker: task tracker  
+cituscl+   2093   2085  0 Jun20 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  25181   2085  0 Jun22 ?        00:01:08 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  53425  52795  0 01:05 pts/1    00:00:00 psql -d postgres
+cituscl+  53426   2085  0 01:05 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  53485   2085  0 01:10 ?        00:00:00 postgres: bgworker: logical replication worker for subscription 43772  
+cituscl+  53486   2085 82 01:10 ?        00:00:03 postgres: bgworker: logical replication worker for subscription 43772 sync 43764  
+cituscl+  53488  52958  0 01:10 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@center1 ~]$ gdb attach 53485
+GNU gdb (GDB) Red Hat Enterprise Linux 7.6.1-110.el7
+Copyright (C) 2013 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-redhat-linux-gnu".
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>...
+attach: No such file or directory.
+Attaching to process 53485
+Reading symbols from /opt/pgsql-10.1/bin/postgres...done.
+Reading symbols from /lib64/libpthread.so.0...(no debugging symbols found)...done.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib64/libthread_db.so.1".
+Loaded symbols for /lib64/libpthread.so.0
+Reading symbols from /lib64/librt.so.1...(no debugging symbols found)...done.
+Loaded symbols for /lib64/librt.so.1
+Reading symbols from /lib64/libdl.so.2...(no debugging symbols found)...done.
+Loaded symbols for /lib64/libdl.so.2
+Reading symbols from /lib64/libm.so.6...(no debugging symbols found)...done.
+Loaded symbols for /lib64/libm.so.6
+Reading symbols from /lib64/libc.so.6...(no debugging symbols found)...done.
+Loaded symbols for /lib64/libc.so.6
+Reading symbols from /lib64/ld-linux-x86-64.so.2...(no debugging symbols found)...done.
+Loaded symbols for /lib64/ld-linux-x86-64.so.2
+Reading symbols from /opt/pgsql-10.1/lib/citus.so...done.
+Loaded symbols for /opt/pgsql-10.1/lib/citus.so
+Reading symbols from /opt/pgsql-10.1/lib/libpq.so.5...done.
+Loaded symbols for /opt/pgsql-10.1/lib/libpq.so.5
+Reading symbols from /lib64/libnss_files.so.2...(no debugging symbols found)...done.
+Loaded symbols for /lib64/libnss_files.so.2
+Reading symbols from /opt/pgsql-10.1/lib/libpqwalreceiver.so...done.
+Loaded symbols for /opt/pgsql-10.1/lib/libpqwalreceiver.so
+0x00007f8701ed7163 in __epoll_wait_nocancel () from /lib64/libc.so.6
+Missing separate debuginfos, use: debuginfo-install glibc-2.17-222.el7.x86_64
+(gdb) bt
+#0  0x00007f8701ed7163 in __epoll_wait_nocancel () from /lib64/libc.so.6
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x12771d8, cur_timeout=1000, occurred_events=0x7ffe8d27aa40, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x12771d8, timeout=1000, occurred_events=0x7ffe8d27aa40, nevents=1, wait_event_info=83886086) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f86f9f1c414, wakeEvents=27, sock=4, timeout=1000, wait_event_info=83886086) at latch.c:385
+#4  0x00000000007b710d in LogicalRepApplyLoop (last_received=24121219664) at worker.c:1167
+#5  0x00000000007b7e48 in ApplyWorkerMain (main_arg=0) at worker.c:1650
+#6  0x000000000077a272 in StartBackgroundWorker () at bgworker.c:835
+#7  0x000000000078c035 in do_start_bgworker (rw=0x123e860) at postmaster.c:5680
+#8  0x000000000078c36f in maybe_start_bgworkers () at postmaster.c:5884
+#9  0x000000000078b455 in sigusr1_handler (postgres_signal_arg=10) at postmaster.c:5073
+#10 <signal handler called>
+#11 0x00007f8701ecdc53 in __select_nocancel () from /lib64/libc.so.6
+#12 0x00000000007872c2 in ServerLoop () at postmaster.c:1717
+#13 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x11f9c20) at postmaster.c:1361
+#14 0x00000000006cf26f in main (argc=1, argv=0x11f9c20) at main.c:228
+
+
+-- sync worker 调用栈
+[cituscluster@center1 ~]$ pstack 53758
+#0  0x00000000004dc316 in _bt_compare (rel=0x7f8702c8c500, keysz=1, scankey=0x1310cb8, page=0x7f86f6b75680 "", offnum=371) at nbtsearch.c:433
+#1  0x00000000004dc2c3 in _bt_binsrch (rel=0x7f8702c8c500, buf=11198, keysz=1, scankey=0x1310cb8, nextkey=0 '\000') at nbtsearch.c:374
+#2  0x00000000004d35ae in _bt_doinsert (rel=0x7f8702c8c500, itup=0x1310c98, checkUnique=UNIQUE_CHECK_YES, heapRel=0x7f8702c88498) at nbtinsert.c:167
+#3  0x00000000004da5d1 in btinsert (rel=0x7f8702c8c500, values=0x7ffe8d27a6c0, isnull=0x7ffe8d27a6a0 "", ht_ctid=0x13266cc, heapRel=0x7f8702c88498, checkUnique=UNIQUE_CHECK_YES, indexInfo=0x12f2fa0) at nbtree.c:330
+#4  0x00000000004d2131 in index_insert (indexRelation=0x7f8702c8c500, values=0x7ffe8d27a6c0, isnull=0x7ffe8d27a6a0 "", heap_t_ctid=0x13266cc, heapRelation=0x7f8702c88498, checkUnique=UNIQUE_CHECK_YES, indexInfo=0x12f2fa0) at indexam.c:210
+#5  0x000000000067718f in ExecInsertIndexTuples (slot=0x12e20b8, tupleid=0x13266cc, estate=0x130cc08, noDupErr=0 '\000', specConflict=0x0, arbiterIndexes=0x0) at execIndexing.c:386
+#6  0x00000000005e8a24 in CopyFromInsertBatch (cstate=0x12e3238, estate=0x130cc08, mycid=0, hi_options=0, resultRelInfo=0x12f2c20, myslot=0x12e20b8, bistate=0x1310c48, nBufferedTuples=1000, bufferedTuples=0x130ec18, firstBufferedLineNo=804001) at copy.c:2942
+#7  0x00000000005e85ab in CopyFrom (cstate=0x12e3238) at copy.c:2768
+#8  0x00000000007b50cd in copy_table (rel=0x7f8702c88498) at tablesync.c:804
+#9  0x00000000007b5423 in LogicalRepSyncTableStart (origin_startpos=0x7ffe8d27ab98) at tablesync.c:921
+#10 0x00000000007b7bff in ApplyWorkerMain (main_arg=1) at worker.c:1577
+#11 0x000000000077a272 in StartBackgroundWorker () at bgworker.c:835
+#12 0x000000000078c035 in do_start_bgworker (rw=0x123ec70) at postmaster.c:5680
+#13 0x000000000078c36f in maybe_start_bgworkers () at postmaster.c:5884
+#14 0x000000000078b455 in sigusr1_handler (postgres_signal_arg=10) at postmaster.c:5073
+#15 <signal handler called>
+#16 0x00007f8701ecdc53 in __select_nocancel () from /lib64/libc.so.6
+#17 0x00000000007872c2 in ServerLoop () at postmaster.c:1717
+#18 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x11f9c20) at postmaster.c:1361
+#19 0x00000000006cf26f in main (argc=1, argv=0x11f9c20) at main.c:228
+[cituscluster@center1 ~]$ 
+
+
+
+-- 存量同步完成后
+[cituscluster@center1 ~]$ ps -ef | grep postgres
+cituscl+   2085      1  0 Jun20 ?        00:00:03 /opt/pgsql-10.1/bin/postgres
+cituscl+   2087   2085  0 Jun20 ?        00:00:02 postgres: checkpointer process  
+cituscl+   2088   2085  0 Jun20 ?        00:00:07 postgres: writer process   
+cituscl+   2089   2085  0 Jun20 ?        00:00:11 postgres: wal writer process  
+cituscl+   2090   2085  0 Jun20 ?        00:00:04 postgres: autovacuum launcher process  
+cituscl+   2091   2085  0 Jun20 ?        00:00:08 postgres: stats collector process  
+cituscl+   2092   2085  0 Jun20 ?        00:02:06 postgres: bgworker: task tracker  
+cituscl+   2093   2085  0 Jun20 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  25181   2085  0 Jun22 ?        00:01:08 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+  53425  52795  0 01:05 pts/1    00:00:00 psql -d postgres
+cituscl+  53426   2085  0 01:05 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  53680   2085  0 01:21 ?        00:00:00 postgres: bgworker: logical replication worker for subscription 43772  
+cituscl+  53684  52958  0 01:22 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@center1 ~]$ pstack 53680
+#0  0x00007f8701ed7163 in __epoll_wait_nocancel () from /lib64/libc.so.6
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x12771d8, cur_timeout=1000, occurred_events=0x7ffe8d27aa40, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x12771d8, timeout=1000, occurred_events=0x7ffe8d27aa40, nevents=1, wait_event_info=83886086) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f86f9f1c414, wakeEvents=27, sock=4, timeout=1000, wait_event_info=83886086) at latch.c:385
+#4  0x00000000007b710d in LogicalRepApplyLoop (last_received=24121219888) at worker.c:1167
+#5  0x00000000007b7e48 in ApplyWorkerMain (main_arg=0) at worker.c:1650
+#6  0x000000000077a272 in StartBackgroundWorker () at bgworker.c:835
+#7  0x000000000078c035 in do_start_bgworker (rw=0x123e860) at postmaster.c:5680
+#8  0x000000000078c36f in maybe_start_bgworkers () at postmaster.c:5884
+#9  0x000000000078b455 in sigusr1_handler (postgres_signal_arg=10) at postmaster.c:5073
+#10 <signal handler called>
+#11 0x00007f8701ecdc53 in __select_nocancel () from /lib64/libc.so.6
+#12 0x00000000007872c2 in ServerLoop () at postmaster.c:1717
+#13 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x11f9c20) at postmaster.c:1361
+#14 0x00000000006cf26f in main (argc=1, argv=0x11f9c20) at main.c:228
+[cituscluster@center1 ~]$ 

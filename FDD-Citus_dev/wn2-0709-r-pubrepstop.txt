@@ -1,0 +1,3419 @@
+postgres=# #################################### publication replication process stop ###########################;
+ERROR:  syntax error at or near "####################################"
+LINE 1: #################################### publication replication...
+        ^
+postgres=# #################################### publication replication process stop ###########################;
+ERROR:  syntax error at or near "####################################"
+LINE 1: #################################### publication replication...
+        ^
+postgres=# #################################### publication replication process stop ###########################;
+ERROR:  syntax error at or near "####################################"
+LINE 1: #################################### publication replication...
+        ^
+postgres=# 
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:05.211822-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21348 |       | 6/4623B798   | 2019-07-09 00:49:20.992024-07 | 2019-07-09 00:47:07.580906-07 | 6/4623B798     | 2019-07-09 00:49:20.992024-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:06.285305-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21348 |       | 6/4623B798   | 2019-07-09 00:49:20.992024-07 | 2019-07-09 00:47:07.580906-07 | 6/4623B798     | 2019-07-09 00:49:20.992024-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-09 01:08:07.50895-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21348 |       | 6/4623B798   | 2019-07-09 00:49:20.992024-07 | 2019-07-09 00:47:07.580906-07 | 6/4623B798     | 2019-07-09 00:49:20.992024-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:08.528341-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21348 |       | 6/4623B798   | 2019-07-09 00:49:20.992024-07 | 2019-07-09 00:47:07.580906-07 | 6/4623B798     | 2019-07-09 00:49:20.992024-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:09.539774-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21348 |       | 6/4623B798   | 2019-07-09 00:49:20.992024-07 | 2019-07-09 00:47:07.580906-07 | 6/4623B798     | 2019-07-09 00:49:20.992024-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:10.556124-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21348 |       | 6/4623B798   | 2019-07-09 00:49:20.992024-07 | 2019-07-09 00:47:07.580906-07 | 6/4623B798     | 2019-07-09 00:49:20.992024-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:11.567224-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21348 |       | 6/4623B798   | 2019-07-09 00:49:20.992024-07 | 2019-07-09 00:47:07.580906-07 | 6/4623B798     | 2019-07-09 00:49:20.992024-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:12.600065-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21348 |       | 6/4623B798   | 2019-07-09 00:49:20.992024-07 | 2019-07-09 00:47:07.580906-07 | 6/4623B798     | 2019-07-09 00:49:20.992024-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-09 01:08:13.61486-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21348 |       | 6/4623B798   | 2019-07-09 00:49:20.992024-07 | 2019-07-09 00:47:07.580906-07 | 6/4623B798     | 2019-07-09 00:49:20.992024-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-09 01:08:14.62452-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21348 |       | 6/4623B798   | 2019-07-09 00:49:20.992024-07 | 2019-07-09 00:47:07.580906-07 | 6/4623B798     | 2019-07-09 00:49:20.992024-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:15.638698-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21348 |       | 6/4623B798   | 2019-07-09 00:49:20.992024-07 | 2019-07-09 00:47:07.580906-07 | 6/4623B798     | 2019-07-09 00:49:20.992024-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:16.652573-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21348 |       | 6/4623B798   | 2019-07-09 00:49:20.992024-07 | 2019-07-09 00:47:07.580906-07 | 6/4623B798     | 2019-07-09 00:49:20.992024-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:17.669292-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21348 |       | 6/4623B798   | 2019-07-09 00:49:20.992024-07 | 2019-07-09 00:47:07.580906-07 | 6/4623B798     | 2019-07-09 00:49:20.992024-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:18.680005-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21348 |       | 6/4623B798   | 2019-07-09 00:49:20.992024-07 | 2019-07-09 00:47:07.580906-07 | 6/4623B798     | 2019-07-09 00:49:20.992024-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-09 01:08:19.69819-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21348 |       | 6/4623B798   | 2019-07-09 00:49:20.992024-07 | 2019-07-09 00:47:07.580906-07 | 6/4623B798     | 2019-07-09 00:49:20.992024-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:20.709144-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21587 |       |              | 2019-07-09 01:08:21.276942-07 | 2019-07-09 01:08:21.276942-07 |                | 2019-07-09 01:08:21.276942-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:21.722216-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname | pid | relid | received_lsn | last_msg_send_time | last_msg_receipt_time | latest_end_lsn | latest_end_time 
+-------+---------+-----+-------+--------------+--------------------+-----------------------+----------------+-----------------
+ 68559 | sub1    |     |       |              |                    |                       |                | 
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:22.738585-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname | pid | relid | received_lsn | last_msg_send_time | last_msg_receipt_time | latest_end_lsn | latest_end_time 
+-------+---------+-----+-------+--------------+--------------------+-----------------------+----------------+-----------------
+ 68559 | sub1    |     |       |              |                    |                       |                | 
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:23.755439-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname | pid | relid | received_lsn | last_msg_send_time | last_msg_receipt_time | latest_end_lsn | latest_end_time 
+-------+---------+-----+-------+--------------+--------------------+-----------------------+----------------+-----------------
+ 68559 | sub1    |     |       |              |                    |                       |                | 
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:24.765014-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname | pid | relid | received_lsn | last_msg_send_time | last_msg_receipt_time | latest_end_lsn | latest_end_time 
+-------+---------+-----+-------+--------------+--------------------+-----------------------+----------------+-----------------
+ 68559 | sub1    |     |       |              |                    |                       |                | 
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:25.779154-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21589 |       | 6/4623B808   | 2019-07-09 01:10:38.596332-07 | 2019-07-09 01:08:26.379521-07 | 6/4623B808     | 2019-07-09 01:10:38.596332-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:26.792788-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21589 |       | 6/4623B808   | 2019-07-09 01:10:38.596332-07 | 2019-07-09 01:08:26.379521-07 | 6/4623B808     | 2019-07-09 01:10:38.596332-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-09 01:08:27.82213-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21589 |       | 6/4623B808   | 2019-07-09 01:10:38.596332-07 | 2019-07-09 01:08:26.379521-07 | 6/4623B808     | 2019-07-09 01:10:38.596332-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:28.835975-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21589 |       | 6/4623B808   | 2019-07-09 01:10:38.596332-07 | 2019-07-09 01:08:26.379521-07 | 6/4623B808     | 2019-07-09 01:10:38.596332-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-09 01:08:29.85148-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21589 |       | 6/4623B808   | 2019-07-09 01:10:38.596332-07 | 2019-07-09 01:08:26.379521-07 | 6/4623B808     | 2019-07-09 01:10:38.596332-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-09 01:08:30.86646-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21589 |       | 6/4623B808   | 2019-07-09 01:10:38.596332-07 | 2019-07-09 01:08:26.379521-07 | 6/4623B808     | 2019-07-09 01:10:38.596332-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:31.884042-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21589 |       | 6/4623B808   | 2019-07-09 01:10:38.596332-07 | 2019-07-09 01:08:26.379521-07 | 6/4623B808     | 2019-07-09 01:10:38.596332-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:32.929407-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21589 |       | 6/4623B808   | 2019-07-09 01:10:38.596332-07 | 2019-07-09 01:08:26.379521-07 | 6/4623B808     | 2019-07-09 01:10:38.596332-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:33.969422-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21589 |       | 6/4623B808   | 2019-07-09 01:10:38.596332-07 | 2019-07-09 01:08:26.379521-07 | 6/4623B808     | 2019-07-09 01:10:38.596332-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:35.093526-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21589 |       | 6/4623B808   | 2019-07-09 01:10:38.596332-07 | 2019-07-09 01:08:26.379521-07 | 6/4623B808     | 2019-07-09 01:10:38.596332-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:36.105805-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21589 |       | 6/4623B808   | 2019-07-09 01:10:38.596332-07 | 2019-07-09 01:08:26.379521-07 | 6/4623B808     | 2019-07-09 01:10:38.596332-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:37.121588-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21589 |       | 6/4623B808   | 2019-07-09 01:10:38.596332-07 | 2019-07-09 01:08:26.379521-07 | 6/4623B808     | 2019-07-09 01:10:38.596332-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-09 01:08:38.14913-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname | pid | relid | received_lsn | last_msg_send_time | last_msg_receipt_time | latest_end_lsn | latest_end_time 
+-------+---------+-----+-------+--------------+--------------------+-----------------------+----------------+-----------------
+ 68559 | sub1    |     |       |              |                    |                       |                | 
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:39.163359-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname | pid | relid | received_lsn | last_msg_send_time | last_msg_receipt_time | latest_end_lsn | latest_end_time 
+-------+---------+-----+-------+--------------+--------------------+-----------------------+----------------+-----------------
+ 68559 | sub1    |     |       |              |                    |                       |                | 
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:40.178745-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname | pid | relid | received_lsn | last_msg_send_time | last_msg_receipt_time | latest_end_lsn | latest_end_time 
+-------+---------+-----+-------+--------------+--------------------+-----------------------+----------------+-----------------
+ 68559 | sub1    |     |       |              |                    |                       |                | 
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:41.192628-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname | pid | relid | received_lsn | last_msg_send_time | last_msg_receipt_time | latest_end_lsn | latest_end_time 
+-------+---------+-----+-------+--------------+--------------------+-----------------------+----------------+-----------------
+ 68559 | sub1    |     |       |              |                    |                       |                | 
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:42.206389-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname | pid | relid | received_lsn | last_msg_send_time | last_msg_receipt_time | latest_end_lsn | latest_end_time 
+-------+---------+-----+-------+--------------+--------------------+-----------------------+----------------+-----------------
+ 68559 | sub1    |     |       |              |                    |                       |                | 
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:43.217754-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B878   | 2019-07-09 01:10:53.744766-07 | 2019-07-09 01:08:43.212505-07 | 6/4623B878     | 2019-07-09 01:10:53.744766-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:44.234679-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B878   | 2019-07-09 01:10:53.744766-07 | 2019-07-09 01:08:43.212505-07 | 6/4623B878     | 2019-07-09 01:10:53.744766-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:45.247311-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B878   | 2019-07-09 01:10:53.744766-07 | 2019-07-09 01:08:43.212505-07 | 6/4623B878     | 2019-07-09 01:10:53.744766-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:46.262046-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B878   | 2019-07-09 01:10:53.744766-07 | 2019-07-09 01:08:43.212505-07 | 6/4623B878     | 2019-07-09 01:10:53.744766-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:47.273934-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B878   | 2019-07-09 01:10:53.744766-07 | 2019-07-09 01:08:43.212505-07 | 6/4623B878     | 2019-07-09 01:10:53.744766-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:48.289739-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B878   | 2019-07-09 01:10:53.744766-07 | 2019-07-09 01:08:43.212505-07 | 6/4623B878     | 2019-07-09 01:10:53.744766-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:49.321958-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B878   | 2019-07-09 01:10:53.744766-07 | 2019-07-09 01:08:43.212505-07 | 6/4623B878     | 2019-07-09 01:10:53.744766-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-09 01:08:50.33396-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B878   | 2019-07-09 01:10:53.744766-07 | 2019-07-09 01:08:43.212505-07 | 6/4623B878     | 2019-07-09 01:10:53.744766-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:51.351785-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B878   | 2019-07-09 01:10:53.744766-07 | 2019-07-09 01:08:43.212505-07 | 6/4623B878     | 2019-07-09 01:10:53.744766-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:52.364714-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B878   | 2019-07-09 01:10:53.744766-07 | 2019-07-09 01:08:43.212505-07 | 6/4623B878     | 2019-07-09 01:10:53.744766-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:53.397634-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B878   | 2019-07-09 01:10:53.744766-07 | 2019-07-09 01:08:43.212505-07 | 6/4623B878     | 2019-07-09 01:10:53.744766-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:54.409626-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:55.418717-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:56.434066-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:57.447528-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:58.480267-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:08:59.509234-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:00.526062-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:01.538262-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:02.547324-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:03.583401-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:04.592811-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-09 01:09:05.60578-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:06.641433-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:07.651609-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:08.664104-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:09.677388-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:10.722665-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-09 01:09:11.73831-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:12.751627-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:13.800464-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:14.830205-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:15.856601-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp      
+-----------------------------
+ 2019-07-09 01:09:16.8755-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:17.888705-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:18.897755-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:19.926847-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-09 01:09:20.95851-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:21.974529-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:22.985194-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:23.999176-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+     current_timestamp      
+----------------------------
+ 2019-07-09 01:09:25.014-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:26.033308-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:27.209994-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:28.256257-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:29.284966-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:30.301592-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-09 01:09:31.31661-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:32.343226-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:33.365323-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:34.389967-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:35.403675-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:36.422741-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:37.429592-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:38.468069-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-09 01:09:39.48845-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:40.524105-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:41.531346-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:42.545873-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:43.579036-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:44.591089-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:45.606232-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:46.632532-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:47.647547-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:48.663068-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:49.676471-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:50.701144-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-09 01:09:51.89605-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+postgres=# SELECT * FROM pg_stat_subscription;
+ subid | subname |  pid  | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time        
+-------+---------+-------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
+ 68559 | sub1    | 21600 |       | 6/4623B8B0   | 2019-07-09 01:11:04.333182-07 | 2019-07-09 01:08:54.978399-07 | 6/4623B8B0     | 2019-07-09 01:11:04.333182-07
+(1 row)
+
+postgres=# SELECT * FROM pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn  
+----------+-------------+------------+------------
+        1 | pg_68559    | 6/4623B5D8 | 4/E38387B8
+(1 row)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:09:53.048129-07
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription;
+ subdbid | subname | subowner | subenabled |                                   subconninfo                                    | subslotname | subsynccommit | subpublications 
+---------+---------+----------+------------+----------------------------------------------------------------------------------+-------------+---------------+-----------------
+   13212 | sub1    |       10 | t          | host=192.168.221.131 port=5432 user=cituscluster password=123456 dbname=postgres | sub1        | off           | {pub1}
+(1 row)
+
+postgres=# SELECT * FROM pg_subscription_rel;
+ srsubid | srrelid | srsubstate |  srsublsn  
+---------+---------+------------+------------
+   68559 |   43797 | r          | 6/4623A190
+   68559 |   68425 | r          | 6/4623A190
+   68559 |   43764 | r          | 6/46238BC8
+(3 rows)
+
+
+[cituscluster@center1 ~]$ 2019-07-09 01:07:19.014 PDT [17884] ERROR:  syntax error at or near "####################################" at character 1
+2019-07-09 01:07:19.014 PDT [17884] STATEMENT:  #################################### publication replication process stop ###########################;
+2019-07-09 01:07:19.856 PDT [17884] ERROR:  syntax error at or near "####################################" at character 1
+2019-07-09 01:07:19.856 PDT [17884] STATEMENT:  #################################### publication replication process stop ###########################;
+2019-07-09 01:07:20.710 PDT [17884] ERROR:  syntax error at or near "####################################" at character 1
+2019-07-09 01:07:20.710 PDT [17884] STATEMENT:  #################################### publication replication process stop ###########################;
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2019-07-09 01:08:21.272 PDT [21348] ERROR:  could not receive data from WAL stream: server closed the connection unexpectedly
+		This probably means the server terminated abnormally
+		before or while processing the request.
+2019-07-09 01:08:21.274 PDT [17875] LOG:  worker process: logical replication worker for subscription 68559 (PID 21348) exited with exit code 1
+2019-07-09 01:08:21.283 PDT [21587] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-07-09 01:08:21.331 PDT [21587] ERROR:  could not connect to the publisher: FATAL:  the database system is in recovery mode
+2019-07-09 01:08:21.332 PDT [17875] LOG:  worker process: logical replication worker for subscription 68559 (PID 21587) exited with exit code 1
+2019-07-09 01:08:26.346 PDT [21589] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-07-09 01:08:38.110 PDT [21589] ERROR:  could not receive data from WAL stream: server closed the connection unexpectedly
+		This probably means the server terminated abnormally
+		before or while processing the request.
+2019-07-09 01:08:38.112 PDT [17875] LOG:  worker process: logical replication worker for subscription 68559 (PID 21589) exited with exit code 1
+2019-07-09 01:08:38.119 PDT [21590] LOG:  logical replication apply worker for subscription "sub1" has started
+2019-07-09 01:08:38.167 PDT [21590] ERROR:  could not connect to the publisher: FATAL:  the database system is in recovery mode
+2019-07-09 01:08:38.169 PDT [17875] LOG:  worker process: logical replication worker for subscription 68559 (PID 21590) exited with exit code 1
+2019-07-09 01:08:43.182 PDT [21600] LOG:  logical replication apply worker for subscription "sub1" has started

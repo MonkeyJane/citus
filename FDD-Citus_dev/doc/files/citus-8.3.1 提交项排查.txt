@@ -1,0 +1,47 @@
+7.10 拉 citus 8.4 版本分支，修复测试例
+7.11 修改 citus.control 版本号为 8.4
+7.17 （8.3.2 未采用）新增枚举定义 RowModifyLevel，取代 CmdType
+     新增升级到 8.4 版本的SQL文件
+7.24 新增 WorkerSession 成员变量 waitEventSetIndex ：避免 RunDistributedExecution 中execution->waitFlagsChanged时不必要的execution->waitEventSet重建
+     新增 WorkerSession 成员变量 latestUnconsumedWaitEvents ：避免不必要的 PQconsumeInput
+	 优化 RunDistributedExecution 流程：避免不必要的execution->waitEventSet重建
+	 优化 ManageWorkerPool 流程：仅当超时时触发 CheckConnectionTimeout
+	 删除 ConnectionHashEntry 成员变量 connectionCount，直接使用宏定义 MaxCachedConnectionsPerWorker 表示连接池大小
+	 优化 WorkerPool 成员变量 WorkerNode，替换为 nodeName nodePort；避免传参的不必要开销
+	 替换 CleanUpSessions & AssignTasksToConnections & ExecutionOrderForTask & ManageWorkerPool 等函数中的elog，使用 ereport
+	 修复 multi_prune_shard_list & multi_null_minmax_value_pruning 测试例
+	 （8.3.2 未采用）修复 MetadataCreateCommands 中对节点排序的BUG
+7.25 删除citus 7.0-1 以下版本的升级SQL文件
+     增加、修复测试例
+7.27 （8.3.2 未采用）修改 CompareShardIntervals 逻辑：新增处理场景，当两个分片区间无法比较时（最大/最小值为空），则比较shardId
+7.29 修改 changelog
+7.31 修改注释、代码排版
+     （8.3.2 未采用）修改 RebuildQueryStrings 异常日志打印：避免参数为空的异常
+8.2  修复测试例
+     （8.3.2 未采用）修改 DistributedExecutionRequiresRollback 逻辑：当 task->taskPlacementList > 1 时，需启动或继承CN事务
+	 修复测试例
+8.6  更新 CONTRIBUTING 文件
+8.8  修改 PlanAlterTableStmt 逻辑：若要求线性执行，则直接设置到配置项全局变量中。因此可以删除 DDLJob 成员变量executeSequentially以及该变量的相关使用流程
+	 adaptive executor 池大小直接使用宏定义 MaxAdaptiveExecutorPoolSize
+8.9  （8.3.2 未采用）优化保存连接的流程，提升性能
+     拉 citus 8.3.2 版本分支
+	 （8.3.2 未采用）CreateRequiredDirectories 中使用宏定义 PG_JOB_CACHE_DIR 替代字符串 "pgsql_job_cache"
+	 设置配置项 extra_float_digits 初始化值 0
+	 修改一系列测试例
+8.13 代码规范修改
+     （8.3.2 已删除此函数）调整 AcquireExecutorShardLocksForRelationRowLockList 入参
+	 新增UDF函数 citus_prepare_pg_upgrade 到版本8.4.1
+8.14 （8.3.2 未采用）调整 UpdateColocationGroupReplicationFactor 入参并更名，以及与该函数相关的代码调整
+8.16 （8.3.2 未采用）新增配置项 single_shard_commit_protocol，以及与该配置项相关的代码调整
+	 （8.3.2 未采用）调整部分上锁流程
+8.18 （8.3.2 未采用）调整配置项 multi_shard_commit_protocol
+8.20 （8.3.2 未采用）修改 FilterAndPartitionTable 逻辑：增加几个异常场景判断
+8.21 （8.3.2 未采用）修复 MultiTaskTrackerExecute 异常日志打印：日志信息不对
+8.22 （8.3.2 未采用）新增函数 ErrorIfReindexOnDistributedTable 以及相关应用流程
+	 （8.3.2 未采用）新增函数 CompareShardPlacementsByWorker 以及相关应用流程
+	 （8.3.2 未采用）拷贝参考表分片时，新增拷贝外键流程；新增对参考表分片资源上锁函数
+8.23 （8.3.2 未采用）新增函数 try_relation_open_nolock，替换 try_relation_open
+	 （8.3.2 未采用）修改 configure 等文件
+
+8.27 （8.3.2 未采用）
+	 

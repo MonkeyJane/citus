@@ -1,0 +1,627 @@
+[BEGIN] 2019/6/10 ÐÇÆÚÒ» ÉÏÎç 10:46:36
+(gdb) n
+1076		FirstXactSnapshot = NULL;
+(gdb) 
+1081		if (exportedSnapshots != NIL)
+(gdb) 
+1112		InvalidateCatalogSnapshot();
+(gdb) p exportedSnapshots
+$4 = (List *) 0x0
+(gdb) c
+Continuing.
+
+Breakpoint 6, ResourceOwnerDelete (owner=0x14d0d98) at resowner.c:708
+708		while (owner->firstchild != NULL)
+(gdb) bt
+#0  ResourceOwnerDelete (owner=0x14d0d98) at resowner.c:708
+#1  0x000000000050a81c in CommitTransaction () at xact.c:2142
+#2  0x000000000050b1ba in CommitTransactionCommand () at xact.c:2773
+#3  0x00007fc3d2408179 in PostProcessIndexStmt (indexStmt=0x152ea40) at commands/index.c:293
+#4  0x00007fc3d24128a0 in PostProcessUtility (parsetree=0x152ea40) at commands/utility_hook.c:696
+#5  0x00007fc3d2412414 in multi_ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", 
+    context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at commands/utility_hook.c:475
+#6  0x000000000081ac94 in ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", context=PROCESS_UTILITY_TOPLEVEL, 
+    params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at utility.c:353
+#7  0x0000000000819ed1 in PortalRunUtility (portal=0x15dab28, pstmt=0x152e8d0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1178
+#8  0x000000000081a0b2 in PortalRunMulti (portal=0x15dab28, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1324
+#9  0x000000000081968a in PortalRun (portal=0x15dab28, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:799
+#10 0x0000000000813b59 in exec_simple_query (query_string=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);") at postgres.c:1099
+#11 0x0000000000817b1f in PostgresMain (argc=1, argv=0x14cb348, dbname=0x14cb1f8 "postgres", username=0x1482cb8 "cituscluster") at postgres.c:4088
+#12 0x000000000078b2d2 in BackendRun (port=0x14c57d0) at postmaster.c:4357
+#13 0x000000000078aa7b in BackendStartup (port=0x14c57d0) at postmaster.c:4029
+#14 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#15 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1480b90) at postmaster.c:1361
+#16 0x00000000006cf26f in main (argc=1, argv=0x1480b90) at main.c:228
+(gdb) p *owner
+$5 = {parent = 0x0, firstchild = 0x0, nextchild = 0x0, name = 0x9d3035 "TopTransaction", bufferarr = {itemsarr = 0x14d7090, invalidval = 0, capacity = 16, nitems = 0, maxitems = 16, 
+    lastidx = 4294967295}, catrefarr = {itemsarr = 0x15a1b18, invalidval = 0, capacity = 16, nitems = 0, maxitems = 16, lastidx = 4294967295}, catlistrefarr = {itemsarr = 0x15a12b8, 
+    invalidval = 0, capacity = 16, nitems = 0, maxitems = 16, lastidx = 4294967295}, relrefarr = {itemsarr = 0x159f538, invalidval = 0, capacity = 16, nitems = 0, maxitems = 16, 
+    lastidx = 4294967295}, planrefarr = {itemsarr = 0x0, invalidval = 0, capacity = 0, nitems = 0, maxitems = 0, lastidx = 0}, tupdescarr = {itemsarr = 0x159fa28, invalidval = 0, 
+    capacity = 16, nitems = 0, maxitems = 16, lastidx = 4294967295}, snapshotarr = {itemsarr = 0x14d1498, invalidval = 0, capacity = 16, nitems = 0, maxitems = 16, lastidx = 4294967295}, 
+  filearr = {itemsarr = 0x0, invalidval = 4294967295, capacity = 0, nitems = 0, maxitems = 0, lastidx = 0}, dsmarr = {itemsarr = 0x0, invalidval = 0, capacity = 0, nitems = 0, maxitems = 0, 
+    lastidx = 0}, nlocks = 0, locks = {0x14c4f68, 0x1579958, 0x14c4d28, 0x14c4ba8, 0x0 <repeats 11 times>}}
+(gdb) n
+716		ResourceOwnerNewParent(owner, NULL);
+(gdb) c
+Continuing.
+
+Breakpoint 7, ResourceOwnerRememberSnapshot (owner=0x14d0d98, snapshot=0x15949d8) at resowner.c:1156
+1156		ResourceArrayAdd(&(owner->snapshotarr), PointerGetDatum(snapshot));
+(gdb) bt
+#0  ResourceOwnerRememberSnapshot (owner=0x14d0d98, snapshot=0x15949d8) at resowner.c:1156
+#1  0x00000000009b1c29 in RegisterSnapshotOnOwner (snapshot=0xe17020 <CatalogSnapshotData>, owner=0x14d0d98) at snapmgr.c:889
+#2  0x00000000009b1bb7 in RegisterSnapshot (snapshot=0xe17020 <CatalogSnapshotData>) at snapmgr.c:868
+#3  0x00000000004d190f in systable_beginscan (heapRelation=0x1501468, indexId=2659, indexOK=1 '\001', snapshot=0x0, nkeys=2, key=0x7ffcf7f11760) at genam.c:353
+#4  0x000000000095174b in RelationBuildTupleDesc (relation=0x7fc3d9a64390) at relcache.c:527
+#5  0x0000000000953463 in RelationBuildDesc (targetRelId=28994, insertIt=1 '\001') at relcache.c:1325
+#6  0x000000000095509c in RelationIdGetRelation (relationId=28994) at relcache.c:2107
+#7  0x00000000004ba793 in relation_open (relationId=28994, lockmode=0) at heapam.c:1125
+#8  0x00000000004ba923 in relation_openrv (relation=0x152eaf0, lockmode=4) at heapam.c:1214
+#9  0x00000000004baae5 in heap_openrv (relation=0x152eaf0, lockmode=4) at heapam.c:1316
+#10 0x00007fc3d2408193 in PostProcessIndexStmt (indexStmt=0x152ea40) at commands/index.c:297
+#11 0x00007fc3d24128a0 in PostProcessUtility (parsetree=0x152ea40) at commands/utility_hook.c:696
+#12 0x00007fc3d2412414 in multi_ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", 
+    context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at commands/utility_hook.c:475
+#13 0x000000000081ac94 in ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", context=PROCESS_UTILITY_TOPLEVEL, 
+    params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at utility.c:353
+#14 0x0000000000819ed1 in PortalRunUtility (portal=0x15dab28, pstmt=0x152e8d0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1178
+#15 0x000000000081a0b2 in PortalRunMulti (portal=0x15dab28, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1324
+#16 0x000000000081968a in PortalRun (portal=0x15dab28, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:799
+#17 0x0000000000813b59 in exec_simple_query (query_string=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);") at postgres.c:1099
+#18 0x0000000000817b1f in PostgresMain (argc=1, argv=0x14cb348, dbname=0x14cb1f8 "postgres", username=0x1482cb8 "cituscluster") at postgres.c:4088
+#19 0x000000000078b2d2 in BackendRun (port=0x14c57d0) at postmaster.c:4357
+#20 0x000000000078aa7b in BackendStartup (port=0x14c57d0) at postmaster.c:4029
+#21 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#22 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1480b90) at postmaster.c:1361
+#23 0x00000000006cf26f in main (argc=1, argv=0x1480b90) at main.c:228
+(gdb) c
+Continuing.
+
+Breakpoint 5, UnregisterSnapshotFromOwner (snapshot=0x15949d8, owner=0x14d0d98) at snapmgr.c:920
+920		if (snapshot == NULL)
+(gdb) bt
+#0  UnregisterSnapshotFromOwner (snapshot=0x15949d8, owner=0x14d0d98) at snapmgr.c:920
+#1  0x00000000009b1c7b in UnregisterSnapshot (snapshot=0x15949d8) at snapmgr.c:910
+#2  0x00000000004d1c8b in systable_endscan (sysscan=0x1594878) at genam.c:510
+#3  0x00000000009518f6 in RelationBuildTupleDesc (relation=0x7fc3d9a64390) at relcache.c:576
+#4  0x0000000000953463 in RelationBuildDesc (targetRelId=28994, insertIt=1 '\001') at relcache.c:1325
+#5  0x000000000095509c in RelationIdGetRelation (relationId=28994) at relcache.c:2107
+#6  0x00000000004ba793 in relation_open (relationId=28994, lockmode=0) at heapam.c:1125
+#7  0x00000000004ba923 in relation_openrv (relation=0x152eaf0, lockmode=4) at heapam.c:1214
+#8  0x00000000004baae5 in heap_openrv (relation=0x152eaf0, lockmode=4) at heapam.c:1316
+#9  0x00007fc3d2408193 in PostProcessIndexStmt (indexStmt=0x152ea40) at commands/index.c:297
+#10 0x00007fc3d24128a0 in PostProcessUtility (parsetree=0x152ea40) at commands/utility_hook.c:696
+#11 0x00007fc3d2412414 in multi_ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", 
+    context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at commands/utility_hook.c:475
+#12 0x000000000081ac94 in ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", context=PROCESS_UTILITY_TOPLEVEL, 
+    params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at utility.c:353
+#13 0x0000000000819ed1 in PortalRunUtility (portal=0x15dab28, pstmt=0x152e8d0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1178
+#14 0x000000000081a0b2 in PortalRunMulti (portal=0x15dab28, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1324
+#15 0x000000000081968a in PortalRun (portal=0x15dab28, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:799
+#16 0x0000000000813b59 in exec_simple_query (query_string=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);") at postgres.c:1099
+#17 0x0000000000817b1f in PostgresMain (argc=1, argv=0x14cb348, dbname=0x14cb1f8 "postgres", username=0x1482cb8 "cituscluster") at postgres.c:4088
+#18 0x000000000078b2d2 in BackendRun (port=0x14c57d0) at postmaster.c:4357
+#19 0x000000000078aa7b in BackendStartup (port=0x14c57d0) at postmaster.c:4029
+#20 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#21 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1480b90) at postmaster.c:1361
+#22 0x00000000006cf26f in main (argc=1, argv=0x1480b90) at main.c:228
+(gdb) c
+Continuing.
+
+Breakpoint 9, ResourceOwnerForgetSnapshot (owner=0x14d0d98, snapshot=0x15949d8) at resowner.c:1165
+1165		if (!ResourceArrayRemove(&(owner->snapshotarr), PointerGetDatum(snapshot)))
+(gdb) bt
+#0  ResourceOwnerForgetSnapshot (owner=0x14d0d98, snapshot=0x15949d8) at resowner.c:1165
+#1  0x00000000009b1ca9 in UnregisterSnapshotFromOwner (snapshot=0x15949d8, owner=0x14d0d98) at snapmgr.c:926
+#2  0x00000000009b1c7b in UnregisterSnapshot (snapshot=0x15949d8) at snapmgr.c:910
+#3  0x00000000004d1c8b in systable_endscan (sysscan=0x1594878) at genam.c:510
+#4  0x00000000009518f6 in RelationBuildTupleDesc (relation=0x7fc3d9a64390) at relcache.c:576
+#5  0x0000000000953463 in RelationBuildDesc (targetRelId=28994, insertIt=1 '\001') at relcache.c:1325
+#6  0x000000000095509c in RelationIdGetRelation (relationId=28994) at relcache.c:2107
+#7  0x00000000004ba793 in relation_open (relationId=28994, lockmode=0) at heapam.c:1125
+#8  0x00000000004ba923 in relation_openrv (relation=0x152eaf0, lockmode=4) at heapam.c:1214
+#9  0x00000000004baae5 in heap_openrv (relation=0x152eaf0, lockmode=4) at heapam.c:1316
+#10 0x00007fc3d2408193 in PostProcessIndexStmt (indexStmt=0x152ea40) at commands/index.c:297
+#11 0x00007fc3d24128a0 in PostProcessUtility (parsetree=0x152ea40) at commands/utility_hook.c:696
+#12 0x00007fc3d2412414 in multi_ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", 
+    context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at commands/utility_hook.c:475
+#13 0x000000000081ac94 in ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", context=PROCESS_UTILITY_TOPLEVEL, 
+    params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at utility.c:353
+#14 0x0000000000819ed1 in PortalRunUtility (portal=0x15dab28, pstmt=0x152e8d0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1178
+#15 0x000000000081a0b2 in PortalRunMulti (portal=0x15dab28, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1324
+#16 0x000000000081968a in PortalRun (portal=0x15dab28, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:799
+#17 0x0000000000813b59 in exec_simple_query (query_string=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);") at postgres.c:1099
+#18 0x0000000000817b1f in PostgresMain (argc=1, argv=0x14cb348, dbname=0x14cb1f8 "postgres", username=0x1482cb8 "cituscluster") at postgres.c:4088
+#19 0x000000000078b2d2 in BackendRun (port=0x14c57d0) at postmaster.c:4357
+#20 0x000000000078aa7b in BackendStartup (port=0x14c57d0) at postmaster.c:4029
+#21 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#22 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1480b90) at postmaster.c:1361
+#23 0x00000000006cf26f in main (argc=1, argv=0x1480b90) at main.c:228
+(gdb) c
+Continuing.
+
+Breakpoint 7, ResourceOwnerRememberSnapshot (owner=0x14d0d98, snapshot=0x15949d8) at resowner.c:1156
+1156		ResourceArrayAdd(&(owner->snapshotarr), PointerGetDatum(snapshot));
+(gdb) bt
+#0  ResourceOwnerRememberSnapshot (owner=0x14d0d98, snapshot=0x15949d8) at resowner.c:1156
+#1  0x00000000009b1c29 in RegisterSnapshotOnOwner (snapshot=0xe17020 <CatalogSnapshotData>, owner=0x14d0d98) at snapmgr.c:889
+#2  0x00000000009b1bb7 in RegisterSnapshot (snapshot=0xe17020 <CatalogSnapshotData>) at snapmgr.c:868
+#3  0x00000000004d190f in systable_beginscan (heapRelation=0x7fc3d9a48138, indexId=2701, indexOK=1 '\001', snapshot=0x0, nkeys=1, key=0x7ffcf7f11770) at genam.c:353
+#4  0x000000000064bdac in RelationBuildTriggers (relation=0x7fc3d9a64390) at trigger.c:1716
+#5  0x00000000009534b5 in RelationBuildDesc (targetRelId=28994, insertIt=1 '\001') at relcache.c:1339
+#6  0x000000000095509c in RelationIdGetRelation (relationId=28994) at relcache.c:2107
+#7  0x00000000004ba793 in relation_open (relationId=28994, lockmode=0) at heapam.c:1125
+#8  0x00000000004ba923 in relation_openrv (relation=0x152eaf0, lockmode=4) at heapam.c:1214
+#9  0x00000000004baae5 in heap_openrv (relation=0x152eaf0, lockmode=4) at heapam.c:1316
+#10 0x00007fc3d2408193 in PostProcessIndexStmt (indexStmt=0x152ea40) at commands/index.c:297
+#11 0x00007fc3d24128a0 in PostProcessUtility (parsetree=0x152ea40) at commands/utility_hook.c:696
+#12 0x00007fc3d2412414 in multi_ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", 
+    context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at commands/utility_hook.c:475
+#13 0x000000000081ac94 in ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", context=PROCESS_UTILITY_TOPLEVEL, 
+    params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at utility.c:353
+#14 0x0000000000819ed1 in PortalRunUtility (portal=0x15dab28, pstmt=0x152e8d0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1178
+#15 0x000000000081a0b2 in PortalRunMulti (portal=0x15dab28, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1324
+#16 0x000000000081968a in PortalRun (portal=0x15dab28, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:799
+#17 0x0000000000813b59 in exec_simple_query (query_string=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);") at postgres.c:1099
+#18 0x0000000000817b1f in PostgresMain (argc=1, argv=0x14cb348, dbname=0x14cb1f8 "postgres", username=0x1482cb8 "cituscluster") at postgres.c:4088
+#19 0x000000000078b2d2 in BackendRun (port=0x14c57d0) at postmaster.c:4357
+#20 0x000000000078aa7b in BackendStartup (port=0x14c57d0) at postmaster.c:4029
+#21 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#22 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1480b90) at postmaster.c:1361
+#23 0x00000000006cf26f in main (argc=1, argv=0x1480b90) at main.c:228
+(gdb) c
+Continuing.
+
+Breakpoint 5, UnregisterSnapshotFromOwner (snapshot=0x15949d8, owner=0x14d0d98) at snapmgr.c:920
+920		if (snapshot == NULL)
+(gdb) bt
+#0  UnregisterSnapshotFromOwner (snapshot=0x15949d8, owner=0x14d0d98) at snapmgr.c:920
+#1  0x00000000009b1c7b in UnregisterSnapshot (snapshot=0x15949d8) at snapmgr.c:910
+#2  0x00000000004d1c8b in systable_endscan (sysscan=0x1594878) at genam.c:510
+#3  0x000000000064caa5 in RelationBuildTriggers (relation=0x7fc3d9a64390) at trigger.c:1804
+#4  0x00000000009534b5 in RelationBuildDesc (targetRelId=28994, insertIt=1 '\001') at relcache.c:1339
+#5  0x000000000095509c in RelationIdGetRelation (relationId=28994) at relcache.c:2107
+#6  0x00000000004ba793 in relation_open (relationId=28994, lockmode=0) at heapam.c:1125
+#7  0x00000000004ba923 in relation_openrv (relation=0x152eaf0, lockmode=4) at heapam.c:1214
+#8  0x00000000004baae5 in heap_openrv (relation=0x152eaf0, lockmode=4) at heapam.c:1316
+#9  0x00007fc3d2408193 in PostProcessIndexStmt (indexStmt=0x152ea40) at commands/index.c:297
+#10 0x00007fc3d24128a0 in PostProcessUtility (parsetree=0x152ea40) at commands/utility_hook.c:696
+#11 0x00007fc3d2412414 in multi_ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", 
+    context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at commands/utility_hook.c:475
+#12 0x000000000081ac94 in ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", context=PROCESS_UTILITY_TOPLEVEL, 
+    params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at utility.c:353
+#13 0x0000000000819ed1 in PortalRunUtility (portal=0x15dab28, pstmt=0x152e8d0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1178
+#14 0x000000000081a0b2 in PortalRunMulti (portal=0x15dab28, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1324
+#15 0x000000000081968a in PortalRun (portal=0x15dab28, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:799
+#16 0x0000000000813b59 in exec_simple_query (query_string=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);") at postgres.c:1099
+#17 0x0000000000817b1f in PostgresMain (argc=1, argv=0x14cb348, dbname=0x14cb1f8 "postgres", username=0x1482cb8 "cituscluster") at postgres.c:4088
+#18 0x000000000078b2d2 in BackendRun (port=0x14c57d0) at postmaster.c:4357
+#19 0x000000000078aa7b in BackendStartup (port=0x14c57d0) at postmaster.c:4029
+#20 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#21 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1480b90) at postmaster.c:1361
+#22 0x00000000006cf26f in main (argc=1, argv=0x1480b90) at main.c:228
+(gdb) c
+Continuing.
+
+Breakpoint 9, ResourceOwnerForgetSnapshot (owner=0x14d0d98, snapshot=0x15949d8) at resowner.c:1165
+1165		if (!ResourceArrayRemove(&(owner->snapshotarr), PointerGetDatum(snapshot)))
+(gdb) 
+Continuing.
+
+Breakpoint 7, ResourceOwnerRememberSnapshot (owner=0x14d0d98, snapshot=0x15949d8) at resowner.c:1156
+1156		ResourceArrayAdd(&(owner->snapshotarr), PointerGetDatum(snapshot));
+(gdb) bt
+#0  ResourceOwnerRememberSnapshot (owner=0x14d0d98, snapshot=0x15949d8) at resowner.c:1156
+#1  0x00000000009b1c29 in RegisterSnapshotOnOwner (snapshot=0xe17020 <CatalogSnapshotData>, owner=0x14d0d98) at snapmgr.c:889
+#2  0x00000000009b1bb7 in RegisterSnapshot (snapshot=0xe17020 <CatalogSnapshotData>) at snapmgr.c:868
+#3  0x00000000004d190f in systable_beginscan (heapRelation=0x1500108, indexId=2663, indexOK=1 '\001', snapshot=0x0, nkeys=2, key=0x7ffcf7f11730) at genam.c:353
+#4  0x000000000094be9c in SearchCatCache (cache=0x14f5838, v1=22211280, v2=2200, v3=0, v4=0) at catcache.c:1169
+#5  0x000000000095e65e in SearchSysCache (cacheId=49, key1=22211280, key2=2200, key3=0, key4=0) at syscache.c:1109
+#6  0x000000000095e77a in GetSysCacheOid (cacheId=49, key1=22211280, key2=2200, key3=0, key4=0) at syscache.c:1187
+#7  0x000000000096125b in get_relname_relid (relname=0x152ead0 "clicked_at_idx", relnamespace=2200) at lsyscache.c:1685
+#8  0x00007fc3d24081b4 in PostProcessIndexStmt (indexStmt=0x152ea40) at commands/index.c:298
+#9  0x00007fc3d24128a0 in PostProcessUtility (parsetree=0x152ea40) at commands/utility_hook.c:696
+#10 0x00007fc3d2412414 in multi_ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", 
+    context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at commands/utility_hook.c:475
+#11 0x000000000081ac94 in ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", context=PROCESS_UTILITY_TOPLEVEL, 
+    params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at utility.c:353
+#12 0x0000000000819ed1 in PortalRunUtility (portal=0x15dab28, pstmt=0x152e8d0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1178
+#13 0x000000000081a0b2 in PortalRunMulti (portal=0x15dab28, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1324
+#14 0x000000000081968a in PortalRun (portal=0x15dab28, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:799
+#15 0x0000000000813b59 in exec_simple_query (query_string=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);") at postgres.c:1099
+#16 0x0000000000817b1f in PostgresMain (argc=1, argv=0x14cb348, dbname=0x14cb1f8 "postgres", username=0x1482cb8 "cituscluster") at postgres.c:4088
+#17 0x000000000078b2d2 in BackendRun (port=0x14c57d0) at postmaster.c:4357
+#18 0x000000000078aa7b in BackendStartup (port=0x14c57d0) at postmaster.c:4029
+#19 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#20 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1480b90) at postmaster.c:1361
+#21 0x00000000006cf26f in main (argc=1, argv=0x1480b90) at main.c:228
+(gdb) c
+Continuing.
+
+Breakpoint 5, UnregisterSnapshotFromOwner (snapshot=0x15949d8, owner=0x14d0d98) at snapmgr.c:920
+920		if (snapshot == NULL)
+(gdb) 
+Continuing.
+
+Breakpoint 9, ResourceOwnerForgetSnapshot (owner=0x14d0d98, snapshot=0x15949d8) at resowner.c:1165
+1165		if (!ResourceArrayRemove(&(owner->snapshotarr), PointerGetDatum(snapshot)))
+(gdb) 
+Continuing.
+
+Breakpoint 7, ResourceOwnerRememberSnapshot (owner=0x14d0d98, snapshot=0x15949d8) at resowner.c:1156
+1156		ResourceArrayAdd(&(owner->snapshotarr), PointerGetDatum(snapshot));
+(gdb) bt
+#0  ResourceOwnerRememberSnapshot (owner=0x14d0d98, snapshot=0x15949d8) at resowner.c:1156
+#1  0x00000000009b1c29 in RegisterSnapshotOnOwner (snapshot=0xe17020 <CatalogSnapshotData>, owner=0x14d0d98) at snapmgr.c:889
+#2  0x00000000009b1bb7 in RegisterSnapshot (snapshot=0xe17020 <CatalogSnapshotData>) at snapmgr.c:868
+#3  0x00000000004d190f in systable_beginscan (heapRelation=0x1501468, indexId=2659, indexOK=1 '\001', snapshot=0x0, nkeys=2, key=0x7ffcf7f11790) at genam.c:353
+#4  0x000000000095174b in RelationBuildTupleDesc (relation=0x7fc3d9a64180) at relcache.c:527
+#5  0x0000000000953463 in RelationBuildDesc (targetRelId=37214, insertIt=1 '\001') at relcache.c:1325
+#6  0x000000000095509c in RelationIdGetRelation (relationId=37214) at relcache.c:2107
+#7  0x00000000004ba793 in relation_open (relationId=37214, lockmode=3) at heapam.c:1125
+#8  0x00000000004d1fb2 in index_open (relationId=37214, lockmode=3) at indexam.c:155
+#9  0x00007fc3d24081c6 in PostProcessIndexStmt (indexStmt=0x152ea40) at commands/index.c:300
+#10 0x00007fc3d24128a0 in PostProcessUtility (parsetree=0x152ea40) at commands/utility_hook.c:696
+#11 0x00007fc3d2412414 in multi_ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", 
+    context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at commands/utility_hook.c:475
+#12 0x000000000081ac94 in ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", context=PROCESS_UTILITY_TOPLEVEL, 
+    params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at utility.c:353
+#13 0x0000000000819ed1 in PortalRunUtility (portal=0x15dab28, pstmt=0x152e8d0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1178
+#14 0x000000000081a0b2 in PortalRunMulti (portal=0x15dab28, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1324
+#15 0x000000000081968a in PortalRun (portal=0x15dab28, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:799
+#16 0x0000000000813b59 in exec_simple_query (query_string=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);") at postgres.c:1099
+#17 0x0000000000817b1f in PostgresMain (argc=1, argv=0x14cb348, dbname=0x14cb1f8 "postgres", username=0x1482cb8 "cituscluster") at postgres.c:4088
+#18 0x000000000078b2d2 in BackendRun (port=0x14c57d0) at postmaster.c:4357
+#19 0x000000000078aa7b in BackendStartup (port=0x14c57d0) at postmaster.c:4029
+#20 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#21 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1480b90) at postmaster.c:1361
+#22 0x00000000006cf26f in main (argc=1, argv=0x1480b90) at main.c:228
+(gdb) c
+Continuing.
+
+Breakpoint 5, UnregisterSnapshotFromOwner (snapshot=0x15949d8, owner=0x14d0d98) at snapmgr.c:920
+920		if (snapshot == NULL)
+(gdb) 
+Continuing.
+
+Breakpoint 9, ResourceOwnerForgetSnapshot (owner=0x14d0d98, snapshot=0x15949d8) at resowner.c:1165
+1165		if (!ResourceArrayRemove(&(owner->snapshotarr), PointerGetDatum(snapshot)))
+(gdb) 
+Continuing.
+
+Breakpoint 7, ResourceOwnerRememberSnapshot (owner=0x14d0d98, snapshot=0x15949d8) at resowner.c:1156
+1156		ResourceArrayAdd(&(owner->snapshotarr), PointerGetDatum(snapshot));
+(gdb) bt
+#0  ResourceOwnerRememberSnapshot (owner=0x14d0d98, snapshot=0x15949d8) at resowner.c:1156
+#1  0x00000000009b1c29 in RegisterSnapshotOnOwner (snapshot=0xe17020 <CatalogSnapshotData>, owner=0x14d0d98) at snapmgr.c:889
+#2  0x00000000009b1bb7 in RegisterSnapshot (snapshot=0xe17020 <CatalogSnapshotData>) at snapmgr.c:868
+#3  0x00000000004d190f in systable_beginscan (heapRelation=0x15052e8, indexId=2679, indexOK=1 '\001', snapshot=0x0, nkeys=1, key=0x7ffcf7f11600) at genam.c:353
+#4  0x000000000094be9c in SearchCatCache (cache=0x14f0018, v1=37214, v2=0, v3=0, v4=0) at catcache.c:1169
+#5  0x000000000095e65e in SearchSysCache (cacheId=32, key1=37214, key2=0, key3=0, key4=0) at syscache.c:1109
+#6  0x000000000095397e in RelationInitIndexAccessInfo (relation=0x7fc3d9a64180) at relcache.c:1530
+#7  0x0000000000953582 in RelationBuildDesc (targetRelId=37214, insertIt=1 '\001') at relcache.c:1370
+#8  0x000000000095509c in RelationIdGetRelation (relationId=37214) at relcache.c:2107
+#9  0x00000000004ba793 in relation_open (relationId=37214, lockmode=3) at heapam.c:1125
+#10 0x00000000004d1fb2 in index_open (relationId=37214, lockmode=3) at indexam.c:155
+#11 0x00007fc3d24081c6 in PostProcessIndexStmt (indexStmt=0x152ea40) at commands/index.c:300
+#12 0x00007fc3d24128a0 in PostProcessUtility (parsetree=0x152ea40) at commands/utility_hook.c:696
+#13 0x00007fc3d2412414 in multi_ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", 
+    context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at commands/utility_hook.c:475
+#14 0x000000000081ac94 in ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", context=PROCESS_UTILITY_TOPLEVEL, 
+    params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at utility.c:353
+#15 0x0000000000819ed1 in PortalRunUtility (portal=0x15dab28, pstmt=0x152e8d0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1178
+#16 0x000000000081a0b2 in PortalRunMulti (portal=0x15dab28, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1324
+#17 0x000000000081968a in PortalRun (portal=0x15dab28, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:799
+#18 0x0000000000813b59 in exec_simple_query (query_string=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);") at postgres.c:1099
+#19 0x0000000000817b1f in PostgresMain (argc=1, argv=0x14cb348, dbname=0x14cb1f8 "postgres", username=0x1482cb8 "cituscluster") at postgres.c:4088
+#20 0x000000000078b2d2 in BackendRun (port=0x14c57d0) at postmaster.c:4357
+#21 0x000000000078aa7b in BackendStartup (port=0x14c57d0) at postmaster.c:4029
+#22 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#23 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1480b90) at postmaster.c:1361
+#24 0x00000000006cf26f in main (argc=1, argv=0x1480b90) at main.c:228
+(gdb) c
+Continuing.
+
+Breakpoint 5, UnregisterSnapshotFromOwner (snapshot=0x15949d8, owner=0x14d0d98) at snapmgr.c:920
+920		if (snapshot == NULL)
+(gdb) 
+Continuing.
+
+Breakpoint 9, ResourceOwnerForgetSnapshot (owner=0x14d0d98, snapshot=0x15949d8) at resowner.c:1165
+1165		if (!ResourceArrayRemove(&(owner->snapshotarr), PointerGetDatum(snapshot)))
+(gdb) 
+Continuing.
+
+Breakpoint 8, AtEOXact_Snapshot (isCommit=1 '\001', resetXmin=0 '\000') at snapmgr.c:1070
+1070		if (FirstXactSnapshot != NULL)
+(gdb) bt
+#0  AtEOXact_Snapshot (isCommit=1 '\001', resetXmin=0 '\000') at snapmgr.c:1070
+#1  0x000000000050a7ee in CommitTransaction () at xact.c:2137
+#2  0x000000000050b1ba in CommitTransactionCommand () at xact.c:2773
+#3  0x00007fc3d2408200 in PostProcessIndexStmt (indexStmt=0x152ea40) at commands/index.c:310
+#4  0x00007fc3d24128a0 in PostProcessUtility (parsetree=0x152ea40) at commands/utility_hook.c:696
+#5  0x00007fc3d2412414 in multi_ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", 
+    context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at commands/utility_hook.c:475
+#6  0x000000000081ac94 in ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", context=PROCESS_UTILITY_TOPLEVEL, 
+    params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at utility.c:353
+#7  0x0000000000819ed1 in PortalRunUtility (portal=0x15dab28, pstmt=0x152e8d0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1178
+#8  0x000000000081a0b2 in PortalRunMulti (portal=0x15dab28, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1324
+#9  0x000000000081968a in PortalRun (portal=0x15dab28, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:799
+#10 0x0000000000813b59 in exec_simple_query (query_string=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);") at postgres.c:1099
+#11 0x0000000000817b1f in PostgresMain (argc=1, argv=0x14cb348, dbname=0x14cb1f8 "postgres", username=0x1482cb8 "cituscluster") at postgres.c:4088
+#12 0x000000000078b2d2 in BackendRun (port=0x14c57d0) at postmaster.c:4357
+#13 0x000000000078aa7b in BackendStartup (port=0x14c57d0) at postmaster.c:4029
+#14 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#15 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1480b90) at postmaster.c:1361
+#16 0x00000000006cf26f in main (argc=1, argv=0x1480b90) at main.c:228
+(gdb) p FirstXactSnapshot
+$6 = (Snapshot) 0x0
+(gdb) n
+1076		FirstXactSnapshot = NULL;
+(gdb) 
+1081		if (exportedSnapshots != NIL)
+(gdb) 
+1112		InvalidateCatalogSnapshot();
+(gdb) c
+Continuing.
+
+Breakpoint 6, ResourceOwnerDelete (owner=0x14d0d98) at resowner.c:708
+708		while (owner->firstchild != NULL)
+(gdb) bt
+#0  ResourceOwnerDelete (owner=0x14d0d98) at resowner.c:708
+#1  0x000000000050a81c in CommitTransaction () at xact.c:2142
+#2  0x000000000050b1ba in CommitTransactionCommand () at xact.c:2773
+#3  0x00007fc3d2408200 in PostProcessIndexStmt (indexStmt=0x152ea40) at commands/index.c:310
+#4  0x00007fc3d24128a0 in PostProcessUtility (parsetree=0x152ea40) at commands/utility_hook.c:696
+#5  0x00007fc3d2412414 in multi_ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", 
+    context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at commands/utility_hook.c:475
+#6  0x000000000081ac94 in ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", context=PROCESS_UTILITY_TOPLEVEL, 
+    params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at utility.c:353
+#7  0x0000000000819ed1 in PortalRunUtility (portal=0x15dab28, pstmt=0x152e8d0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1178
+#8  0x000000000081a0b2 in PortalRunMulti (portal=0x15dab28, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1324
+#9  0x000000000081968a in PortalRun (portal=0x15dab28, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:799
+#10 0x0000000000813b59 in exec_simple_query (query_string=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);") at postgres.c:1099
+#11 0x0000000000817b1f in PostgresMain (argc=1, argv=0x14cb348, dbname=0x14cb1f8 "postgres", username=0x1482cb8 "cituscluster") at postgres.c:4088
+#12 0x000000000078b2d2 in BackendRun (port=0x14c57d0) at postmaster.c:4357
+#13 0x000000000078aa7b in BackendStartup (port=0x14c57d0) at postmaster.c:4029
+#14 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#15 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1480b90) at postmaster.c:1361
+#16 0x00000000006cf26f in main (argc=1, argv=0x1480b90) at main.c:228
+(gdb) ^CQuit
+(gdb) n
+716		ResourceOwnerNewParent(owner, NULL);
+(gdb) c
+Continuing.
+
+Breakpoint 7, ResourceOwnerRememberSnapshot (owner=0x14d0d98, snapshot=0x15948c8) at resowner.c:1156
+1156		ResourceArrayAdd(&(owner->snapshotarr), PointerGetDatum(snapshot));
+(gdb) bt
+#0  ResourceOwnerRememberSnapshot (owner=0x14d0d98, snapshot=0x15948c8) at resowner.c:1156
+#1  0x00000000009b1c29 in RegisterSnapshotOnOwner (snapshot=0xe17020 <CatalogSnapshotData>, owner=0x14d0d98) at snapmgr.c:889
+#2  0x00000000009b1bb7 in RegisterSnapshot (snapshot=0xe17020 <CatalogSnapshotData>) at snapmgr.c:868
+#3  0x00000000004d190f in systable_beginscan (heapRelation=0x15052e8, indexId=2679, indexOK=1 '\001', snapshot=0x0, nkeys=1, key=0x7ffcf7f11750) at genam.c:353
+#4  0x000000000094be9c in SearchCatCache (cache=0x14f0018, v1=37214, v2=0, v3=0, v4=0) at catcache.c:1169
+#5  0x000000000095e65e in SearchSysCache (cacheId=32, key1=37214, key2=0, key3=0, key4=0) at syscache.c:1109
+#6  0x000000000095e6b2 in SearchSysCacheCopy (cacheId=32, key1=37214, key2=0, key3=0, key4=0) at syscache.c:1140
+#7  0x00007fc3d2408238 in PostProcessIndexStmt (indexStmt=0x152ea40) at commands/index.c:316
+#8  0x00007fc3d24128a0 in PostProcessUtility (parsetree=0x152ea40) at commands/utility_hook.c:696
+#9  0x00007fc3d2412414 in multi_ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", 
+    context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at commands/utility_hook.c:475
+#10 0x000000000081ac94 in ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", context=PROCESS_UTILITY_TOPLEVEL, 
+    params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at utility.c:353
+#11 0x0000000000819ed1 in PortalRunUtility (portal=0x15dab28, pstmt=0x152e8d0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1178
+#12 0x000000000081a0b2 in PortalRunMulti (portal=0x15dab28, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1324
+#13 0x000000000081968a in PortalRun (portal=0x15dab28, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:799
+#14 0x0000000000813b59 in exec_simple_query (query_string=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);") at postgres.c:1099
+#15 0x0000000000817b1f in PostgresMain (argc=1, argv=0x14cb348, dbname=0x14cb1f8 "postgres", username=0x1482cb8 "cituscluster") at postgres.c:4088
+#16 0x000000000078b2d2 in BackendRun (port=0x14c57d0) at postmaster.c:4357
+#17 0x000000000078aa7b in BackendStartup (port=0x14c57d0) at postmaster.c:4029
+#18 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#19 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1480b90) at postmaster.c:1361
+#20 0x00000000006cf26f in main (argc=1, argv=0x1480b90) at main.c:228
+(gdb) c
+Continuing.
+
+Breakpoint 5, UnregisterSnapshotFromOwner (snapshot=0x15948c8, owner=0x14d0d98) at snapmgr.c:920
+920		if (snapshot == NULL)
+(gdb) bt
+#0  UnregisterSnapshotFromOwner (snapshot=0x15948c8, owner=0x14d0d98) at snapmgr.c:920
+#1  0x00000000009b1c7b in UnregisterSnapshot (snapshot=0x15948c8) at snapmgr.c:910
+#2  0x00000000004d1c8b in systable_endscan (sysscan=0x1594878) at genam.c:510
+#3  0x000000000094bf29 in SearchCatCache (cache=0x14f0018, v1=37214, v2=0, v3=0, v4=0) at catcache.c:1190
+#4  0x000000000095e65e in SearchSysCache (cacheId=32, key1=37214, key2=0, key3=0, key4=0) at syscache.c:1109
+#5  0x000000000095e6b2 in SearchSysCacheCopy (cacheId=32, key1=37214, key2=0, key3=0, key4=0) at syscache.c:1140
+#6  0x00007fc3d2408238 in PostProcessIndexStmt (indexStmt=0x152ea40) at commands/index.c:316
+#7  0x00007fc3d24128a0 in PostProcessUtility (parsetree=0x152ea40) at commands/utility_hook.c:696
+#8  0x00007fc3d2412414 in multi_ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", 
+    context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at commands/utility_hook.c:475
+#9  0x000000000081ac94 in ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", context=PROCESS_UTILITY_TOPLEVEL, 
+    params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at utility.c:353
+#10 0x0000000000819ed1 in PortalRunUtility (portal=0x15dab28, pstmt=0x152e8d0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1178
+#11 0x000000000081a0b2 in PortalRunMulti (portal=0x15dab28, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1324
+#12 0x000000000081968a in PortalRun (portal=0x15dab28, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:799
+#13 0x0000000000813b59 in exec_simple_query (query_string=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);") at postgres.c:1099
+#14 0x0000000000817b1f in PostgresMain (argc=1, argv=0x14cb348, dbname=0x14cb1f8 "postgres", username=0x1482cb8 "cituscluster") at postgres.c:4088
+#15 0x000000000078b2d2 in BackendRun (port=0x14c57d0) at postmaster.c:4357
+#16 0x000000000078aa7b in BackendStartup (port=0x14c57d0) at postmaster.c:4029
+#17 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#18 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1480b90) at postmaster.c:1361
+#19 0x00000000006cf26f in main (argc=1, argv=0x1480b90) at main.c:228
+(gdb) c
+Continuing.
+
+Breakpoint 9, ResourceOwnerForgetSnapshot (owner=0x14d0d98, snapshot=0x15948c8) at resowner.c:1165
+1165		if (!ResourceArrayRemove(&(owner->snapshotarr), PointerGetDatum(snapshot)))
+(gdb) 
+Continuing.
+
+Breakpoint 7, ResourceOwnerRememberSnapshot (owner=0x14d0d98, snapshot=0x1594a68) at resowner.c:1156
+1156		ResourceArrayAdd(&(owner->snapshotarr), PointerGetDatum(snapshot));
+(gdb) bt
+#0  ResourceOwnerRememberSnapshot (owner=0x14d0d98, snapshot=0x1594a68) at resowner.c:1156
+#1  0x00000000009b1c29 in RegisterSnapshotOnOwner (snapshot=0xe17020 <CatalogSnapshotData>, owner=0x14d0d98) at snapmgr.c:889
+#2  0x00000000009b1bb7 in RegisterSnapshot (snapshot=0xe17020 <CatalogSnapshotData>) at snapmgr.c:868
+#3  0x00000000004d190f in systable_beginscan (heapRelation=0x7fc3d9a467e8, indexId=20453, indexOK=1 '\001', snapshot=0x0, nkeys=1, key=0x7ffcf7f116f0) at genam.c:353
+#4  0x00007fc3d24780fa in LookupDistPartitionTuple (pgDistPartition=0x7fc3d9a467e8, relationId=28994) at utils/metadata_cache.c:3534
+#5  0x00007fc3d2473f91 in BuildDistTableCacheEntry (cacheEntry=0x15c2b38) at utils/metadata_cache.c:961
+#6  0x00007fc3d2473efc in LookupDistTableCacheEntry (relationId=28994) at utils/metadata_cache.c:932
+#7  0x00007fc3d2473d72 in DistributedTableCacheEntry (distributedRelationId=28994) at utils/metadata_cache.c:835
+#8  0x00007fc3d24300f8 in ShouldSyncTableMetadata (relationId=28994) at metadata/metadata_sync.c:372
+#9  0x00007fc3d24124ea in ExecuteDistributedDDLJob (ddlJob=0x15970c0) at commands/utility_hook.c:537
+#10 0x00007fc3d2412470 in multi_ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", 
+    context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at commands/utility_hook.c:502
+#11 0x000000000081ac94 in ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", context=PROCESS_UTILITY_TOPLEVEL, 
+    params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at utility.c:353
+#12 0x0000000000819ed1 in PortalRunUtility (portal=0x15dab28, pstmt=0x152e8d0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1178
+#13 0x000000000081a0b2 in PortalRunMulti (portal=0x15dab28, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1324
+#14 0x000000000081968a in PortalRun (portal=0x15dab28, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:799
+#15 0x0000000000813b59 in exec_simple_query (query_string=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);") at postgres.c:1099
+#16 0x0000000000817b1f in PostgresMain (argc=1, argv=0x14cb348, dbname=0x14cb1f8 "postgres", username=0x1482cb8 "cituscluster") at postgres.c:4088
+#17 0x000000000078b2d2 in BackendRun (port=0x14c57d0) at postmaster.c:4357
+#18 0x000000000078aa7b in BackendStartup (port=0x14c57d0) at postmaster.c:4029
+#19 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#20 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1480b90) at postmaster.c:1361
+#21 0x00000000006cf26f in main (argc=1, argv=0x1480b90) at main.c:228
+(gdb) c
+Continuing.
+
+Breakpoint 5, UnregisterSnapshotFromOwner (snapshot=0x1594a68, owner=0x14d0d98) at snapmgr.c:920
+920		if (snapshot == NULL)
+(gdb) 
+Continuing.
+
+Breakpoint 9, ResourceOwnerForgetSnapshot (owner=0x14d0d98, snapshot=0x1594a68) at resowner.c:1165
+1165		if (!ResourceArrayRemove(&(owner->snapshotarr), PointerGetDatum(snapshot)))
+(gdb) bt
+#0  ResourceOwnerForgetSnapshot (owner=0x14d0d98, snapshot=0x1594a68) at resowner.c:1165
+#1  0x00000000009b1ca9 in UnregisterSnapshotFromOwner (snapshot=0x1594a68, owner=0x14d0d98) at snapmgr.c:926
+#2  0x00000000009b1c7b in UnregisterSnapshot (snapshot=0x1594a68) at snapmgr.c:910
+#3  0x00000000004d1c8b in systable_endscan (sysscan=0x1595a78) at genam.c:510
+#4  0x00007fc3d2478131 in LookupDistPartitionTuple (pgDistPartition=0x7fc3d9a467e8, relationId=28994) at utils/metadata_cache.c:3544
+#5  0x00007fc3d2473f91 in BuildDistTableCacheEntry (cacheEntry=0x15c2b38) at utils/metadata_cache.c:961
+#6  0x00007fc3d2473efc in LookupDistTableCacheEntry (relationId=28994) at utils/metadata_cache.c:932
+#7  0x00007fc3d2473d72 in DistributedTableCacheEntry (distributedRelationId=28994) at utils/metadata_cache.c:835
+#8  0x00007fc3d24300f8 in ShouldSyncTableMetadata (relationId=28994) at metadata/metadata_sync.c:372
+#9  0x00007fc3d24124ea in ExecuteDistributedDDLJob (ddlJob=0x15970c0) at commands/utility_hook.c:537
+#10 0x00007fc3d2412470 in multi_ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", 
+    context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at commands/utility_hook.c:502
+#11 0x000000000081ac94 in ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", context=PROCESS_UTILITY_TOPLEVEL, 
+    params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at utility.c:353
+#12 0x0000000000819ed1 in PortalRunUtility (portal=0x15dab28, pstmt=0x152e8d0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1178
+#13 0x000000000081a0b2 in PortalRunMulti (portal=0x15dab28, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1324
+#14 0x000000000081968a in PortalRun (portal=0x15dab28, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:799
+#15 0x0000000000813b59 in exec_simple_query (query_string=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);") at postgres.c:1099
+#16 0x0000000000817b1f in PostgresMain (argc=1, argv=0x14cb348, dbname=0x14cb1f8 "postgres", username=0x1482cb8 "cituscluster") at postgres.c:4088
+#17 0x000000000078b2d2 in BackendRun (port=0x14c57d0) at postmaster.c:4357
+#18 0x000000000078aa7b in BackendStartup (port=0x14c57d0) at postmaster.c:4029
+#19 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#20 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1480b90) at postmaster.c:1361
+#21 0x00000000006cf26f in main (argc=1, argv=0x1480b90) at main.c:228
+(gdb) c
+Continuing.
+
+Breakpoint 7, ResourceOwnerRememberSnapshot (owner=0x14d0d98, snapshot=0x1594a68) at resowner.c:1156
+1156		ResourceArrayAdd(&(owner->snapshotarr), PointerGetDatum(snapshot));
+(gdb) bt
+#0  ResourceOwnerRememberSnapshot (owner=0x14d0d98, snapshot=0x1594a68) at resowner.c:1156
+#1  0x00000000009b1c29 in RegisterSnapshotOnOwner (snapshot=0xe17020 <CatalogSnapshotData>, owner=0x14d0d98) at snapmgr.c:889
+#2  0x00000000009b1bb7 in RegisterSnapshot (snapshot=0xe17020 <CatalogSnapshotData>) at snapmgr.c:868
+#3  0x00000000004d190f in systable_beginscan (heapRelation=0x7fc3d9a57c60, indexId=20454, indexOK=1 '\001', snapshot=0x0, nkeys=1, key=0x7ffcf7f115c0) at genam.c:353
+#4  0x00007fc3d2478203 in LookupDistShardTuples (relationId=28994) at utils/metadata_cache.c:3574
+#5  0x00007fc3d2474303 in BuildCachedShardList (cacheEntry=0x15c2b38) at utils/metadata_cache.c:1094
+#6  0x00007fc3d2474103 in BuildDistTableCacheEntry (cacheEntry=0x15c2b38) at utils/metadata_cache.c:1026
+#7  0x00007fc3d2473efc in LookupDistTableCacheEntry (relationId=28994) at utils/metadata_cache.c:932
+#8  0x00007fc3d2473d72 in DistributedTableCacheEntry (distributedRelationId=28994) at utils/metadata_cache.c:835
+#9  0x00007fc3d24300f8 in ShouldSyncTableMetadata (relationId=28994) at metadata/metadata_sync.c:372
+#10 0x00007fc3d24124ea in ExecuteDistributedDDLJob (ddlJob=0x15970c0) at commands/utility_hook.c:537
+#11 0x00007fc3d2412470 in multi_ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", 
+    context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at commands/utility_hook.c:502
+#12 0x000000000081ac94 in ProcessUtility (pstmt=0x152e8d0, queryString=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);", context=PROCESS_UTILITY_TOPLEVEL, 
+    params=0x0, queryEnv=0x0, dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "") at utility.c:353
+#13 0x0000000000819ed1 in PortalRunUtility (portal=0x15dab28, pstmt=0x152e8d0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1178
+#14 0x000000000081a0b2 in PortalRunMulti (portal=0x15dab28, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:1324
+#15 0x000000000081968a in PortalRun (portal=0x15dab28, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x152e9b0, altdest=0x152e9b0, completionTag=0x7ffcf7f11e60 "")
+    at pquery.c:799
+#16 0x0000000000813b59 in exec_simple_query (query_string=0x152d988 "CREATE INDEX CONCURRENTLY clicked_at_idx ON fdd_test USING BRIN (x);") at postgres.c:1099
+#17 0x0000000000817b1f in PostgresMain (argc=1, argv=0x14cb348, dbname=0x14cb1f8 "postgres", username=0x1482cb8 "cituscluster") at postgres.c:4088
+#18 0x000000000078b2d2 in BackendRun (port=0x14c57d0) at postmaster.c:4357
+#19 0x000000000078aa7b in BackendStartup (port=0x14c57d0) at postmaster.c:4029
+#20 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#21 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1480b90) at postmaster.c:1361
+#22 0x00000000006cf26f in main (argc=1, argv=0x1480b90) at main.c:228
+(gdb) cinfo b
+Undefined command: "cinfo".  Try "help".
+(gdb) info b
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x00007fc3d2412887 in PostProcessUtility at commands/utility_hook.c:694
+	breakpoint already hit 1 time
+2       breakpoint     keep y   0x00007fc3d2411ba6 in multi_ProcessUtility at commands/utility_hook.c:105
+	breakpoint already hit 2 times
+3       breakpoint     keep y   0x00000000009b198c in PushActiveSnapshot at snapmgr.c:739
+4       breakpoint     keep y   0x00000000009b1ad6 in PopActiveSnapshot at snapmgr.c:816
+5       breakpoint     keep y   0x00000000009b1c8d in UnregisterSnapshotFromOwner at snapmgr.c:920
+	breakpoint already hit 7 times
+6       breakpoint     keep y   0x000000000099e42f in ResourceOwnerDelete at resowner.c:708
+	breakpoint already hit 2 times
+7       breakpoint     keep y   0x000000000099ed4f in ResourceOwnerRememberSnapshot at resowner.c:1156
+	breakpoint already hit 8 times
+8       breakpoint     keep y   0x00000000009b1f0c in AtEOXact_Snapshot at snapmgr.c:1070
+	breakpoint already hit 2 times
+9       breakpoint     keep y   0x000000000099ed7b in ResourceOwnerForgetSnapshot at resowner.c:1165
+	breakpoint already hit 7 times
+(gdb) 
+Socket error Event: 32 Error: 10053.
+Connection closing...Socket close.
+
+Connection closed by foreign host.
+
+Disconnected from remote host(citus-cn1) at 18:52:00.
+
+Type `help' to learn how to use Xshell prompt.

@@ -1,0 +1,25 @@
+DoWorker全局缓存的内存保护（读 增）
+1. DoWorker 事务内 切换上下文 + DoMonitor 事务内 切换上下文       --> OK
+2. DoWorker 事务内 切换上下文                                     --> OK
+3. DoWorker 事务内 切到自定义上下文                               --> OK
+4. DoWorker 事务内 切到自定义上下文                               --> OK
+5. DoWorker 事务外 切到自定义上下文                               --> ERR （全局链表地址不为空，但指针均为空）
+6. DoWorker 事务外 切换上下文                                     --> ERR （全局链表地址不为空，但指针均为空）
+
+
+DoWorker全局缓存的内存保护（读 增 删）
+1. DoWorker 事务内 切换上下文 + DoMonitor 事务内 切换上下文       --> OK
+2. DoWorker 事务内 切换上下文                                     --> OK
+3. DoWorker 事务内 切到自定义上下文                               --> OK
+4. DoWorker 事务内 切到自定义上下文                               --> OK
+5. DoWorker 事务外 切到自定义上下文                               --> ERR （全局链表地址不为空，但指针均为空）
+6. DoWorker 事务外 切换上下文                                     --> ERR （全局链表地址不为空，但指针均为空）
+
+
+DoWorker一个流程内多个事务的内存保护
+1. Start + Commit + Start                                 --> ERR （指向全局链表元素的内存失效）
+2. Start + Commit + Start + 切到自定义上下文              --> ERR （指向全局链表元素的内存失效）
+3. Start + Commit + Start （DoWorker保护4场景下）         --> OK
+
+
+

@@ -1,0 +1,15 @@
+src/backend/distributed/commands/truncate.c                   --> 差异 check
+
+src/backend/distributed/utils/node_metadata.c                 --> 差异 check
+src/backend/distributed/utils/metadata_cache.c                --> 差异 check
+src/backend/distributed/utils/resource_lock.c                 --> 无差异
+src/backend/distributed/metadata/metadata_sync.c              --> 差异 check
+src/backend/distributed/master/worker_node_manager.c          --> 无差异
+src/backend/distributed/shared_library_init.c                 --> 差异 check
+src/backend/distributed/executor/multi_real_time_executor.c   --> 差异 check
+src/backend/distributed/executor/multi_server_executor.c      --> 差异 check
+src/backend/distributed/executor/subplan_execution.c          --> 无差异
+src/backend/distributed/planner/multi_physical_planner.c      --> 差异 check
+src/backend/distributed/planner/multi_router_planner.c        --> 差异 check
+src/include/distributed/resource_lock.h                       --> 无差异
+src/include/distributed/worker_manager.h                      --> 无差异

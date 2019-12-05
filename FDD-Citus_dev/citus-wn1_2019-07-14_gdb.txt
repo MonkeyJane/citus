@@ -1,0 +1,987 @@
+Xshell 5 (Build 1326)
+Copyright (c) 2002-2017 NetSarang Computer, Inc. All rights reserved.
+
+Type `help' to learn how to use Xshell prompt.
+[c:\~]$ 
+
+Connecting to 192.168.221.131:22...
+Connection established.
+To escape to local shell, press 'Ctrl+Alt+]'.
+
+Last login: Sun Jul 14 18:09:39 2019 from 192.168.221.1
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:49 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  63675  40370  0 18:29 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51446) idle
+cituscl+  63678  40370 15 18:29 ?        00:00:07 postgres: wal sender process cituscluster 192.168.221.132(51452) COPY
+cituscl+  63699  63620  0 18:30 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ psql -d postgres
+psql (10.1)
+Type "help" for help.
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-14 18:32:39.166172-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      63675 |      |         1103 | 6/4625FD60  | 6/4625FD98
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |   state   |  sent_lsn  | write_lsn  | fl
+ush_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+-----------+------------+------------+---
+---------+------------+-----------+-----------+------------+---------------+------------
+ 63675 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       51446 | 2019-07-14 18:29:20.110691-07 |              | streaming | 6/4625FD98 | 6/4625FD98 | 6/
+4625FD98 | 6/4625FD98 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# \q
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:49 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:01 postgres: cituscluster postgres [local] idle
+cituscl+  63675  40370  0 18:29 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51446) idle
+cituscl+  63798  63620  0 18:33 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ kill 63675
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:49 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:01 postgres: cituscluster postgres [local] idle
+cituscl+  63803  40370  0 18:33 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51454) idle
+cituscl+  63811  63620  0 18:33 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ kill 63803
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:49 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:01 postgres: cituscluster postgres [local] idle
+cituscl+  63819  40370  0 18:33 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51456) idle
+cituscl+  63822  63620  0 18:34 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ kill 63819
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:49 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:01 postgres: cituscluster postgres [local] idle
+cituscl+  63827  40370  0 18:34 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51458) idle
+cituscl+  63830  63620  0 18:34 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ kill 63827
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:49 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:01 postgres: cituscluster postgres [local] idle
+cituscl+  63836  63620  0 18:34 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:49 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:01 postgres: cituscluster postgres [local] idle
+cituscl+  63841  40370  0 18:34 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51460) idle
+cituscl+  63847  63620  0 18:34 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ vi data/postgresql.conf 
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:01 postgres: cituscluster postgres [local] idle
+cituscl+  63959  63620  0 18:41 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:02 postgres: cituscluster postgres [local] idle
+cituscl+  63973  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51466) idle
+cituscl+  63974  40370 10 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51468) COPY
+cituscl+  63975  40370 14 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51470) COPY
+cituscl+  63979  63620  0 18:41 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:02 postgres: cituscluster postgres [local] idle
+cituscl+  63973  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51466) idle
+cituscl+  63974  40370  8 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51468) COPY
+cituscl+  63975  40370 10 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51470) COPY
+cituscl+  63982  63620  0 18:41 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:02 postgres: cituscluster postgres [local] idle
+cituscl+  63973  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51466) idle
+cituscl+  63974  40370  9 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51468) COPY
+cituscl+  63975  40370 10 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51470) COPY
+cituscl+  63984  63620  0 18:41 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:02 postgres: cituscluster postgres [local] idle
+cituscl+  63973  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51466) idle
+cituscl+  63974  40370  7 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51468) COPY
+cituscl+  63975  40370  9 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51470) COPY
+cituscl+  63987  63620  0 18:41 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:02 postgres: cituscluster postgres [local] idle
+cituscl+  63973  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51466) idle
+cituscl+  63974  40370  7 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51468) COPY
+cituscl+  63975  40370 10 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51470) COPY
+cituscl+  63989  63620  0 18:41 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:02 postgres: cituscluster postgres [local] idle
+cituscl+  63973  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51466) idle
+cituscl+  63974  40370  8 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51468) COPY
+cituscl+  63975  40370 10 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51470) COPY
+cituscl+  63991  63620  0 18:41 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ kill 63973
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:02 postgres: cituscluster postgres [local] idle
+cituscl+  63996  40370 11 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51472) COPY
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64016  63620  0 18:41 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:02 postgres: cituscluster postgres [local] idle
+cituscl+  63996  40370 10 18:41 ?        00:00:01 postgres: wal sender process cituscluster 192.168.221.132(51472) COPY
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64019  63620  0 18:41 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:02 postgres: cituscluster postgres [local] idle
+cituscl+  63996  40370 10 18:41 ?        00:00:01 postgres: wal sender process cituscluster 192.168.221.132(51472) COPY
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64021  63620  0 18:41 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:02 postgres: cituscluster postgres [local] idle
+cituscl+  63996  40370 11 18:41 ?        00:00:01 postgres: wal sender process cituscluster 192.168.221.132(51472) COPY
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64024  63620  0 18:41 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:02 postgres: cituscluster postgres [local] idle
+cituscl+  63996  40370 10 18:41 ?        00:00:01 postgres: wal sender process cituscluster 192.168.221.132(51472) COPY
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64026  63620  0 18:41 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:02 postgres: cituscluster postgres [local] idle
+cituscl+  63996  40370 10 18:41 ?        00:00:01 postgres: wal sender process cituscluster 192.168.221.132(51472) COPY
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64028  63620  0 18:41 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:02 postgres: cituscluster postgres [local] idle
+cituscl+  63996  40370 10 18:41 ?        00:00:01 postgres: wal sender process cituscluster 192.168.221.132(51472) COPY
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64031  63620  0 18:41 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:00 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:02 postgres: cituscluster postgres [local] idle
+cituscl+  63996  40370 10 18:41 ?        00:00:01 postgres: wal sender process cituscluster 192.168.221.132(51472) COPY
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64033  63620  0 18:41 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ kill 63996
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64053  40370  0 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51476) COPY
+cituscl+  64055  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64053  40370 12 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51476) COPY
+cituscl+  64058  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64053  40370  7 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51476) COPY
+cituscl+  64060  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64053  40370  9 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51476) COPY
+cituscl+  64063  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ kill 64053
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64071  40370  8 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51478) COPY
+cituscl+  64073  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64071  40370 13 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51478) COPY
+cituscl+  64075  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64071  40370  8 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51478) COPY
+cituscl+  64078  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64071  40370 10 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51478) COPY
+cituscl+  64080  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64071  40370 11 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51478) COPY
+cituscl+  64082  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64071  40370  8 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51478) COPY
+cituscl+  64085  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64071  40370  9 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51478) COPY
+cituscl+  64087  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64071  40370 10 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51478) COPY
+cituscl+  64089  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ kill 64071
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64093  40370 14 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51480) COPY
+cituscl+  64096  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64093  40370 17 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51480) COPY
+cituscl+  64099  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64093  40370 19 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51480) COPY
+cituscl+  64101  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64093  40370 10 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51480) COPY
+cituscl+  64103  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64093  40370 11 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51480) COPY
+cituscl+  64105  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ kill 64093
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64111  40370 12 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51482) COPY
+cituscl+  64114  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64111  40370 15 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51482) COPY
+cituscl+  64116  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64111  40370 18 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51482) COPY
+cituscl+  64118  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64013  40370  0 18:41 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51474) idle
+cituscl+  64111  40370 10 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51482) COPY
+cituscl+  64121  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ kill 64013
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64111  40370  9 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51482) COPY
+cituscl+  64128  40370  0 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51484) idle
+cituscl+  64131  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64111  40370  8 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51482) COPY
+cituscl+  64128  40370  0 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51484) idle
+cituscl+  64133  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64111  40370  8 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51482) COPY
+cituscl+  64128  40370  0 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51484) idle
+cituscl+  64136  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64111  40370  9 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51482) COPY
+cituscl+  64128  40370  0 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51484) idle
+cituscl+  64138  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64111  40370  8 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51482) COPY
+cituscl+  64128  40370  0 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51484) idle
+cituscl+  64140  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64111  40370  8 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51482) COPY
+cituscl+  64128  40370  0 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51484) idle
+cituscl+  64142  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:03 postgres: cituscluster postgres [local] idle
+cituscl+  64111  40370  8 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51482) COPY
+cituscl+  64128  40370  0 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51484) idle
+cituscl+  64145  63620  0 18:42 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:05 postgres: cituscluster postgres [local] idle
+cituscl+  64111  40370  7 18:42 ?        00:00:06 postgres: wal sender process cituscluster 192.168.221.132(51482) COPY
+cituscl+  64128  40370  0 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51484) idle
+cituscl+  64229  63620  0 18:44 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:05 postgres: cituscluster postgres [local] idle
+cituscl+  64111  40370  7 18:42 ?        00:00:06 postgres: wal sender process cituscluster 192.168.221.132(51482) COPY
+cituscl+  64128  40370  0 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51484) idle
+cituscl+  64231  63620  0 18:44 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:05 postgres: cituscluster postgres [local] idle
+cituscl+  64111  40370  7 18:42 ?        00:00:06 postgres: wal sender process cituscluster 192.168.221.132(51482) COPY
+cituscl+  64128  40370  0 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51484) idle
+cituscl+  64234  63620  0 18:44 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:57 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:11 pts/0    00:00:01 psql -d postgres
+cituscl+  63382  40370  0 18:11 ?        00:00:05 postgres: cituscluster postgres [local] idle
+cituscl+  64111  40370  7 18:42 ?        00:00:06 postgres: wal sender process cituscluster 192.168.221.132(51482) COPY
+cituscl+  64128  40370  0 18:42 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51484) idle
+cituscl+  64236  63620  0 18:44 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ pstack 64111
+#0  0x00007f43c9582163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x17997d8, cur_timeout=-1, occurred_events=0x7fffd9c3d320, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x17997d8, timeout=-1, occurred_events=0x7fffd9c3d320, nevents=1, wait_event_info=100663297) at latch.c:1000
+#3  0x00000000006bec4e in secure_write (port=0x17dcb30, ptr=0x17e1320, len=4152) at be-secure.c:268
+#4  0x00000000006cb66e in internal_flush () at pqcomm.c:1433
+#5  0x00000000006cb53c in internal_putbytes (s=0x18c004f "\t1234\n", len=6) at pqcomm.c:1379
+#6  0x00000000006cb8a1 in socket_putmessage (msgtype=100 'd', s=0x18c0048 "2818705\t1234\n", len=13) at pqcomm.c:1576
+#7  0x00000000005e3266 in CopySendEndOfRow (cstate=0x18bfc38) at copy.c:534
+#8  0x00000000005e7499 in CopyOneRowTo (cstate=0x18bfc38, tupleOid=0, values=0x18bfbe0, nulls=0x18c0458 "") at copy.c:2162
+#9  0x00000000005e70e0 in CopyTo (cstate=0x18bfc38) at copy.c:2047
+#10 0x00000000005e6c41 in DoCopyTo (cstate=0x18bfc38) at copy.c:1884
+#11 0x00000000005e4046 in DoCopy (pstate=0x18d4978, stmt=0x1847a50, stmt_location=0, stmt_len=0, processed=0x7fffd9c3d7d8) at copy.c:985
+#12 0x000000000081b153 in standard_ProcessUtility (pstmt=0x1847d90, queryString=0x1846f58 "COPY public.tbl5 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x1847e70, completionTag=0x7fffd9c3dd50 "") at utility.c:560
+#13 0x00007f43c2c92ecd in multi_ProcessUtility (pstmt=0x1847d90, queryString=0x1846f58 "COPY public.tbl5 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x1847e70, completionTag=0x7fffd9c3dd50 "") at commands/utility_hook.c:136
+#14 0x000000000081ac94 in ProcessUtility (pstmt=0x1847d90, queryString=0x1846f58 "COPY public.tbl5 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x1847e70, completionTag=0x7fffd9c3dd50 "") at utility.c:353
+#15 0x0000000000819ed1 in PortalRunUtility (portal=0x1842018, pstmt=0x1847d90, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x1847e70, completionTag=0x7fffd9c3dd50 "") at pquery.c:1178
+#16 0x000000000081a0b2 in PortalRunMulti (portal=0x1842018, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x1847e70, altdest=0x1847e70, completionTag=0x7fffd9c3dd50 "") at pquery.c:1324
+#17 0x000000000081968a in PortalRun (portal=0x1842018, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x1847e70, altdest=0x1847e70, completionTag=0x7fffd9c3dd50 "") at pquery.c:799
+#18 0x0000000000813b59 in exec_simple_query (query_string=0x1846f58 "COPY public.tbl5 TO STDOUT") at postgres.c:1099
+#19 0x0000000000817b11 in PostgresMain (argc=1, argv=0x17e24d0, dbname=0x17e2368 "postgres", username=0x1799d18 "cituscluster") at postgres.c:4085
+#20 0x000000000078b2d2 in BackendRun (port=0x17dcb30) at postmaster.c:4357
+#21 0x000000000078aa7b in BackendStartup (port=0x17dcb30) at postmaster.c:4029
+#22 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#23 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1797bf0) at postmaster.c:1361
+#24 0x00000000006cf26f in main (argc=1, argv=0x1797bf0) at main.c:228
+[cituscluster@gtm2 ~]$ ps -ef | grep postgre
+cituscl+  40370      1  0 Jul13 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  40372  40370  0 Jul13 ?        00:00:00 postgres: checkpointer process  
+cituscl+  40373  40370  0 Jul13 ?        00:00:03 postgres: writer process   
+cituscl+  40374  40370  0 Jul13 ?        00:00:02 postgres: wal writer process  
+cituscl+  40375  40370  0 Jul13 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  40376  40370  0 Jul13 ?        00:00:03 postgres: stats collector process  
+cituscl+  40377  40370  0 Jul13 ?        00:00:50 postgres: bgworker: task tracker  
+cituscl+  61786  40370  0 15:58 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  63381  63261  0 18:12 pts/0    00:00:02 psql -d postgres
+cituscl+  63382  40370  0 18:12 ?        00:00:07 postgres: cituscluster postgres [local] idle
+cituscl+  64417  40370  0 18:52 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(51500) idle
+cituscl+  64511  63620  0 18:57 pts/2    00:00:00 grep --color=auto postgre
+[cituscluster@gtm2 ~]$ gdb attach 64417
+GNU gdb (GDB) Red Hat Enterprise Linux 7.6.1-110.el7
+Copyright (C) 2013 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-redhat-linux-gnu".
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>...
+attach: No such file or directory.
+Attaching to process 64417
+Reading symbols from /opt/pgsql-10.1/bin/postgres...done.
+Reading symbols from /lib64/libpthread.so.0...Reading symbols from /usr/lib/debug/usr/lib64/libpthread-2.17.so.debug...done.
+done.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib64/libthread_db.so.1".
+Loaded symbols for /lib64/libpthread.so.0
+Reading symbols from /lib64/librt.so.1...Reading symbols from /usr/lib/debug/usr/lib64/librt-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/librt.so.1
+Reading symbols from /lib64/libdl.so.2...Reading symbols from /usr/lib/debug/usr/lib64/libdl-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libdl.so.2
+Reading symbols from /lib64/libm.so.6...Reading symbols from /usr/lib/debug/usr/lib64/libm-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libm.so.6
+Reading symbols from /lib64/libc.so.6...Reading symbols from /usr/lib/debug/usr/lib64/libc-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libc.so.6
+Reading symbols from /lib64/ld-linux-x86-64.so.2...Reading symbols from /usr/lib/debug/usr/lib64/ld-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/ld-linux-x86-64.so.2
+Reading symbols from /opt/pgsql-10.1/lib/citus.so...done.
+Loaded symbols for /opt/pgsql-10.1/lib/citus.so
+Reading symbols from /opt/pgsql-10.1/lib/libpq.so.5...done.
+Loaded symbols for /opt/pgsql-10.1/lib/libpq.so.5
+Reading symbols from /lib64/libnss_files.so.2...Reading symbols from /usr/lib/debug/usr/lib64/libnss_files-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libnss_files.so.2
+Reading symbols from /opt/pgsql-10.1/lib/pgoutput.so...done.
+Loaded symbols for /opt/pgsql-10.1/lib/pgoutput.so
+0x00007f43c9582163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+81	T_PSEUDO (SYSCALL_SYMBOL, SYSCALL_NAME, SYSCALL_NARGS)
+(gdb) bt
+#0  0x00007f43c9582163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x18c35c8, cur_timeout=29999, occurred_events=0x7fffd9c3db70, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x18c35c8, timeout=29999, occurred_events=0x7fffd9c3db70, nevents=1, wait_event_info=100663302) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f43c15be304, wakeEvents=27, sock=9, timeout=29999, wait_event_info=100663302) at latch.c:385
+#4  0x00000000007b9d7d in WalSndWaitForWal (loc=26946699368) at walsender.c:1399
+#5  0x00000000007b8e06 in logical_read_xlog_page (state=0x1842290, targetPagePtr=26946699264, reqLen=104, targetRecPtr=26946699344, cur_page=0x18ab538 "\227\320\004", pageTLI=0x1842b3c)
+    at walsender.c:761
+#6  0x0000000000525d94 in ReadPageInternal (state=0x1842290, pageptr=26946699264, reqLen=104) at xlogreader.c:556
+#7  0x0000000000525627 in XLogReadRecord (state=0x1842290, RecPtr=26946699344, errormsg=0x7fffd9c3dd28) at xlogreader.c:255
+#8  0x00000000007bb898 in XLogSendLogical () at walsender.c:2752
+#9  0x00000000007bac5d in WalSndLoop (send_data=0x7bb867 <XLogSendLogical>) at walsender.c:2134
+#10 0x00000000007b9873 in StartLogicalReplication (cmd=0x17b7f78) at walsender.c:1101
+#11 0x00000000007ba0b5 in exec_replication_command (cmd_string=0x1846f58 "START_REPLICATION SLOT \"sub1\" LOGICAL 0/0 (proto_version '1', publication_names '\"pub1\"')") at walsender.c:1527
+#12 0x0000000000817b01 in PostgresMain (argc=1, argv=0x17e24b8, dbname=0x17e2368 "postgres", username=0x1799d18 "cituscluster") at postgres.c:4084
+#13 0x000000000078b2d2 in BackendRun (port=0x17dcb30) at postmaster.c:4357
+#14 0x000000000078aa7b in BackendStartup (port=0x17dcb30) at postmaster.c:4029
+#15 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#16 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1797bf0) at postmaster.c:1361
+#17 0x00000000006cf26f in main (argc=1, argv=0x1797bf0) at main.c:228
+(gdb) b WalSndLoop
+Breakpoint 1 at 0x7bab9e: file walsender.c, line 2081.
+(gdb) c
+Continuing.
+
+Program received signal SIGUSR1, User defined signal 1.
+0x00007f43c9582163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+81	T_PSEUDO (SYSCALL_SYMBOL, SYSCALL_NAME, SYSCALL_NARGS)
+(gdb) c
+Continuing.
+^C
+Program received signal SIGINT, Interrupt.
+0x00007f43c9582163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+81	T_PSEUDO (SYSCALL_SYMBOL, SYSCALL_NAME, SYSCALL_NARGS)
+(gdb) q
+A debugging session is active.
+
+	Inferior 1 [process 64417] will be detached.
+
+Quit anyway? (y or n) y  
+Detaching from program: /opt/pgsql-10.1/bin/postgres, process 64417
+[cituscluster@gtm2 ~]$ 
+[cituscluster@gtm2 ~]$ pg_ctl --help
+pg_ctl is a utility to initialize, start, stop, or control a PostgreSQL server.
+
+Usage:
+  pg_ctl init[db] [-D DATADIR] [-s] [-o OPTIONS]
+  pg_ctl start    [-D DATADIR] [-l FILENAME] [-W] [-t SECS] [-s]
+                  [-o OPTIONS] [-p PATH] [-c]
+  pg_ctl stop     [-D DATADIR] [-m SHUTDOWN-MODE] [-W] [-t SECS] [-s]
+  pg_ctl restart  [-D DATADIR] [-m SHUTDOWN-MODE] [-W] [-t SECS] [-s]
+                  [-o OPTIONS] [-c]
+  pg_ctl reload   [-D DATADIR] [-s]
+  pg_ctl status   [-D DATADIR]
+  pg_ctl promote  [-D DATADIR] [-W] [-t SECS] [-s]
+  pg_ctl kill     SIGNALNAME PID
+
+Common options:
+  -D, --pgdata=DATADIR   location of the database storage area
+  -s, --silent           only print errors, no informational messages
+  -t, --timeout=SECS     seconds to wait when using -w option
+  -V, --version          output version information, then exit
+  -w, --wait             wait until operation completes (default)
+  -W, --no-wait          do not wait until operation completes
+  -?, --help             show this help, then exit
+If the -D option is omitted, the environment variable PGDATA is used.
+
+Options for start or restart:
+  -c, --core-files       allow postgres to produce core files
+  -l, --log=FILENAME     write (or append) server log to FILENAME
+  -o, --options=OPTIONS  command line options to pass to postgres
+                         (PostgreSQL server executable) or initdb
+  -p PATH-TO-POSTGRES    normally not necessary
+
+Options for stop or restart:
+  -m, --mode=MODE        MODE can be "smart", "fast", or "immediate"
+
+Shutdown modes are:
+  smart       quit after all clients have disconnected
+  fast        quit directly, with proper shutdown (default)
+  immediate   quit without complete shutdown; will lead to recovery on restart
+
+Allowed signal names for kill:
+  ABRT HUP INT QUIT TERM USR1 USR2
+
+Report bugs to <pgsql-bugs@postgresql.org>.
+[cituscluster@gtm2 ~]$ 

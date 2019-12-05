@@ -1,0 +1,32 @@
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      7 |       5 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      8 |       4 | 192.168.221.135 |     5432 | default  | f           | t        | secondary | default
+      6 |       4 | 192.168.221.131 |     5432 | default  | f           | t        | primary   | default
+     10 |       6 | 192.168.221.133 |     5432 | default  | t           | t        | cn_tp     | default
+(4 rows)
+
+postgres=# 
+postgres=# 
+postgres=# select citus_switchover('192.168.221.135', 5432);
+INFO:  node (192.168.221.135,5432) switchover to the primary role
+2019-06-09 18:46:09.978 PDT [3371] WARNING:  node (192.168.221.131,5432) is a primary node, recommand to use SELECT citus_switchover_prepare('192.168.221.131', 5432) to change the node to unavailable
+WARNING:  node (192.168.221.131,5432) is a primary node, recommand to use SELECT citus_switchover_prepare('192.168.221.131', 5432) to change the node to unavailable
+2019-06-09 18:46:17.653 PDT [3371] WARNING:  Snapshot reference leak: Snapshot 0x15b5d68 still referenced
+WARNING:  Snapshot reference leak: Snapshot 0x15b5d68 still referenced
+2019-06-09 18:46:17.654 PDT [3371] WARNING:  Snapshot reference leak: Snapshot 0x15b5d68 still referenced
+WARNING:  Snapshot reference leak: Snapshot 0x15b5d68 still referenced
+2019-06-09 18:46:17.655 PDT [3371] WARNING:  snapshot 0x15b5d38 still active
+WARNING:  snapshot 0x15b5d38 still active
+2019-06-09 18:55:26.603 PDT [3371] ERROR:  snapshot reference 0x15b5d68 is not owned by resource owner TopTransaction
+2019-06-09 18:55:26.603 PDT [3371] STATEMENT:  select citus_switchover('192.168.221.135', 5432);
+ERROR:  snapshot reference 0x15b5d68 is not owned by resource owner TopTransaction
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      7 |       5 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      6 |       4 | 192.168.221.131 |     5432 | default  | f           | t        | secondary | default
+      8 |       4 | 192.168.221.135 |     5432 | default  | f           | t        | primary   | default
+     10 |       6 | 192.168.221.133 |     5432 | default  | t           | t        | cn_tp     | default
+(4 rows)

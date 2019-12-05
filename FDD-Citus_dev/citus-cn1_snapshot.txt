@@ -1,0 +1,357 @@
+[cituscluster@gtm1 ~]$ ps -ef | grep postgres
+cituscl+ 127109      1  0 Jun04 pts/0    00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+ 127146 113138  0 Jun04 pts/1    00:00:00 psql -d postgres
+cituscl+ 127692 127109  0 00:25 ?        00:00:00 postgres: checkpointer process  
+cituscl+ 127693 127109  0 00:25 ?        00:00:00 postgres: writer process   
+cituscl+ 127694 127109  0 00:25 ?        00:00:00 postgres: wal writer process  
+cituscl+ 127695 127109  0 00:25 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+ 127696 127109  0 00:25 ?        00:00:00 postgres: stats collector process  
+cituscl+ 127698 127109  0 00:25 ?        00:00:00 postgres: bgworker: task tracker  
+cituscl+ 127699 127109  0 00:25 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+ 127701  97902  0 00:25 pts/0    00:00:00 psql -d postgres
+cituscl+ 127702 127109  0 00:25 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+ 127704 113190  0 00:26 pts/3    00:00:00 grep --color=auto postgres
+[cituscluster@gtm1 ~]$ gdb attach 127702
+GNU gdb (GDB) Red Hat Enterprise Linux 7.6.1-110.el7
+Copyright (C) 2013 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-redhat-linux-gnu".
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>...
+attach: No such file or directory.
+Attaching to process 127702
+Reading symbols from /opt/pgsql-10.1/bin/postgres...done.
+Reading symbols from /lib64/libpthread.so.0...Reading symbols from /usr/lib/debug/usr/lib64/libpthread-2.17.so.debug...done.
+done.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib64/libthread_db.so.1".
+Loaded symbols for /lib64/libpthread.so.0
+Reading symbols from /lib64/librt.so.1...Reading symbols from /usr/lib/debug/usr/lib64/librt-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/librt.so.1
+Reading symbols from /lib64/libdl.so.2...Reading symbols from /usr/lib/debug/usr/lib64/libdl-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libdl.so.2
+Reading symbols from /lib64/libm.so.6...Reading symbols from /usr/lib/debug/usr/lib64/libm-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libm.so.6
+Reading symbols from /lib64/libc.so.6...Reading symbols from /usr/lib/debug/usr/lib64/libc-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libc.so.6
+Reading symbols from /lib64/ld-linux-x86-64.so.2...Reading symbols from /usr/lib/debug/usr/lib64/ld-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/ld-linux-x86-64.so.2
+Reading symbols from /opt/pgsql-10.1/lib/citus.so...done.
+Loaded symbols for /opt/pgsql-10.1/lib/citus.so
+Reading symbols from /opt/pgsql-10.1/lib/libpq.so.5...done.
+Loaded symbols for /opt/pgsql-10.1/lib/libpq.so.5
+Reading symbols from /lib64/libnss_files.so.2...Reading symbols from /usr/lib/debug/usr/lib64/libnss_files-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libnss_files.so.2
+0x00007f12f0f0b163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+81	T_PSEUDO (SYSCALL_SYMBOL, SYSCALL_NAME, SYSCALL_NARGS)
+(gdb) b PopActiveSnapshot
+Breakpoint 1 at 0x9b1ad6: file snapmgr.c, line 816.
+(gdb) b PortalRunSelect
+Breakpoint 2 at 0x819826: file pquery.c, line 888.
+(gdb) b PushActiveSnapshot
+Breakpoint 3 at 0x9b198c: file snapmgr.c, line 739.
+(gdb) b FDD_ExchangeNodeRole
+Breakpoint 4 at 0x7f12ea685e1b: file utils/node_metadata.c, line 1357.
+(gdb) info b
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x00000000009b1ad6 in PopActiveSnapshot at snapmgr.c:816
+2       breakpoint     keep y   0x0000000000819826 in PortalRunSelect at pquery.c:888
+3       breakpoint     keep y   0x00000000009b198c in PushActiveSnapshot at snapmgr.c:739
+4       breakpoint     keep y   0x00007f12ea685e1b in FDD_ExchangeNodeRole at utils/node_metadata.c:1357
+(gdb) c
+Continuing.
+
+Breakpoint 3, PushActiveSnapshot (snap=0xe16f20 <CurrentSnapshotData>) at snapmgr.c:739
+739		newactive = MemoryContextAlloc(TopTransactionContext, sizeof(ActiveSnapshotElt));
+(gdb) bt
+#0  PushActiveSnapshot (snap=0xe16f20 <CurrentSnapshotData>) at snapmgr.c:739
+#1  0x0000000000813998 in exec_simple_query (query_string=0x2aa0a38 "select citus_switchover('192.168.221.131', 5432, true);") at postgres.c:1012
+#2  0x0000000000817b1f in PostgresMain (argc=1, argv=0x2a3fb88, dbname=0x2a3fa68 "postgres", username=0x2a3fa48 "cituscluster") at postgres.c:4088
+#3  0x000000000078b2d2 in BackendRun (port=0x2a38820) at postmaster.c:4357
+#4  0x000000000078aa7b in BackendStartup (port=0x2a38820) at postmaster.c:4029
+#5  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#6  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29f3c00) at postmaster.c:1361
+#7  0x00000000006cf26f in main (argc=1, argv=0x29f3c00) at main.c:228
+(gdb) c
+Continuing.
+
+Program received signal SIGUSR1, User defined signal 1.
+0x00007f12f0f0b163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+81	T_PSEUDO (SYSCALL_SYMBOL, SYSCALL_NAME, SYSCALL_NARGS)
+(gdb) c
+Continuing.
+
+Breakpoint 1, PopActiveSnapshot () at snapmgr.c:816
+816		newstack = ActiveSnapshot->as_next;
+(gdb) bt
+#0  PopActiveSnapshot () at snapmgr.c:816
+#1  0x00000000008139fb in exec_simple_query (query_string=0x2aa0a38 "select citus_switchover('192.168.221.131', 5432, true);") at postgres.c:1032
+#2  0x0000000000817b1f in PostgresMain (argc=1, argv=0x2a3fb88, dbname=0x2a3fa68 "postgres", username=0x2a3fa48 "cituscluster") at postgres.c:4088
+#3  0x000000000078b2d2 in BackendRun (port=0x2a38820) at postmaster.c:4357
+#4  0x000000000078aa7b in BackendStartup (port=0x2a38820) at postmaster.c:4029
+#5  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#6  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29f3c00) at postmaster.c:1361
+#7  0x00000000006cf26f in main (argc=1, argv=0x29f3c00) at main.c:228
+(gdb) p ActiveSnapshot
+$1 = (ActiveSnapshotElt *) 0x2a13128
+(gdb) p *ActiveSnapshot
+$2 = {as_snap = 0x2a13158, as_level = 1, as_next = 0x0}
+(gdb) n
+820		ActiveSnapshot->as_snap->active_count--;
+(gdb) 
+822		if (ActiveSnapshot->as_snap->active_count == 0 &&
+(gdb) 
+823			ActiveSnapshot->as_snap->regd_count == 0)
+(gdb) 
+822		if (ActiveSnapshot->as_snap->active_count == 0 &&
+(gdb) 
+824			FreeSnapshot(ActiveSnapshot->as_snap);
+(gdb) 
+826		pfree(ActiveSnapshot);
+(gdb) 
+827		ActiveSnapshot = newstack;
+(gdb) 
+828		if (ActiveSnapshot == NULL)
+(gdb) p ActiveSnapshot
+$3 = (ActiveSnapshotElt *) 0x0
+(gdb) n
+829			OldestActiveSnapshot = NULL;
+(gdb) 
+831		SnapshotResetXmin();
+(gdb) s
+SnapshotResetXmin () at snapmgr.c:982
+982		if (ActiveSnapshot != NULL)
+(gdb) n
+985		if (pairingheap_is_empty(&RegisteredSnapshots))
+(gdb) 
+991		minSnapshot = pairingheap_container(SnapshotData, ph_node,
+(gdb) 
+994		if (TransactionIdPrecedes(MyPgXact->xmin, minSnapshot->xmin))
+(gdb) 
+996	}
+(gdb) 
+PopActiveSnapshot () at snapmgr.c:832
+832	}
+(gdb) 
+exec_simple_query (query_string=0x2aa0a38 "select citus_switchover('192.168.221.131', 5432, true);") at postgres.c:1035
+1035			CHECK_FOR_INTERRUPTS();
+(gdb) c
+Continuing.
+
+Breakpoint 3, PushActiveSnapshot (snap=0xe16f20 <CurrentSnapshotData>) at snapmgr.c:739
+739		newactive = MemoryContextAlloc(TopTransactionContext, sizeof(ActiveSnapshotElt));
+(gdb) bt
+#0  PushActiveSnapshot (snap=0xe16f20 <CurrentSnapshotData>) at snapmgr.c:739
+#1  0x0000000000818fdc in PortalStart (portal=0x2b218b8, params=0x0, eflags=0, snapshot=0x0) at pquery.c:492
+#2  0x0000000000813a72 in exec_simple_query (query_string=0x2aa0a38 "select citus_switchover('192.168.221.131', 5432, true);") at postgres.c:1060
+#3  0x0000000000817b1f in PostgresMain (argc=1, argv=0x2a3fb88, dbname=0x2a3fa68 "postgres", username=0x2a3fa48 "cituscluster") at postgres.c:4088
+#4  0x000000000078b2d2 in BackendRun (port=0x2a38820) at postmaster.c:4357
+#5  0x000000000078aa7b in BackendStartup (port=0x2a38820) at postmaster.c:4029
+#6  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#7  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29f3c00) at postmaster.c:1361
+#8  0x00000000006cf26f in main (argc=1, argv=0x29f3c00) at main.c:228
+(gdb) n
+745		if (snap == CurrentSnapshot || snap == SecondarySnapshot || !snap->copied)
+(gdb) 
+746			newactive->as_snap = CopySnapshot(snap);
+(gdb) 
+750		newactive->as_next = ActiveSnapshot;
+(gdb) 
+751		newactive->as_level = GetCurrentTransactionNestLevel();
+(gdb) p ActiveSnapshot
+$4 = (ActiveSnapshotElt *) 0x0
+(gdb) n
+753		newactive->as_snap->active_count++;
+(gdb) 
+755		ActiveSnapshot = newactive;
+(gdb) 
+756		if (OldestActiveSnapshot == NULL)
+(gdb) p ActiveSnapshot
+$5 = (ActiveSnapshotElt *) 0x2a13128
+(gdb) p *ActiveSnapshot
+$6 = {as_snap = 0x2a13158, as_level = 1, as_next = 0x0}
+(gdb) n
+757			OldestActiveSnapshot = ActiveSnapshot;
+(gdb) 
+758	}
+(gdb) p OldestActiveSnapshot
+$7 = (ActiveSnapshotElt *) 0x2a13128
+(gdb) n
+PortalStart (portal=0x2b218b8, params=0x0, eflags=0, snapshot=0x0) at pquery.c:498
+498					queryDesc = CreateQueryDesc(linitial_node(PlannedStmt, portal->stmts),
+(gdb) c
+Continuing.
+
+Breakpoint 1, PopActiveSnapshot () at snapmgr.c:816
+816		newstack = ActiveSnapshot->as_next;
+(gdb) bt
+#0  PopActiveSnapshot () at snapmgr.c:816
+#1  0x00000000008190d8 in PortalStart (portal=0x2b218b8, params=0x0, eflags=0, snapshot=0x0) at pquery.c:539
+#2  0x0000000000813a72 in exec_simple_query (query_string=0x2aa0a38 "select citus_switchover('192.168.221.131', 5432, true);") at postgres.c:1060
+#3  0x0000000000817b1f in PostgresMain (argc=1, argv=0x2a3fb88, dbname=0x2a3fa68 "postgres", username=0x2a3fa48 "cituscluster") at postgres.c:4088
+#4  0x000000000078b2d2 in BackendRun (port=0x2a38820) at postmaster.c:4357
+#5  0x000000000078aa7b in BackendStartup (port=0x2a38820) at postmaster.c:4029
+#6  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#7  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29f3c00) at postmaster.c:1361
+#8  0x00000000006cf26f in main (argc=1, argv=0x29f3c00) at main.c:228
+(gdb) n
+820		ActiveSnapshot->as_snap->active_count--;
+(gdb) p newstack
+$8 = (ActiveSnapshotElt *) 0x0
+(gdb) n
+822		if (ActiveSnapshot->as_snap->active_count == 0 &&
+(gdb) p newstack
+$9 = (ActiveSnapshotElt *) 0x0
+(gdb) n
+823			ActiveSnapshot->as_snap->regd_count == 0)
+(gdb) 
+822		if (ActiveSnapshot->as_snap->active_count == 0 &&
+(gdb) 
+826		pfree(ActiveSnapshot);
+(gdb) 
+827		ActiveSnapshot = newstack;
+(gdb) 
+828		if (ActiveSnapshot == NULL)
+(gdb) 
+829			OldestActiveSnapshot = NULL;
+(gdb) 
+831		SnapshotResetXmin();
+(gdb) 
+832	}
+(gdb) 
+PortalStart (portal=0x2b218b8, params=0x0, eflags=0, snapshot=0x0) at pquery.c:540
+540					break;
+(gdb) c
+Continuing.
+
+Breakpoint 2, PortalRunSelect (portal=0x2b218b8, forward=1 '\001', count=9223372036854775807, dest=0x2b158e8) at pquery.c:888
+888		queryDesc = PortalGetQueryDesc(portal);
+(gdb) bt
+#0  PortalRunSelect (portal=0x2b218b8, forward=1 '\001', count=9223372036854775807, dest=0x2b158e8) at pquery.c:888
+#1  0x00000000008195c7 in PortalRun (portal=0x2b218b8, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x2b158e8, altdest=0x2b158e8, completionTag=0x7ffe4144b4b0 "")
+    at pquery.c:773
+#2  0x0000000000813b59 in exec_simple_query (query_string=0x2aa0a38 "select citus_switchover('192.168.221.131', 5432, true);") at postgres.c:1099
+#3  0x0000000000817b1f in PostgresMain (argc=1, argv=0x2a3fb88, dbname=0x2a3fa68 "postgres", username=0x2a3fa48 "cituscluster") at postgres.c:4088
+#4  0x000000000078b2d2 in BackendRun (port=0x2a38820) at postmaster.c:4357
+#5  0x000000000078aa7b in BackendStartup (port=0x2a38820) at postmaster.c:4029
+#6  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#7  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29f3c00) at postmaster.c:1361
+#8  0x00000000006cf26f in main (argc=1, argv=0x29f3c00) at main.c:228
+(gdb) c
+Continuing.
+
+Breakpoint 3, PushActiveSnapshot (snap=0x2a13158) at snapmgr.c:739
+739		newactive = MemoryContextAlloc(TopTransactionContext, sizeof(ActiveSnapshotElt));
+(gdb) bt
+#0  PushActiveSnapshot (snap=0x2a13158) at snapmgr.c:739
+#1  0x00000000008198d2 in PortalRunSelect (portal=0x2b218b8, forward=1 '\001', count=0, dest=0x2b158e8) at pquery.c:931
+#2  0x00000000008195c7 in PortalRun (portal=0x2b218b8, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x2b158e8, altdest=0x2b158e8, completionTag=0x7ffe4144b4b0 "")
+    at pquery.c:773
+#3  0x0000000000813b59 in exec_simple_query (query_string=0x2aa0a38 "select citus_switchover('192.168.221.131', 5432, true);") at postgres.c:1099
+#4  0x0000000000817b1f in PostgresMain (argc=1, argv=0x2a3fb88, dbname=0x2a3fa68 "postgres", username=0x2a3fa48 "cituscluster") at postgres.c:4088
+#5  0x000000000078b2d2 in BackendRun (port=0x2a38820) at postmaster.c:4357
+#6  0x000000000078aa7b in BackendStartup (port=0x2a38820) at postmaster.c:4029
+#7  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#8  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29f3c00) at postmaster.c:1361
+#9  0x00000000006cf26f in main (argc=1, argv=0x29f3c00) at main.c:228
+(gdb) n
+745		if (snap == CurrentSnapshot || snap == SecondarySnapshot || !snap->copied)
+(gdb) 
+748			newactive->as_snap = snap;
+(gdb) 
+750		newactive->as_next = ActiveSnapshot;
+(gdb) 
+751		newactive->as_level = GetCurrentTransactionNestLevel();
+(gdb) 
+753		newactive->as_snap->active_count++;
+(gdb) 
+755		ActiveSnapshot = newactive;
+(gdb) 
+756		if (OldestActiveSnapshot == NULL)
+(gdb) 
+757			OldestActiveSnapshot = ActiveSnapshot;
+(gdb) 
+758	}
+(gdb) p ActiveSnapshot
+$10 = (ActiveSnapshotElt *) 0x2a13128
+(gdb) p OldestActiveSnapshot
+$11 = (ActiveSnapshotElt *) 0x2a13128
+(gdb) p *ActiveSnapshot
+$12 = {as_snap = 0x2a13158, as_level = 1, as_next = 0x0}
+(gdb) n
+PortalRunSelect (portal=0x2b218b8, forward=1 '\001', count=0, dest=0x2b158e8) at pquery.c:933
+933							portal->run_once);
+(gdb) 
+932				ExecutorRun(queryDesc, direction, (uint64) count,
+(gdb) c
+Continuing.
+
+Breakpoint 4, FDD_ExchangeNodeRole (promoteNode=0x2b28858, demoteNode=0x2b3acb8, isCloseConnections=1 '\001', isFailover=0 '\000') at utils/node_metadata.c:1357
+1357		List *placementList = NIL;
+(gdb) bt
+#0  FDD_ExchangeNodeRole (promoteNode=0x2b28858, demoteNode=0x2b3acb8, isCloseConnections=1 '\001', isFailover=0 '\000') at utils/node_metadata.c:1357
+#1  0x00007f12ea685bc9 in citus_switchover (fcinfo=0x2b23fc8) at utils/node_metadata.c:1289
+#2  0x00000000006702c9 in ExecInterpExpr (state=0x2b23ef0, econtext=0x2b23be8, isnull=0x7ffe4144b0e7 "") at execExprInterp.c:672
+#3  0x00000000006a509c in ExecEvalExprSwitchContext (state=0x2b23ef0, econtext=0x2b23be8, isNull=0x7ffe4144b0e7 "") at ../../../src/include/executor/executor.h:308
+#4  0x00000000006a5105 in ExecProject (projInfo=0x2b23ee8) at ../../../src/include/executor/executor.h:342
+#5  0x00000000006a5274 in ExecResult (pstate=0x2b23ad8) at nodeResult.c:136
+#6  0x000000000067f485 in ExecProcNodeFirst (node=0x2b23ad8) at execProcnode.c:430
+#7  0x0000000000678445 in ExecProcNode (node=0x2b23ad8) at ../../../src/include/executor/executor.h:250
+#8  0x000000000067a888 in ExecutePlan (estate=0x2b238c8, planstate=0x2b23ad8, use_parallel_mode=0 '\000', operation=CMD_SELECT, sendTuples=1 '\001', numberTuples=0, 
+    direction=ForwardScanDirection, dest=0x2b158e8, execute_once=1 '\001') at execMain.c:1722
+#9  0x00000000006788e1 in standard_ExecutorRun (queryDesc=0x2a3b288, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:363
+#10 0x00007f12ea625490 in CitusExecutorRun (queryDesc=0x2a3b288, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at executor/multi_executor.c:149
+#11 0x0000000000678763 in ExecutorRun (queryDesc=0x2a3b288, direction=ForwardScanDirection, count=0, execute_once=1 '\001') at execMain.c:304
+#12 0x00000000008198f0 in PortalRunSelect (portal=0x2b218b8, forward=1 '\001', count=0, dest=0x2b158e8) at pquery.c:932
+#13 0x00000000008195c7 in PortalRun (portal=0x2b218b8, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x2b158e8, altdest=0x2b158e8, completionTag=0x7ffe4144b4b0 "")
+    at pquery.c:773
+#14 0x0000000000813b59 in exec_simple_query (query_string=0x2aa0a38 "select citus_switchover('192.168.221.131', 5432, true);") at postgres.c:1099
+#15 0x0000000000817b1f in PostgresMain (argc=1, argv=0x2a3fb88, dbname=0x2a3fa68 "postgres", username=0x2a3fa48 "cituscluster") at postgres.c:4088
+#16 0x000000000078b2d2 in BackendRun (port=0x2a38820) at postmaster.c:4357
+#17 0x000000000078aa7b in BackendStartup (port=0x2a38820) at postmaster.c:4029
+#18 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#19 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29f3c00) at postmaster.c:1361
+#20 0x00000000006cf26f in main (argc=1, argv=0x29f3c00) at main.c:228
+(gdb) c
+Continuing.
+
+Breakpoint 1, PopActiveSnapshot () at snapmgr.c:816
+816		newstack = ActiveSnapshot->as_next;
+(gdb) bt
+#0  PopActiveSnapshot () at snapmgr.c:816
+#1  0x0000000000819908 in PortalRunSelect (portal=0x2b218b8, forward=1 '\001', count=0, dest=0x2b158e8) at pquery.c:935
+#2  0x00000000008195c7 in PortalRun (portal=0x2b218b8, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x2b158e8, altdest=0x2b158e8, completionTag=0x7ffe4144b4b0 "")
+    at pquery.c:773
+#3  0x0000000000813b59 in exec_simple_query (query_string=0x2aa0a38 "select citus_switchover('192.168.221.131', 5432, true);") at postgres.c:1099
+#4  0x0000000000817b1f in PostgresMain (argc=1, argv=0x2a3fb88, dbname=0x2a3fa68 "postgres", username=0x2a3fa48 "cituscluster") at postgres.c:4088
+#5  0x000000000078b2d2 in BackendRun (port=0x2a38820) at postmaster.c:4357
+#6  0x000000000078aa7b in BackendStartup (port=0x2a38820) at postmaster.c:4029
+#7  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#8  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29f3c00) at postmaster.c:1361
+#9  0x00000000006cf26f in main (argc=1, argv=0x29f3c00) at main.c:228
+(gdb) p *ActiveSnapshot
+Cannot access memory at address 0x0
+(gdb) n
+
+Program received signal SIGSEGV, Segmentation fault.
+0x00000000009b1add in PopActiveSnapshot () at snapmgr.c:816
+816		newstack = ActiveSnapshot->as_next;
+(gdb) p ActiveSnapshot
+$13 = (ActiveSnapshotElt *) 0x0
+(gdb) q
+A debugging session is active.
+
+	Inferior 1 [process 127702] will be detached.
+
+Quit anyway? (y or n) y
+Detaching from program: /opt/pgsql-10.1/bin/postgres, process 127702
+[cituscluster@gtm1 ~]$ 

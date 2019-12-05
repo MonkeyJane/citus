@@ -1,0 +1,796 @@
+rd -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/deparse_shard_query.o test/deparse_shard_query.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/deparse_shard_query.o test/deparse_shard_query.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/distributed_deadlock_detection.o test/distributed_deadlock_detection.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/distributed_deadlock_detection.o test/distributed_deadlock_detection.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/distribution_metadata.o test/distribution_metadata.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/distribution_metadata.o test/distribution_metadata.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/fake_fdw.o test/fake_fdw.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/fake_fdw.o test/fake_fdw.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/foreign_key_relationship_query.o test/foreign_key_relationship_query.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/foreign_key_relationship_query.o test/foreign_key_relationship_query.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/metadata_sync.o test/metadata_sync.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/metadata_sync.o test/metadata_sync.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/partitioning_utils.o test/partitioning_utils.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/partitioning_utils.o test/partitioning_utils.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/progress_utils.o test/progress_utils.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/progress_utils.o test/progress_utils.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/prune_shard_list.o test/prune_shard_list.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/prune_shard_list.o test/prune_shard_list.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/relation_access_tracking.o test/relation_access_tracking.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/relation_access_tracking.o test/relation_access_tracking.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/run_from_same_connection.o test/run_from_same_connection.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/run_from_same_connection.o test/run_from_same_connection.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/sequential_execution.o test/sequential_execution.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o test/sequential_execution.o test/sequential_execution.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/backend_data.o transaction/backend_data.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/backend_data.o transaction/backend_data.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/citus_dist_stat_activity.o transaction/citus_dist_stat_activity.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/citus_dist_stat_activity.o transaction/citus_dist_stat_activity.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/distributed_deadlock_detection.o transaction/distributed_deadlock_detection.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/distributed_deadlock_detection.o transaction/distributed_deadlock_detection.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/lock_graph.o transaction/lock_graph.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/lock_graph.o transaction/lock_graph.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/multi_shard_transaction.o transaction/multi_shard_transaction.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/multi_shard_transaction.o transaction/multi_shard_transaction.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/relation_access_tracking.o transaction/relation_access_tracking.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/relation_access_tracking.o transaction/relation_access_tracking.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/remote_transaction.o transaction/remote_transaction.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/remote_transaction.o transaction/remote_transaction.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/transaction_management.o transaction/transaction_management.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/transaction_management.o transaction/transaction_management.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/transaction_recovery.o transaction/transaction_recovery.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/transaction_recovery.o transaction/transaction_recovery.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/worker_transaction.o transaction/worker_transaction.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o transaction/worker_transaction.o transaction/worker_transaction.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/acquire_lock.o utils/acquire_lock.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/acquire_lock.o utils/acquire_lock.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/citus_clauses.o utils/citus_clauses.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/citus_clauses.o utils/citus_clauses.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/citus_copyfuncs.o utils/citus_copyfuncs.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/citus_copyfuncs.o utils/citus_copyfuncs.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/citus_nodefuncs.o utils/citus_nodefuncs.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/citus_nodefuncs.o utils/citus_nodefuncs.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/citus_outfuncs.o utils/citus_outfuncs.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/citus_outfuncs.o utils/citus_outfuncs.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/citus_readfuncs.o utils/citus_readfuncs.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/citus_readfuncs.o utils/citus_readfuncs.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/citus_ruleutils.o utils/citus_ruleutils.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/citus_ruleutils.o utils/citus_ruleutils.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/citus_version.o utils/citus_version.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/citus_version.o utils/citus_version.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/colocation_utils.o utils/colocation_utils.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/colocation_utils.o utils/colocation_utils.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/distribution_column.o utils/distribution_column.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/distribution_column.o utils/distribution_column.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/enable_ssl.o utils/enable_ssl.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/enable_ssl.o utils/enable_ssl.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/errormessage.o utils/errormessage.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/errormessage.o utils/errormessage.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/foreign_key_relationship.o utils/foreign_key_relationship.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/foreign_key_relationship.o utils/foreign_key_relationship.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/function_utils.o utils/function_utils.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/function_utils.o utils/function_utils.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/hash_helpers.o utils/hash_helpers.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/hash_helpers.o utils/hash_helpers.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/listutils.o utils/listutils.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/listutils.o utils/listutils.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/maintenanced.o utils/maintenanced.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/maintenanced.o utils/maintenanced.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/metadata_cache.o utils/metadata_cache.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/metadata_cache.o utils/metadata_cache.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/multi_partitioning_utils.o utils/multi_partitioning_utils.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/multi_partitioning_utils.o utils/multi_partitioning_utils.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/multi_resowner.o utils/multi_resowner.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/multi_resowner.o utils/multi_resowner.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/node_metadata.o utils/node_metadata.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/node_metadata.o utils/node_metadata.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/reference_table_utils.o utils/reference_table_utils.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/reference_table_utils.o utils/reference_table_utils.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/resource_lock.o utils/resource_lock.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/resource_lock.o utils/resource_lock.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/ruleutils_10.o utils/ruleutils_10.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/ruleutils_10.o utils/ruleutils_10.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/ruleutils_11.o utils/ruleutils_11.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/ruleutils_11.o utils/ruleutils_11.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/shardinterval_utils.o utils/shardinterval_utils.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/shardinterval_utils.o utils/shardinterval_utils.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/statistics_collection.o utils/statistics_collection.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o utils/statistics_collection.o utils/statistics_collection.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/task_tracker.o worker/task_tracker.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/task_tracker.o worker/task_tracker.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/task_tracker_protocol.o worker/task_tracker_protocol.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/task_tracker_protocol.o worker/task_tracker_protocol.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/worker_data_fetch_protocol.o worker/worker_data_fetch_protocol.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/worker_data_fetch_protocol.o worker/worker_data_fetch_protocol.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/worker_drop_protocol.o worker/worker_drop_protocol.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/worker_drop_protocol.o worker/worker_drop_protocol.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/worker_file_access_protocol.o worker/worker_file_access_protocol.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/worker_file_access_protocol.o worker/worker_file_access_protocol.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/worker_merge_protocol.o worker/worker_merge_protocol.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/worker_merge_protocol.o worker/worker_merge_protocol.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/worker_partition_protocol.o worker/worker_partition_protocol.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/worker_partition_protocol.o worker/worker_partition_protocol.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/worker_shard_visibility.o worker/worker_shard_visibility.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/worker_shard_visibility.o worker/worker_shard_visibility.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/worker_sql_task_protocol.o worker/worker_sql_task_protocol.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/worker_sql_task_protocol.o worker/worker_sql_task_protocol.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/worker_truncate_trigger_protocol.o worker/worker_truncate_trigger_protocol.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -I '/home/cituscluster/FDD-Citus_dev-8.3/src/include' -I'../../../src/include' -I. -I./ -I/opt/pgsql-10.1/include/server -I/opt/pgsql-10.1/include/internal  -D_GNU_SOURCE  -I/opt/pgsql-10.1/include  -c -o worker/worker_truncate_trigger_protocol.o worker/worker_truncate_trigger_protocol.c
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -shared -o citus.so ./shared_library_init.o commands/cluster.o commands/create_distributed_table.o commands/drop_distributed_table.o commands/extension.o commands/foreign_constraint.o commands/grant.o commands/index.o commands/multi_copy.o commands/policy.o commands/rename.o commands/schema.o commands/sequence.o commands/subscription.o commands/table.o commands/transmit.o commands/truncate.o commands/utility_hook.o commands/vacuum.o commands/variableset.o connection/connection_configuration.o connection/connection_management.o connection/placement_connection.o connection/remote_commands.o executor/adaptive_executor.o executor/citus_custom_scan.o executor/insert_select_executor.o executor/intermediate_results.o executor/multi_client_executor.o executor/multi_executor.o executor/multi_real_time_executor.o executor/multi_router_executor.o executor/multi_server_executor.o executor/multi_task_tracker_executor.o executor/query_stats.o executor/subplan_execution.o master/citus_create_restore_point.o master/master_citus_tools.o master/master_create_shards.o master/master_delete_protocol.o master/master_metadata_utility.o master/master_modify_multiple_shards.o master/master_node_protocol.o master/master_repair_shards.o master/master_split_shards.o master/master_stage_protocol.o master/master_truncate.o master/worker_node_manager.o metadata/metadata_sync.o planner/deparse_shard_query.o planner/distributed_planner.o planner/extended_op_node_utils.o planner/fast_path_router_planner.o planner/insert_select_planner.o planner/multi_explain.o planner/multi_join_order.o planner/multi_logical_optimizer.o planner/multi_logical_planner.o planner/multi_master_planner.o planner/multi_physical_planner.o planner/multi_router_planner.o planner/postgres_planning_functions.o planner/query_colocation_checker.o planner/query_pushdown_planning.o planner/recursive_planning.o planner/relation_restriction_equivalence.o planner/shard_pruning.o progress/multi_progress.o relay/relay_event_utility.o test/colocation_utils.o test/create_shards.o test/deparse_shard_query.o test/distributed_deadlock_detection.o test/distribution_metadata.o test/fake_fdw.o test/foreign_key_relationship_query.o test/metadata_sync.o test/partitioning_utils.o test/progress_utils.o test/prune_shard_list.o test/relation_access_tracking.o test/run_from_same_connection.o test/sequential_execution.o transaction/backend_data.o transaction/citus_dist_stat_activity.o transaction/distributed_deadlock_detection.o transaction/lock_graph.o transaction/multi_shard_transaction.o transaction/relation_access_tracking.o transaction/remote_transaction.o transaction/transaction_management.o transaction/transaction_recovery.o transaction/worker_transaction.o utils/acquire_lock.o utils/citus_clauses.o utils/citus_copyfuncs.o utils/citus_nodefuncs.o utils/citus_outfuncs.o utils/citus_readfuncs.o utils/citus_ruleutils.o utils/citus_version.o utils/colocation_utils.o utils/distribution_column.o utils/enable_ssl.o utils/errormessage.o utils/foreign_key_relationship.o utils/function_utils.o utils/hash_helpers.o utils/listutils.o utils/maintenanced.o utils/metadata_cache.o utils/multi_partitioning_utils.o utils/multi_resowner.o utils/node_metadata.o utils/reference_table_utils.o utils/resource_lock.o utils/ruleutils_10.o utils/ruleutils_11.o utils/shardinterval_utils.o utils/statistics_collection.o worker/task_tracker.o worker/task_tracker_protocol.o worker/worker_data_fetch_protocol.o worker/worker_drop_protocol.o worker/worker_file_access_protocol.o worker/worker_merge_protocol.o worker/worker_partition_protocol.o worker/worker_shard_visibility.o worker/worker_sql_task_protocol.o worker/worker_truncate_trigger_protocol.o -L/opt/pgsql-10.1/lib -Wl,--as-needed -Wl,-rpath,'/opt/pgsql-10.1/lib',--enable-new-dtags   -L/opt/pgsql-10.1/lib -lpq  
+gcc -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -g -g -O0 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-clobbered -Wdeclaration-after-statement -Wendif-labels -Wmissing-format-attribute -Wmissing-declarations -Wmissing-prototypes -Wshadow -Werror=vla -DFDD -shared -o citus.so ./shared_library_init.o commands/cluster.o commands/create_distributed_table.o commands/drop_distributed_table.o commands/extension.o commands/foreign_constraint.o commands/grant.o commands/index.o commands/multi_copy.o commands/policy.o commands/rename.o commands/schema.o commands/sequence.o commands/subscription.o commands/table.o commands/transmit.o commands/truncate.o commands/utility_hook.o commands/vacuum.o commands/variableset.o connection/connection_configuration.o connection/connection_management.o connection/placement_connection.o connection/remote_commands.o executor/adaptive_executor.o executor/citus_custom_scan.o executor/insert_select_executor.o executor/intermediate_results.o executor/multi_client_executor.o executor/multi_executor.o executor/multi_real_time_executor.o executor/multi_router_executor.o executor/multi_server_executor.o executor/multi_task_tracker_executor.o executor/query_stats.o executor/subplan_execution.o master/citus_create_restore_point.o master/master_citus_tools.o master/master_create_shards.o master/master_delete_protocol.o master/master_metadata_utility.o master/master_modify_multiple_shards.o master/master_node_protocol.o master/master_repair_shards.o master/master_split_shards.o master/master_stage_protocol.o master/master_truncate.o master/worker_node_manager.o metadata/metadata_sync.o planner/deparse_shard_query.o planner/distributed_planner.o planner/extended_op_node_utils.o planner/fast_path_router_planner.o planner/insert_select_planner.o planner/multi_explain.o planner/multi_join_order.o planner/multi_logical_optimizer.o planner/multi_logical_planner.o planner/multi_master_planner.o planner/multi_physical_planner.o planner/multi_router_planner.o planner/postgres_planning_functions.o planner/query_colocation_checker.o planner/query_pushdown_planning.o planner/recursive_planning.o planner/relation_restriction_equivalence.o planner/shard_pruning.o progress/multi_progress.o relay/relay_event_utility.o test/colocation_utils.o test/create_shards.o test/deparse_shard_query.o test/distributed_deadlock_detection.o test/distribution_metadata.o test/fake_fdw.o test/foreign_key_relationship_query.o test/metadata_sync.o test/partitioning_utils.o test/progress_utils.o test/prune_shard_list.o test/relation_access_tracking.o test/run_from_same_connection.o test/sequential_execution.o transaction/backend_data.o transaction/citus_dist_stat_activity.o transaction/distributed_deadlock_detection.o transaction/lock_graph.o transaction/multi_shard_transaction.o transaction/relation_access_tracking.o transaction/remote_transaction.o transaction/transaction_management.o transaction/transaction_recovery.o transaction/worker_transaction.o utils/acquire_lock.o utils/citus_clauses.o utils/citus_copyfuncs.o utils/citus_nodefuncs.o utils/citus_outfuncs.o utils/citus_readfuncs.o utils/citus_ruleutils.o utils/citus_version.o utils/colocation_utils.o utils/distribution_column.o utils/enable_ssl.o utils/errormessage.o utils/foreign_key_relationship.o utils/function_utils.o utils/hash_helpers.o utils/listutils.o utils/maintenanced.o utils/metadata_cache.o utils/multi_partitioning_utils.o utils/multi_resowner.o utils/node_metadata.o utils/reference_table_utils.o utils/resource_lock.o utils/ruleutils_10.o utils/ruleutils_11.o utils/shardinterval_utils.o utils/statistics_collection.o worker/task_tracker.o worker/task_tracker_protocol.o worker/worker_data_fetch_protocol.o worker/worker_drop_protocol.o worker/worker_file_access_protocol.o worker/worker_merge_protocol.o worker/worker_partition_protocol.o worker/worker_shard_visibility.o worker/worker_sql_task_protocol.o worker/worker_truncate_trigger_protocol.o -L/opt/pgsql-10.1/lib -Wl,--as-needed -Wl,-rpath,'/opt/pgsql-10.1/lib',--enable-new-dtags   -L/opt/pgsql-10.1/lib -lpq  
+cat fdd--B00C01--citus--8.3-1.sql >  citus--8.2-4--8.3-1.sql	
+cat fdd--B00C01--citus--8.3-1.sql >  citus--8.2-4--8.3-1.sql	
+make[1]: Leaving directory `/home/cituscluster/FDD-Citus_dev-8.3/src/backend/distributed'
+make -C src/backend/distributed/ install
+make[1]: Leaving directory `/home/cituscluster/FDD-Citus_dev-8.3/src/backend/distributed'
+make[1]: Entering directory `/home/cituscluster/FDD-Citus_dev-8.3/src/backend/distributed'
+cat fdd--B00C01--citus--8.3-1.sql >  citus--8.2-4--8.3-1.sql	
+/usr/bin/mkdir -p '/opt/pgsql-10.1/lib'
+/usr/bin/mkdir -p '/opt/pgsql-10.1/share/extension'
+/usr/bin/mkdir -p '/opt/pgsql-10.1/share/extension'
+/usr/bin/install -c -m 755  citus.so '/opt/pgsql-10.1/lib/citus.so'
+/usr/bin/install -c -m 644 .//citus.control '/opt/pgsql-10.1/share/extension/'
+/usr/bin/install -c -m 644 .//citus--5.1-2--5.1-3.sql .//citus--6.1-11--6.1-12.sql .//citus--6.0-17--6.0-18.sql .//citus--8.0-7--8.0-8.sql .//citus--6.2-2--6.2-3.sql .//citus--6.0-9--6.0-10.sql .//citus--5.1-1--5.1-2.sql .//citus--8.0-12--8.0-13.sql .//citus--6.1-17--6.2-1.sql .//citus--6.2-1--6.2-2.sql .//citus--8.0-10--8.0-11.sql .//citus--7.3-2--7.3-3.sql .//citus--6.1-6--6.1-7.sql .//citus--7.0-12--7.0-13.sql .//citus--7.1-3--7.1-4.sql .//citus--6.0-15--6.0-16.sql .//citus--7.5-4--7.5-5.sql .//citus--7.0-8--7.0-9.sql .//citus--7.3-1--7.3-2.sql .//citus--6.0-1--6.0-2.sql .//citus--7.5-2--7.5-3.sql .//citus--5.2-3--5.2-4.sql .//citus--7.0-9--7.0-10.sql .//citus--7.0-1--7.0-2.sql .//citus--8.0-5--8.0-6.sql .//citus--5.1-7--5.1-8.sql .//citus--6.0-2--6.0-3.sql .//citus--7.1-1--7.1-2.sql .//citus--7.0-7--7.0-8.sql .//citus--5.0-2--5.1-1.sql .//citus--7.1-2--7.1-3.sql .//citus--6.2-4--7.0-1.sql .//citus--5.0.sql .//citus--7.0-4--7.0-5.sql .//citus--8.1-1--8.2-1.sql .//citus--8.0-13--8.1-1.sql .//citus--6.1-9--6.1-10.sql .//citus--6.0-14--6.0-15.sql .//citus--5.2-1--5.2-2.sql .//citus--6.0-5--6.0-6.sql .//citus--6.0-18--6.1-1.sql .//citus--7.5-3--7.5-4.sql .//citus--6.0-11--6.0-12.sql .//citus--6.0-7--6.0-8.sql .//citus--7.0-14--7.0-15.sql .//citus--5.1-8--5.2-1.sql .//citus--6.1-7--6.1-8.sql .//citus--6.1-16--6.1-17.sql .//citus--5.0-1--5.0-2.sql .//citus--6.0-12--6.0-13.sql .//citus--7.0-13--7.0-14.sql .//citus--7.0-10--7.0-11.sql .//citus--6.0-13--6.0-14.sql .//citus--5.0--5.0-1.sql .//citus--6.0-6--6.0-7.sql .//citus--7.0-3--7.0-4.sql .//citus--8.0-9--8.0-10.sql .//citus--5.2-4--6.0-1.sql .//citus--7.5-1--7.5-2.sql .//citus--7.2-1--7.2-2.sql .//citus--8.2-2--8.2-3.sql .//citus--5.1-6--5.1-7.sql .//citus--5.2-2--5.2-3.sql .//citus--6.1-15--6.1-16.sql .//citus--7.2-3--7.3-1.sql .//citus--6.1-13--6.1-14.sql .//citus--5.1-5--5.1-6.sql .//citus--7.2-2--7.2-3.sql .//citus--6.1-10--6.1-11.sql .//citus--8.2-1--8.2-2.sql .//citus--7.0-11--7.0-12.sql .//citus--8.0-4--8.0-5.sql .//citus--6.0-3--6.0-4.sql .//citus--7.0-2--7.0-3.sql .//citus--7.4-2--7.4-3.sql .//citus--6.1-3--6.1-4.sql .//citus--6.0-8--6.0-9.sql .//citus--7.4-1--7.4-2.sql .//citus--8.0-1--8.0-2.sql .//citus--5.1-4--5.1-5.sql .//citus--6.1-8--6.1-9.sql .//citus--7.4-3--7.5-1.sql .//citus--7.5-5--7.5-6.sql .//citus--7.0-15--7.1-1.sql .//citus--8.0-8--8.0-9.sql .//citus--6.1-2--6.1-3.sql .//citus--8.2-4--8.3-1.sql .//citus--8.0-3--8.0-4.sql .//citus--6.0-16--6.0-17.sql .//citus--8.2-3--8.2-4.sql .//citus--6.0-4--6.0-5.sql .//citus--7.5-7--8.0-1.sql .//citus--6.1-1--6.1-2.sql .//citus--6.1-14--6.1-15.sql .//citus--6.1-4--6.1-5.sql .//citus--7.5-6--7.5-7.sql .//citus--7.1-4--7.2-1.sql .//citus--7.0-5--7.0-6.sql .//citus--8.0-2--8.0-3.sql .//citus--6.1-12--6.1-13.sql .//citus--8.0-11--8.0-12.sql .//citus--5.1-3--5.1-4.sql .//citus--7.0-6--7.0-7.sql .//citus--6.2-3--6.2-4.sql .//citus--6.0-10--6.0-11.sql .//citus--8.0-6--8.0-7.sql .//citus--6.1-5--6.1-6.sql .//citus--7.3-3--7.4-1.sql  '/opt/pgsql-10.1/share/extension/'
+make[1]: Leaving directory `/home/cituscluster/FDD-Citus_dev-8.3/src/backend/distributed'
+/usr/bin/mkdir -p '/opt/pgsql-10.1/include/server/distributed/'
+/usr/bin/install -c -m 644 ./src/include/citus_version.h '/opt/pgsql-10.1/include/server/'
+/usr/bin/install -c -m 644 /home/cituscluster/FDD-Citus_dev-8.3/./src/include/distributed/*.h '/opt/pgsql-10.1/include/server/distributed/'
+[1]+  Done                    make
+[cituscluster@gtm1 FDD-Citus_dev-8.3]$ pg_ctl start
+waiting for server to start....2019-07-18 01:07:39.934 PDT [29295] LOG:  number of prepared transactions has not been configured, overriding
+2019-07-18 01:07:39.934 PDT [29295] DETAIL:  max_prepared_transactions is now set to 200
+2019-07-18 01:07:39.935 PDT [29295] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2019-07-18 01:07:39.936 PDT [29295] LOG:  listening on IPv6 address "::", port 5432
+2019-07-18 01:07:39.940 PDT [29295] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-07-18 01:07:40.019 PDT [29296] LOG:  database system was shut down at 2019-07-18 00:51:01 PDT
+2019-07-18 01:07:40.026 PDT [29295] LOG:  database system is ready to accept connections
+ done
+server started
+[cituscluster@gtm1 FDD-Citus_dev-8.3]$ psql -d postgres
+psql (10.1)
+Type "help" for help.
+
+postgres=# \dx
+2019-07-18 01:07:53.428 PDT [29306] LOG:  starting maintenance daemon on database 13212 user 10
+2019-07-18 01:07:53.428 PDT [29306] CONTEXT:  Citus maintenance daemon for database 13212 user 10
+                 List of installed extensions
+  Name   | Version |   Schema   |         Description          
+---------+---------+------------+------------------------------
+ citus   | 8.2-2   | pg_catalog | Citus distributed database
+ plpgsql | 1.0     | pg_catalog | PL/pgSQL procedural language
+(2 rows)
+
+postgres=# drop extension citus;
+DROP EXTENSION
+postgres=# \dx
+                 List of installed extensions
+  Name   | Version |   Schema   |         Description          
+---------+---------+------------+------------------------------
+ plpgsql | 1.0     | pg_catalog | PL/pgSQL procedural language
+(1 row)
+
+postgres=# \q
+[cituscluster@gtm1 FDD-Citus_dev-8.3]$ pg_ctl restart
+waiting for server to shut down....2019-07-18 01:08:19.128 PDT [29295] LOG:  received fast shutdown request
+2019-07-18 01:08:19.203 PDT [29295] LOG:  aborting any active transactions
+2019-07-18 01:08:19.205 PDT [29306] FATAL:  terminating connection due to administrator command
+2019-07-18 01:08:19.205 PDT [29306] CONTEXT:  Citus maintenance daemon for database 13212 user 10
+2019-07-18 01:08:19.210 PDT [29295] LOG:  worker process: logical replication launcher (PID 29303) exited with exit code 1
+2019-07-18 01:08:19.210 PDT [29295] LOG:  worker process: Citus Maintenance Daemon: 13212/10 (PID 29306) exited with exit code 1
+2019-07-18 01:08:19.211 PDT [29297] LOG:  shutting down
+2019-07-18 01:08:19.320 PDT [29295] LOG:  database system is shut down
+ done
+server stopped
+waiting for server to start....2019-07-18 01:08:19.470 PDT [29316] LOG:  number of prepared transactions has not been configured, overriding
+2019-07-18 01:08:19.470 PDT [29316] DETAIL:  max_prepared_transactions is now set to 200
+2019-07-18 01:08:19.470 PDT [29316] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2019-07-18 01:08:19.470 PDT [29316] LOG:  listening on IPv6 address "::", port 5432
+2019-07-18 01:08:19.481 PDT [29316] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-07-18 01:08:19.539 PDT [29317] LOG:  database system was shut down at 2019-07-18 01:08:19 PDT
+2019-07-18 01:08:19.546 PDT [29316] LOG:  database system is ready to accept connections
+ done
+server started
+[cituscluster@gtm1 FDD-Citus_dev-8.3]$ psql -d postgres
+psql (10.1)
+Type "help" for help.
+
+postgres=# \dx
+                 List of installed extensions
+  Name   | Version |   Schema   |         Description          
+---------+---------+------------+------------------------------
+ plpgsql | 1.0     | pg_catalog | PL/pgSQL procedural language
+(1 row)
+
+postgres=# create extension citus;
+2019-07-18 01:08:30.527 PDT [29328] LOG:  starting maintenance daemon on database 13212 user 10
+2019-07-18 01:08:30.527 PDT [29328] CONTEXT:  Citus maintenance daemon for database 13212 user 10
+CREATE EXTENSION
+postgres=# 
+postgres=# 
+postgres=# \dx
+                 List of installed extensions
+  Name   | Version |   Schema   |         Description          
+---------+---------+------------+------------------------------
+ citus   | 8.3-1   | pg_catalog | Citus distributed database
+ plpgsql | 1.0     | pg_catalog | PL/pgSQL procedural language
+(2 rows)
+
+postgres=# show version;
+2019-07-18 01:08:39.388 PDT [29326] ERROR:  unrecognized configuration parameter "version"
+2019-07-18 01:08:39.388 PDT [29326] STATEMENT:  show version;
+ERROR:  unrecognized configuration parameter "version"
+postgres=# show version();
+2019-07-18 01:08:41.862 PDT [29326] ERROR:  syntax error at or near "(" at character 13
+2019-07-18 01:08:41.862 PDT [29326] STATEMENT:  show version();
+ERROR:  syntax error at or near "("
+LINE 1: show version();
+                    ^
+postgres=# select  version();
+                                                 version                                                 
+---------------------------------------------------------------------------------------------------------
+ PostgreSQL 10.1 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-28), 64-bit
+(1 row)
+
+postgres=# select * from  citus_version();
+                                                         citus_version                                                          
+--------------------------------------------------------------------------------------------------------------------------------
+ FlyingDD B00C01( base on Citus 8.3.0 ) on x86_64-pc-linux-gnu, compiled by gcc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-28), 64-bit
+(1 row)
+
+postgres=# select * from master_add_node('192.168.221.131', 5432);
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+----------+-------------
+      1 |       1 | 192.168.221.131 |     5432 | default  | f           | t        | primary  | default
+(1 row)
+
+postgres=# select * from master_add_node('192.168.221.132', 5432);
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+----------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary  | default
+(1 row)
+
+postgres=# select * from master_add_secondary_node('192.168.221.135', 5432, '192.168.221.131', 5432);
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      3 |       1 | 192.168.221.135 |     5432 | default  | f           | t        | secondary | default
+(1 row)
+
+postgres=# select * from master_add_secondary_node('192.168.221.136', 5432, '192.168.221.132', 5432);
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      4 |       2 | 192.168.221.136 |     5432 | default  | f           | t        | secondary | default
+(1 row)
+
+postgres=# select * from master_add_coordinator('192.168.221.133',5432);
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+----------+-------------
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_tp    | default
+(1 row)
+
+postgres=# select * from master_add_coordinator('192.168.221.134',5432,'cn_rtap');
+2019-07-18 01:14:39.049 PDT [29326] ERROR:  connection error: 192.168.221.134:5432
+2019-07-18 01:14:39.049 PDT [29326] DETAIL:  could not send data to server: Connection refused
+	could not send startup packet: Connection refused
+2019-07-18 01:14:39.049 PDT [29326] STATEMENT:  select * from master_add_coordinator('192.168.221.134',5432,'cn_rtap');
+ERROR:  connection error: 192.168.221.134:5432
+DETAIL:  could not send data to server: Connection refused
+could not send startup packet: Connection refused
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      1 |       1 | 192.168.221.131 |     5432 | default  | f           | t        | primary   | default
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      3 |       1 | 192.168.221.135 |     5432 | default  | f           | t        | secondary | default
+      4 |       2 | 192.168.221.136 |     5432 | default  | f           | t        | secondary | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_tp     | default
+(5 rows)
+
+postgres=# select * from master_add_coordinator('192.168.221.134',5432,'cn_rtap');
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+----------+-------------
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_rtap  | default
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      1 |       1 | 192.168.221.131 |     5432 | default  | f           | t        | primary   | default
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      3 |       1 | 192.168.221.135 |     5432 | default  | f           | t        | secondary | default
+      4 |       2 | 192.168.221.136 |     5432 | default  | f           | t        | secondary | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_tp     | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_rtap   | default
+(6 rows)
+
+postgres=# select * from master_remove_node('192.168.221.136',5432);
+ master_remove_node 
+--------------------
+ 
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      1 |       1 | 192.168.221.131 |     5432 | default  | f           | t        | primary   | default
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      3 |       1 | 192.168.221.135 |     5432 | default  | f           | t        | secondary | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_tp     | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_rtap   | default
+(5 rows)
+
+postgres=# select * from master_add_coordinator('192.168.221.133',5432,'cn_rtap');
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+----------+-------------
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap  | default
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      1 |       1 | 192.168.221.131 |     5432 | default  | f           | t        | primary   | default
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      3 |       1 | 192.168.221.135 |     5432 | default  | f           | t        | secondary | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_rtap   | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap   | default
+(5 rows)
+
+postgres=# select * from master_add_coordinator('192.168.221.134',5432,'cn_tp');
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+----------+-------------
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp    | default
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      1 |       1 | 192.168.221.131 |     5432 | default  | f           | t        | primary   | default
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      3 |       1 | 192.168.221.135 |     5432 | default  | f           | t        | secondary | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap   | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp     | default
+(5 rows)
+
+postgres=# select * from master_add_coordinator('192.168.221.131',5432,'cn_tp');
+2019-07-18 01:35:01.495 PDT [29326] ERROR:  192.168.221.131:5432 is a worker node, can not change to a cn_tp or cn_rtap node
+2019-07-18 01:35:01.495 PDT [29326] STATEMENT:  select * from master_add_coordinator('192.168.221.131',5432,'cn_tp');
+ERROR:  192.168.221.131:5432 is a worker node, can not change to a cn_tp or cn_rtap node
+postgres=# select * from master_add_coordinator('192.168.221.135',5432,'cn_tp');
+2019-07-18 01:35:07.730 PDT [29326] ERROR:  192.168.221.135:5432 is a worker node, can not change to a cn_tp or cn_rtap node
+2019-07-18 01:35:07.730 PDT [29326] STATEMENT:  select * from master_add_coordinator('192.168.221.135',5432,'cn_tp');
+ERROR:  192.168.221.135:5432 is a worker node, can not change to a cn_tp or cn_rtap node
+postgres=# select * from start_metadata_sync_to_node('192.168.221.135', 5432);
+2019-07-18 01:35:33.833 PDT [29326] WARNING:  node ('192.168.221.135',5432) is not a primary/cn_tp/cn_ap node, cannot sync metadata to it
+WARNING:  node ('192.168.221.135',5432) is not a primary/cn_tp/cn_ap node, cannot sync metadata to it
+ start_metadata_sync_to_node 
+-----------------------------
+ 
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      1 |       1 | 192.168.221.131 |     5432 | default  | f           | t        | primary   | default
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      3 |       1 | 192.168.221.135 |     5432 | default  | f           | t        | secondary | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap   | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp     | default
+(5 rows)
+
+postgres=# select * from start_metadata_sync_to_node('192.168.221.133', 5432);
+ start_metadata_sync_to_node 
+-----------------------------
+ 
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      1 |       1 | 192.168.221.131 |     5432 | default  | f           | t        | primary   | default
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      3 |       1 | 192.168.221.135 |     5432 | default  | f           | t        | secondary | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap   | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp     | default
+(5 rows)
+
+postgres=# select * from start_metadata_sync_to_node('192.168.221.137', 5432);
+2019-07-18 01:36:59.358 PDT [29326] ERROR:  you cannot sync metadata to a non-existent node
+2019-07-18 01:36:59.358 PDT [29326] HINT:  First, add the node with SELECT master_add_node('192.168.221.137',5432)
+2019-07-18 01:36:59.358 PDT [29326] STATEMENT:  select * from start_metadata_sync_to_node('192.168.221.137', 5432);
+ERROR:  you cannot sync metadata to a non-existent node
+HINT:  First, add the node with SELECT master_add_node('192.168.221.137',5432)
+postgres=# select * from start_metadata_sync_to_node('192.168.221.131', 5432);
+ start_metadata_sync_to_node 
+-----------------------------
+ 
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap   | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp     | default
+      1 |       1 | 192.168.221.131 |     5432 | default  | t           | t        | primary   | default
+      3 |       1 | 192.168.221.135 |     5432 | default  | t           | t        | secondary | default
+(5 rows)
+
+postgres=# select * from stop_metadata_sync_to_node('192.168.221.133', 5432);
+2019-07-18 01:38:33.668 PDT [29326] WARNING:  node (192.168.221.133,5432) is a cn_tp or cn_rtap, should not stop the sync operation
+WARNING:  node (192.168.221.133,5432) is a cn_tp or cn_rtap, should not stop the sync operation
+ stop_metadata_sync_to_node 
+----------------------------
+ 
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp     | default
+      1 |       1 | 192.168.221.131 |     5432 | default  | t           | t        | primary   | default
+      3 |       1 | 192.168.221.135 |     5432 | default  | t           | t        | secondary | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | f           | t        | cn_rtap   | default
+(5 rows)
+
+postgres=# select * from start_metadata_sync_to_node('192.168.221.133', 5432);
+ start_metadata_sync_to_node 
+-----------------------------
+ 
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp     | default
+      1 |       1 | 192.168.221.131 |     5432 | default  | t           | t        | primary   | default
+      3 |       1 | 192.168.221.135 |     5432 | default  | t           | t        | secondary | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap   | default
+(5 rows)
+
+postgres=# select * from stop_metadata_sync_to_node('192.168.221.131', 5432);
+ stop_metadata_sync_to_node 
+----------------------------
+ 
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp     | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap   | default
+      1 |       1 | 192.168.221.131 |     5432 | default  | f           | t        | primary   | default
+      3 |       1 | 192.168.221.135 |     5432 | default  | f           | t        | secondary | default
+(5 rows)
+
+postgres=# select * from master_remove_node('192.168.221.131',5432);
+ master_remove_node 
+--------------------
+ 
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp     | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap   | default
+      3 |       1 | 192.168.221.135 |     5432 | default  | f           | t        | secondary | default
+(4 rows)
+
+postgres=# select * master_update_node(7, '192.168.221.131', 5432);
+2019-07-18 01:40:55.406 PDT [29326] ERROR:  syntax error at or near "master_update_node" at character 10
+2019-07-18 01:40:55.406 PDT [29326] STATEMENT:  select * master_update_node(7, '192.168.221.131', 5432);
+ERROR:  syntax error at or near "master_update_node"
+LINE 1: select * master_update_node(7, '192.168.221.131', 5432);
+                 ^
+postgres=# select * from master_update_node(7, '192.168.221.131', 5432);
+ master_update_node 
+--------------------
+ 
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap   | default
+      3 |       1 | 192.168.221.135 |     5432 | default  | f           | t        | secondary | default
+      7 |       5 | 192.168.221.131 |     5432 | default  | t           | t        | cn_tp     | default
+(4 rows)
+
+postgres=# select * from master_update_node(7, '192.168.221.133', 5432);
+2019-07-18 01:41:45.980 PDT [29326] ERROR:  there is already another node with the specified hostname and port
+2019-07-18 01:41:45.980 PDT [29326] STATEMENT:  select * from master_update_node(7, '192.168.221.133', 5432);
+ERROR:  there is already another node with the specified hostname and port
+postgres=# select * from master_update_node(7, '192.168.221.134', 5432);
+ master_update_node 
+--------------------
+ 
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap   | default
+      3 |       1 | 192.168.221.135 |     5432 | default  | f           | t        | secondary | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp     | default
+(4 rows)
+
+postgres=# select * from master_remove_node('192.168.221.135',5432);
+ master_remove_node 
+--------------------
+ 
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+----------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary  | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap  | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp    | default
+(3 rows)
+
+postgres=# select * from master_add_node('192.168.221.131', 5432);
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+----------+-------------
+      8 |       6 | 192.168.221.131 |     5432 | default  | f           | t        | primary  | default
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+----------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary  | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap  | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp    | default
+      8 |       6 | 192.168.221.131 |     5432 | default  | f           | t        | primary  | default
+(4 rows)
+
+postgres=# select * from start_metadata_sync_to_node('192.168.221.131', 5432);
+ start_metadata_sync_to_node 
+-----------------------------
+ 
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+----------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary  | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap  | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp    | default
+      8 |       6 | 192.168.221.131 |     5432 | default  | t           | t        | primary  | default
+(4 rows)
+
+postgres=# select * from master_add_secondary_node('192.168.221.135', 5432, '192.168.221.131', 5432);
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      9 |       6 | 192.168.221.135 |     5432 | default  | t           | t        | secondary | default
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap   | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp     | default
+      8 |       6 | 192.168.221.131 |     5432 | default  | t           | t        | primary   | default
+      9 |       6 | 192.168.221.135 |     5432 | default  | t           | t        | secondary | default
+(5 rows)
+
+postgres=# select * from stop_metadata_sync_to_node('192.168.221.135', 5432);
+2019-07-18 01:44:33.567 PDT [29326] WARNING:  node (192.168.221.135,5432) is a secondary node, cannot stop sync metadata
+WARNING:  node (192.168.221.135,5432) is a secondary node, cannot stop sync metadata
+ stop_metadata_sync_to_node 
+----------------------------
+ 
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap   | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp     | default
+      8 |       6 | 192.168.221.131 |     5432 | default  | t           | t        | primary   | default
+      9 |       6 | 192.168.221.135 |     5432 | default  | t           | t        | secondary | default
+(5 rows)
+
+postgres=# SELECT close_node_connections('192.168.221.131', 5432, false);
+INFO:  close connections to node (192.168.221.131,5432)
+ close_node_connections 
+------------------------
+ 
+(1 row)
+
+postgres=# \dt
+Did not find any relations.
+postgres=# create table test1(id int primary key, name int);
+CREATE TABLE
+postgres=# set citus.replication_model=streaming;
+SET
+postgres=# set citus.shard_count=2;
+SET
+postgres=# SELECT create_distributed_table('test1', 'id', 'hash');
+ create_distributed_table 
+--------------------------
+ 
+(1 row)
+
+postgres=# select * from test1;
+ id | name 
+----+------
+(0 rows)
+
+postgres=# SELECT close_node_connections('192.168.221.131', 5432, false);
+INFO:  close connections to node (192.168.221.131,5432)
+ close_node_connections 
+------------------------
+ 
+(1 row)
+
+postgres=# SELECT close_node_connections('192.168.221.131', 5432, false);
+INFO:  close connections to node (192.168.221.131,5432)
+ close_node_connections 
+------------------------
+ 
+(1 row)
+
+postgres=# select * from test1;
+ id | name 
+----+------
+(0 rows)
+
+postgres=# 
+postgres=# select * from test1;
+ id | name 
+----+------
+(0 rows)
+
+postgres=# SELECT * from set_node_role('192.168.221.135', 5432, 'unavailable');
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive |  noderole   | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-------------+-------------
+      9 |       6 | 192.168.221.135 |     5432 | default  | t           | t        | unavailable | default
+(1 row)
+
+postgres=# select * from test1;
+ id | name 
+----+------
+(0 rows)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive |  noderole   | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-------------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary     | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap     | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp       | default
+      8 |       6 | 192.168.221.131 |     5432 | default  | t           | t        | primary     | default
+      9 |       6 | 192.168.221.135 |     5432 | default  | t           | t        | unavailable | default
+(5 rows)
+
+postgres=# SELECT * from set_node_role('192.168.221.135', 5432, 'primary');
+2019-07-18 01:50:50.795 PDT [29326] ERROR:  there cannot be two primary nodes in a group
+2019-07-18 01:50:50.795 PDT [29326] CONTEXT:  while executing command on 192.168.221.134:5432
+	PL/pgSQL function citus.pg_dist_node_trigger_func() line 18 at RAISE
+2019-07-18 01:50:50.795 PDT [29326] STATEMENT:  SELECT * from set_node_role('192.168.221.135', 5432, 'primary');
+ERROR:  there cannot be two primary nodes in a group
+CONTEXT:  while executing command on 192.168.221.134:5432
+PL/pgSQL function citus.pg_dist_node_trigger_func() line 18 at RAISE
+postgres=# SELECT * from set_node_role('192.168.221.135', 5432, 'cn_tp');
+2019-07-18 01:50:56.607 PDT [29326] ERROR:  The nodeRole parameter is only support primary, secondary and unavaliable!
+2019-07-18 01:50:56.607 PDT [29326] STATEMENT:  SELECT * from set_node_role('192.168.221.135', 5432, 'cn_tp');
+ERROR:  The nodeRole parameter is only support primary, secondary and unavaliable!
+postgres=# SELECT * from set_node_role('192.168.221.135', 5432, 'secondary');
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      9 |       6 | 192.168.221.135 |     5432 | default  | t           | t        | secondary | default
+(1 row)
+
+postgres=# SELECT citus_failover('192.168.221.135', 5432);
+2019-07-18 01:52:13.143 PDT [29326] WARNING:  node (192.168.221.131,5432) change to unavailable to make sure no query will be executed on it.
+INFO:  node (192.168.221.135,5432) failover to the primary role
+WARNING:  node (192.168.221.131,5432) change to unavailable to make sure no query will be executed on it.
+2019-07-18 01:52:13.188 PDT [29326] ERROR:  cannot execute UPDATE in a read-only transaction
+2019-07-18 01:52:13.188 PDT [29326] CONTEXT:  while executing command on 192.168.221.135:5432
+2019-07-18 01:52:13.188 PDT [29326] STATEMENT:  SELECT citus_failover('192.168.221.135', 5432);
+ERROR:  cannot execute UPDATE in a read-only transaction
+CONTEXT:  while executing command on 192.168.221.135:5432
+postgres=# SELECT citus_failover('192.168.221.135', 5432);
+2019-07-18 01:52:28.543 PDT [29326] WARNING:  node (192.168.221.131,5432) change to unavailable to make sure no query will be executed on it.
+INFO:  node (192.168.221.135,5432) failover to the primary role
+WARNING:  node (192.168.221.131,5432) change to unavailable to make sure no query will be executed on it.
+ citus_failover 
+----------------
+ 
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive |  noderole   | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-------------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary     | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap     | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp       | default
+      8 |       6 | 192.168.221.131 |     5432 | default  | t           | t        | unavailable | default
+      9 |       6 | 192.168.221.135 |     5432 | default  | t           | t        | primary     | default
+(5 rows)
+
+postgres=# SELECT citus_switchover_prepare('192.168.221.131', 5432);
+2019-07-18 01:53:04.552 PDT [29326] ERROR:  node (192.168.221.131,5432) should be a secondary node. Please check the node role and status, or use SELECT set_node_role('192.168.221.131', 5432, 'secondary') to change the node role to secondary.
+2019-07-18 01:53:04.552 PDT [29326] STATEMENT:  SELECT citus_switchover_prepare('192.168.221.131', 5432);
+ERROR:  node (192.168.221.131,5432) should be a secondary node. Please check the node role and status, or use SELECT set_node_role('192.168.221.131', 5432, 'secondary') to change the node role to secondary.
+postgres=# SELECT citus_switchover_prepare('192.168.221.131', 5432, true);
+2019-07-18 01:53:11.366 PDT [29326] WARNING:  node (192.168.221.135,5432) change to unavailable to make sure no query will be executed on it.
+WARNING:  node (192.168.221.135,5432) change to unavailable to make sure no query will be executed on it.
+ citus_switchover_prepare 
+--------------------------
+ 
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive |  noderole   | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-------------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary     | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap     | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp       | default
+      8 |       6 | 192.168.221.131 |     5432 | default  | t           | t        | secondary   | default
+      9 |       6 | 192.168.221.135 |     5432 | default  | t           | t        | unavailable | default
+(5 rows)
+
+postgres=# SELECT citus_switchover('192.168.221.131', 5432);
+INFO:  node (192.168.221.131,5432) switchover to the primary role
+ citus_switchover 
+------------------
+ 
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap   | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp     | default
+      9 |       6 | 192.168.221.135 |     5432 | default  | t           | t        | secondary | default
+      8 |       6 | 192.168.221.131 |     5432 | default  | t           | t        | primary   | default
+(5 rows)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap   | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp     | default
+      9 |       6 | 192.168.221.135 |     5432 | default  | t           | t        | secondary | default
+      8 |       6 | 192.168.221.131 |     5432 | default  | t           | t        | primary   | default
+(5 rows)
+
+postgres=# SELECT citus_switchover('192.168.221.135', 5432);
+2019-07-18 01:55:42.038 PDT [29326] WARNING:  node (192.168.221.131,5432) is a primary node, recommand to use SELECT citus_switchover_prepare('192.168.221.131', 5432) to change the node to unavailable
+INFO:  node (192.168.221.135,5432) switchover to the primary role
+WARNING:  node (192.168.221.131,5432) is a primary node, recommand to use SELECT citus_switchover_prepare('192.168.221.131', 5432) to change the node to unavailable
+ citus_switchover 
+------------------
+ 
+(1 row)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap   | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp     | default
+      8 |       6 | 192.168.221.131 |     5432 | default  | t           | t        | secondary | default
+      9 |       6 | 192.168.221.135 |     5432 | default  | t           | t        | primary   | default
+(5 rows)
+
+postgres=# select * from pg_dist_node;
+ nodeid | groupid |    nodename     | nodeport | noderack | hasmetadata | isactive | noderole  | nodecluster 
+--------+---------+-----------------+----------+----------+-------------+----------+-----------+-------------
+      2 |       2 | 192.168.221.132 |     5432 | default  | f           | t        | primary   | default
+      5 |       3 | 192.168.221.133 |     5432 | default  | t           | t        | cn_rtap   | default
+      7 |       5 | 192.168.221.134 |     5432 | default  | t           | t        | cn_tp     | default
+      8 |       6 | 192.168.221.131 |     5432 | default  | t           | t        | secondary | default
+      9 |       6 | 192.168.221.135 |     5432 | default  | t           | t        | primary   | default
+(5 rows)
+
+postgres=# 

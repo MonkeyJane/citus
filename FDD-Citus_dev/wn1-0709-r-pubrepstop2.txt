@@ -1,0 +1,1057 @@
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | f      |            |      |         1094 | 6/4623BAE0  | 6/4623BAE0
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+ pid | usesysid | usename | application_name | client_addr | client_hostname | client_port | backend_start | backend_xmin | state | sent_lsn | write_lsn | flush_lsn | replay_lsn | write_lag |
+ flush_lag | replay_lag | sync_priority | sync_state 
+-----+----------+---------+------------------+-------------+-----------------+-------------+---------------+--------------+-------+----------+-----------+-----------+------------+-----------+
+-----------+------------+---------------+------------
+(0 rows)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:37.236872-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | f      |            |      |         1094 | 6/4623BAE0  | 6/4623BAE0
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+ pid | usesysid | usename | application_name | client_addr | client_hostname | client_port | backend_start | backend_xmin | state | sent_lsn | write_lsn | flush_lsn | replay_lsn | write_lag |
+ flush_lag | replay_lag | sync_priority | sync_state 
+-----+----------+---------+------------------+-------------+-----------------+-------------+---------------+--------------+-------+----------+-----------+-----------+------------+-----------+
+-----------+------------+---------------+------------
+(0 rows)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:37.556992-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | f      |            |      |         1094 | 6/4623BAE0  | 6/4623BAE0
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+ pid | usesysid | usename | application_name | client_addr | client_hostname | client_port | backend_start | backend_xmin | state | sent_lsn | write_lsn | flush_lsn | replay_lsn | write_lag |
+ flush_lag | replay_lag | sync_priority | sync_state 
+-----+----------+---------+------------------+-------------+-----------------+-------------+---------------+--------------+-------+----------+-----------+-----------+------------+-----------+
+-----------+------------+---------------+------------
+(0 rows)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:37.840108-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | f      |            |      |         1094 | 6/4623BAE0  | 6/4623BAE0
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+ pid | usesysid | usename | application_name | client_addr | client_hostname | client_port | backend_start | backend_xmin | state | sent_lsn | write_lsn | flush_lsn | replay_lsn | write_lag |
+ flush_lag | replay_lag | sync_priority | sync_state 
+-----+----------+---------+------------------+-------------+-----------------+-------------+---------------+--------------+-------+----------+-----------+-----------+------------+-----------+
+-----------+------------+---------------+------------
+(0 rows)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:38.162009-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | f      |            |      |         1094 | 6/4623BAE0  | 6/4623BAE0
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+ pid | usesysid | usename | application_name | client_addr | client_hostname | client_port | backend_start | backend_xmin | state | sent_lsn | write_lsn | flush_lsn | replay_lsn | write_lag |
+ flush_lag | replay_lag | sync_priority | sync_state 
+-----+----------+---------+------------------+-------------+-----------------+-------------+---------------+--------------+-------+----------+-----------+-----------+------------+-----------+
+-----------+------------+---------------+------------
+(0 rows)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:38.508501-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:38.837684-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:39.194686-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-09 01:40:39.56563-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:39.919935-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:40.258234-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:40.591118-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:40.946302-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:41.326972-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:41.708323-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:42.059321-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-09 01:40:42.42891-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+      current_timestamp       
+------------------------------
+ 2019-07-09 01:40:42.80966-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:43.214149-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:43.543853-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:43.938051-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:44.313074-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:44.689277-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:45.077998-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:45.492686-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:45.917043-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:46.540879-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+     current_timestamp      
+----------------------------
+ 2019-07-09 01:40:46.967-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# SELECT current_timestamp;
+       current_timestamp       
+-------------------------------
+ 2019-07-09 01:40:47.360707-07
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   76829 |   35655
+   76829 |   35663
+   76829 |   76789
+(3 rows)
+
+postgres=# SELECT * FROM pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub1      | pgoutput | logical   |  13212 | postgres | f         | t      |      22334 |      |         1094 | 6/4623BAE0  | 6/4623BB88
+(1 row)
+
+postgres=# SELECT * FROM pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 22334 |       10 | cituscluster | sub1             | 192.168.221.132 |                 |       50948 | 2019-07-09 01:40:38.436647-07 |              | catchup | 6/4623BB88 | 6/4623BB88 | 6/46
+23BB88 | 6/4623BB88 |           |           |            |             0 | async
+(1 row)
+
+postgres=# SELECT * FROM pg_publication_tables;
+ pubname | schemaname | tablename 
+---------+------------+-----------
+ pub1    | public     | tbl2
+ pub1    | public     | tbl1
+ pub1    | public     | tbl5
+(3 rows)
+
+postgres=# 

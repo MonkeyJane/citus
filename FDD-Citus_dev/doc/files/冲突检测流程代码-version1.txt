@@ -1,0 +1,412 @@
+1. 获取 pg_subscription & pg_subscription_rel 中在线迁移创建的订阅者及订阅表数据存储到 sub_stat_list
+2. 启动轮询定时器
+注：定时器中 sub_stat_list 以及其元素均标识为 a_s  a
+	轮询的 pg_stat_subscription 数据列表及其元素标识为 b_s  b
+	轮询的 pg_subscription_rel 数据列表及其元素标识为 c_s  c
+
+外部遍历 PostedShards 表中每一个 MoveShardCacheEntry
+
+ 
+List *FDD_GetSubStatusList(MoveWorker *worker)
+{
+	List *subStatusList = NIL;
+	ListCell *subStatCell = NULL;
+	
+	bool pubConnNormal = false;
+	bool subConnNormal = false;
+	bool enableCheck = false;
+	bool foundInCache = false;
+	int abnormal_state = 0;
+	
+	// 1. 与发布端通信设置 pubConnNormal
+	
+	// 2. 根据 MoveWorker->sub_name & MoveWorker->PostedShardsHash 获取订阅端信息到 subStatusList
+	if (subStatusList != NIL && list_length(subStatusList) != 0)
+	{
+		subConnNormal = true;
+	}
+	
+	foreach (subStatCell, subStatusList)
+	{
+		sub_status *subStatus = lfirst(subStatCell);
+		if (!enableCheck && !subStatus->sub_enabled)
+		{
+			// 报警：逻辑复制关闭
+			worker->rep_state = worker->rep_state%100 + MANUAL_INTERRUPT;
+			return;
+		}
+		
+		enableCheck = true;
+		
+		MoveShardCacheEntry *shardEntry = FDD_GetShardHashEntry(worker, subStatus->relid);
+		if (shardEntry == NULL)
+		{
+			// 不允许找不到，报异常
+		}
+		
+		FDD_ShardStateMonitor(worker->rep_state, subStatus, shardEntry);
+	}
+		
+	FDD_RepStateMonitor(worker, pubConnNormal, subConnNormal);
+}
+
+MoveShardCacheEntry *FDD_GetShardHashEntry(MoveWorker *worker, Oid relationId)
+{
+	MoveShardCacheEntry *shardEntry = NULL;
+	void *hashKey = (void *) &relationId;
+	bool foundInCache = false;
+
+	shardEntry = hash_search(worker->PostedShardsHash, hashKey, HASH_FIND, &foundInCache);
+	return shardEntry;
+}
+
+typedef struct _RepStatInfo
+{
+	int pub_fail_count;
+	int sub_fail_count;
+	int cn_fail_count;
+	int normal_count;
+}RepStatInfo;
+
+void FDD_RepStateMonitor(MoveWorker *worker, bool pubConnNormal, bool subConnNormal)
+{
+	int state = pubConnNormal << 1 | subConnNormal;
+	swicth (state)
+	{
+		case 0:
+		{
+			++worker->statInfo.cn_fail_count;
+			worker->statInfo.normal_count = 0;
+			
+			if (worker->statInfo.cn_fail_coun >= CN通信异常阈值)
+			{
+				// 报警：CN主机异常
+				worker->rep_state = worker->rep_state%100 + CN_CONNECT_FAIL;
+			}
+			break;
+		}
+		case 1:
+		{
+			++worker->statInfo.pub_fail_count;
+			worker->statInfo.normal_count = 0;
+			
+			if (FDD_IsShardRepStop(worker->rep_state))
+			{
+				// 清除报警
+				worker->rep_state -= MANUAL_INTERRUPT;
+			}
+			
+			if (worker->statInfo.pub_fail_count >= 通信失败阈值)
+			{
+				// 报警：PUB端异常
+				worker->rep_state = worker->rep_state%100 + SRC_CONNECT_FAIL;
+			}
+			break;
+		}
+		case 2:
+		{
+			++worker->statInfo.sub_fail_count;
+			worker->statInfo.normal_count = 0;
+			
+			if (worker->statInfo.sub_fail_count >= 通信失败阈值)
+			{
+				// 报警：SUB端异常
+				worker->rep_state = worker->rep_state%100 + DST_CONNECT_FAIL;
+			}
+			
+			HASH_SEQ_STATUS status;
+			MoveShardCacheEntry *shardEntry = NULL;
+		
+			hash_seq_init(&status, worker->PostedShardsHash);
+		
+			shardEntry = (MoveShardCacheEntry *)hash_seq_search(&status);
+			while (shardEntry != NULL)
+			{
+				FDD_ShardStateMonitor(worker->rep_state, NULL, shardEntry);
+			}
+			
+			break;
+		}
+		case 3:
+		{
+			++worker->statInfo.normal_count;
+			
+			if (FDD_IsShardRepStop(worker->rep_state))
+			{
+				// 清除报警
+				worker->rep_state -= MANUAL_INTERRUPT;
+			}
+			
+			if (worker->statInfo.normal_count >= 异常恢复阈值)
+			{
+				// 清除报警
+				worker->rep_state = worker->rep_state%100;
+			}
+			break;
+		}
+		default:
+		{
+			break;
+		}		
+	}
+}
+
+void FDD_ShardStateMonitor(int rep_state, sub_status stat_data, MoveShardCacheEntry *shardRec)
+{
+	if (stat_data.slot_pid == shardRec->sub_pid && shardRec->sub_pid != 0)
+	{
+		if (shardRec->abnormal_check || FDD_IsShardRepErr(shardRec->shard_state))
+		{
+			++shardRec->normal_count;
+		}
+		
+		if (shardRec->normal_count >= 冲突恢复阈值)
+		{
+			if (FDD_IsShardRepErr(shardRec->shard_state))
+			{
+				// 报警：故障恢复
+				shardRec->shard_state /= 100;
+			}
+			
+			// 清除异常计数
+			shardRec->disconnect_count = 0;
+			shardRec->normal_count = 0;
+			shardRec->abnormal_count = 0;
+			shardRec->abnormal_check = false;
+		}
+	}	
+	else if (stat_data.slot_pid == shardRec->sub_pid && shardRec->sub_pid == 0)
+	{
+		if (FDD_IsShardRepErr(shardRec->shard_state))
+		{
+			break;
+		}
+		
+		if (FDD_IsShardRepStop(shardRec->shard_state))
+		{
+			break;
+		}
+					
+		if (shardRec->abnormal_check)
+		{
+			// 根据 shardRec->nodeip & shardRec->nodeport 尝试连接到发布端 connected
+			if (!pubConnNormal)
+			{
+				++shardRec->disconnect_count;
+			}
+			else
+			{
+				++shardRec->abnormal_count;
+			}
+			
+			if (shardRec->disconnect_count >= 通信失败阈值)
+			{
+				// 报警：与发布者通信异常
+				shardRec->shard_state = shardRec->shard_state%100+SRC_CONNECT_FAIL;
+				shardRec->abnormal_check = false;
+			}
+			
+			if (shardRec->abnormal_count >= 冲突阈值)
+			{
+				// 报警：逻辑复制冲突
+				shardRec->shard_state = shardRec->shard_state%100+CONFLICT;
+				shardRec->abnormal_check = false;
+			}
+		}
+	}		
+	else if (shardRec->sub_pid == 0 && stat_data.slot_pid != 0)
+	{
+		{
+			shardRec->sub_pid = stat_data.slot_pid;
+		}
+		
+		if (FDD_IsShardRepErr(shardRec->shard_state))
+		{
+			break;
+		}
+		
+		if (FDD_IsShardRepStop(shardRec->shard_state))
+		{
+			shardRec->shard_state -= MANUAL_INTERRUPT;
+		}
+		
+		++shardRec->start_count;
+		
+		if (shardRec->start_count - 1 >= 冲突阈值)
+		{
+			// 报警：逻辑复制冲突
+			shardRec->shard_state = shardRec->shard_state%100+CONFLICT;
+			shardRec->abnormal_check = false;
+			break;
+		}
+	}
+	else if (shardRec->sub_pid != 0 && stat_data.slot_pid == 0)
+	{
+		{
+			shardRec->sub_pid = stat_data.slot_pid;
+			shardRec->normal_count = 0;
+		}
+					
+		if (stat_data->relid == NULL)
+		{
+			if (!stat_data.sub_enabled)
+			{
+				if (!FDD_IsShardRepErr(shardRec->shard_state))
+				{
+					// 清除异常计数
+					shardRec->disconnect_count = 0;
+					shardRec->normal_count = 0;
+					shardRec->abnormal_count = 0;
+					shardRec->abnormal_check = false;
+				}
+				
+				// 报警：订阅者被 DISABLE
+				shardRec->shard_state = shardRec->shard_state%100+MANUAL_INTERRUPT;
+			}
+			else
+			{
+				// 根据 shardRec->nodeip & shardRec->nodeport 尝试连接到发布端 connected
+				if (!pubConnNormal)
+				{
+					++shardRec->disconnect_count;
+				}
+				else
+				{
+					++shardRec->abnormal_count;
+				}
+				
+				if (shardRec->disconnect_count >= 通信失败阈值)
+				{
+					// 报警：与发布者通信异常
+					shardRec->shard_state = shardRec->shard_state%100+SRC_CONNECT_FAIL;
+					shardRec->abnormal_check = false;
+					break;
+				}
+				
+				if (shardRec->abnormal_count >= 冲突阈值)
+				{
+					// 报警：逻辑复制冲突
+					shardRec->shard_state = shardRec->shard_state%100+CONFLICT;
+					shardRec->abnormal_check = false;
+					break;
+				}
+				shardRec->abnormal_check = true;
+			}
+		}
+		else
+		{
+			if (stat_data.subrel_satus == 's' || stat_data.subrel_satus == 'r')
+			{
+				shardRec->shard_state = (stat_data.subrel_satus == 's') ? SHARD_REP_SYNCDONE : SHARD_REP_READY;
+				
+				// 清除异常计数
+				shardRec->disconnect_count = 0;
+				shardRec->normal_count = 0;
+				shardRec->abnormal_count = 0;
+				shardRec->abnormal_check = false;	
+			}
+			else
+			{
+				// 更新	shardRec->relstate
+				
+				if (!stat_data.sub_enabled)
+				{
+					if (!FDD_IsShardRepErr(shardRec->shard_state))
+					{
+						// 清除异常计数
+						shardRec->disconnect_count = 0;
+						shardRec->normal_count = 0;
+						shardRec->abnormal_count = 0;
+						shardRec->abnormal_check = false;
+					}
+					
+					// 报警：订阅者被 DISABLE
+					shardRec->shard_state = shardRec->shard_state%100+MANUAL_INTERRUPT;
+					break;
+				}
+				
+				// 根据 shardRec->nodeip & shardRec->nodeport 尝试连接到发布端 connected
+				if (!pubConnNormal)
+				{
+					++shardRec->disconnect_count;
+				}
+				else
+				{
+					++shardRec->abnormal_count;
+				}
+				
+				if (shardRec->disconnect_count >= 通信失败阈值)
+				{
+					// 报警：与发布者通信异常
+					shardRec->shard_state = shardRec->shard_state%100+SRC_CONNECT_FAIL;
+					shardRec->abnormal_check = false;
+					break;
+				}
+				
+				if (shardRec->abnormal_count >= 冲突阈值)
+				{
+					// 报警：逻辑复制冲突
+					shardRec->shard_state = shardRec->shard_state%100+CONFLICT;
+					shardRec->abnormal_check = false;
+					break;
+				}
+				shardRec->abnormal_check = true;
+			}
+		}
+	}
+	else if (stat_data->slot_pid != shardRec->sub_pid && stat_data->slot_pid != 0 && shardRec->sub_pid != 0)
+	{
+		{
+			shardRec->sub_pid = stat_data->slot_pid;
+			shardRec->normal_count = 0;
+		}
+		
+		if (FDD_IsShardRepErr(shardRec->shard_state))
+		{
+			break;
+		}
+		
+		if (FDD_IsShardRepStop(shardRec->shard_state))
+		{
+			shardRec->shard_state = shardRec->shard_state%100+MANUAL_INTERRUPT;
+		}
+		
+		++shardRec->start_count;
+		
+		if (shardRec->start_count - 1 >= 冲突阈值)
+		{
+			// 报警：逻辑复制冲突
+			shardRec->shard_state = shardRec->shard_state%100+CONFLICT;
+			break;
+		}
+	}
+}
+
+
+
+bool FDD_IsConnectErr(int shard_state)
+{
+	if (shard_state/100 == DST_CONNECT_FAIL/100 || shard_state/100 == SRC_CONNECT_FAIL/100 || shard_state/100 == CN_CONNECT_FAIL/100)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool FDD_IsShardRepErr(int shard_state)
+{
+	if (shard_state/100 == CONFLICT/100)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool FDD_IsShardRepStop(int shard_state)
+{
+	if (shard_state/100 == MANUAL_INTERRUPT/100)
+	{
+		return true;
+	}
+	return false;
+}

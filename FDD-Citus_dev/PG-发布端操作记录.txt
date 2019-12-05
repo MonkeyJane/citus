@@ -1,0 +1,559 @@
+[cituscluster@gtm2 ~]$ psql -d postgres
+psql (10.1)
+Type "help" for help.
+
+postgres=# \dt
+          List of relations
+ Schema | Name | Type  |    Owner     
+--------+------+-------+--------------
+ public | tbl1 | table | cituscluster
+ public | tbl2 | table | cituscluster
+ public | tbl3 | table | cituscluster
+ public | tbl4 | table | cituscluster
+(4 rows)
+
+postgres=# select * from pg_publication;
+ pubname | pubowner | puballtables | pubinsert | pubupdate | pubdelete 
+---------+----------+--------------+-----------+-----------+-----------
+(0 rows)
+
+postgres=# select pg_size_pretty(pg_relation_size('tbl1'));
+ pg_size_pretty 
+----------------
+ 600 MB
+(1 row)
+
+postgres=# select pg_size_pretty(pg_relation_size('tbl2'));
+ pg_size_pretty 
+----------------
+ 200 MB
+(1 row)
+
+postgres=# CREATE PUBLICATION pub_tbl2 FOR TABLE tbl2;
+CREATE PUBLICATION
+postgres=# select * from pg_publication;
+ pubname  | pubowner | puballtables | pubinsert | pubupdate | pubdelete 
+----------+----------+--------------+-----------+-----------+-----------
+ pub_tbl2 |       10 | f            | t         | t         | t
+(1 row)
+
+postgres=# select * from pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   43887 |   35663
+(1 row)
+
+postgres=# select * from pg_stat_replication;
+ pid | usesysid | usename | application_name | client_addr | client_hostname | client_port | backend_start | backend_xmin | state | sent_lsn | write_lsn | flush_lsn | replay_lsn | write_lag |
+ flush_lag | replay_lag | sync_priority | sync_state 
+-----+----------+---------+------------------+-------------+-----------------+-------------+---------------+--------------+-------+----------+-----------+-----------+------------+-----------+
+-----------+------------+---------------+------------
+(0 rows)
+
+postgres=# select * from pg_stat_replication_slot;
+ERROR:  relation "pg_stat_replication_slot" does not exist
+LINE 1: select * from pg_stat_replication_slot;
+                      ^
+postgres=# select * from pg_replication_slot;
+ERROR:  relation "pg_replication_slot" does not exist
+LINE 1: select * from pg_replication_slot;
+                      ^
+postgres=# select * from pg_replication_slots;
+ slot_name | plugin | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+--------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+(0 rows)
+
+postgres=# select * from pg_replication_origin;
+ roident | roname 
+---------+--------
+(0 rows)
+
+postgres=# select * from pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn 
+----------+-------------+------------+-----------
+(0 rows)
+
+postgres=# select * from pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn 
+----------+-------------+------------+-----------
+(0 rows)
+
+postgres=# select * from pg_replication_origin;
+ roident | roname 
+---------+--------
+(0 rows)
+
+postgres=# select * from pg_replication_slots;
+         slot_name         |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+---------------------------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub_tbl2_43772_sync_43764 | pgoutput | logical   |  13212 | postgres | t         | t      |      51977 |      |          925 | 5/9DBC86B0  | 5/9DBC86E8
+ sub_tbl2                  | pgoutput | logical   |  13212 | postgres | f         | t      |      51976 |      |          925 | 5/9DBC9A18  | 5/9DBC9A50
+(2 rows)
+
+postgres=# select * from pg_stat_replication;
+  pid  | usesysid |   usename    |     application_name      |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |   state   |  sent_lsn  | write_
+lsn  | flush_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+---------------------------+-----------------+-----------------+-------------+-------------------------------+--------------+-----------+------------+-------
+-----+------------+------------+-----------+-----------+------------+---------------+------------
+ 51977 |       10 | cituscluster | sub_tbl2_43772_sync_43764 | 192.168.221.132 |                 |       59000 | 2019-06-24 01:12:59.827429-07 |          925 | startup   |            |       
+     |            |            |           |           |            |             0 | async
+ 51976 |       10 | cituscluster | sub_tbl2                  | 192.168.221.132 |                 |       58998 | 2019-06-24 01:12:59.803527-07 |              | streaming | 5/9DBC9A50 | 5/9DBC
+9A50 | 5/9DBC9A50 | 5/9DBC9A50 |           |           |            |             0 | async
+(2 rows)
+
+postgres=# select * from pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   43887 |   35663
+(1 row)
+
+postgres=# select * from pg_publication;
+ pubname  | pubowner | puballtables | pubinsert | pubupdate | pubdelete 
+----------+----------+--------------+-----------+-----------+-----------
+ pub_tbl2 |       10 | f            | t         | t         | t
+(1 row)
+
+postgres=# select * from pg_replication_origin_status;
+ local_id | external_id | remote_lsn | local_lsn 
+----------+-------------+------------+-----------
+(0 rows)
+
+postgres=# select * from pg_replication_origin;
+ roident | roname 
+---------+--------
+(0 rows)
+
+postgres=# select * from pg_publication;
+ pubname  | pubowner | puballtables | pubinsert | pubupdate | pubdelete 
+----------+----------+--------------+-----------+-----------+-----------
+ pub_tbl2 |       10 | f            | t         | t         | t
+(1 row)
+
+postgres=# select * from pg_publication_rel;
+ prpubid | prrelid 
+---------+---------
+   43887 |   35663
+(1 row)
+
+postgres=# select * from pg_stat_replication;
+  pid  | usesysid |   usename    | application_name |   client_addr   | client_hostname | client_port |         backend_start         | backend_xmin |  state  |  sent_lsn  | write_lsn  | flus
+h_lsn  | replay_lsn | write_lag | flush_lag | replay_lag | sync_priority | sync_state 
+-------+----------+--------------+------------------+-----------------+-----------------+-------------+-------------------------------+--------------+---------+------------+------------+-----
+-------+------------+-----------+-----------+------------+---------------+------------
+ 52008 |       10 | cituscluster | sub_tbl2         | 192.168.221.132 |                 |       59002 | 2019-06-24 01:16:49.562263-07 |              | catchup | 5/9DBC9B30 | 5/9DBC9B30 | 5/9D
+BC9B30 | 5/9DBC9B30 |           |           |            |             0 | async
+(1 row)
+
+postgres=# select * from pg_replication_slots;
+ slot_name |  plugin  | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn 
+-----------+----------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------
+ sub_tbl2  | pgoutput | logical   |  13212 | postgres | f         | t      |      52008 |      |          925 | 5/9DBC9AF8  | 5/9DBC9B30
+(1 row)
+
+postgres=# 
+
+
+
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  39721      1  0 Jun23 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  39723  39721  0 Jun23 ?        00:00:05 postgres: checkpointer process  
+cituscl+  39724  39721  0 Jun23 ?        00:00:06 postgres: writer process   
+cituscl+  39725  39721  0 Jun23 ?        00:00:11 postgres: wal writer process  
+cituscl+  39726  39721  0 Jun23 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  39727  39721  0 Jun23 ?        00:00:02 postgres: stats collector process  
+cituscl+  39728  39721  0 Jun23 ?        00:00:28 postgres: bgworker: task tracker  
+cituscl+  39729  39721  0 Jun23 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  51500  51294  0 00:31 pts/0    00:00:00 psql -d postgres
+cituscl+  51501  39721  0 00:31 ?        00:00:01 postgres: cituscluster postgres [local] idle
+cituscl+  52086  39721  0 01:23 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(59004) idle
+cituscl+  52090  51455  0 01:23 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ pstack 52086
+#0  0x00007f8003a99163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x2af3c18, cur_timeout=29999, occurred_events=0x7ffd28222cc0, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x2af3c18, timeout=29999, occurred_events=0x7ffd28222cc0, nevents=1, wait_event_info=100663302) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f7ffbadc104, wakeEvents=27, sock=9, timeout=29999, wait_event_info=100663302) at latch.c:385
+#4  0x00000000007b9d7d in WalSndWaitForWal (loc=24121219912) at walsender.c:1399
+#5  0x00000000007b8e06 in logical_read_xlog_page (state=0x2a72ae0, targetPagePtr=24121212928, reqLen=6984, targetRecPtr=24121219888, cur_page=0x2adbb88 "\227\320\005", pageTLI=0x2a7338c) at walsender.c:761
+#6  0x0000000000525d94 in ReadPageInternal (state=0x2a72ae0, pageptr=24121212928, reqLen=6984) at xlogreader.c:556
+#7  0x0000000000525627 in XLogReadRecord (state=0x2a72ae0, RecPtr=24121219888, errormsg=0x7ffd28222e78) at xlogreader.c:255
+#8  0x00000000007bb898 in XLogSendLogical () at walsender.c:2752
+#9  0x00000000007bac5d in WalSndLoop (send_data=0x7bb867 <XLogSendLogical>) at walsender.c:2134
+#10 0x00000000007b9873 in StartLogicalReplication (cmd=0x29e8f78) at walsender.c:1101
+#11 0x00000000007ba0b5 in exec_replication_command (cmd_string=0x2a777a8 "START_REPLICATION SLOT \"sub_tbl2\" LOGICAL 0/0 (proto_version '1', publication_names '\"pub_tbl2\"')") at walsender.c:1527
+#12 0x0000000000817b01 in PostgresMain (argc=1, argv=0x2a13420, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4084
+#13 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#14 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#15 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#16 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#17 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ 
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  39721      1  0 Jun23 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  39723  39721  0 Jun23 ?        00:00:05 postgres: checkpointer process  
+cituscl+  39724  39721  0 Jun23 ?        00:00:06 postgres: writer process   
+cituscl+  39725  39721  0 Jun23 ?        00:00:12 postgres: wal writer process  
+cituscl+  39726  39721  0 Jun23 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  39727  39721  0 Jun23 ?        00:00:02 postgres: stats collector process  
+cituscl+  39728  39721  0 Jun23 ?        00:00:29 postgres: bgworker: task tracker  
+cituscl+  39729  39721  0 Jun23 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  51500  51294  0 00:34 pts/0    00:00:00 psql -d postgres
+cituscl+  51501  39721  0 00:34 ?        00:00:01 postgres: cituscluster postgres [local] idle
+cituscl+  52774  39721  0 02:23 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(59092) idle
+cituscl+  52775  39721 36 02:23 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(59094) COPY
+cituscl+  52777  51455  0 02:23 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ PSTACK 52774
+bash: PSTACK: command not found...
+Similar command is: 'pstack'
+[cituscluster@gtm2 ~]$ pstack 52774
+#0  0x00007f8003a99163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x2af3c18, cur_timeout=29999, occurred_events=0x7ffd28222cc0, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x2af3c18, timeout=29999, occurred_events=0x7ffd28222cc0, nevents=1, wait_event_info=100663302) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f7ffbadc104, wakeEvents=27, sock=9, timeout=29999, wait_event_info=100663302) at latch.c:385
+#4  0x00000000007b9d7d in WalSndWaitForWal (loc=24121221952) at walsender.c:1399
+#5  0x00000000007b8e06 in logical_read_xlog_page (state=0x2a72ae0, targetPagePtr=24121221120, reqLen=832, targetRecPtr=24121221928, cur_page=0x2adbb88 "\227\320\004", pageTLI=0x2a7338c) at walsender.c:761
+#6  0x0000000000525d94 in ReadPageInternal (state=0x2a72ae0, pageptr=24121221120, reqLen=832) at xlogreader.c:556
+#7  0x0000000000525627 in XLogReadRecord (state=0x2a72ae0, RecPtr=24121221928, errormsg=0x7ffd28222e78) at xlogreader.c:255
+#8  0x00000000007bb898 in XLogSendLogical () at walsender.c:2752
+#9  0x00000000007bac5d in WalSndLoop (send_data=0x7bb867 <XLogSendLogical>) at walsender.c:2134
+#10 0x00000000007b9873 in StartLogicalReplication (cmd=0x29e8f78) at walsender.c:1101
+#11 0x00000000007ba0b5 in exec_replication_command (cmd_string=0x2a777a8 "START_REPLICATION SLOT \"sub_tbl2\" LOGICAL 0/0 (proto_version '1', publication_names '\"pub_tbl2\"')") at walsender.c:1527
+#12 0x0000000000817b01 in PostgresMain (argc=1, argv=0x2a13420, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4084
+#13 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#14 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#15 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#16 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#17 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ pstack 52775
+#0  0x00007f8003a99163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x29ca7d8, cur_timeout=-1, occurred_events=0x7ffd28222470, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x29ca7d8, timeout=-1, occurred_events=0x7ffd28222470, nevents=1, wait_event_info=100663297) at latch.c:1000
+#3  0x00000000006bec4e in secure_write (port=0x2a0da90, ptr=0x2a130d0, len=488) at be-secure.c:268
+#4  0x00000000006cb66e in internal_flush () at pqcomm.c:1433
+#5  0x00000000006cb53c in internal_putbytes (s=0x7ffd2822255c "", len=4) at pqcomm.c:1379
+#6  0x00000000006cb88a in socket_putmessage (msgtype=100 'd', s=0x2af08a8 "1365532\t24680\n", len=14) at pqcomm.c:1573
+#7  0x00000000005e3266 in CopySendEndOfRow (cstate=0x2af0498) at copy.c:534
+#8  0x00000000005e7499 in CopyOneRowTo (cstate=0x2af0498, tupleOid=0, values=0x2af0440, nulls=0x2af0cb8 "") at copy.c:2162
+#9  0x00000000005e70e0 in CopyTo (cstate=0x2af0498) at copy.c:2047
+#10 0x00000000005e6c41 in DoCopyTo (cstate=0x2af0498) at copy.c:1884
+#11 0x00000000005e4046 in DoCopy (pstate=0x2b051d8, stmt=0x2a786b0, stmt_location=0, stmt_len=0, processed=0x7ffd28222928) at copy.c:985
+#12 0x000000000081b153 in standard_ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at utility.c:560
+#13 0x00007f7ffd1a9c7d in multi_ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at commands/utility_hook.c:136
+#14 0x000000000081ac94 in ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at utility.c:353
+#15 0x0000000000819ed1 in PortalRunUtility (portal=0x2a72c78, pstmt=0x2a789f0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:1178
+#16 0x000000000081a0b2 in PortalRunMulti (portal=0x2a72c78, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x2a78ad0, altdest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:1324
+#17 0x000000000081968a in PortalRun (portal=0x2a72c78, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x2a78ad0, altdest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:799
+#18 0x0000000000813b59 in exec_simple_query (query_string=0x2a77bb8 "COPY public.tbl2 TO STDOUT") at postgres.c:1099
+#19 0x0000000000817b11 in PostgresMain (argc=1, argv=0x2a13430, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4085
+#20 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#21 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#22 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#23 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#24 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ pstack 52774
+#0  0x00007f8003a99163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x2af3c18, cur_timeout=26861, occurred_events=0x7ffd28222cc0, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x2af3c18, timeout=29999, occurred_events=0x7ffd28222cc0, nevents=1, wait_event_info=100663302) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f7ffbadc104, wakeEvents=27, sock=9, timeout=29999, wait_event_info=100663302) at latch.c:385
+#4  0x00000000007b9d7d in WalSndWaitForWal (loc=24121221952) at walsender.c:1399
+#5  0x00000000007b8e06 in logical_read_xlog_page (state=0x2a72ae0, targetPagePtr=24121221120, reqLen=832, targetRecPtr=24121221928, cur_page=0x2adbb88 "\227\320\004", pageTLI=0x2a7338c) at walsender.c:761
+#6  0x0000000000525d94 in ReadPageInternal (state=0x2a72ae0, pageptr=24121221120, reqLen=832) at xlogreader.c:556
+#7  0x0000000000525627 in XLogReadRecord (state=0x2a72ae0, RecPtr=24121221928, errormsg=0x7ffd28222e78) at xlogreader.c:255
+#8  0x00000000007bb898 in XLogSendLogical () at walsender.c:2752
+#9  0x00000000007bac5d in WalSndLoop (send_data=0x7bb867 <XLogSendLogical>) at walsender.c:2134
+#10 0x00000000007b9873 in StartLogicalReplication (cmd=0x29e8f78) at walsender.c:1101
+#11 0x00000000007ba0b5 in exec_replication_command (cmd_string=0x2a777a8 "START_REPLICATION SLOT \"sub_tbl2\" LOGICAL 0/0 (proto_version '1', publication_names '\"pub_tbl2\"')") at walsender.c:1527
+#12 0x0000000000817b01 in PostgresMain (argc=1, argv=0x2a13420, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4084
+#13 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#14 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#15 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#16 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#17 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ pstack 52775
+#0  0x00007f8003a99163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x29ca7d8, cur_timeout=-1, occurred_events=0x7ffd28222470, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x29ca7d8, timeout=-1, occurred_events=0x7ffd28222470, nevents=1, wait_event_info=100663297) at latch.c:1000
+#3  0x00000000006bec4e in secure_write (port=0x2a0da90, ptr=0x2a125d0, len=3304) at be-secure.c:268
+#4  0x00000000006cb66e in internal_flush () at pqcomm.c:1433
+#5  0x00000000006cb53c in internal_putbytes (s=0x7ffd2822255c "", len=4) at pqcomm.c:1379
+#6  0x00000000006cb88a in socket_putmessage (msgtype=100 'd', s=0x2af08a8 "1914396\t24680\n", len=14) at pqcomm.c:1573
+#7  0x00000000005e3266 in CopySendEndOfRow (cstate=0x2af0498) at copy.c:534
+#8  0x00000000005e7499 in CopyOneRowTo (cstate=0x2af0498, tupleOid=0, values=0x2af0440, nulls=0x2af0cb8 "") at copy.c:2162
+#9  0x00000000005e70e0 in CopyTo (cstate=0x2af0498) at copy.c:2047
+#10 0x00000000005e6c41 in DoCopyTo (cstate=0x2af0498) at copy.c:1884
+#11 0x00000000005e4046 in DoCopy (pstate=0x2b051d8, stmt=0x2a786b0, stmt_location=0, stmt_len=0, processed=0x7ffd28222928) at copy.c:985
+#12 0x000000000081b153 in standard_ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at utility.c:560
+#13 0x00007f7ffd1a9c7d in multi_ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at commands/utility_hook.c:136
+#14 0x000000000081ac94 in ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at utility.c:353
+#15 0x0000000000819ed1 in PortalRunUtility (portal=0x2a72c78, pstmt=0x2a789f0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:1178
+#16 0x000000000081a0b2 in PortalRunMulti (portal=0x2a72c78, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x2a78ad0, altdest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:1324
+#17 0x000000000081968a in PortalRun (portal=0x2a72c78, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x2a78ad0, altdest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:799
+#18 0x0000000000813b59 in exec_simple_query (query_string=0x2a77bb8 "COPY public.tbl2 TO STDOUT") at postgres.c:1099
+#19 0x0000000000817b11 in PostgresMain (argc=1, argv=0x2a13430, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4085
+#20 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#21 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#22 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#23 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#24 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ pstack 52775
+#0  0x00007f8003a99163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x29ca7d8, cur_timeout=-1, occurred_events=0x7ffd28222470, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x29ca7d8, timeout=-1, occurred_events=0x7ffd28222470, nevents=1, wait_event_info=100663297) at latch.c:1000
+#3  0x00000000006bec4e in secure_write (port=0x2a0da90, ptr=0x2a12d60, len=1368) at be-secure.c:268
+#4  0x00000000006cb66e in internal_flush () at pqcomm.c:1433
+#5  0x00000000006cb53c in internal_putbytes (s=0x7ffd2822254c "d", len=1) at pqcomm.c:1379
+#6  0x00000000006cb854 in socket_putmessage (msgtype=100 'd', s=0x2af08a8 "2195511\t24680\n", len=14) at pqcomm.c:1566
+#7  0x00000000005e3266 in CopySendEndOfRow (cstate=0x2af0498) at copy.c:534
+#8  0x00000000005e7499 in CopyOneRowTo (cstate=0x2af0498, tupleOid=0, values=0x2af0440, nulls=0x2af0cb8 "") at copy.c:2162
+#9  0x00000000005e70e0 in CopyTo (cstate=0x2af0498) at copy.c:2047
+#10 0x00000000005e6c41 in DoCopyTo (cstate=0x2af0498) at copy.c:1884
+#11 0x00000000005e4046 in DoCopy (pstate=0x2b051d8, stmt=0x2a786b0, stmt_location=0, stmt_len=0, processed=0x7ffd28222928) at copy.c:985
+#12 0x000000000081b153 in standard_ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at utility.c:560
+#13 0x00007f7ffd1a9c7d in multi_ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at commands/utility_hook.c:136
+#14 0x000000000081ac94 in ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at utility.c:353
+#15 0x0000000000819ed1 in PortalRunUtility (portal=0x2a72c78, pstmt=0x2a789f0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:1178
+#16 0x000000000081a0b2 in PortalRunMulti (portal=0x2a72c78, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x2a78ad0, altdest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:1324
+#17 0x000000000081968a in PortalRun (portal=0x2a72c78, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x2a78ad0, altdest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:799
+#18 0x0000000000813b59 in exec_simple_query (query_string=0x2a77bb8 "COPY public.tbl2 TO STDOUT") at postgres.c:1099
+#19 0x0000000000817b11 in PostgresMain (argc=1, argv=0x2a13430, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4085
+#20 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#21 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#22 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#23 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#24 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ pstack 52774
+#0  0x00007f8003a99163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x2af3c18, cur_timeout=29999, occurred_events=0x7ffd28222cc0, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x2af3c18, timeout=29999, occurred_events=0x7ffd28222cc0, nevents=1, wait_event_info=100663302) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f7ffbadc104, wakeEvents=27, sock=9, timeout=29999, wait_event_info=100663302) at latch.c:385
+#4  0x00000000007b9d7d in WalSndWaitForWal (loc=24121221952) at walsender.c:1399
+#5  0x00000000007b8e06 in logical_read_xlog_page (state=0x2a72ae0, targetPagePtr=24121221120, reqLen=832, targetRecPtr=24121221928, cur_page=0x2adbb88 "\227\320\004", pageTLI=0x2a7338c) at walsender.c:761
+#6  0x0000000000525d94 in ReadPageInternal (state=0x2a72ae0, pageptr=24121221120, reqLen=832) at xlogreader.c:556
+#7  0x0000000000525627 in XLogReadRecord (state=0x2a72ae0, RecPtr=24121221928, errormsg=0x7ffd28222e78) at xlogreader.c:255
+#8  0x00000000007bb898 in XLogSendLogical () at walsender.c:2752
+#9  0x00000000007bac5d in WalSndLoop (send_data=0x7bb867 <XLogSendLogical>) at walsender.c:2134
+#10 0x00000000007b9873 in StartLogicalReplication (cmd=0x29e8f78) at walsender.c:1101
+#11 0x00000000007ba0b5 in exec_replication_command (cmd_string=0x2a777a8 "START_REPLICATION SLOT \"sub_tbl2\" LOGICAL 0/0 (proto_version '1', publication_names '\"pub_tbl2\"')") at walsender.c:1527
+#12 0x0000000000817b01 in PostgresMain (argc=1, argv=0x2a13420, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4084
+#13 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#14 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#15 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#16 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#17 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ pstack 52775
+#0  0x00007f8003a99163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x29ca7d8, cur_timeout=-1, occurred_events=0x7ffd28222470, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x29ca7d8, timeout=-1, occurred_events=0x7ffd28222470, nevents=1, wait_event_info=100663297) at latch.c:1000
+#3  0x00000000006bec4e in secure_write (port=0x2a0da90, ptr=0x2a11940, len=6520) at be-secure.c:268
+#4  0x00000000006cb66e in internal_flush () at pqcomm.c:1433
+#5  0x00000000006cb53c in internal_putbytes (s=0x7ffd2822255f "\022\240%\"(\375\177", len=1) at pqcomm.c:1379
+#6  0x00000000006cb88a in socket_putmessage (msgtype=100 'd', s=0x2af08a8 "2840523\t24680\n", len=14) at pqcomm.c:1573
+#7  0x00000000005e3266 in CopySendEndOfRow (cstate=0x2af0498) at copy.c:534
+#8  0x00000000005e7499 in CopyOneRowTo (cstate=0x2af0498, tupleOid=0, values=0x2af0440, nulls=0x2af0cb8 "") at copy.c:2162
+#9  0x00000000005e70e0 in CopyTo (cstate=0x2af0498) at copy.c:2047
+#10 0x00000000005e6c41 in DoCopyTo (cstate=0x2af0498) at copy.c:1884
+#11 0x00000000005e4046 in DoCopy (pstate=0x2b051d8, stmt=0x2a786b0, stmt_location=0, stmt_len=0, processed=0x7ffd28222928) at copy.c:985
+#12 0x000000000081b153 in standard_ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at utility.c:560
+#13 0x00007f7ffd1a9c7d in multi_ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at commands/utility_hook.c:136
+#14 0x000000000081ac94 in ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at utility.c:353
+#15 0x0000000000819ed1 in PortalRunUtility (portal=0x2a72c78, pstmt=0x2a789f0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:1178
+#16 0x000000000081a0b2 in PortalRunMulti (portal=0x2a72c78, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x2a78ad0, altdest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:1324
+#17 0x000000000081968a in PortalRun (portal=0x2a72c78, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x2a78ad0, altdest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:799
+#18 0x0000000000813b59 in exec_simple_query (query_string=0x2a77bb8 "COPY public.tbl2 TO STDOUT") at postgres.c:1099
+#19 0x0000000000817b11 in PostgresMain (argc=1, argv=0x2a13430, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4085
+#20 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#21 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#22 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#23 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#24 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ pstack 52774
+#0  0x00007f8003a99163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x2af3c18, cur_timeout=28862, occurred_events=0x7ffd28222cc0, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x2af3c18, timeout=29999, occurred_events=0x7ffd28222cc0, nevents=1, wait_event_info=100663302) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f7ffbadc104, wakeEvents=27, sock=9, timeout=29999, wait_event_info=100663302) at latch.c:385
+#4  0x00000000007b9d7d in WalSndWaitForWal (loc=24121221952) at walsender.c:1399
+#5  0x00000000007b8e06 in logical_read_xlog_page (state=0x2a72ae0, targetPagePtr=24121221120, reqLen=832, targetRecPtr=24121221928, cur_page=0x2adbb88 "\227\320\004", pageTLI=0x2a7338c) at walsender.c:761
+#6  0x0000000000525d94 in ReadPageInternal (state=0x2a72ae0, pageptr=24121221120, reqLen=832) at xlogreader.c:556
+#7  0x0000000000525627 in XLogReadRecord (state=0x2a72ae0, RecPtr=24121221928, errormsg=0x7ffd28222e78) at xlogreader.c:255
+#8  0x00000000007bb898 in XLogSendLogical () at walsender.c:2752
+#9  0x00000000007bac5d in WalSndLoop (send_data=0x7bb867 <XLogSendLogical>) at walsender.c:2134
+#10 0x00000000007b9873 in StartLogicalReplication (cmd=0x29e8f78) at walsender.c:1101
+#11 0x00000000007ba0b5 in exec_replication_command (cmd_string=0x2a777a8 "START_REPLICATION SLOT \"sub_tbl2\" LOGICAL 0/0 (proto_version '1', publication_names '\"pub_tbl2\"')") at walsender.c:1527
+#12 0x0000000000817b01 in PostgresMain (argc=1, argv=0x2a13420, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4084
+#13 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#14 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#15 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#16 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#17 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ pstack 52775
+#0  0x00007f8003a99163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x29ca7d8, cur_timeout=-1, occurred_events=0x7ffd28222470, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x29ca7d8, timeout=-1, occurred_events=0x7ffd28222470, nevents=1, wait_event_info=100663297) at latch.c:1000
+#3  0x00000000006bec4e in secure_write (port=0x2a0da90, ptr=0x2a11548, len=7536) at be-secure.c:268
+#4  0x00000000006cb66e in internal_flush () at pqcomm.c:1433
+#5  0x00000000006cb53c in internal_putbytes (s=0x2af08ad "93\t24680\n", len=9) at pqcomm.c:1379
+#6  0x00000000006cb8a1 in socket_putmessage (msgtype=100 'd', s=0x2af08a8 "3447593\t24680\n", len=14) at pqcomm.c:1576
+#7  0x00000000005e3266 in CopySendEndOfRow (cstate=0x2af0498) at copy.c:534
+#8  0x00000000005e7499 in CopyOneRowTo (cstate=0x2af0498, tupleOid=0, values=0x2af0440, nulls=0x2af0cb8 "") at copy.c:2162
+#9  0x00000000005e70e0 in CopyTo (cstate=0x2af0498) at copy.c:2047
+#10 0x00000000005e6c41 in DoCopyTo (cstate=0x2af0498) at copy.c:1884
+#11 0x00000000005e4046 in DoCopy (pstate=0x2b051d8, stmt=0x2a786b0, stmt_location=0, stmt_len=0, processed=0x7ffd28222928) at copy.c:985
+#12 0x000000000081b153 in standard_ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at utility.c:560
+#13 0x00007f7ffd1a9c7d in multi_ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at commands/utility_hook.c:136
+#14 0x000000000081ac94 in ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at utility.c:353
+#15 0x0000000000819ed1 in PortalRunUtility (portal=0x2a72c78, pstmt=0x2a789f0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:1178
+#16 0x000000000081a0b2 in PortalRunMulti (portal=0x2a72c78, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x2a78ad0, altdest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:1324
+#17 0x000000000081968a in PortalRun (portal=0x2a72c78, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x2a78ad0, altdest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:799
+#18 0x0000000000813b59 in exec_simple_query (query_string=0x2a77bb8 "COPY public.tbl2 TO STDOUT") at postgres.c:1099
+#19 0x0000000000817b11 in PostgresMain (argc=1, argv=0x2a13430, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4085
+#20 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#21 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#22 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#23 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#24 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ pstack 52774
+#0  0x00007f8003a99163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x2af3c18, cur_timeout=26107, occurred_events=0x7ffd28222cc0, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x2af3c18, timeout=29999, occurred_events=0x7ffd28222cc0, nevents=1, wait_event_info=100663302) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f7ffbadc104, wakeEvents=27, sock=9, timeout=29999, wait_event_info=100663302) at latch.c:385
+#4  0x00000000007b9d7d in WalSndWaitForWal (loc=24121221952) at walsender.c:1399
+#5  0x00000000007b8e06 in logical_read_xlog_page (state=0x2a72ae0, targetPagePtr=24121221120, reqLen=832, targetRecPtr=24121221928, cur_page=0x2adbb88 "\227\320\004", pageTLI=0x2a7338c) at walsender.c:761
+#6  0x0000000000525d94 in ReadPageInternal (state=0x2a72ae0, pageptr=24121221120, reqLen=832) at xlogreader.c:556
+#7  0x0000000000525627 in XLogReadRecord (state=0x2a72ae0, RecPtr=24121221928, errormsg=0x7ffd28222e78) at xlogreader.c:255
+#8  0x00000000007bb898 in XLogSendLogical () at walsender.c:2752
+#9  0x00000000007bac5d in WalSndLoop (send_data=0x7bb867 <XLogSendLogical>) at walsender.c:2134
+#10 0x00000000007b9873 in StartLogicalReplication (cmd=0x29e8f78) at walsender.c:1101
+#11 0x00000000007ba0b5 in exec_replication_command (cmd_string=0x2a777a8 "START_REPLICATION SLOT \"sub_tbl2\" LOGICAL 0/0 (proto_version '1', publication_names '\"pub_tbl2\"')") at walsender.c:1527
+#12 0x0000000000817b01 in PostgresMain (argc=1, argv=0x2a13420, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4084
+#13 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#14 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#15 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#16 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#17 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ pstack 52775
+#0  enlargeStringInfo (str=0x2af0060, needed=5) at stringinfo.c:255
+#1  0x00000000006bcae9 in appendBinaryStringInfo (str=0x2af0060, data=0x2af3cc8 "24680", datalen=5) at stringinfo.c:213
+#2  0x00000000005e2f6b in CopySendData (cstate=0x2af0498, databuf=0x2af3cc8, datasize=5) at copy.c:449
+#3  0x00000000005ebb74 in CopyAttributeOutText (cstate=0x2af0498, string=0x2af3cc8 "24680") at copy.c:4629
+#4  0x00000000005e7402 in CopyOneRowTo (cstate=0x2af0498, tupleOid=0, values=0x2af0440, nulls=0x2af0cb8 "") at copy.c:2147
+#5  0x00000000005e70e0 in CopyTo (cstate=0x2af0498) at copy.c:2047
+#6  0x00000000005e6c41 in DoCopyTo (cstate=0x2af0498) at copy.c:1884
+#7  0x00000000005e4046 in DoCopy (pstate=0x2b051d8, stmt=0x2a786b0, stmt_location=0, stmt_len=0, processed=0x7ffd28222928) at copy.c:985
+#8  0x000000000081b153 in standard_ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at utility.c:560
+#9  0x00007f7ffd1a9c7d in multi_ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at commands/utility_hook.c:136
+#10 0x000000000081ac94 in ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at utility.c:353
+#11 0x0000000000819ed1 in PortalRunUtility (portal=0x2a72c78, pstmt=0x2a789f0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:1178
+#12 0x000000000081a0b2 in PortalRunMulti (portal=0x2a72c78, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x2a78ad0, altdest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:1324
+#13 0x000000000081968a in PortalRun (portal=0x2a72c78, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x2a78ad0, altdest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:799
+#14 0x0000000000813b59 in exec_simple_query (query_string=0x2a77bb8 "COPY public.tbl2 TO STDOUT") at postgres.c:1099
+#15 0x0000000000817b11 in PostgresMain (argc=1, argv=0x2a13430, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4085
+#16 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#17 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#18 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#19 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#20 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ pstack 52774
+#0  0x00007f8003a99163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x2af3c18, cur_timeout=29999, occurred_events=0x7ffd28222cc0, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x2af3c18, timeout=29999, occurred_events=0x7ffd28222cc0, nevents=1, wait_event_info=100663302) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f7ffbadc104, wakeEvents=27, sock=9, timeout=29999, wait_event_info=100663302) at latch.c:385
+#4  0x00000000007b9d7d in WalSndWaitForWal (loc=24121221952) at walsender.c:1399
+#5  0x00000000007b8e06 in logical_read_xlog_page (state=0x2a72ae0, targetPagePtr=24121221120, reqLen=832, targetRecPtr=24121221928, cur_page=0x2adbb88 "\227\320\004", pageTLI=0x2a7338c) at walsender.c:761
+#6  0x0000000000525d94 in ReadPageInternal (state=0x2a72ae0, pageptr=24121221120, reqLen=832) at xlogreader.c:556
+#7  0x0000000000525627 in XLogReadRecord (state=0x2a72ae0, RecPtr=24121221928, errormsg=0x7ffd28222e78) at xlogreader.c:255
+#8  0x00000000007bb898 in XLogSendLogical () at walsender.c:2752
+#9  0x00000000007bac5d in WalSndLoop (send_data=0x7bb867 <XLogSendLogical>) at walsender.c:2134
+#10 0x00000000007b9873 in StartLogicalReplication (cmd=0x29e8f78) at walsender.c:1101
+#11 0x00000000007ba0b5 in exec_replication_command (cmd_string=0x2a777a8 "START_REPLICATION SLOT \"sub_tbl2\" LOGICAL 0/0 (proto_version '1', publication_names '\"pub_tbl2\"')") at walsender.c:1527
+#12 0x0000000000817b01 in PostgresMain (argc=1, argv=0x2a13420, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4084
+#13 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#14 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#15 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#16 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#17 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ pstack 52774
+^[[A#0  0x00007f8003a99163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x2af3c18, cur_timeout=29528, occurred_events=0x7ffd28222cc0, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x2af3c18, timeout=29999, occurred_events=0x7ffd28222cc0, nevents=1, wait_event_info=100663302) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f7ffbadc104, wakeEvents=27, sock=9, timeout=29999, wait_event_info=100663302) at latch.c:385
+#4  0x00000000007b9d7d in WalSndWaitForWal (loc=24121221952) at walsender.c:1399
+#5  0x00000000007b8e06 in logical_read_xlog_page (state=0x2a72ae0, targetPagePtr=24121221120, reqLen=832, targetRecPtr=24121221928, cur_page=0x2adbb88 "\227\320\004", pageTLI=0x2a7338c) at walsender.c:761
+#6  0x0000000000525d94 in ReadPageInternal (state=0x2a72ae0, pageptr=24121221120, reqLen=832) at xlogreader.c:556
+#7  0x0000000000525627 in XLogReadRecord (state=0x2a72ae0, RecPtr=24121221928, errormsg=0x7ffd28222e78) at xlogreader.c:255
+#8  0x00000000007bb898 in XLogSendLogical () at walsender.c:2752
+#9  0x00000000007bac5d in WalSndLoop (send_data=0x7bb867 <XLogSendLogical>) at walsender.c:2134
+#10 0x00000000007b9873 in StartLogicalReplication (cmd=0x29e8f78) at walsender.c:1101
+#11 0x00000000007ba0b5 in exec_replication_command (cmd_string=0x2a777a8 "START_REPLICATION SLOT \"sub_tbl2\" LOGICAL 0/0 (proto_version '1', publication_names '\"pub_tbl2\"')") at walsender.c:1527
+#12 0x0000000000817b01 in PostgresMain (argc=1, argv=0x2a13420, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4084
+#13 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#14 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#15 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#16 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#17 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ pstack 52775
+#0  0x00007f8003a99163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x29ca7d8, cur_timeout=-1, occurred_events=0x7ffd28222470, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x29ca7d8, timeout=-1, occurred_events=0x7ffd28222470, nevents=1, wait_event_info=100663297) at latch.c:1000
+#3  0x00000000006bec4e in secure_write (port=0x2a0da90, ptr=0x2a11bb8, len=5888) at be-secure.c:268
+#4  0x00000000006cb66e in internal_flush () at pqcomm.c:1433
+#5  0x00000000006cb53c in internal_putbytes (s=0x2af08b4 "0\n", len=2) at pqcomm.c:1379
+#6  0x00000000006cb8a1 in socket_putmessage (msgtype=100 'd', s=0x2af08a8 "4510828\t24680\n", len=14) at pqcomm.c:1576
+#7  0x00000000005e3266 in CopySendEndOfRow (cstate=0x2af0498) at copy.c:534
+#8  0x00000000005e7499 in CopyOneRowTo (cstate=0x2af0498, tupleOid=0, values=0x2af0440, nulls=0x2af0cb8 "") at copy.c:2162
+#9  0x00000000005e70e0 in CopyTo (cstate=0x2af0498) at copy.c:2047
+#10 0x00000000005e6c41 in DoCopyTo (cstate=0x2af0498) at copy.c:1884
+#11 0x00000000005e4046 in DoCopy (pstate=0x2b051d8, stmt=0x2a786b0, stmt_location=0, stmt_len=0, processed=0x7ffd28222928) at copy.c:985
+#12 0x000000000081b153 in standard_ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at utility.c:560
+#13 0x00007f7ffd1a9c7d in multi_ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at commands/utility_hook.c:136
+#14 0x000000000081ac94 in ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl2 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at utility.c:353
+#15 0x0000000000819ed1 in PortalRunUtility (portal=0x2a72c78, pstmt=0x2a789f0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:1178
+#16 0x000000000081a0b2 in PortalRunMulti (portal=0x2a72c78, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x2a78ad0, altdest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:1324
+#17 0x000000000081968a in PortalRun (portal=0x2a72c78, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x2a78ad0, altdest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:799
+#18 0x0000000000813b59 in exec_simple_query (query_string=0x2a77bb8 "COPY public.tbl2 TO STDOUT") at postgres.c:1099
+#19 0x0000000000817b11 in PostgresMain (argc=1, argv=0x2a13430, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4085
+#20 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#21 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#22 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#23 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#24 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ pstack 52774
+#0  0x00007f8003a99163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x2af3c18, cur_timeout=29999, occurred_events=0x7ffd28222cc0, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x2af3c18, timeout=29999, occurred_events=0x7ffd28222cc0, nevents=1, wait_event_info=100663302) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f7ffbadc104, wakeEvents=27, sock=9, timeout=29999, wait_event_info=100663302) at latch.c:385
+#4  0x00000000007b9d7d in WalSndWaitForWal (loc=24121221952) at walsender.c:1399
+#5  0x00000000007b8e06 in logical_read_xlog_page (state=0x2a72ae0, targetPagePtr=24121221120, reqLen=832, targetRecPtr=24121221928, cur_page=0x2adbb88 "\227\320\004", pageTLI=0x2a7338c) at walsender.c:761
+#6  0x0000000000525d94 in ReadPageInternal (state=0x2a72ae0, pageptr=24121221120, reqLen=832) at xlogreader.c:556
+#7  0x0000000000525627 in XLogReadRecord (state=0x2a72ae0, RecPtr=24121221928, errormsg=0x7ffd28222e78) at xlogreader.c:255
+#8  0x00000000007bb898 in XLogSendLogical () at walsender.c:2752
+#9  0x00000000007bac5d in WalSndLoop (send_data=0x7bb867 <XLogSendLogical>) at walsender.c:2134
+#10 0x00000000007b9873 in StartLogicalReplication (cmd=0x29e8f78) at walsender.c:1101
+#11 0x00000000007ba0b5 in exec_replication_command (cmd_string=0x2a777a8 "START_REPLICATION SLOT \"sub_tbl2\" LOGICAL 0/0 (proto_version '1', publication_names '\"pub_tbl2\"')") at walsender.c:1527
+#12 0x0000000000817b01 in PostgresMain (argc=1, argv=0x2a13420, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4084
+#13 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#14 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#15 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#16 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#17 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ pstack 52775
+Process 52775 not found.
+[cituscluster@gtm2 ~]$ pstack 52774
+#0  0x00007f8003a99163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x2af3c18, cur_timeout=26087, occurred_events=0x7ffd28222cc0, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x2af3c18, timeout=29999, occurred_events=0x7ffd28222cc0, nevents=1, wait_event_info=100663302) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7f7ffbadc104, wakeEvents=27, sock=9, timeout=29999, wait_event_info=100663302) at latch.c:385
+#4  0x00000000007b9d7d in WalSndWaitForWal (loc=24121221952) at walsender.c:1399
+#5  0x00000000007b8e06 in logical_read_xlog_page (state=0x2a72ae0, targetPagePtr=24121221120, reqLen=832, targetRecPtr=24121221928, cur_page=0x2adbb88 "\227\320\004", pageTLI=0x2a7338c) at walsender.c:761
+#6  0x0000000000525d94 in ReadPageInternal (state=0x2a72ae0, pageptr=24121221120, reqLen=832) at xlogreader.c:556
+#7  0x0000000000525627 in XLogReadRecord (state=0x2a72ae0, RecPtr=24121221928, errormsg=0x7ffd28222e78) at xlogreader.c:255
+#8  0x00000000007bb898 in XLogSendLogical () at walsender.c:2752
+#9  0x00000000007bac5d in WalSndLoop (send_data=0x7bb867 <XLogSendLogical>) at walsender.c:2134
+#10 0x00000000007b9873 in StartLogicalReplication (cmd=0x29e8f78) at walsender.c:1101
+#11 0x00000000007ba0b5 in exec_replication_command (cmd_string=0x2a777a8 "START_REPLICATION SLOT \"sub_tbl2\" LOGICAL 0/0 (proto_version '1', publication_names '\"pub_tbl2\"')") at walsender.c:1527
+#12 0x0000000000817b01 in PostgresMain (argc=1, argv=0x2a13420, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4084
+#13 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#14 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#15 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#16 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#17 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ 
+

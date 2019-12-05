@@ -1,0 +1,352 @@
+[BEGIN] 2019/6/4 星期二 下午 5:29:10
+[cituscluster@gtm1 ~]$ ps -ef | grep postgres
+cituscl+ 113426      1  0 01:49 pts/0    00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+ 113428 113426  0 01:49 ?        00:00:00 postgres: checkpointer process  
+cituscl+ 113429 113426  0 01:49 ?        00:00:00 postgres: writer process   
+cituscl+ 113430 113426  0 01:49 ?        00:00:00 postgres: wal writer process  
+cituscl+ 113431 113426  0 01:49 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+ 113432 113426  0 01:49 ?        00:00:00 postgres: stats collector process  
+cituscl+ 113433 113426  0 01:49 ?        00:00:00 postgres: bgworker: task tracker  
+cituscl+ 113434 113426  0 01:49 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+ 113435  97902  0 01:49 pts/0    00:00:00 psql -d postgres
+cituscl+ 113436 113426  0 01:49 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+ 113437 113426  0 01:49 ?        00:00:01 postgres: bgworker: Citus Maintenance Daemon: 13212/10  
+cituscl+ 113739 113138  0 02:14 pts/1    00:00:00 psql -d postgres
+cituscl+ 113740 113426  0 02:14 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+ 113846 110866  0 02:24 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm1 ~]$ gdb attach 113436
+GNU gdb (GDB) Red Hat Enterprise Linux 7.6.1-110.el7
+Copyright (C) 2013 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-redhat-linux-gnu".
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>...
+attach: No such file or directory.
+Attaching to process 113436
+Reading symbols from /opt/pgsql-10.1/bin/postgres...done.
+Reading symbols from /lib64/libpthread.so.0...Reading symbols from /usr/lib/debug/usr/lib64/libpthread-2.17.so.debug...done.
+done.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib64/libthread_db.so.1".
+Loaded symbols for /lib64/libpthread.so.0
+Reading symbols from /lib64/librt.so.1...Reading symbols from /usr/lib/debug/usr/lib64/librt-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/librt.so.1
+Reading symbols from /lib64/libdl.so.2...Reading symbols from /usr/lib/debug/usr/lib64/libdl-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libdl.so.2
+Reading symbols from /lib64/libm.so.6...Reading symbols from /usr/lib/debug/usr/lib64/libm-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libm.so.6
+Reading symbols from /lib64/libc.so.6...Reading symbols from /usr/lib/debug/usr/lib64/libc-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libc.so.6
+Reading symbols from /lib64/ld-linux-x86-64.so.2...Reading symbols from /usr/lib/debug/usr/lib64/ld-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/ld-linux-x86-64.so.2
+Reading symbols from /opt/pgsql-10.1/lib/citus.so...done.
+Loaded symbols for /opt/pgsql-10.1/lib/citus.so
+Reading symbols from /opt/pgsql-10.1/lib/libpq.so.5...done.
+Loaded symbols for /opt/pgsql-10.1/lib/libpq.so.5
+Reading symbols from /lib64/libnss_files.so.2...Reading symbols from /usr/lib/debug/usr/lib64/libnss_files-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/libnss_files.so.2
+0x00007f941c9cc163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+81	T_PSEUDO (SYSCALL_SYMBOL, SYSCALL_NAME, SYSCALL_NARGS)
+(gdb) b CommitTransactionCommand
+Breakpoint 1 at 0x50b155: file xact.c, line 2752.
+(gdb) b CoordinatedTransactionCallback
+Breakpoint 2 at 0x7f941613150a: file transaction/transaction_management.c, line 170.
+(gdb) b StartRemoteTransactionCommit
+Breakpoint 3 at 0x7f941612f93c: file transaction/remote_transaction.c, line 190.
+(gdb) b FDD_ExchangeNodeRole
+Breakpoint 4 at 0x7f9416146e1b: file utils/node_metadata.c, line 1357.
+(gdb) c
+Continuing.
+
+Breakpoint 4, FDD_ExchangeNodeRole (promoteNode=0x1615b38, demoteNode=0x1692e18, isCloseConnections=0 '\000', isFailover=0 '\000') at utils/node_metadata.c:1357
+1357		List *placementList = NIL;
+(gdb) n
+1358		bool hasShardOnNode = false;
+(gdb) 
+1359		bool hasMetadataNode = false;
+(gdb) 
+1360		char *nodeRoleUpdateCommand = NULL;
+(gdb) 
+1361		bool isNotifyOtherCN = promoteNode->hasMetadata ? false : true; // 若节点有元数据, 则向其同步元数据时不应通知其他元数据节点
+(gdb) 
+1362		LOCKMODE lockMode = ExclusiveLock;
+(gdb) 
+1365		placementList = AllShardPlacementsOnNodeGroup(demoteNode->groupId);
+(gdb) 
+1366		if (list_length(placementList) > 0)
+(gdb) 
+1368			hasShardOnNode = true;
+(gdb) 
+1369			LockShardsInPlacementListMetadata(placementList, lockMode);
+(gdb) 
+1373		if (isFailover)
+(gdb) 
+1381			FDD_SetNodeRole(demoteNode->workerName, demoteNode->workerPort, SecondaryNodeRoleId(), false);
+(gdb) 
+1383		FDD_SetNodeRole(promoteNode->workerName, promoteNode->workerPort, PrimaryNodeRoleId(), false);
+(gdb) 
+1386		if (hasShardOnNode && ClusterHasKnownMetadataWorkers())
+(gdb) 
+1388			hasMetadataNode = true;
+(gdb) 
+1389			LockShardsInPlacementListMetadataOnWorkers(lockMode, placementList);
+(gdb) 
+1397		if (demoteNode->hasMetadata)
+(gdb) 
+1406		if (isFailover)
+(gdb) 
+1413			nodeRoleUpdateCommand = FDD_NodeRoleUpdateCommand(demoteNode->nodeId, SecondaryNodeRoleId());
+(gdb) 
+1414			SendCommandToWorkers(WORKERS_WITH_METADATA, nodeRoleUpdateCommand);
+(gdb) 
+1416		nodeRoleUpdateCommand = FDD_NodeRoleUpdateCommand(promoteNode->nodeId, PrimaryNodeRoleId());
+(gdb) 
+1417		SendCommandToWorkers(WORKERS_WITH_METADATA, nodeRoleUpdateCommand);
+(gdb) 
+1422		if (!isCloseConnections)
+(gdb) c
+Continuing.
+
+Breakpoint 1, CommitTransactionCommand () at xact.c:2752
+2752		TransactionState s = CurrentTransactionState;
+(gdb) n
+2754		switch (s->blockState)
+(gdb) 
+2773				CommitTransaction();
+(gdb) p s->blockState
+$1 = TBLOCK_STARTED
+(gdb) bt
+#0  CommitTransactionCommand () at xact.c:2773
+#1  0x0000000000815d9f in finish_xact_command () at postgres.c:2459
+#2  0x0000000000813ba5 in exec_simple_query (query_string=0x15caa38 "select citus_switchover('192.168.221.131', 5432);") at postgres.c:1131
+#3  0x0000000000817b1f in PostgresMain (argc=1, argv=0x15683f8, dbname=0x15682a8 "postgres", username=0x151fd28 "cituscluster") at postgres.c:4088
+#4  0x000000000078b2d2 in BackendRun (port=0x1562880) at postmaster.c:4357
+#5  0x000000000078aa7b in BackendStartup (port=0x1562880) at postmaster.c:4029
+#6  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#7  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x151dc00) at postmaster.c:1361
+#8  0x00000000006cf26f in main (argc=1, argv=0x151dc00) at main.c:228
+(gdb) n
+
+Breakpoint 2, CoordinatedTransactionCallback (event=XACT_EVENT_PRE_COMMIT, arg=0x0) at transaction/transaction_management.c:170
+170		switch (event)
+(gdb) 
+318				RemoveIntermediateResultsDirectory();
+(gdb) 
+321				if (CurrentCoordinatedTransactionState == COORD_TRANS_NONE)
+(gdb) p CurrentCoordinatedTransactionState
+$2 = COORD_TRANS_STARTED
+(gdb) p event
+$3 = XACT_EVENT_PRE_COMMIT
+(gdb) n
+340				MarkFailedShardPlacements();
+(gdb) 
+342				if (CoordinatedTransactionUses2PC)
+(gdb) 
+344					CoordinatedRemoteTransactionsPrepare();
+(gdb) p CoordinatedTransactionUses2PC
+$4 = 1 '\001'
+(gdb) n
+345					CurrentCoordinatedTransactionState = COORD_TRANS_PREPARED;
+(gdb) 
+351					CheckRemoteTransactionsHealth();
+(gdb) 
+370				PostCommitMarkFailedShardPlacements(CoordinatedTransactionUses2PC);
+(gdb) 
+371				break;
+(gdb) 
+386	}
+(gdb) 
+CallXactCallbacks (event=XACT_EVENT_PRE_COMMIT) at xact.c:3346
+3346		for (item = Xact_callbacks; item; item = item->next)
+(gdb) 
+3348	}
+(gdb) 
+CommitTransaction () at xact.c:1995
+1995		if (IsInParallelMode())
+(gdb) 
+1999		AfterTriggerEndXact(true);
+(gdb) 
+2005		PreCommit_on_commit_actions();
+(gdb) 
+2008		AtEOXact_LargeObject(true);
+(gdb) bt
+#0  CommitTransaction () at xact.c:2008
+#1  0x000000000050b1ba in CommitTransactionCommand () at xact.c:2773
+#2  0x0000000000815d9f in finish_xact_command () at postgres.c:2459
+#3  0x0000000000813ba5 in exec_simple_query (query_string=0x15caa38 "select citus_switchover('192.168.221.131', 5432);") at postgres.c:1131
+#4  0x0000000000817b1f in PostgresMain (argc=1, argv=0x15683f8, dbname=0x15682a8 "postgres", username=0x151fd28 "cituscluster") at postgres.c:4088
+#5  0x000000000078b2d2 in BackendRun (port=0x1562880) at postmaster.c:4357
+#6  0x000000000078aa7b in BackendStartup (port=0x1562880) at postmaster.c:4029
+#7  0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#8  0x0000000000786a6d in PostmasterMain (argc=1, argv=0x151dc00) at postmaster.c:1361
+#9  0x00000000006cf26f in main (argc=1, argv=0x151dc00) at main.c:228
+(gdb) n
+2015		PreCommit_CheckForSerializationFailure();
+(gdb) 
+2022		PreCommit_Notify();
+(gdb) 
+2025		HOLD_INTERRUPTS();
+(gdb) 
+2028		AtEOXact_RelationMap(true);
+(gdb) 
+2034		s->state = TRANS_COMMIT;
+(gdb) 
+2035		s->parallelModeLevel = 0;
+(gdb) 
+2037		if (!is_parallel_worker)
+(gdb) 
+2043			latestXid = RecordTransactionCommit();
+(gdb) 
+2067		ProcArrayEndTransaction(MyProc, latestXid);
+(gdb) 
+2085		CallXactCallbacks(is_parallel_worker ? XACT_EVENT_PARALLEL_COMMIT
+(gdb) 
+
+Breakpoint 2, CoordinatedTransactionCallback (event=XACT_EVENT_COMMIT, arg=0x0) at transaction/transaction_management.c:170
+170		switch (event)
+(gdb) 
+189				MemoryContext previousContext = CurrentMemoryContext;
+(gdb) n
+190				MemoryContextSwitchTo(CommitContext);
+(gdb) 
+197				ResetShardPlacementTransactionState();
+(gdb) 
+199				if (CurrentCoordinatedTransactionState == COORD_TRANS_PREPARED)
+(gdb) p CurrentCoordinatedTransactionState
+$5 = COORD_TRANS_PREPARED
+(gdb) n
+202					CoordinatedRemoteTransactionsCommit();
+(gdb) 
+
+Breakpoint 3, StartRemoteTransactionCommit (connection=0x166f320) at transaction/remote_transaction.c:190
+190		RemoteTransaction *transaction = &connection->remoteTransaction;
+(gdb) 
+191		const bool raiseErrors = false;
+(gdb) 
+192		const bool isCommit = true;
+(gdb) 
+200		if (transaction->transactionFailed)
+(gdb) 
+216		else if (transaction->transactionState == REMOTE_TRANS_PREPARED)
+(gdb) 
+221			initStringInfo(&command);
+(gdb) p transaction->transactionState
+$6 = REMOTE_TRANS_PREPARED
+(gdb) n
+223							 transaction->preparedName);
+(gdb) 
+222			appendStringInfo(&command, "COMMIT PREPARED '%s'",
+(gdb) 
+225			transaction->transactionState = REMOTE_TRANS_2PC_COMMITTING;
+(gdb) 
+227			if (!SendRemoteCommand(connection, command.data))
+(gdb) 
+250	}
+(gdb) close the remote transaction
+Undefined command: "close".  Try "help".
+(gdb) n
+CoordinatedRemoteTransactionsCommit () at transaction/remote_transaction.c:877
+877			connectionList = lappend(connectionList, connection);
+(gdb) 
+861		dlist_foreach(iter, &InProgressTransactions)
+(gdb) 
+880		raiseInterrupts = false;
+(gdb) 
+881		WaitForAllConnections(connectionList, raiseInterrupts);
+(gdb) 
+884		dlist_foreach(iter, &InProgressTransactions)
+(gdb) 
+886			MultiConnection *connection = dlist_container(MultiConnection, transactionNode,
+(gdb) 
+888			RemoteTransaction *transaction = &connection->remoteTransaction;
+(gdb) bt
+#0  CoordinatedRemoteTransactionsCommit () at transaction/remote_transaction.c:888
+#1  0x00007f9416131570 in CoordinatedTransactionCallback (event=XACT_EVENT_COMMIT, arg=0x0) at transaction/transaction_management.c:202
+#2  0x000000000050b913 in CallXactCallbacks (event=XACT_EVENT_COMMIT) at xact.c:3347
+#3  0x000000000050a6fd in CommitTransaction () at xact.c:2085
+#4  0x000000000050b1ba in CommitTransactionCommand () at xact.c:2773
+#5  0x0000000000815d9f in finish_xact_command () at postgres.c:2459
+#6  0x0000000000813ba5 in exec_simple_query (query_string=0x15caa38 "select citus_switchover('192.168.221.131', 5432);") at postgres.c:1131
+#7  0x0000000000817b1f in PostgresMain (argc=1, argv=0x15683f8, dbname=0x15682a8 "postgres", username=0x151fd28 "cituscluster") at postgres.c:4088
+#8  0x000000000078b2d2 in BackendRun (port=0x1562880) at postmaster.c:4357
+#9  0x000000000078aa7b in BackendStartup (port=0x1562880) at postmaster.c:4029
+#10 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#11 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x151dc00) at postmaster.c:1361
+#12 0x00000000006cf26f in main (argc=1, argv=0x151dc00) at main.c:228
+(gdb) n
+891			if (transaction->transactionState != REMOTE_TRANS_1PC_COMMITTING &&
+(gdb) 
+892				transaction->transactionState != REMOTE_TRANS_2PC_COMMITTING &&
+(gdb) 
+891			if (transaction->transactionState != REMOTE_TRANS_1PC_COMMITTING &&
+(gdb) 
+899			FinishRemoteTransactionCommit(connection);
+(gdb) 
+884		dlist_foreach(iter, &InProgressTransactions)
+(gdb) 
+901	}
+(gdb) 
+CoordinatedTransactionCallback (event=XACT_EVENT_COMMIT, arg=0x0) at transaction/transaction_management.c:206
+206				if (CurrentCoordinatedTransactionState != COORD_TRANS_NONE)
+(gdb) 
+208					ResetPlacementConnectionManagement();
+(gdb) 
+209					AfterXactConnectionHandling(true);
+(gdb) 
+212				CurrentCoordinatedTransactionState = COORD_TRANS_NONE;
+(gdb) 
+213				XactModificationLevel = XACT_MODIFICATION_NONE;
+(gdb) 
+214				dlist_init(&InProgressTransactions);
+(gdb) 
+215				CoordinatedTransactionUses2PC = false;
+(gdb) 
+217				UnSetDistributedTransactionId();
+(gdb) 
+220				MemoryContextSwitchTo(previousContext);
+(gdb) 
+221				MemoryContextReset(CommitContext);
+(gdb) 
+222				break;
+(gdb) 
+386	}
+(gdb) 
+CallXactCallbacks (event=XACT_EVENT_COMMIT) at xact.c:3346
+3346		for (item = Xact_callbacks; item; item = item->next)
+(gdb) 
+3348	}
+(gdb) 
+CommitTransaction () at xact.c:2088
+2088		ResourceOwnerRelease(TopTransactionResourceOwner,
+(gdb) 
+2093		AtEOXact_Buffers(true);
+(gdb) 
+2096		AtEOXact_RelationCache(true);
+(gdb) 
+2105		AtEOXact_Inval(true);
+(gdb) 
+2107		AtEOXact_MultiXact();
+(gdb) 
+2109		ResourceOwnerRelease(TopTransactionResourceOwner,
+(gdb) 
+2112		ResourceOwnerRelease(TopTransactionResourceOwner,
+(gdb) release local lock
+Undefined command: "release".  Try "help".
+(gdb) q
+A debugging session is active.
+
+	Inferior 1 [process 113436] will be detached.
+
+Quit anyway? (y or n) y
+Detaching from program: /opt/pgsql-10.1/bin/postgres, process 113436
+
+[END] 2019/6/4 星期二 下午 5:36:49

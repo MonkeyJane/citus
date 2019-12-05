@@ -1,0 +1,531 @@
+[BEGIN] 2019/6/26 ÐÇÆÚÈý ÉÏÎç 10:49:26
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  39721      1  0 Jun24 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  39723  39721  0 Jun24 ?        00:00:05 postgres: checkpointer process  
+cituscl+  39724  39721  0 Jun24 ?        00:00:07 postgres: writer process   
+cituscl+  39725  39721  0 Jun24 ?        00:00:13 postgres: wal writer process  
+cituscl+  39726  39721  0 Jun24 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  39727  39721  0 Jun24 ?        00:00:04 postgres: stats collector process  
+cituscl+  39728  39721  0 Jun24 ?        00:00:51 postgres: bgworker: task tracker  
+cituscl+  39729  39721  0 Jun24 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  62642  62577  0 19:44 pts/3    00:00:00 psql -d postgres
+cituscl+  62643  39721  0 19:44 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  62692  62476  0 19:49 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  39721      1  0 Jun24 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  39723  39721  0 Jun24 ?        00:00:05 postgres: checkpointer process  
+cituscl+  39724  39721  0 Jun24 ?        00:00:07 postgres: writer process   
+cituscl+  39725  39721  0 Jun24 ?        00:00:13 postgres: wal writer process  
+cituscl+  39726  39721  0 Jun24 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  39727  39721  0 Jun24 ?        00:00:04 postgres: stats collector process  
+cituscl+  39728  39721  0 Jun24 ?        00:00:51 postgres: bgworker: task tracker  
+cituscl+  39729  39721  0 Jun24 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  62642  62577  0 19:44 pts/3    00:00:00 psql -d postgres
+cituscl+  62643  39721  0 19:44 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  62705  39721  0 19:50 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(59116) idle
+cituscl+  62706  39721  9 19:50 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(59118) COPY
+cituscl+  62707  39721 16 19:50 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(59120) COPY
+cituscl+  62709  62476  0 19:50 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  39721      1  0 Jun24 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  39723  39721  0 Jun24 ?        00:00:05 postgres: checkpointer process  
+cituscl+  39724  39721  0 Jun24 ?        00:00:07 postgres: writer process   
+cituscl+  39725  39721  0 Jun24 ?        00:00:13 postgres: wal writer process  
+cituscl+  39726  39721  0 Jun24 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  39727  39721  0 Jun24 ?        00:00:04 postgres: stats collector process  
+cituscl+  39728  39721  0 Jun24 ?        00:00:51 postgres: bgworker: task tracker  
+cituscl+  39729  39721  0 Jun24 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  62642  62577  0 19:44 pts/3    00:00:00 psql -d postgres
+cituscl+  62643  39721  0 19:44 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  62711  62476  0 19:50 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  39721      1  0 Jun24 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  39723  39721  0 Jun24 ?        00:00:05 postgres: checkpointer process  
+cituscl+  39724  39721  0 Jun24 ?        00:00:07 postgres: writer process   
+cituscl+  39725  39721  0 Jun24 ?        00:00:13 postgres: wal writer process  
+cituscl+  39726  39721  0 Jun24 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  39727  39721  0 Jun24 ?        00:00:04 postgres: stats collector process  
+cituscl+  39728  39721  0 Jun24 ?        00:00:51 postgres: bgworker: task tracker  
+cituscl+  39729  39721  0 Jun24 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  62642  62577  0 19:44 pts/3    00:00:00 psql -d postgres
+cituscl+  62643  39721  0 19:44 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  62713  62476  0 19:50 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  39721      1  0 Jun24 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  39723  39721  0 Jun24 ?        00:00:05 postgres: checkpointer process  
+cituscl+  39724  39721  0 Jun24 ?        00:00:07 postgres: writer process   
+cituscl+  39725  39721  0 Jun24 ?        00:00:13 postgres: wal writer process  
+cituscl+  39726  39721  0 Jun24 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  39727  39721  0 Jun24 ?        00:00:04 postgres: stats collector process  
+cituscl+  39728  39721  0 Jun24 ?        00:00:51 postgres: bgworker: task tracker  
+cituscl+  39729  39721  0 Jun24 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  62642  62577  0 19:45 pts/3    00:00:00 psql -d postgres
+cituscl+  62643  39721  0 19:45 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  62723  39721  0 19:52 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(59122) idle
+cituscl+  62724  39721 10 19:52 ?        00:00:04 postgres: wal sender process cituscluster 192.168.221.132(59124) COPY
+cituscl+  62725  39721  6 19:52 ?        00:00:02 postgres: wal sender process cituscluster 192.168.221.132(59126) COPY
+cituscl+  62738  62476  0 19:52 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  39721      1  0 Jun24 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  39723  39721  0 Jun24 ?        00:00:05 postgres: checkpointer process  
+cituscl+  39724  39721  0 Jun24 ?        00:00:07 postgres: writer process   
+cituscl+  39725  39721  0 Jun24 ?        00:00:13 postgres: wal writer process  
+cituscl+  39726  39721  0 Jun24 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  39727  39721  0 Jun24 ?        00:00:04 postgres: stats collector process  
+cituscl+  39728  39721  0 Jun24 ?        00:00:51 postgres: bgworker: task tracker  
+cituscl+  39729  39721  0 Jun24 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  62642  62577  0 19:45 pts/3    00:00:00 psql -d postgres
+cituscl+  62643  39721  0 19:45 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  62723  39721  0 19:52 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(59122) idle
+cituscl+  62724  39721 10 19:52 ?        00:00:07 postgres: wal sender process cituscluster 192.168.221.132(59124) COPY
+cituscl+  62725  39721  7 19:52 ?        00:00:05 postgres: wal sender process cituscluster 192.168.221.132(59126) COPY
+cituscl+  62749  62476  0 19:53 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  39721      1  0 Jun24 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  39723  39721  0 Jun24 ?        00:00:05 postgres: checkpointer process  
+cituscl+  39724  39721  0 Jun24 ?        00:00:07 postgres: writer process   
+cituscl+  39725  39721  0 Jun24 ?        00:00:13 postgres: wal writer process  
+cituscl+  39726  39721  0 Jun24 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  39727  39721  0 Jun24 ?        00:00:04 postgres: stats collector process  
+cituscl+  39728  39721  0 Jun24 ?        00:00:51 postgres: bgworker: task tracker  
+cituscl+  39729  39721  0 Jun24 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  62642  62577  0 19:45 pts/3    00:00:00 psql -d postgres
+cituscl+  62643  39721  0 19:45 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  62723  39721  0 19:52 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(59122) idle
+cituscl+  62724  39721  9 19:52 ?        00:00:38 postgres: wal sender process cituscluster 192.168.221.132(59124) COPY
+cituscl+  62761  39721  8 19:54 ?        00:00:20 postgres: wal sender process cituscluster 192.168.221.132(59128) COPY
+cituscl+  62801  62476  0 19:59 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  39721      1  0 Jun24 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  39723  39721  0 Jun24 ?        00:00:05 postgres: checkpointer process  
+cituscl+  39724  39721  0 Jun24 ?        00:00:07 postgres: writer process   
+cituscl+  39725  39721  0 Jun24 ?        00:00:13 postgres: wal writer process  
+cituscl+  39726  39721  0 Jun24 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  39727  39721  0 Jun24 ?        00:00:04 postgres: stats collector process  
+cituscl+  39728  39721  0 Jun24 ?        00:00:51 postgres: bgworker: task tracker  
+cituscl+  39729  39721  0 Jun24 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  62642  62577  0 19:45 pts/3    00:00:00 psql -d postgres
+cituscl+  62643  39721  0 19:45 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  62724  39721  9 19:52 ?        00:00:42 postgres: wal sender process cituscluster 192.168.221.132(59124) COPY
+cituscl+  62761  39721  8 19:54 ?        00:00:25 postgres: wal sender process cituscluster 192.168.221.132(59128) COPY
+cituscl+  62813  62476  0 19:59 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ pstack 62724
+#0  0x00007f8003a99163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x29ca7d8, cur_timeout=-1, occurred_events=0x7ffd28222470, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x29ca7d8, timeout=-1, occurred_events=0x7ffd28222470, nevents=1, wait_event_info=100663297) at latch.c:1000
+#3  0x00000000006bec4e in secure_write (port=0x2a0da90, ptr=0x2a11970, len=6472) at be-secure.c:268
+#4  0x00000000006cb66e in internal_flush () at pqcomm.c:1433
+#5  0x00000000006cb53c in internal_putbytes (s=0x2af08a9 "5499840\t1357\n", len=13) at pqcomm.c:1379
+#6  0x00000000006cb8a1 in socket_putmessage (msgtype=100 'd', s=0x2af08a8 "15499840\t1357\n", len=14) at pqcomm.c:1576
+#7  0x00000000005e3266 in CopySendEndOfRow (cstate=0x2af0498) at copy.c:534
+#8  0x00000000005e7499 in CopyOneRowTo (cstate=0x2af0498, tupleOid=0, values=0x2af0440, nulls=0x2af0cb8 "") at copy.c:2162
+#9  0x00000000005e70e0 in CopyTo (cstate=0x2af0498) at copy.c:2047
+#10 0x00000000005e6c41 in DoCopyTo (cstate=0x2af0498) at copy.c:1884
+#11 0x00000000005e4046 in DoCopy (pstate=0x2b051d8, stmt=0x2a786b0, stmt_location=0, stmt_len=0, processed=0x7ffd28222928) at copy.c:985
+#12 0x000000000081b153 in standard_ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl4 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at utility.c:560
+#13 0x00007f7ffd1a9c7d in multi_ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl4 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at commands/utility_hook.c:136
+#14 0x000000000081ac94 in ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl4 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at utility.c:353
+#15 0x0000000000819ed1 in PortalRunUtility (portal=0x2a72c78, pstmt=0x2a789f0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:1178
+#16 0x000000000081a0b2 in PortalRunMulti (portal=0x2a72c78, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x2a78ad0, altdest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:1324
+#17 0x000000000081968a in PortalRun (portal=0x2a72c78, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x2a78ad0, altdest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:799
+#18 0x0000000000813b59 in exec_simple_query (query_string=0x2a77bb8 "COPY public.tbl4 TO STDOUT") at postgres.c:1099
+#19 0x0000000000817b11 in PostgresMain (argc=1, argv=0x2a13430, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4085
+#20 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#21 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#22 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#23 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#24 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ pstack 62761
+#0  0x00007f8003a99163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x29ca7d8, cur_timeout=-1, occurred_events=0x7ffd28222470, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x29ca7d8, timeout=-1, occurred_events=0x7ffd28222470, nevents=1, wait_event_info=100663297) at latch.c:1000
+#3  0x00000000006bec4e in secure_write (port=0x2a0da90, ptr=0x2a130d0, len=488) at be-secure.c:268
+#4  0x00000000006cb66e in internal_flush () at pqcomm.c:1433
+#5  0x00000000006cb53c in internal_putbytes (s=0x2af08ad "187\t13579\n", len=10) at pqcomm.c:1379
+#6  0x00000000006cb8a1 in socket_putmessage (msgtype=100 'd', s=0x2af08a8 "11419187\t13579\n", len=15) at pqcomm.c:1576
+#7  0x00000000005e3266 in CopySendEndOfRow (cstate=0x2af0498) at copy.c:534
+#8  0x00000000005e7499 in CopyOneRowTo (cstate=0x2af0498, tupleOid=0, values=0x2af0440, nulls=0x2af0cb8 "") at copy.c:2162
+#9  0x00000000005e70e0 in CopyTo (cstate=0x2af0498) at copy.c:2047
+#10 0x00000000005e6c41 in DoCopyTo (cstate=0x2af0498) at copy.c:1884
+#11 0x00000000005e4046 in DoCopy (pstate=0x2b051d8, stmt=0x2a786b0, stmt_location=0, stmt_len=0, processed=0x7ffd28222928) at copy.c:985
+#12 0x000000000081b153 in standard_ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl3 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at utility.c:560
+#13 0x00007f7ffd1a9c7d in multi_ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl3 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at commands/utility_hook.c:136
+#14 0x000000000081ac94 in ProcessUtility (pstmt=0x2a789f0, queryString=0x2a77bb8 "COPY public.tbl3 TO STDOUT", context=PROCESS_UTILITY_TOPLEVEL, params=0x0, queryEnv=0x0, dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at utility.c:353
+#15 0x0000000000819ed1 in PortalRunUtility (portal=0x2a72c78, pstmt=0x2a789f0, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:1178
+#16 0x000000000081a0b2 in PortalRunMulti (portal=0x2a72c78, isTopLevel=1 '\001', setHoldSnapshot=0 '\000', dest=0x2a78ad0, altdest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:1324
+#17 0x000000000081968a in PortalRun (portal=0x2a72c78, count=9223372036854775807, isTopLevel=1 '\001', run_once=1 '\001', dest=0x2a78ad0, altdest=0x2a78ad0, completionTag=0x7ffd28222ea0 "") at pquery.c:799
+#18 0x0000000000813b59 in exec_simple_query (query_string=0x2a77bb8 "COPY public.tbl3 TO STDOUT") at postgres.c:1099
+#19 0x0000000000817b11 in PostgresMain (argc=1, argv=0x2a13430, dbname=0x2a132c8 "postgres", username=0x29cad18 "cituscluster") at postgres.c:4085
+#20 0x000000000078b2d2 in BackendRun (port=0x2a0da90) at postmaster.c:4357
+#21 0x000000000078aa7b in BackendStartup (port=0x2a0da90) at postmaster.c:4029
+#22 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#23 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x29c8bf0) at postmaster.c:1361
+#24 0x00000000006cf26f in main (argc=1, argv=0x29c8bf0) at main.c:228
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  39721      1  0 Jun24 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  39723  39721  0 Jun24 ?        00:00:05 postgres: checkpointer process  
+cituscl+  39724  39721  0 Jun24 ?        00:00:07 postgres: writer process   
+cituscl+  39725  39721  0 Jun24 ?        00:00:13 postgres: wal writer process  
+cituscl+  39726  39721  0 Jun24 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  39727  39721  0 Jun24 ?        00:00:04 postgres: stats collector process  
+cituscl+  39728  39721  0 Jun24 ?        00:00:51 postgres: bgworker: task tracker  
+cituscl+  39729  39721  0 Jun24 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  62642  62577  0 19:45 pts/3    00:00:00 psql -d postgres
+cituscl+  62643  39721  0 19:45 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  62724  39721  9 19:52 ?        00:00:47 postgres: wal sender process cituscluster 192.168.221.132(59124) COPY
+cituscl+  62761  39721  8 19:54 ?        00:00:29 postgres: wal sender process cituscluster 192.168.221.132(59128) COPY
+cituscl+  62866  62476  0 20:00 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ ps -ef | grep postgres
+cituscl+  39721      1  0 Jun24 ?        00:00:01 /opt/pgsql-10.1/bin/postgres
+cituscl+  39723  39721  0 Jun24 ?        00:00:05 postgres: checkpointer process  
+cituscl+  39724  39721  0 Jun24 ?        00:00:07 postgres: writer process   
+cituscl+  39725  39721  0 Jun24 ?        00:00:13 postgres: wal writer process  
+cituscl+  39726  39721  0 Jun24 ?        00:00:01 postgres: autovacuum launcher process  
+cituscl+  39727  39721  0 Jun24 ?        00:00:04 postgres: stats collector process  
+cituscl+  39728  39721  0 Jun24 ?        00:00:51 postgres: bgworker: task tracker  
+cituscl+  39729  39721  0 Jun24 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  62642  62577  0 19:45 pts/3    00:00:00 psql -d postgres
+cituscl+  62643  39721  0 19:45 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  62761  39721  8 19:54 ?        00:00:37 postgres: wal sender process cituscluster 192.168.221.132(59128) COPY
+cituscl+  62897  39721  0 20:02 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(59130) idle
+cituscl+  62899  62476  0 20:02 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 ~]$ pkill -9 postgres
+[cituscluster@gtm2 ~]$ cd data/
+[cituscluster@gtm2 data]$ pg_controldata 
+pg_control version number:            1002
+Catalog version number:               201707211
+Database system identifier:           6695543267037286375
+Database cluster state:               in production
+pg_control last modified:             Tue 25 Jun 2019 07:43:44 PM PDT
+Latest checkpoint location:           5/9DBD7E28
+Prior checkpoint location:            5/9DBD1CB0
+Latest checkpoint's REDO location:    5/9DBD7DF0
+Latest checkpoint's REDO WAL file:    00000001000000050000009D
+Latest checkpoint's TimeLineID:       1
+Latest checkpoint's PrevTimeLineID:   1
+Latest checkpoint's full_page_writes: on
+Latest checkpoint's NextXID:          0:930
+Latest checkpoint's NextOID:          52075
+Latest checkpoint's NextMultiXactId:  1
+Latest checkpoint's NextMultiOffset:  0
+Latest checkpoint's oldestXID:        548
+Latest checkpoint's oldestXID's DB:   1
+Latest checkpoint's oldestActiveXID:  930
+Latest checkpoint's oldestMultiXid:   1
+Latest checkpoint's oldestMulti's DB: 1
+Latest checkpoint's oldestCommitTsXid:0
+Latest checkpoint's newestCommitTsXid:0
+Time of latest checkpoint:            Tue 25 Jun 2019 07:43:43 PM PDT
+Fake LSN counter for unlogged rels:   0/1
+Minimum recovery ending location:     0/0
+Min recovery ending loc's timeline:   0
+Backup start location:                0/0
+Backup end location:                  0/0
+End-of-backup record required:        no
+wal_level setting:                    logical
+wal_log_hints setting:                off
+max_connections setting:              100
+max_worker_processes setting:         8
+max_prepared_xacts setting:           200
+max_locks_per_xact setting:           64
+track_commit_timestamp setting:       off
+Maximum data alignment:               8
+Database block size:                  8192
+Blocks per segment of large relation: 131072
+WAL block size:                       8192
+Bytes per WAL segment:                16777216
+Maximum length of identifiers:        64
+Maximum columns in an index:          32
+Maximum size of a TOAST chunk:        1996
+Size of a large-object chunk:         2048
+Date/time type storage:               64-bit integers
+Float4 argument passing:              by value
+Float8 argument passing:              by value
+Data page checksum version:           0
+Mock authentication nonce:            48d31c96dd4ad5039c666fc6393803d593bde9ae0ab47b8c89e370eaa263a07c
+[cituscluster@gtm2 data]$ pg_ctl start
+pg_ctl: another server might be running; trying to start server anyway
+waiting for server to start....2019-06-25 20:03:13.931 PDT [62917] LOG:  number of prepared transactions has not been configured, overriding
+2019-06-25 20:03:13.931 PDT [62917] DETAIL:  max_prepared_transactions is now set to 200
+2019-06-25 20:03:13.931 PDT [62917] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2019-06-25 20:03:13.932 PDT [62917] LOG:  listening on IPv6 address "::", port 5432
+2019-06-25 20:03:13.963 PDT [62917] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-06-25 20:03:14.130 PDT [62918] LOG:  database system was interrupted; last known up at 2019-06-25 19:43:44 PDT
+2019-06-25 20:03:14.861 PDT [62918] LOG:  database system was not properly shut down; automatic recovery in progress
+2019-06-25 20:03:14.865 PDT [62918] LOG:  redo starts at 5/9DBD7DF0
+2019-06-25 20:03:14.865 PDT [62918] LOG:  invalid record length at 5/9DBD8038: wanted 24, got 0
+2019-06-25 20:03:14.865 PDT [62918] LOG:  redo done at 5/9DBD7FE8
+2019-06-25 20:03:14.890 PDT [62917] LOG:  database system is ready to accept connections
+ done
+server started
+[cituscluster@gtm2 data]$ 2019-06-25 20:03:16.136 PDT [62926] LOG:  starting logical decoding for slot "sub1"
+2019-06-25 20:03:16.136 PDT [62926] DETAIL:  streaming transactions committing after 5/9DBD7FE8, reading WAL from 5/9DBD7FE8
+2019-06-25 20:03:16.136 PDT [62926] LOG:  logical decoding found consistent point at 5/9DBD7FE8
+2019-06-25 20:03:16.136 PDT [62926] DETAIL:  There are no running transactions.
+
+[cituscluster@gtm2 data]$ ps -ef | grep postgres
+cituscl+  62917      1  0 20:03 pts/2    00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  62919  62917  0 20:03 ?        00:00:00 postgres: checkpointer process  
+cituscl+  62920  62917  0 20:03 ?        00:00:00 postgres: writer process   
+cituscl+  62921  62917  0 20:03 ?        00:00:00 postgres: wal writer process  
+cituscl+  62922  62917  0 20:03 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  62923  62917  0 20:03 ?        00:00:00 postgres: stats collector process  
+cituscl+  62924  62917  0 20:03 ?        00:00:00 postgres: bgworker: task tracker  
+cituscl+  62925  62917  0 20:03 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  62926  62917  0 20:03 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(59150) idle
+cituscl+  62935  62577  0 20:03 pts/3    00:00:00 psql -d postgres
+cituscl+  62936  62917  4 20:03 ?        00:00:01 postgres: cituscluster postgres [local] idle
+cituscl+  62940  62476  0 20:04 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 data]$ pstack 62926
+#0  0x00007fb8990cc163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x1fae968, cur_timeout=29999, occurred_events=0x7ffefc123c10, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x1fae968, timeout=29999, occurred_events=0x7ffefc123c10, nevents=1, wait_event_info=100663302) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7fb89110f434, wakeEvents=27, sock=9, timeout=29999, wait_event_info=100663302) at latch.c:385
+#4  0x00000000007b9d7d in WalSndWaitForWal (loc=24121278712) at walsender.c:1399
+#5  0x00000000007b8e06 in logical_read_xlog_page (state=0x1f28da0, targetPagePtr=24121278464, reqLen=248, targetRecPtr=24121278688, cur_page=0x1f78ac8 "\227\320\005", pageTLI=0x1f2964c) at walsender.c:761
+#6  0x0000000000525d94 in ReadPageInternal (state=0x1f28da0, pageptr=24121278464, reqLen=248) at xlogreader.c:556
+#7  0x0000000000525627 in XLogReadRecord (state=0x1f28da0, RecPtr=24121278688, errormsg=0x7ffefc123dc8) at xlogreader.c:255
+#8  0x00000000007bb898 in XLogSendLogical () at walsender.c:2752
+#9  0x00000000007bac5d in WalSndLoop (send_data=0x7bb867 <XLogSendLogical>) at walsender.c:2134
+#10 0x00000000007b9873 in StartLogicalReplication (cmd=0x1ea0f88) at walsender.c:1101
+#11 0x00000000007ba0b5 in exec_replication_command (cmd_string=0x1f2da68 "START_REPLICATION SLOT \"sub1\" LOGICAL 0/0 (proto_version '1', publication_names '\"pub1\"')") at walsender.c:1527
+#12 0x0000000000817b01 in PostgresMain (argc=1, argv=0x1ecb428, dbname=0x1ecb2d8 "postgres", username=0x1e82d28 "cituscluster") at postgres.c:4084
+#13 0x000000000078b2d2 in BackendRun (port=0x1ec58b0) at postmaster.c:4357
+#14 0x000000000078aa7b in BackendStartup (port=0x1ec58b0) at postmaster.c:4029
+#15 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#16 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1e80c00) at postmaster.c:1361
+#17 0x00000000006cf26f in main (argc=1, argv=0x1e80c00) at main.c:228
+[cituscluster@gtm2 data]$ ps -ef | grep postgres
+cituscl+  62917      1  0 Jun25 pts/2    00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  62919  62917  0 Jun25 ?        00:00:00 postgres: checkpointer process  
+cituscl+  62920  62917  0 Jun25 ?        00:00:00 postgres: writer process   
+cituscl+  62921  62917  0 Jun25 ?        00:00:00 postgres: wal writer process  
+cituscl+  62922  62917  0 Jun25 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  62923  62917  0 Jun25 ?        00:00:00 postgres: stats collector process  
+cituscl+  62924  62917  0 Jun25 ?        00:00:08 postgres: bgworker: task tracker  
+cituscl+  62925  62917  0 Jun25 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  62926  62917  0 Jun25 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(59150) idle
+cituscl+  62935  62577  0 Jun25 pts/3    00:00:00 psql -d postgres
+cituscl+  62936  62917  0 Jun25 ?        00:00:01 postgres: cituscluster postgres [local] idle
+cituscl+  66858  62476  0 02:20 pts/2    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 data]$ pstack 62926
+#0  0x00007fb8990cc163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x1fae968, cur_timeout=29999, occurred_events=0x7ffefc123c10, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x1fae968, timeout=29999, occurred_events=0x7ffefc123c10, nevents=1, wait_event_info=100663302) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7fb89110f434, wakeEvents=27, sock=9, timeout=29999, wait_event_info=100663302) at latch.c:385
+#4  0x00000000007b9d7d in WalSndWaitForWal (loc=24121278712) at walsender.c:1399
+#5  0x00000000007b8e06 in logical_read_xlog_page (state=0x1f28da0, targetPagePtr=24121278464, reqLen=248, targetRecPtr=24121278688, cur_page=0x1f78ac8 "\227\320\005", pageTLI=0x1f2964c) at walsender.c:761
+#6  0x0000000000525d94 in ReadPageInternal (state=0x1f28da0, pageptr=24121278464, reqLen=248) at xlogreader.c:556
+#7  0x0000000000525627 in XLogReadRecord (state=0x1f28da0, RecPtr=24121278688, errormsg=0x7ffefc123dc8) at xlogreader.c:255
+#8  0x00000000007bb898 in XLogSendLogical () at walsender.c:2752
+#9  0x00000000007bac5d in WalSndLoop (send_data=0x7bb867 <XLogSendLogical>) at walsender.c:2134
+#10 0x00000000007b9873 in StartLogicalReplication (cmd=0x1ea0f88) at walsender.c:1101
+#11 0x00000000007ba0b5 in exec_replication_command (cmd_string=0x1f2da68 "START_REPLICATION SLOT \"sub1\" LOGICAL 0/0 (proto_version '1', publication_names '\"pub1\"')") at walsender.c:1527
+#12 0x0000000000817b01 in PostgresMain (argc=1, argv=0x1ecb428, dbname=0x1ecb2d8 "postgres", username=0x1e82d28 "cituscluster") at postgres.c:4084
+#13 0x000000000078b2d2 in BackendRun (port=0x1ec58b0) at postmaster.c:4357
+#14 0x000000000078aa7b in BackendStartup (port=0x1ec58b0) at postmaster.c:4029
+#15 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#16 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1e80c00) at postmaster.c:1361
+#17 0x00000000006cf26f in main (argc=1, argv=0x1e80c00) at main.c:228
+[cituscluster@gtm2 data]$ pstack 62926
+#0  0x00007fb8990cc163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x405cbd8, cur_timeout=28055, occurred_events=0x7ffefc123960, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x405cbd8, timeout=28055, occurred_events=0x7ffefc123960, nevents=1, wait_event_info=100663303) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7fb89110f434, wakeEvents=31, sock=9, timeout=28055, wait_event_info=100663303) at latch.c:385
+#4  0x00000000007b9b0c in WalSndWriteData (ctx=0x1f28b28, lsn=24125523048, xid=930, last_write=1 '\001') at walsender.c:1226
+#5  0x00000000007a6469 in OutputPluginWrite (ctx=0x1f28b28, last_write=1 '\001') at logical.c:508
+#6  0x00007fb887dcbe0c in pgoutput_change (ctx=0x1f28b28, txn=0x1fb28d8, relation=0x7fb899ec04b8, change=0x38151f8) at pgoutput.c:352
+#7  0x00000000007a69a3 in change_cb_wrapper (cache=0x1fa2888, txn=0x1fb28d8, relation=0x7fb899ec04b8, change=0x38151f8) at logical.c:711
+#8  0x00000000007ae018 in ReorderBufferCommit (rb=0x1fa2888, xid=930, commit_lsn=24132131952, end_lsn=24132132000, commit_time=614856044420666, origin_id=0, origin_lsn=0) at reorderbuffer.c:1445
+#9  0x00000000007a3330 in DecodeCommit (ctx=0x1f28b28, buf=0x7ffefc123d90, parsed=0x7ffefc123cc0, xid=930) at decode.c:611
+#10 0x00000000007a293c in DecodeXactOp (ctx=0x1f28b28, buf=0x7ffefc123d90) at decode.c:241
+#11 0x00000000007a264f in LogicalDecodingProcessRecord (ctx=0x1f28b28, record=0x1f28da0) at decode.c:113
+#12 0x00000000007bb903 in XLogSendLogical () at walsender.c:2766
+#13 0x00000000007bac5d in WalSndLoop (send_data=0x7bb867 <XLogSendLogical>) at walsender.c:2134
+#14 0x00000000007b9873 in StartLogicalReplication (cmd=0x1ea0f88) at walsender.c:1101
+#15 0x00000000007ba0b5 in exec_replication_command (cmd_string=0x1f2da68 "START_REPLICATION SLOT \"sub1\" LOGICAL 0/0 (proto_version '1', publication_names '\"pub1\"')") at walsender.c:1527
+#16 0x0000000000817b01 in PostgresMain (argc=1, argv=0x1ecb428, dbname=0x1ecb2d8 "postgres", username=0x1e82d28 "cituscluster") at postgres.c:4084
+#17 0x000000000078b2d2 in BackendRun (port=0x1ec58b0) at postmaster.c:4357
+#18 0x000000000078aa7b in BackendStartup (port=0x1ec58b0) at postmaster.c:4029
+#19 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#20 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1e80c00) at postmaster.c:1361
+#21 0x00000000006cf26f in main (argc=1, argv=0x1e80c00) at main.c:228
+[cituscluster@gtm2 data]$ 2019-06-26 02:53:43.908 PDT [62926] LOG:  terminating walsender process due to replication timeout
+2019-06-26 02:53:43.908 PDT [62926] CONTEXT:  slot "sub1", output plugin "pgoutput", in the change callback, associated LSN 5/9E7EDF90
+2019-06-26 02:54:19.808 PDT [67210] LOG:  starting logical decoding for slot "sub1"
+2019-06-26 02:54:19.808 PDT [67210] DETAIL:  streaming transactions committing after 5/9EBE9FE0, reading WAL from 5/9E69F340
+2019-06-26 02:54:19.808 PDT [67210] LOG:  logical decoding found consistent point at 5/9E69F340
+2019-06-26 02:54:19.808 PDT [67210] DETAIL:  There are no running transactions.
+
+Socket error Event: 32 Error: 10053.
+Connection closing...Socket close.
+
+Connection closed by foreign host.
+
+Disconnected from remote host(citus-wn1) at 18:48:43.
+
+Type `help' to learn how to use Xshell prompt.
+[c:\~]$ 
+
+Connecting to 192.168.221.131:22...
+Connection established.
+To escape to local shell, press 'Ctrl+Alt+]'.
+
+Last login: Tue Jun 25 19:42:44 2019 from 192.168.221.1
+[cituscluster@gtm2 ~]$ cd data/
+[cituscluster@gtm2 data]$ ll pg_replslot/
+total 0
+drwx------ 2 cituscluster cituscluster 19 Jun 26 02:59 sub1
+[cituscluster@gtm2 data]$ ll pg_replslot/sub1/
+total 4
+-rw------- 1 cituscluster cituscluster 176 Jun 26 02:59 state
+[cituscluster@gtm2 data]$ ll pg_replslot/sub1/state 
+-rw------- 1 cituscluster cituscluster 176 Jun 26 02:59 pg_replslot/sub1/state
+[cituscluster@gtm2 data]$ cat pg_replslot/sub1/state 
+?2??sub13¡èPPpgoutput[cituscluster@gtm2 data]$ XshellXshellXshell^C
+[cituscluster@gtm2 data]$ 
+[cituscluster@gtm2 data]$ ps -ef | grep postgres
+cituscl+  62917      1  0 Jun26 ?        00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  62919  62917  0 Jun26 ?        00:00:00 postgres: checkpointer process  
+cituscl+  62920  62917  0 Jun26 ?        00:00:01 postgres: writer process   
+cituscl+  62921  62917  0 Jun26 ?        00:00:01 postgres: wal writer process  
+cituscl+  62922  62917  0 Jun26 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  62923  62917  0 Jun26 ?        00:00:01 postgres: stats collector process  
+cituscl+  62924  62917  0 Jun26 ?        00:00:18 postgres: bgworker: task tracker  
+cituscl+  62925  62917  0 Jun26 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  67822  62917  0 Jun26 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(59154) idle
+cituscl+  71387  70840  0 00:21 pts/0    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 data]$ ps -ef | grep postgres
+cituscl+  62917      1  0 Jun26 ?        00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  62919  62917  0 Jun26 ?        00:00:00 postgres: checkpointer process  
+cituscl+  62920  62917  0 Jun26 ?        00:00:01 postgres: writer process   
+cituscl+  62921  62917  0 Jun26 ?        00:00:01 postgres: wal writer process  
+cituscl+  62922  62917  0 Jun26 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  62923  62917  0 Jun26 ?        00:00:01 postgres: stats collector process  
+cituscl+  62924  62917  0 Jun26 ?        00:00:18 postgres: bgworker: task tracker  
+cituscl+  62925  62917  0 Jun26 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  71448  71395  0 00:21 pts/1    00:00:00 psql -d postgres
+cituscl+  71449  62917  0 00:21 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  71452  70840  0 00:21 pts/0    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 data]$ ll pg_replslot/
+total 0
+[cituscluster@gtm2 data]$ ll pg_replslot/
+total 0
+drwx------ 2 cituscluster cituscluster 19 Jun 27 00:22 sub1
+[cituscluster@gtm2 data]$ ps -ef | grep postgres
+cituscl+  62917      1  0 Jun26 ?        00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  62919  62917  0 Jun26 ?        00:00:00 postgres: checkpointer process  
+cituscl+  62920  62917  0 Jun26 ?        00:00:01 postgres: writer process   
+cituscl+  62921  62917  0 Jun26 ?        00:00:01 postgres: wal writer process  
+cituscl+  62922  62917  0 Jun26 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  62923  62917  0 Jun26 ?        00:00:01 postgres: stats collector process  
+cituscl+  62924  62917  0 Jun26 ?        00:00:18 postgres: bgworker: task tracker  
+cituscl+  62925  62917  0 Jun26 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  71448  71395  0 00:21 pts/1    00:00:00 psql -d postgres
+cituscl+  71449  62917  0 00:21 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  71460  62917  0 00:22 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(59160) idle
+cituscl+  71474  70840  0 00:22 pts/0    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 data]$ ll pg_replslot/sub1/
+total 4
+-rw------- 1 cituscluster cituscluster 176 Jun 27 00:22 state
+[cituscluster@gtm2 data]$ ll pg_replslot/sub1/
+ls: cannot access pg_replslot/sub1/: No such file or directory
+[cituscluster@gtm2 data]$ ll pg_replslot/
+total 0
+[cituscluster@gtm2 data]$ ll pg_replslot/
+total 0
+drwx------ 2 cituscluster cituscluster 19 Jun 27 00:23 sub1
+drwx------ 2 cituscluster cituscluster 19 Jun 27 00:23 sub1_51959_sync_43764
+[cituscluster@gtm2 data]$ ll pg_replslot/sub1_51959_sync_43
+ls: cannot access pg_replslot/sub1_51959_sync_43: No such file or directory
+[cituscluster@gtm2 data]$ ll pg_replslot/sub1_51959_sync_43764/
+total 4
+-rw------- 1 cituscluster cituscluster 176 Jun 27 00:23 state
+[cituscluster@gtm2 data]$ ll pg_replslot/sub1
+total 4
+-rw------- 1 cituscluster cituscluster 176 Jun 27 00:24 state
+[cituscluster@gtm2 data]$ ps -ef | grep postgres
+cituscl+  62917      1  0 Jun26 ?        00:00:00 /opt/pgsql-10.1/bin/postgres
+cituscl+  62919  62917  0 Jun26 ?        00:00:00 postgres: checkpointer process  
+cituscl+  62920  62917  0 Jun26 ?        00:00:01 postgres: writer process   
+cituscl+  62921  62917  0 Jun26 ?        00:00:01 postgres: wal writer process  
+cituscl+  62922  62917  0 Jun26 ?        00:00:00 postgres: autovacuum launcher process  
+cituscl+  62923  62917  0 Jun26 ?        00:00:01 postgres: stats collector process  
+cituscl+  62924  62917  0 Jun26 ?        00:00:18 postgres: bgworker: task tracker  
+cituscl+  62925  62917  0 Jun26 ?        00:00:00 postgres: bgworker: logical replication launcher  
+cituscl+  71448  71395  0 00:21 pts/1    00:00:00 psql -d postgres
+cituscl+  71449  62917  0 00:21 ?        00:00:00 postgres: cituscluster postgres [local] idle
+cituscl+  71507  62917  0 00:23 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(59202) idle
+cituscl+  71508  62917 18 00:23 ?        00:00:07 postgres: wal sender process cituscluster 192.168.221.132(59204) COPY
+cituscl+  71538  62917  0 00:24 ?        00:00:00 postgres: wal sender process cituscluster 192.168.221.132(59234) idle in transaction
+cituscl+  71540  70840  0 00:24 pts/0    00:00:00 grep --color=auto postgres
+[cituscluster@gtm2 data]$ ll pg_replslot/
+total 0
+drwx------ 2 cituscluster cituscluster 19 Jun 27 00:24 sub1
+drwx------ 2 cituscluster cituscluster 19 Jun 27 00:23 sub1_51959_sync_43764
+[cituscluster@gtm2 data]$ ll pg_replslot/
+total 0
+drwx------ 2 cituscluster cituscluster 19 Jun 27 00:24 sub1
+drwx------ 2 cituscluster cituscluster 19 Jun 27 00:23 sub1_51959_sync_43764
+[cituscluster@gtm2 data]$ pstack 71460
+Process 71460 not found.
+[cituscluster@gtm2 data]$ pstack 71507
+#0  0x00007fb8990cc163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x1fabc28, cur_timeout=29999, occurred_events=0x7ffefc123c10, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x1fabc28, timeout=29999, occurred_events=0x7ffefc123c10, nevents=1, wait_event_info=100663302) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7fb89110f434, wakeEvents=27, sock=9, timeout=29999, wait_event_info=100663302) at latch.c:385
+#4  0x00000000007b9d7d in WalSndWaitForWal (loc=24142896680) at walsender.c:1399
+#5  0x00000000007b8e06 in logical_read_xlog_page (state=0x1f2aaf0, targetPagePtr=24142888960, reqLen=7720, targetRecPtr=24142896656, cur_page=0x1f93b98 "\227\320\005", pageTLI=0x1f2b39c) at walsender.c:761
+#6  0x0000000000525d94 in ReadPageInternal (state=0x1f2aaf0, pageptr=24142888960, reqLen=7720) at xlogreader.c:556
+#7  0x0000000000525627 in XLogReadRecord (state=0x1f2aaf0, RecPtr=24142896656, errormsg=0x7ffefc123dc8) at xlogreader.c:255
+#8  0x00000000007bb898 in XLogSendLogical () at walsender.c:2752
+#9  0x00000000007bac5d in WalSndLoop (send_data=0x7bb867 <XLogSendLogical>) at walsender.c:2134
+#10 0x00000000007b9873 in StartLogicalReplication (cmd=0x1ea0f88) at walsender.c:1101
+#11 0x00000000007ba0b5 in exec_replication_command (cmd_string=0x1f2f7b8 "START_REPLICATION SLOT \"sub1\" LOGICAL 0/0 (proto_version '1', publication_names '\"pub1\"')") at walsender.c:1527
+#12 0x0000000000817b01 in PostgresMain (argc=1, argv=0x1ecb428, dbname=0x1ecb2d8 "postgres", username=0x1e82d28 "cituscluster") at postgres.c:4084
+#13 0x000000000078b2d2 in BackendRun (port=0x1ec5ad0) at postmaster.c:4357
+#14 0x000000000078aa7b in BackendStartup (port=0x1ec5ad0) at postmaster.c:4029
+#15 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#16 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1e80c00) at postmaster.c:1361
+#17 0x00000000006cf26f in main (argc=1, argv=0x1e80c00) at main.c:228
+[cituscluster@gtm2 data]$ pstack 71507
+#0  0x00007fb8990cc163 in __epoll_wait_nocancel () at ../sysdeps/unix/syscall-template.S:81
+#1  0x00000000007ed015 in WaitEventSetWaitBlock (set=0x1fabc28, cur_timeout=29999, occurred_events=0x7ffefc123c10, nevents=1) at latch.c:1048
+#2  0x00000000007ecef0 in WaitEventSetWait (set=0x1fabc28, timeout=29999, occurred_events=0x7ffefc123c10, nevents=1, wait_event_info=100663302) at latch.c:1000
+#3  0x00000000007ec800 in WaitLatchOrSocket (latch=0x7fb89110f434, wakeEvents=27, sock=9, timeout=29999, wait_event_info=100663302) at latch.c:385
+#4  0x00000000007b9d7d in WalSndWaitForWal (loc=24142897488) at walsender.c:1399
+#5  0x00000000007b8e06 in logical_read_xlog_page (state=0x1f2aaf0, targetPagePtr=24142897152, reqLen=336, targetRecPtr=24142897464, cur_page=0x1f93b98 "\227\320\005", pageTLI=0x1f2b39c) at walsender.c:761
+#6  0x0000000000525d94 in ReadPageInternal (state=0x1f2aaf0, pageptr=24142897152, reqLen=336) at xlogreader.c:556
+#7  0x0000000000525627 in XLogReadRecord (state=0x1f2aaf0, RecPtr=24142897464, errormsg=0x7ffefc123dc8) at xlogreader.c:255
+#8  0x00000000007bb898 in XLogSendLogical () at walsender.c:2752
+#9  0x00000000007bac5d in WalSndLoop (send_data=0x7bb867 <XLogSendLogical>) at walsender.c:2134
+#10 0x00000000007b9873 in StartLogicalReplication (cmd=0x1ea0f88) at walsender.c:1101
+#11 0x00000000007ba0b5 in exec_replication_command (cmd_string=0x1f2f7b8 "START_REPLICATION SLOT \"sub1\" LOGICAL 0/0 (proto_version '1', publication_names '\"pub1\"')") at walsender.c:1527
+#12 0x0000000000817b01 in PostgresMain (argc=1, argv=0x1ecb428, dbname=0x1ecb2d8 "postgres", username=0x1e82d28 "cituscluster") at postgres.c:4084
+#13 0x000000000078b2d2 in BackendRun (port=0x1ec5ad0) at postmaster.c:4357
+#14 0x000000000078aa7b in BackendStartup (port=0x1ec5ad0) at postmaster.c:4029
+#15 0x00000000007873e6 in ServerLoop () at postmaster.c:1753
+#16 0x0000000000786a6d in PostmasterMain (argc=1, argv=0x1e80c00) at postmaster.c:1361
+#17 0x00000000006cf26f in main (argc=1, argv=0x1e80c00) at main.c:228
+[cituscluster@gtm2 data]$ ll pg_replslot/
+total 0
+drwx------ 2 cituscluster cituscluster 19 Jun 27 00:26 sub1
+[cituscluster@gtm2 data]$ 
+[cituscluster@gtm2 data]$ cd ~
+[cituscluster@gtm2 ~]$ ll
+total 660
+drwx------ 20 cituscluster cituscluster   4096 Jun 25 20:03 data
+drwxrwxrwx 11 cituscluster cituscluster   4096 Apr 14 19:15 pgbouncer-1.8.1
+-rwxrwxrwx  1 cituscluster cituscluster 634753 Apr 14 19:15 pgbouncer-1.8.1.zip
+drwxrwxrwx  6 cituscluster cituscluster    331 Apr 14 19:15 postgresql-10.1
+-rwx------  1 cituscluster cituscluster  22767 Apr 30 00:08 postgresql.conf
+-rw-r--r--  1 cituscluster cituscluster   5822 Apr 30 02:56 recovery.conf
+[cituscluster@gtm2 ~]$ 
+Socket error Event: 32 Error: 10053.
+Connection closing...Socket close.
+
+Connection closed by foreign host.
+
+Disconnected from remote host(citus-wn1) at 19:08:57.
+
+Type `help' to learn how to use Xshell prompt.
